@@ -56,7 +56,7 @@ OAgent::OAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader, bool qui
 // Fair splitting
 float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t period) {
     OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex object
-    float Dout = float(s->getOutDegree() + 1);    // store out degree
+    float Dout = float(s->getOutDegree() + 1);    // store out degree 
     _initializeFairSplitting(s,x);      // initialize state variables                           
     unsigned long start;                // create variable to store iteration start time
     bool txDone;                        // create variable to keep track of broadcasts
