@@ -14,6 +14,7 @@
 #include "Streaming.h"
 //#define VERBOSE
 
+
 //// Public methods
 /// Constructors
 OAgent::OAgent() {
@@ -54,8 +55,9 @@ OAgent::OAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader, bool qui
 
 /// Ratio-consensus
 // Fair splitting
+
 float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t period) {
-    OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex object
+    OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex object///NO ENTIENDO ESTE TIPO DE PUNTEROS !!!
     float Dout = float(s->getOutDegree() + 1);    // store out degree 
     _initializeFairSplitting(s,x);      // initialize state variables                           
     unsigned long start;                // create variable to store iteration start time
@@ -264,6 +266,7 @@ long OAgent::computeFairSplitFinalValue(float gamma) {
 
 long OAgent::leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uint16_t period) {
     unsigned long startTime = millis() + 1200;
+    
     _broadcastScheduleFairSplitPacket(startTime,iterations,period);
     long final = initial;
     float gamma = 0;
@@ -655,19 +658,20 @@ void OAgent::_initializeFairSplitting(OLocalVertex * s, long x) {
 
 void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
     uint16_t payload[5];           
-    long mu    = s->getMuMin();
-    long sigma = s->getSigma();
-    payload[0] = FAIR_SPLITTING_HEADER;
-    payload[1] = mu;
-    payload[2] = mu >> 16;
-    payload[3] = sigma;
-    payload[4] = sigma >> 16;
+    long mu    = s->getMuMin(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
+    long sigma = s->getSigma();// definimos la variable sigma y le asignamos el valor que cogemos de la funcion get sigma
+    payload[0] = FAIR_SPLITTING_HEADER; // en el primer elemento del vector guardamos este valor predefinido //titulo de la informacion
+    payload[1] = mu; // guardamos el valor de mu los primeros?? 16 bits
+    payload[2] = mu >> 16;// guardamos el valor de mu los ultimos?? 16 bits
+    payload[3] = sigma;// guardamos el valor de sigma los ultimos?? 16 bits
+    payload[4] = sigma >> 16;// guardamos el valor de sigma los ultimos?? 16 bits
     _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
     unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
 #ifdef VERBOSE
     Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
 #endif
 }
+//funcion patricia
 
 long OAgent::_getMuFromPacket() {
     uint8_t ptr = 2;

@@ -96,7 +96,7 @@ class OAgent {
         uint32_t _availableAgentLsb[8];
         
         /// Graph
-        OGraph * _G;
+        OGraph * _G;// que es este puntero??
         
         
         /// Agent properties
