@@ -114,6 +114,59 @@ long OAgent::computeFairSplitFinalValue(float gamma) {
         return s->getMax();    
 }
 
+float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t period) {
+    OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex object///NO ENTIENDO ESTE TIPO DE PUNTEROS !!!
+    float Dout = float(s->getOutDegree() + 1);    // store out degree 
+    _initializeFairSplitting(s,x);      // initialize state variables                           
+    unsigned long start;                // create variable to store iteration start time
+    bool txDone;                        // create variable to keep track of broadcasts
+    uint16_t txTime = _genTxTime(period,5,analogRead(0));   // get transmit time
+    
+    //cambiamos de long a float
+    float inY;                           // incoming state variable
+    float inZ;
+
+    for(uint8_t k = 0; k < iterations; k++) {
+        txDone = false;     // initialize toggle to keep track of broadcasts
+        start = millis();   // initialize timer
+        // clear in y and in z
+        inY = 0;
+        inZ = 0;
+        while(uint16_t(millis()-start) < period) {
+            if(_fairSplitPacketAvailable()) {                                   // robust, coordinate value packet available
+                uint8_t i;                                                      // index of remote device in graph in-neighborhood
+                if(_G->isInNeighbor(_rx->getRemoteAddress64().getLsb(),i)) {    // check if remote device is in in-neighborhood
+                    float inMu = _getMuFromPacketP();                             // store incoming value of mu
+                
+                    inY += inMu - s->getNuMinP(i);  
+                    s->setNuMinP(i,inMu);                                        // save received mu as new nu (nuMin)
+
+                    float inSigma = _getSigmaFromPacketP();                       // store incoming value of sigma
+                   
+                    inZ += inSigma - s->getTauP(i)                            // add sigma from incoming device and subtract last received value       
+                    s->setTauP(i,inSigma);                                       // save received sigma as new tau
+                }
+            } else if((int((millis() - start)) >= txTime) && !txDone) {
+                txDone = true; // toggle txDone
+                _broadcastFairSplitPacketP(s);
+            }
+            delay(5);
+        }
+        if(!_quiet) {
+           // Serial << _MEM(PSTR("y(")) << (k+1) << _MEM(PSTR(") = ")) << s->getYMin() << _MEM(PSTR(";")) << endl;
+            //Serial << _MEM(PSTR("z(")) << (k+1) << _MEM(PSTR(") = ")) << s->getZ() << _MEM(PSTR(";")) << endl;
+            delay(10);
+        } else {
+            delay(25);
+        }
+        s->setYMinP((s->getYMinP())/Dout + inY);
+        s->setMuMinP(s->getMuMinP() + (s->getYMinP())/Dout);
+        s->setZP((s->getZP())/Dout + inZ);
+        s->addToSigmaP((s->getZP())/Dout);
+    }
+    return float(s->getYMinP())/(s->getZP());
+}
+
 
 
 // void OAgent::incrementalLeaderRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
@@ -671,8 +724,51 @@ void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
     Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
 #endif
 }
-//funcion patricia
+//the same function as the avobe but with the new changes
+void OAgent::_broadcastFairSplitPacketP(OLocalVertex * s) {
+    uint16_t payload[7];           
+    float mu   = s->getMuMinP(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
+    //cambiamos las variables de long a foalt para poder recibir números negativos
+    float sigma = s->getSigmaP();// definimos la variable sigma y le asignamos el valor que cogemos de la funcion get sigma
+    //cambiamos las variables anteriores de long a foalt para poder recibir números negativos
+    //por lo tanto debemos cambiar tambien la definición de las funciones getSigma y getMuMin para que puedan mandar variables float
+    
+    // multiplicamos por la base para eliminar numeros decimales.
+    mu=mu*base;
+    sigma=sigma*base;
 
+    payload[0] = FAIR_SPLITTING_HEADER; // en el primer elemento del vector guardamos este valor predefinido //titulo de la informacion
+    payload[1] = mu; // guardamos el valor de mu los primeros?? 16 bits
+    payload[2] = mu >> 16;// guardamos el valor de mu los ultimos?? 16 bits
+    payload[3] = sigma;// guardamos el valor de sigma los ultimos?? 16 bits
+    payload[4] = sigma >> 16;// guardamos el valor de sigma los ultimos?? 16 bits
+
+    if(mu<0){
+   
+        payload[5]=0;//if it is 0 then the coeficient between mu and sigma is negative 
+
+   }else{
+        payload[5]=1;
+   }
+   if(sigma<0){
+   
+        payload[6]=0;//if it is 0 then the coeficient between mu and sigma is negative 
+
+   }else{
+        payload[6]=1;
+   }
+
+    _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
+    //se ha transformado nuestro vector de 16bits en uno se 8bits --> se ha doblado la longitud del vector
+    unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
+#ifdef VERBOSE
+    Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
+#endif
+}
+
+
+
+/*
 long OAgent::_getMuFromPacket() {
     uint8_t ptr = 2;
     return _getUint32_tFromPacket(ptr);
@@ -682,6 +778,32 @@ long OAgent::_getSigmaFromPacket() {
     uint8_t ptr = 6;
     return _getUint32_tFromPacket(ptr);
 }
+*/
+//New functions that send the real values with the sing 
+float OAgent::_getMuFromPacketP() {
+    uint8_t ptr = 2;
+    uint8_t ptr1 = 10;
+    float Mu;
+    if(_getUint32_tFromPacket(ptr1)==0){
+           Mu=-_getUint32_tFromPacket(ptr)/base;
+    }else{
+        Mu=_getUint32_tFromPacket(ptr)/base;
+    }
+    return Mu;
+}
+
+float OAgent::_getSigmaFromPacketP() {
+    uint8_t ptr = 6;
+    uint8_t ptr1 = 12;
+    float Sigma;
+    if(_getUint32_tFromPacket(ptr1)==0){
+           Sigma=-_getUint32_tFromPacket(ptr)/base;
+    }else{
+        Sigma=_getUint32_tFromPacket(ptr)/base;
+    }
+    return Sigma;
+}
+
 /// End fair splitting ratio-consensus methods
 
 /// Optimal dispatch methods

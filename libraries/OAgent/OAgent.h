@@ -122,6 +122,11 @@ class OAgent {
         long _getMuFromPacket();
         long _getSigmaFromPacket();
         
+        
+        float _getMuFromPacketP();
+        float _getSigmaFromPacketP();
+        
+
         /// Optimal dispatch methods
         void _initializeOptimalDispatch(OLocalVertex * s, long x);
         void _updateOptimalDispatchStates(OLocalVertex * s, uint8_t Dout);

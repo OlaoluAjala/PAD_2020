@@ -34,12 +34,20 @@ class OVertex {
         
         // States
         inline void setYMin(long yMin) { _yMin = yMin; }
+        //redefine function to recive float value
+        inline void setYMinP(float yMin) { _yMin = yMin; }
+
+
         inline void setYMax(long yMax) { _yMax = yMax; }
         inline void setYMinYMax(long yMin, long yMax) { _yMin = yMin; _yMax = yMax; }
         inline void addToYMin(long increment) { _yMin += increment; }
         inline void addToYMax(long increment) { _yMax += increment; }
         inline void addToYMinYMax(long incrementYMin, long incrementYMax) { _yMin += incrementYMin; _yMax += incrementYMax; }
         inline long getYMin() { return _yMin; }
+
+        //redefine the function to operate with float
+        inline float getYMinP() { return _yMin; }
+
         inline long getYMax() { return _yMax; }
         inline void getYMinYMax(long &yMin, long &yMax) { yMin = _yMin; yMax = _yMax; }
         inline void clearYMinYMax() { _yMin = 0; _yMax = 0; }
@@ -56,9 +64,15 @@ class OVertex {
 
         // broadcast states
         inline void setMuMin(long muMin) { _muMin = muMin; }
+        //redefine function to work with    
+        inline void setMuMinP(long muMin) { _muMin = muMin; }
+
         inline void setMuMax(long muMax) { _muMax = muMax; }
         inline void setMuMinMuMax(long muMin, long muMax) { _muMin = muMin; _muMax = muMax; }
-        inline long getMuMin() { return _muMin; }
+        inline long getMuMin() { return _mu; }
+        //same function as avobe but with changes
+        inline float getMUminP(){return _muMin ;}
+
         inline long getMuMax() { return _muMax; }
         inline void getMuMinMuMax(long &muMin, long &muMax) { muMin = _muMin; muMax = _muMax; }
         inline void clearMuMinMuMax() { _muMin = 0; _muMax = 0; }
@@ -66,8 +80,14 @@ class OVertex {
 
         // Previously received values for robust algorithm
         bool setNuMin(uint8_t i, long nuMin);
+        //redefine the function to be able to recibe float
+        bool setNuMinP(uint8_t i, float nuMin);
+
         bool setNuMax(uint8_t i, long nuMax);
         long getNuMin(uint8_t i);
+        //redefine the function to be able to send floatvalues
+         float getNuMinP(uint8_t i);
+
         long getNuMax(uint8_t i);
         bool clearNuMinNuMax(uint8_t i);
         void clearAllNuMinNuMax();
@@ -95,15 +115,25 @@ class OVertex {
         uint8_t _broadcastLambda;
         // States
         long _yMin;
+        //redefine varible to float
+         float _yMin;
+
         long _yMax;
         // Variable to keep track of incoming states
         long _yMinIn;
         long _yMaxIn;
         // Broadcast states for robust algorithm
         long _muMin;
+        //redefine the variable to float
+        float _muMin;
+        float _mu;
+
         long _muMax;
         // Previous received values for robust algorithm
         long _nuMin[NUM_IN_NEIGHBORS];
+        //modificamos a float 
+        float _nuMin[NUM_IN_NEIGHBORS];
+
         long _nuMax[NUM_IN_NEIGHBORS];
         /// Methods
         // Helper functions
@@ -131,8 +161,13 @@ class OLocalVertex : public OVertex {
         void initializeYMinYMax();
         // State Z
         inline void setZ(long z) { _z = z; }
+        //redefine function to work with float
+        inline void setZP(long z) { _z = z; }
+
         inline void addToZ(long increment) { _z += increment; }
         inline long getZ() { return _z; }
+        //redefine function to work with float
+        inline float getZ() { return _z; }
         void updateZ();
         // Incoming state Z
         inline void setZIn(long zIn) { _zIn = zIn; }
@@ -144,13 +179,24 @@ class OLocalVertex : public OVertex {
         // Sigma -- broadcast state for robust algorithm
         inline void setSigma(long sigma) { _sigma = sigma; }
         inline void addToSigma(long increment) { _sigma += increment; }
+        //redefine the function to work with float
+        inline void addToSigmaP(float increment) { _sigma += increment; }
+        
         inline long getSigma() { return _sigma; }
+
+         inline float getSigmaP() { return _sigma; }
+
         void updateSigma();
         void initializeSigma();
         inline void clearSigma() { _sigma = 0; }
         // Tau -- state for robust algorithm
         bool setTau(uint8_t i, long tau);
+        //redefine the function to accept float values
+        bool setTauP(uint8_t i, float tau);
+
         long getTau(uint8_t i);
+        //redefine the function to send float
+        float getTauP(uint8_t i);
         void clearAllTau();
         // Limits and cost coefficients
         inline long getMin() { return _min; }
@@ -165,10 +211,18 @@ class OLocalVertex : public OVertex {
         long _base;
         // Ratio-consensus states
         long _z;
+
+        //redefine variable to float
+        float _z;
         long _zIn;
         // Robust algorithm states
         long _sigma;
+        //redefine the variable to float
+        float _sigma;
+
         long _tau[NUM_IN_NEIGHBORS];
+        //redefine the vector to float tipe
+        float _tau[NUM_IN_NEIGHBORS];
         // Limits and cost coefficients
         long _min;
         long _max;

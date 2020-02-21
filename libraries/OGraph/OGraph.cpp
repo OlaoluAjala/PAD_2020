@@ -164,6 +164,14 @@ bool OVertex::setNuMin(uint8_t i, long nuMin) {
     }
     return false;
 }
+//redefine the fucntion to be able to recive float
+bool OVertex::setNuMinP(uint8_t i, float nuMin) {
+    if(i < NUM_IN_NEIGHBORS) {
+        _nuMin[i] = nuMin;
+        return true;
+    }
+    return false;
+}
 
 bool OVertex::setNuMax(uint8_t i, long nuMax) {
     if(i < NUM_IN_NEIGHBORS) {
@@ -178,6 +186,13 @@ long OVertex::getNuMin(uint8_t i) {
         return _nuMin[i];
     return LONG_ERROR;
 }
+
+float OVertex::getNuMinP(uint8_t i) {
+    if(i < NUM_IN_NEIGHBORS)
+        return _nuMin[i];
+    return LONG_ERROR;
+}
+
 
 long OVertex::getNuMax(uint8_t i) {
     if(i < NUM_IN_NEIGHBORS)
@@ -412,8 +427,22 @@ bool OLocalVertex::setTau(uint8_t i, long tau) {
     }
     return false;
 }
+//redefine the function to be able to geat float values
+bool OLocalVertex::setTauP(uint8_t i, float tau) {
+    if(i < NUM_IN_NEIGHBORS) {
+        _tau[i] = tau;
+        return true;
+    }
+    return false;
+}
 
 long OLocalVertex::getTau(uint8_t i) {
+    if(i < NUM_IN_NEIGHBORS)
+        return _tau[i];
+    return LONG_ERROR;
+}
+//redefine the function to send float
+float OLocalVertex::getTauP(uint8_t i) {
     if(i < NUM_IN_NEIGHBORS)
         return _tau[i];
     return LONG_ERROR;
