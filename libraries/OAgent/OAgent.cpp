@@ -12,16 +12,22 @@
 
 #include "OAgent.h"
 #include "Streaming.h"
+
 //#define VERBOSE
 
 //// Public methods
 /// Constructors
 OAgent::OAgent() {
-    _prepareOAgent(&XBee(),&ZBRxResponse(),&OGraph());
+    XBee temp1 = XBee();
+    ZBRxResponse temp2 = ZBRxResponse();
+    OGraph temp3 = OGraph();
+
+    _prepareOAgent(&temp1,&temp2,&temp3);
 }
 
 OAgent::OAgent(XBee * xbee, OGraph * G, bool leader, bool quiet) {
-    _prepareOAgent(xbee,&ZBRxResponse(),G,leader,quiet);
+    ZBRxResponse temp2 = ZBRxResponse();
+    _prepareOAgent(xbee,&temp2,G,leader,quiet);
 }
 
 OAgent::OAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader, bool quiet) {
@@ -63,6 +69,7 @@ float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t perio
     uint16_t txTime = _genTxTime(period,5,analogRead(0));   // get transmit time
     long inY;                           // incoming state variable
     long inZ;
+   // Serial<<s->getYMin()<<" , "<< s->getZ() <<endl;
     for(uint8_t k = 0; k < iterations; k++) {
         txDone = false;     // initialize toggle to keep track of broadcasts
         start = millis();   // initialize timer
@@ -79,10 +86,13 @@ float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t perio
                     long inSigma = _getSigmaFromPacket();                       // store incoming value of sigma
                     inZ += inSigma - s->getTau(i);                              // add sigma from incoming device and subtract last received value
                     s->setTau(i,inSigma);                                       // save received sigma as new tau
+                    Serial<<"recieved "<<inY<<" and "<< inZ<<" from node "<< i <<endl;
+
                 }
             } else if((int((millis() - start)) >= txTime) && !txDone) {
                 txDone = true; // toggle txDone
                 _broadcastFairSplitPacket(s);
+             Serial<<"sending "<<s->getYMin()<<" and "<< s->getZ()<<endl;   
             }
             delay(5);
         }
@@ -97,6 +107,8 @@ float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t perio
         s->setMuMin(s->getMuMin() + long(float(s->getYMin())/Dout));
         s->setZ(long(float(s->getZ())/Dout) + inZ);
         s->addToSigma(long(float(s->getZ())/Dout));
+
+       // Serial<<s->getYMin()<<" , "<< s->getZ() <<endl;
     }
     return float(s->getYMin())/float(s->getZ());
 }
@@ -274,27 +286,27 @@ long OAgent::leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uin
     return final;
 }
 
-void OAgent::leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
-    _start_millis = millis() + 1750;
-	OLocalVertex * s = _G->getLocalVertex();
-	float base = float(s->getBase());
-    _broadcastScheduleFairSplitPacket(_start_millis,iterations,period);
-	// get the torque command from python
-    float t = d.getTorqueFloat();
-	// scale torque to base and call it initial
-	long initial = long(t*base);
-	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
-    long final = initial;
-    float gamma = 0;
-    if(_waitToStart(_start_millis,false,2000)) {
-		digitalWrite(ledPin,HIGH);
-        gamma = fairSplitRatioConsensus(initial,iterations,period);
-		d.sendShortLogData(LOG_GAMMA_KEY,uint16_t(float(1000)*gamma));
-        final = computeFairSplitFinalValue(gamma);
-		digitalWrite(ledPin,LOW);
-    }
-	d.setTorque(float(final)/base);
-}
+// void OAgent::leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
+//     _start_millis = millis() + 1750;
+// 	OLocalVertex * s = _G->getLocalVertex();
+// 	float base = float(s->getBase());
+//     _broadcastScheduleFairSplitPacket(_start_millis,iterations,period);
+// 	// get the torque command from python
+//     float t = d.getTorqueFloat();
+// 	// scale torque to base and call it initial
+// 	long initial = long(t*base);
+// 	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
+//     long final = initial;
+//     float gamma = 0;
+//     if(_waitToStart(_start_millis,false,2000)) {
+// 		digitalWrite(ledPin,HIGH);
+//         gamma = fairSplitRatioConsensus(initial,iterations,period);
+// 		d.sendShortLogData(LOG_GAMMA_KEY,uint16_t(float(1000)*gamma));
+//         final = computeFairSplitFinalValue(gamma);
+// 		digitalWrite(ledPin,LOW);
+//     }
+// 	d.setTorque(float(final)/base);
+// }
 
 long OAgent::nonleaderFairSplitRatioConsensus(long initial) {
     unsigned long startTime;
@@ -312,51 +324,51 @@ long OAgent::nonleaderFairSplitRatioConsensus(long initial) {
     return final;
 }
 
-void OAgent::nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin) {
-    // get pointer to local vertex
-    OLocalVertex * s = _G->getLocalVertex();
-	float base = s->getBase();
-    // wait for schedule packet
-    _waitForScheduleFairSplitPacket(_start_millis,_iterations,_period);
-    // get current torque command
-	float t = d.getTorqueFloat();
-	long initial = long(t*base);
-	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
-    long final = initial;
-    float gamma = 0;
-    if(_waitToStart(_start_millis,true,2000)) {
-		digitalWrite(ledPin,HIGH);
-        gamma = fairSplitRatioConsensus(initial,_iterations,_period);
-		d.sendShortLogData(LOG_GAMMA_KEY,uint16_t(float(1000)*gamma));
-        final = computeFairSplitFinalValue(gamma);
-		digitalWrite(ledPin,LOW);
-    }
-	d.setTorque(float(final)/base);
-}
+// void OAgent::nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin) {
+//     // get pointer to local vertex
+//     OLocalVertex * s = _G->getLocalVertex();
+// 	float base = s->getBase();
+//     // wait for schedule packet
+//     _waitForScheduleFairSplitPacket(_start_millis,_iterations,_period);
+//     // get current torque command
+// 	float t = d.getTorqueFloat();
+// 	long initial = long(t*base);
+// 	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
+//     long final = initial;
+//     float gamma = 0;
+//     if(_waitToStart(_start_millis,true,2000)) {
+// 		digitalWrite(ledPin,HIGH);
+//         gamma = fairSplitRatioConsensus(initial,_iterations,_period);
+// 		d.sendShortLogData(LOG_GAMMA_KEY,uint16_t(float(1000)*gamma));
+//         final = computeFairSplitFinalValue(gamma);
+// 		digitalWrite(ledPin,LOW);
+//     }
+// 	d.setTorque(float(final)/base);
+// }
 
-void OAgent::reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8_t &ledPin) {
-    // get pointer to local vertex
-    OLocalVertex * s = _G->getLocalVertex();
-	float base = s->getBase();
-    // wait for schedule packet
-    _waitForScheduleFairSplitPacket(_start_millis,_iterations,_period);
-    // get current torque command
-	float t = d.getTorqueFloat();
-	long initial = long(t*base);
-	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
-    long final = initial;
-    float gamma = 0;
-    if(_waitToStart(_start_millis,true,2000)) {
-		digitalWrite(ledPin,HIGH);
-        gamma = fairSplitRatioConsensus(initial,_iterations,_period);
-		d.sendShortLogData(LOG_GAMMA_KEY,uint16_t(float(1000)*gamma));
-        final = computeFairSplitFinalValue(gamma);
-		if(s->getMax() != trueMax && gamma > 1)
-			s->setMax(trueMax);
-		digitalWrite(ledPin,LOW);
-    }
-	d.setTorque(float(final)/base);
-}
+// void OAgent::reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8_t &ledPin) {
+//     // get pointer to local vertex
+//     OLocalVertex * s = _G->getLocalVertex();
+// 	float base = s->getBase();
+//     // wait for schedule packet
+//     _waitForScheduleFairSplitPacket(_start_millis,_iterations,_period);
+//     // get current torque command
+// 	float t = d.getTorqueFloat();
+// 	long initial = long(t*base);
+// 	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
+//     long final = initial;
+//     float gamma = 0;
+//     if(_waitToStart(_start_millis,true,2000)) {
+// 		digitalWrite(ledPin,HIGH);
+//         gamma = fairSplitRatioConsensus(initial,_iterations,_period);
+// 		d.sendShortLogData(LOG_GAMMA_KEY,uint16_t(float(1000)*gamma));
+//         final = computeFairSplitFinalValue(gamma);
+// 		if(s->getMax() != trueMax && gamma > 1)
+// 			s->setMax(trueMax);
+// 		digitalWrite(ledPin,LOW);
+//     }
+// 	d.setTorque(float(final)/base);
+// }
 
 //void OAgent::reserveFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin) {
 	//     // get pointer to local vertex
@@ -429,7 +441,7 @@ long OAgent::optimalDispatch(long x, uint8_t iterations, uint16_t period) {
                 // toggle txDone
                 txDone = true; 
                 // broadcast optimal dispatch packet
-                _broadcastOptimalDispatchPacket(s);
+                //_broadcastOptimalDispatchPacket(s);
             }
             delay(5);
         }
@@ -462,67 +474,67 @@ long OAgent::optimalDispatch(long x, uint8_t iterations, uint16_t period) {
     return s->g(lambdaStar);
 }
 
-long OAgent::optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d) {
- 	OLocalVertex * s = _G->getLocalVertex();           // store pointer to local vertex object
-    uint8_t Dout = s->getOutDegree() + 1;       // store out degree
-    //Serial << "Out-degree: " << _DEC(Dout) << endl;
-    _initializeOptimalDispatch(s,x);            // initialize state variables
-    delay(20);
-    bool txDone;                                // create variable to keep track of broadcasts
-    uint16_t txTime = _genTxTime(period,5);     // time to broadcast packet
-    for(uint8_t k = 0; k < iterations; k++) {
-        // initialize toggle to keep track of broadcasts
-        txDone = false;  
-        // initialize timer   
-        _start_millis = millis();   
-        // do for iteration period
-        while(uint16_t(millis()-_start_millis) < period) {
-            // look for optimal dispatch packet
-            if(_optimalDispatchPacketAvailable()) {
-            	// index of in-neighbor packet received from
-            	uint8_t i;
-                // check if sender is in-neighbor
-                uint32_t rv = _rx->getRemoteAddress64().getLsb();
-                if(_G->isInNeighbor(rv,i)) {
-                    // process optimal dispatch packet
-                    _processOptimalDispatchPacket(s,_G->getRemoteVertex(i)->getIndex());
-                }
-            // check if time to transmit and if transmit has already occured
-            } else if(_timeToTransmit(_start_millis,txTime) && !txDone) {
-                // toggle txDone
-                txDone = true; 
-                // broadcast optimal dispatch packet
-                _broadcastOptimalDispatchPacket(s);
-            }
-            delay(5);
-        }
-#ifdef VERBOSE
-        if(!_quiet) {
-            _printStates(s,k,false);
-            //delay(30);
-        } else {
-            delay(15);
-        }
-#endif
-		delay(15);
-        // update all states (z = z/Dout + zIn, etc)
-        _updateOptimalDispatchStates(s,Dout);
-        // clear all incoming states before next iteration
-        _G->clearAllInStates();
-    }
-#ifdef VERBOSE
-	uint8_t states = 2*(_G->getN());
-    float ratios[states];
-    _computeFinalOptimalDispatchRatios(s,ratios);
-    /if(!_quiet)
-        _printRatios(ratios,states);
-#endif
-    long lambdaStar = _findLambdaStar(s);
-	delay(15);
-    //Serial << _MEM(PSTR("lambda* = ")) << _DEC(lambdaStar) << endl;
-	d.sendShortLogData(LOG_LAMBDA_KEY,uint16_t(float(lambdaStar)/float(100)));
-    return s->g(lambdaStar);
-}
+// long OAgent::optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d) {
+//  	OLocalVertex * s = _G->getLocalVertex();           // store pointer to local vertex object
+//     uint8_t Dout = s->getOutDegree() + 1;       // store out degree
+//     //Serial << "Out-degree: " << _DEC(Dout) << endl;
+//     _initializeOptimalDispatch(s,x);            // initialize state variables
+//     delay(20);
+//     bool txDone;                                // create variable to keep track of broadcasts
+//     uint16_t txTime = _genTxTime(period,5);     // time to broadcast packet
+//     for(uint8_t k = 0; k < iterations; k++) {
+//         // initialize toggle to keep track of broadcasts
+//         txDone = false;  
+//         // initialize timer   
+//         _start_millis = millis();   
+//         // do for iteration period
+//         while(uint16_t(millis()-_start_millis) < period) {
+//             // look for optimal dispatch packet
+//             if(_optimalDispatchPacketAvailable()) {
+//             	// index of in-neighbor packet received from
+//             	uint8_t i;
+//                 // check if sender is in-neighbor
+//                 uint32_t rv = _rx->getRemoteAddress64().getLsb();
+//                 if(_G->isInNeighbor(rv,i)) {
+//                     // process optimal dispatch packet
+//                     _processOptimalDispatchPacket(s,_G->getRemoteVertex(i)->getIndex());
+//                 }
+//             // check if time to transmit and if transmit has already occured
+//             } else if(_timeToTransmit(_start_millis,txTime) && !txDone) {
+//                 // toggle txDone
+//                 txDone = true; 
+//                 // broadcast optimal dispatch packet
+//                 _broadcastOptimalDispatchPacket(s);
+//             }
+//             delay(5);
+//         }
+// #ifdef VERBOSE
+//         if(!_quiet) {
+//             _printStates(s,k,false);
+//             //delay(30);
+//         } else {
+//             delay(15);
+//         }
+// #endif
+// 		delay(15);
+//         // update all states (z = z/Dout + zIn, etc)
+//         _updateOptimalDispatchStates(s,Dout);
+//         // clear all incoming states before next iteration
+//         _G->clearAllInStates();
+//     }
+// #ifdef VERBOSE
+// 	uint8_t states = 2*(_G->getN());
+//     float ratios[states];
+//     _computeFinalOptimalDispatchRatios(s,ratios);
+//     /if(!_quiet)
+//         _printRatios(ratios,states);
+// #endif
+//     long lambdaStar = _findLambdaStar(s);
+// 	delay(15);
+//     //Serial << _MEM(PSTR("lambda* = ")) << _DEC(lambdaStar) << endl;
+// 	d.sendShortLogData(LOG_LAMBDA_KEY,uint16_t(float(lambdaStar)/float(100)));
+//     return s->g(lambdaStar);
+// }
 
 long OAgent::leaderOptimalDispatch(long initial, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
     _start_millis = millis() + 1750;
@@ -536,28 +548,28 @@ long OAgent::leaderOptimalDispatch(long initial, uint8_t iterations, uint16_t pe
 	return final;
 }
 
-void OAgent::leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
-    _start_millis = millis() + 1750;
-	OLocalVertex * s = _G->getLocalVertex();
-	// save base as floating point number
-	float base = float(s->getBase());
-     _broadcastScheduleOptimalDispatchPacket(_start_millis,iterations,period);
-	// get the torque command from python
-	float t = d.getOTorqueFloat();
-	//float t = 1.12;
-	// scale toruqe to base and call it initial
-	//long initial = long(float(s->getBase())*t);
-	long initial = long(t*base);
-	d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
-    long final = initial;
-    if(_waitToStart(_start_millis,false,2000)) {
-		digitalWrite(ledPin,HIGH);
-		//Serial << "initial: " << _DEC(initial) << endl;
-        final = optimalDispatchWithDyno(initial,iterations,period,d);
-		digitalWrite(ledPin,LOW);
-    }
-	d.setTorque(float(final)/base);
-}
+// void OAgent::leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
+//     _start_millis = millis() + 1750;
+// 	OLocalVertex * s = _G->getLocalVertex();
+// 	// save base as floating point number
+// 	float base = float(s->getBase());
+//      _broadcastScheduleOptimalDispatchPacket(_start_millis,iterations,period);
+// 	// get the torque command from python
+// 	float t = d.getOTorqueFloat();
+// 	//float t = 1.12;
+// 	// scale toruqe to base and call it initial
+// 	//long initial = long(float(s->getBase())*t);
+// 	long initial = long(t*base);
+// 	d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
+//     long final = initial;
+//     if(_waitToStart(_start_millis,false,2000)) {
+// 		digitalWrite(ledPin,HIGH);
+// 		//Serial << "initial: " << _DEC(initial) << endl;
+//         final = optimalDispatchWithDyno(initial,iterations,period,d);
+// 		digitalWrite(ledPin,LOW);
+//     }
+// 	d.setTorque(float(final)/base);
+// }
 
 long OAgent::nonleaderOptimalDispatch(long initial, uint8_t &ledPin) {
     uint8_t iterations;
@@ -573,29 +585,30 @@ long OAgent::nonleaderOptimalDispatch(long initial, uint8_t &ledPin) {
 	return final;
 }
 
-void OAgent::nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin) {	
-    OLocalVertex * s = _G->getLocalVertex();
-	// save base as floating point number
-	float base = float(s->getBase());
-    _waitForScheduleOptimalDispatchPacket(_start_millis,_iterations,_period);
-    // get current torque command
-    float t = d.getTorqueFloat();
-    long initial = long(t*base);
-	d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
-    long final = initial;
-    if(_waitToStart(_start_millis,true,2000)) {
-		digitalWrite(ledPin,HIGH);
-		//Serial << "initial: " << _DEC(initial) << endl;
-        final = optimalDispatchWithDyno(initial,_iterations,_period,d);
-		digitalWrite(ledPin,LOW);
-    }
-    d.setTorque(float(final)/base);
-}
+// void OAgent::nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin) {	
+//     OLocalVertex * s = _G->getLocalVertex();
+// 	// save base as floating point number
+// 	float base = float(s->getBase());
+//     _waitForScheduleOptimalDispatchPacket(_start_millis,_iterations,_period);
+//     // get current torque command
+//     float t = d.getTorqueFloat();
+//     long initial = long(t*base);
+// 	d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
+//     long final = initial;
+//     if(_waitToStart(_start_millis,true,2000)) {
+// 		digitalWrite(ledPin,HIGH);
+// 		//Serial << "initial: " << _DEC(initial) << endl;
+//         final = optimalDispatchWithDyno(initial,_iterations,_period,d);
+// 		digitalWrite(ledPin,LOW);
+//     }
+//     d.setTorque(float(final)/base);
+// }
 
 /// End optimal dispatch
 /// Synchronization methods
 bool OAgent::sync(uint8_t attempts) {
     if(_leader) {
+        //Serial<<"This is the leader"<<endl;
 		for(uint8_t i = 0; i < attempts; i++) {
 			if(_leaderSync()) {
                 _synced = true;
@@ -604,12 +617,19 @@ bool OAgent::sync(uint8_t attempts) {
 			delay(SYNC_RETRY_PERIOD);
 		}    
     } else {
+        //Serial<<"This is not the leader"<<endl;
     	unsigned long tTwo;
     	if(_waitForSyncBeginPacket(tTwo)) {
+            //Serial<<"recieved syncbegin packet"<<endl;
     		if(_isTargetNode())
+            {
+                //Serial<<"This is the target"<<endl;
     			return _targetSync(tTwo);
-    		else
+            }
+    		else{
+                //Serial<<"this is not the target"<<endl;
     			return _nonTargetSync(tTwo);
+            }
     	}
     }
     return false;
@@ -664,9 +684,9 @@ void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
     payload[4] = sigma >> 16;
     _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
     unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
-#ifdef VERBOSE
-    Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
-#endif
+// #ifdef VERBOSE
+//     Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
+//#endif
 }
 
 long OAgent::_getMuFromPacket() {
@@ -793,34 +813,34 @@ void OAgent::_findMinRatioMaxRatio(float ratios[], uint8_t num, float &min, floa
 //    return _packetAvailable(OPTIMAL_DISPATCH_HEADER,true);
 //}
 
-void OAgent::_broadcastOptimalDispatchPacket(OLocalVertex * s) {
-    uint8_t p = _getPayloadSize();
-    uint8_t payload[p];
-#ifdef VERBOSE
-    Serial << "packet bytes: " << _DEC(p) << endl;
-#endif
-    uint8_t ptr = 0;  // pointer to next open position in payload array
-    payload[0] = OPTIMAL_DISPATCH_HEADER;
-    payload[1] = OPTIMAL_DISPATCH_HEADER >> 8;
-    ptr = 2;          // account for header
-    // add sigma to payload
-    ptr = _addUint32_tToPayload(s->getSigma(),payload,ptr);
-    // add broadcast states (muMin and muMax) and (optionally) lamdbaMin and lambdaMax to payload for all vertices
-    for(uint8_t i = 0; i < (_G->getN()); i++) {
-        ptr = _addDataToPayload(_G->getVertexByUniqueID(i),payload,ptr);
-    }
-#ifdef VERBOSE
-    Serial << "payload: 0x"; 
-    for(uint8_t i = 0; i < p; i++) {
-        Serial << _HEX(payload[i]);
-    }
-    Serial << endl;
-#endif
-    // put payload in zigbee transmit object
-    _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), p); 
-    // transmit packet
-    _xbee->send(_zbTx);
-}
+// void OAgent::_broadcastOptimalDispatchPacket(OLocalVertex * s) {
+//     uint8_t p = _getPayloadSize();
+//     uint8_t payload[p];
+// #ifdef VERBOSE
+//     Serial << "packet bytes: " << _DEC(p) << endl;
+// #endif
+//     uint8_t ptr = 0;  // pointer to next open position in payload array
+//     payload[0] = OPTIMAL_DISPATCH_HEADER;
+//     payload[1] = OPTIMAL_DISPATCH_HEADER >> 8;
+//     ptr = 2;          // account for header
+//     // add sigma to payload
+//     ptr = _addUint32_tToPayload(s->getSigma(),payload,ptr);
+//     // add broadcast states (muMin and muMax) and (optionally) lamdbaMin and lambdaMax to payload for all vertices
+//     for(uint8_t i = 0; i < (_G->getN()); i++) {
+//         ptr = _addDataToPayload(_G->getVertexByUniqueID(i),payload,ptr);
+//     }
+// #ifdef VERBOSE
+//     Serial << "payload: 0x"; 
+//     for(uint8_t i = 0; i < p; i++) {
+//         Serial << _HEX(payload[i]);
+//     }
+//     Serial << endl;
+// #endif
+//     // put payload in zigbee transmit object
+//     _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), p); 
+//     // transmit packet
+//     _xbee->send(_zbTx);
+// }
 
 uint8_t OAgent::_getPayloadSize() {
 	// get total number of devices
@@ -952,30 +972,30 @@ void OAgent::_printFinalYMinYMax(OLocalVertex * s) {
         Serial << _DEC(i) << " yMin: " << _DEC(_G->getVertexByUniqueID(i)->getYMin()) << ", yMax: " << _DEC(_G->getVertexByUniqueID(i)->getYMax()) << endl;
 }
 
-void OAgent::_printStates(OLocalVertex * s, uint8_t k, bool printY) {
-    uint8_t nodeNum = 1;
-    Serial << _MEM(PSTR("z(")) << (k+1) << _MEM(PSTR(",")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(s->getZ()) << endl;
-    if(printY == true) {
-        for(uint8_t i = 0; i < _G->getN(); i++) {
-            Serial << _MEM(PSTR("y")) << (i+1) << _MEM(PSTR("Min(")) << (k+1) << _MEM(PSTR(",")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getYMin()) << _MEM(PSTR(";")) << endl;
-            Serial << _MEM(PSTR("y")) << (i+1) << _MEM(PSTR("Max(")) << (k+1) << _MEM(PSTR(",")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getYMax()) << _MEM(PSTR(";")) << endl;
-        }
-    }
-}
+// void OAgent::_printStates(OLocalVertex * s, uint8_t k, bool printY) {
+//     uint8_t nodeNum = 1;
+//     Serial << _MEM(PSTR("z(")) << (k+1) << _MEM(PSTR(",")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(s->getZ()) << endl;
+//     if(printY == true) {
+//         for(uint8_t i = 0; i < _G->getN(); i++) {
+//             Serial << _MEM(PSTR("y")) << (i+1) << _MEM(PSTR("Min(")) << (k+1) << _MEM(PSTR(",")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getYMin()) << _MEM(PSTR(";")) << endl;
+//             Serial << _MEM(PSTR("y")) << (i+1) << _MEM(PSTR("Max(")) << (k+1) << _MEM(PSTR(",")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getYMax()) << _MEM(PSTR(";")) << endl;
+//         }
+//     }
+// }
 
-void OAgent::_printLambdas(OLocalVertex * s) {
-    uint8_t nodeNum = 1;
-    for(uint8_t i = 0; i < _G->getN(); i++) {
-        Serial << _MEM(PSTR("lambda")) << (i+1) << _MEM(PSTR("Min(")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getLambdaMin()) << _MEM(PSTR(";")) << endl;
-        Serial << _MEM(PSTR("lambda")) << (i+1) << _MEM(PSTR("Max("))  << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getLambdaMax()) << _MEM(PSTR(";")) << endl;
-    }
-}
-//#ifdef VERBOSE
+// void OAgent::_printLambdas(OLocalVertex * s) {
+//     uint8_t nodeNum = 1;
+//     for(uint8_t i = 0; i < _G->getN(); i++) {
+//         Serial << _MEM(PSTR("lambda")) << (i+1) << _MEM(PSTR("Min(")) << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getLambdaMin()) << _MEM(PSTR(";")) << endl;
+//         Serial << _MEM(PSTR("lambda")) << (i+1) << _MEM(PSTR("Max("))  << _DEC(nodeNum) << _MEM(PSTR(") = ")) << _DEC(_G->getVertexByUniqueID(i)->getLambdaMax()) << _MEM(PSTR(";")) << endl;
+//     }
+// }
+// //#ifdef VERBOSE
 
-void OAgent::_printRatios(float ratios[], uint8_t num) {
-    for(uint8_t i = 0; i < num; i++)
-        Serial << _FLOAT(ratios[i],3) << endl;
-}
+// void OAgent::_printRatios(float ratios[], uint8_t num) {
+//     for(uint8_t i = 0; i < num; i++)
+//         Serial << _FLOAT(ratios[i],3) << endl;
+// }
 
 //#endif
 
@@ -993,14 +1013,15 @@ bool OAgent::_validPacketAvailable() {
 	if(_xbee->getResponse().isAvailable()) {	// packet is available
         // check if recieved data is a zb rx packet
 		if(_xbee->getResponse().getApiId() == ZB_RX_RESPONSE) { 
-#ifdef VERBOSE
-            if(!_quiet)
-                Serial << _MEM(PSTR("Valid XBee packet received")) << endl;
-#endif
-			_xbee->getResponse().getZBRxResponse(_rx);       // fill out zb rx class
-			return true;
+// #ifdef VERBOSE
+//           if(!_quiet)
+                 //Serial <<"Valid XBee packet received" << endl;
+ // #endif
+ 		_xbee->getResponse().getZBRxResponse(_rx);       // fill out zb rx class
+		return true;
 		}
 	}
+    //Serial<<"invalid packet recieved"<<endl;
 	return false;
 }
 
@@ -1019,7 +1040,7 @@ bool OAgent::_packetAvailable(uint16_t header,  unsigned long &rxTime, bool broa
 uint16_t OAgent::_packetAvailable(bool broadcast) {
     _xbee->readPacket();
     if(_validPacketAvailable()) {
-        if(((broadcast == true) && (_rx->getOption() == ZB_BROADCAST_PACKET)) || ((broadcast == false) && (_rx->getOption() == ZB_PACKET_ACKNOWLEDGED)))
+        if(((broadcast == true) && ((_rx->getOption() & 0x0F) == ZB_BROADCAST_PACKET)) || ((broadcast == false) && ((_rx->getOption() & 0x0F) == ZB_PACKET_ACKNOWLEDGED)))
             return _getHeaderFromPacket();
     }
     return 0x0;
@@ -1027,9 +1048,14 @@ uint16_t OAgent::_packetAvailable(bool broadcast) {
 
 bool OAgent::_packetAvailableHelper(uint16_t header, bool broadcast) {
     if(_validPacketAvailable()) {
+        //Serial<<"recieved some packet"<<endl;
         if(_getHeaderFromPacket() == header) {
-        	if(((broadcast == true) && (_rx->getOption() == ZB_BROADCAST_PACKET)) || ((broadcast == false) && (_rx->getOption() == ZB_PACKET_ACKNOWLEDGED)))
-	            return true;
+            //Serial<<"recieved the good packet"<<endl;
+        	if(((broadcast == true) && ((_rx->getOption() & 0x0F) == ZB_BROADCAST_PACKET)) || ((broadcast == false) && ((_rx->getOption() & 0x0F) == ZB_PACKET_ACKNOWLEDGED)))
+	            {
+                return true;
+                
+           } 
         }
     }
     return false; 
@@ -1225,13 +1251,16 @@ bool OAgent::_leaderSync() {
     	// seed random number generator with millis
         srand(millis());
         // get the index of a neighbor at random
-        int i = (rand() % (_G->getN())) + 1;
+        int i = 1;//(rand() % (_G->getN())) + 1;
         // broadcast sync begin packet
         unsigned long tOne = _broadcastSyncBeginPacket(i);
+        //Serial<<"sent beginpaket "<<endl;
         // variable to store receive time of final packet
         unsigned long tFour;
         // wait until sync response packet arrives or timeout
+        //Serial<<"leader almost sending"<<endl;
         if(_waitForSyncResponsePacket(tFour)) {
+            //Serial<<"recieved from target node"<<endl;
             uint8_t ptr = 2;
             unsigned long tTwo = _getUint32_tFromPacket(ptr);
             long d = tTwo + _getUint32_tFromPacket(ptr) - tOne - tFour;
@@ -1247,6 +1276,7 @@ bool OAgent::_leaderSync() {
 
 bool OAgent::_targetSync(unsigned long tTwo) {
 	if(_unicastSyncResponsePacket(tTwo)) {
+        //Serial<<"unicast response sent"<<endl;
 		if(_waitForSyncFinalPacket(SYNC_TIMEOUT)) {
 			// T = t + d
             uint8_t ptr = 6;

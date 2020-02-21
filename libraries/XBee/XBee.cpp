@@ -159,7 +159,7 @@ uint8_t ZBRxResponse::getOption() {
 }
 
 // markers to read data from packet array.  this is the index, so the 12th item in the array
-uint8_t ZBRxResponse::getDataOffset() {
+uint8_t ZBRxResponse::getDataOffset() {        
 	return 11;
 }
 
@@ -800,6 +800,7 @@ unsigned long XBee::readPacketT() {
 
 void XBee::readPacket() {
 	// reset previous response
+	uint8_t b;
 	if (_response.isAvailable() || _response.isError()) {
 		// discard previous packet and start over
 		resetResponse();
@@ -810,10 +811,18 @@ void XBee::readPacket() {
         Serial << "Rxd packet 0x";
         printDebug = true;
     }
+    else
+    	Serial << "No packet available \n";
 #endif
     while (_serial->available()) {
 
         b = _serial->read();
+        /*
+        Serial << _pos;
+        Serial << " ";
+        Serial << _HEX(b);
+        Serial << "\n";
+		*/
 #ifdef DEBUG
         Serial << _HEX(b);
 #endif
@@ -838,7 +847,12 @@ void XBee::readPacket() {
 			b = 0x20 ^ b;
 			_escape = false;
 		}
-
+		/*
+		Serial << _pos;
+        Serial << " ";
+        Serial << _HEX(b);
+        Serial << "\n";
+		*/
 		// checksum includes all bytes starting with api id
 		if (_pos >= API_ID_INDEX) {
 			_checksumTotal+= b;
@@ -906,6 +920,11 @@ void XBee::readPacket() {
 					return;
 				} else {
 					// add to packet array, starting with the fourth byte of the apiFrame
+					/*Serial << "Frame Data\n";
+					Serial << _pos;
+					Serial << " ";
+					Serial << _HEX(b);
+					Serial << "\n";*/
 					_response.getFrameData()[_pos - 4] = b;
 					_pos++;
 				}
@@ -1432,7 +1451,7 @@ unsigned long XBee::sendTwo(XBeeRequest &request, bool sendTime, bool returnTime
 
 	// send packet
 	_serial->flush();
-
+	
 	if(returnTime)
 		return currentTime;
     else
@@ -1491,13 +1510,19 @@ void XBee::sendByte(uint8_t b, bool escape) {
 #ifdef DEBUG
     Serial << _HEX(b);
 #endif
-
+    
 	if (escape && (b == START_BYTE || b == ESCAPE || b == XON || b == XOFF)) {
 //		std::cout << "escaping byte [" << toHexString(b) << "] " << std::endl;
+
 		_serial->write(ESCAPE);
+	
+		//Serial << _HEX(b ^ 0x20);
+        //Serial << "\n";
 		_serial->write(b ^ 0x20);
 	} else {
 		_serial->write(b);
+		//Serial << _HEX(b);
+        //Serial << "\n";
 	}
 }
 

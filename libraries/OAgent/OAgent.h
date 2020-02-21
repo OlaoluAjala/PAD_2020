@@ -16,7 +16,7 @@
 
 #include "XBee.h"   // Include header for xbee api
 #include "OGraph.h"
-#include "Dyno.h"
+//#include "Dyno.h"
 
 #define SCHEDULE_FAIR_SPLIT_HEADER       0x7346 // schedule coordinate header is ascii sC
 #define FAIR_SPLITTING_HEADER            0x6653 // fair splitting ratio-consensus header is ascii fS
@@ -29,7 +29,7 @@
 #define SYNC_BEGIN_HEADER                0x7342	// HRTS sync_begin header is ascii sB
 #define SYNC_RESPONSE_HEADER             0x7352 // HRTS sync_response header is ascii sR
 #define SYNC_FINAL_HEADER                0x7346	// HRTS sync_final header is ascii sF
-#define SYNC_TIMEOUT                     2000   // time out period to wait for response to HRTS sync_begin broadcast in milliseconds
+#define SYNC_TIMEOUT                     3000   // time out period to wait for response to HRTS sync_begin broadcast in milliseconds
 #define ACK_TIMEOUT                      500    // time out period to wait for an ack
 #define SYNC_RETRY_PERIOD                250    // period to wait between broadcasting HRTS sync_begin packet
 #define SYNC_ERROR                       8      // calibrate for small amount of error
@@ -64,20 +64,20 @@ class OAgent {
         float fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t period);
         long computeFairSplitFinalValue(float gamma);
         long leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uint16_t period);
-        void leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
+        //void leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
         long nonleaderFairSplitRatioConsensus(long initial);
-        void nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin);
-		void reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8_t &ledPin);
+        //void nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin);
+		//void reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8_t &ledPin);
         
         // Optimal dispatch Methods
         long optimalDispatch(long x, uint8_t iterations, uint16_t period);
-		long optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d);
-		void leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
+		//long optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d);
+		//void leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
         long leaderOptimalDispatch(long initial, uint8_t iterations, uint16_t period, uint8_t &ledPin);
         long nonleaderOptimalDispatch(long initial, uint8_t &ledPin);
-		void nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin);
+		//void nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin);
         
-        void leaderDGC(Dyno &d, float k, int vref, uint8_t epsilon);
+        //void leaderDGC(Dyno &d, float k, int vref, uint8_t epsilon);
         void nonleaderDGC();
         
         // HRT Synchronization methods
@@ -127,7 +127,7 @@ class OAgent {
         void _updateOptimalDispatchStates(OLocalVertex * s, uint8_t Dout);
         
         // Methods dealing with packets
-        void _broadcastOptimalDispatchPacket(OLocalVertex * s);
+       // void _broadcastOptimalDispatchPacket(OLocalVertex * s);
         inline bool _optimalDispatchPacketAvailable() { return _packetAvailable(OPTIMAL_DISPATCH_HEADER,true); }
         void _processOptimalDispatchPacket(OLocalVertex * s, uint8_t i);
         uint8_t _getPayloadSize();
