@@ -114,7 +114,7 @@ class OVertex {
         // Boolean variable to keep track of broadcasting lambdas
         uint8_t _broadcastLambda;
         // States
-        long _yMin;
+        //long _yMin;
         //redefine varible to float
          float _yMin;
 
@@ -123,14 +123,16 @@ class OVertex {
         long _yMinIn;
         long _yMaxIn;
         // Broadcast states for robust algorithm
-        long _muMin;
+        //long _muMin;
         //redefine the variable to float
         float _muMin;
         float _mu;
 
         long _muMax;
         // Previous received values for robust algorithm
-        long _nuMin[NUM_IN_NEIGHBORS];
+
+        //long _nuMin[NUM_IN_NEIGHBORS];
+
         //modificamos a float 
         float _nuMin[NUM_IN_NEIGHBORS];
 
@@ -167,7 +169,7 @@ class OLocalVertex : public OVertex {
         inline void addToZ(long increment) { _z += increment; }
         inline long getZ() { return _z; }
         //redefine function to work with float
-        inline float getZ() { return _z; }
+        inline float getZP() { return _z; }
         void updateZ();
         // Incoming state Z
         inline void setZIn(long zIn) { _zIn = zIn; }
@@ -210,17 +212,19 @@ class OLocalVertex : public OVertex {
         /// Properties
         long _base;
         // Ratio-consensus states
-        long _z;
+        //long _z;
 
         //redefine variable to float
         float _z;
         long _zIn;
         // Robust algorithm states
-        long _sigma;
+        //long _sigma;
+
         //redefine the variable to float
         float _sigma;
 
-        long _tau[NUM_IN_NEIGHBORS];
+        //long _tau[NUM_IN_NEIGHBORS];
+
         //redefine the vector to float tipe
         float _tau[NUM_IN_NEIGHBORS];
         // Limits and cost coefficients

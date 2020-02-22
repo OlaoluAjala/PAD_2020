@@ -18,11 +18,17 @@
 //// Public methods
 /// Constructors
 OAgent::OAgent() {
-    _prepareOAgent(&XBee(),&ZBRxResponse(),&OGraph());
+    XBee temp1 = XBee();
+    ZBRxResponse temp2 = ZBRxResponse();
+    OGraph temp3 = OGraph();
+    _prepareOAgent(&temp1,&temp2,&temp3);
 }
 
 OAgent::OAgent(XBee * xbee, OGraph * G, bool leader, bool quiet) {
-    _prepareOAgent(xbee,&ZBRxResponse(),G,leader,quiet);
+
+    ZBRxResponse temp1 = ZBRxResponse();
+
+    _prepareOAgent(xbee,&temp1,G,leader,quiet);
 }
 
 OAgent::OAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader, bool quiet) {
@@ -55,7 +61,7 @@ OAgent::OAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader, bool qui
 
 /// Ratio-consensus
 // Fair splitting
-
+/*
 float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t period) {
     OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex object///NO ENTIENDO ESTE TIPO DE PUNTEROS !!!
     float Dout = float(s->getOutDegree() + 1);    // store out degree 
@@ -102,7 +108,7 @@ float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t perio
     }
     return float(s->getYMin())/float(s->getZ());
 }
-
+*/
 long OAgent::computeFairSplitFinalValue(float gamma) {
     OLocalVertex * s = _G->getLocalVertex();
 	if(gamma <= 0)
@@ -160,7 +166,7 @@ float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t peri
             delay(25);
         }
         s->setYMinP((s->getYMinP())/Dout + inY);
-        s->setMuMinP(s->getMuMinP() + (s->getYMinP())/Dout);
+        s->setMuMinP(s->getMuMin() + (s->getYMinP())/Dout);
         s->setZP((s->getZP())/Dout + inZ);
         s->addToSigmaP((s->getZP())/Dout);
     }
@@ -329,7 +335,7 @@ long OAgent::leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uin
     }
     return final;
 }
-
+/*
 void OAgent::leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
     _start_millis = millis() + 1750;
 	OLocalVertex * s = _G->getLocalVertex();
@@ -351,7 +357,7 @@ void OAgent::leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, 
     }
 	d.setTorque(float(final)/base);
 }
-
+*/
 long OAgent::nonleaderFairSplitRatioConsensus(long initial) {
     unsigned long startTime;
     uint8_t iterations;
@@ -367,7 +373,7 @@ long OAgent::nonleaderFairSplitRatioConsensus(long initial) {
     digitalWrite(48,LOW);
     return final;
 }
-
+/*
 void OAgent::nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin) {
     // get pointer to local vertex
     OLocalVertex * s = _G->getLocalVertex();
@@ -413,7 +419,7 @@ void OAgent::reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8
     }
 	d.setTorque(float(final)/base);
 }
-
+*/
 //void OAgent::reserveFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin) {
 	//     // get pointer to local vertex
 	//     OLocalReserveVertex * s = dynamic_cast<OLocalReserveVertex*> (_G->getLocalVertex());
@@ -517,7 +523,7 @@ long OAgent::optimalDispatch(long x, uint8_t iterations, uint16_t period) {
     //Serial << _MEM(PSTR("lambda* = ")) << _DEC(lambdaStar) << endl;
     return s->g(lambdaStar);
 }
-
+/*
 long OAgent::optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d) {
  	OLocalVertex * s = _G->getLocalVertex();           // store pointer to local vertex object
     uint8_t Dout = s->getOutDegree() + 1;       // store out degree
@@ -552,6 +558,7 @@ long OAgent::optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period
             }
             delay(5);
         }
+
 #ifdef VERBOSE
         if(!_quiet) {
             _printStates(s,k,false);
@@ -564,8 +571,7 @@ long OAgent::optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period
         // update all states (z = z/Dout + zIn, etc)
         _updateOptimalDispatchStates(s,Dout);
         // clear all incoming states before next iteration
-        _G->clearAllInStates();
-    }
+      }
 #ifdef VERBOSE
 	uint8_t states = 2*(_G->getN());
     float ratios[states];
@@ -579,7 +585,7 @@ long OAgent::optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period
 	d.sendShortLogData(LOG_LAMBDA_KEY,uint16_t(float(lambdaStar)/float(100)));
     return s->g(lambdaStar);
 }
-
+*/
 long OAgent::leaderOptimalDispatch(long initial, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
     _start_millis = millis() + 1750;
     _broadcastScheduleOptimalDispatchPacket(_start_millis,iterations,period);
@@ -591,7 +597,7 @@ long OAgent::leaderOptimalDispatch(long initial, uint8_t iterations, uint16_t pe
     }
 	return final;
 }
-
+/*
 void OAgent::leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin) {
     _start_millis = millis() + 1750;
 	OLocalVertex * s = _G->getLocalVertex();
@@ -614,7 +620,7 @@ void OAgent::leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t
     }
 	d.setTorque(float(final)/base);
 }
-
+*/
 long OAgent::nonleaderOptimalDispatch(long initial, uint8_t &ledPin) {
     uint8_t iterations;
     uint16_t period;
@@ -628,7 +634,7 @@ long OAgent::nonleaderOptimalDispatch(long initial, uint8_t &ledPin) {
     }
 	return final;
 }
-
+/*
 void OAgent::nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin) {	
     OLocalVertex * s = _G->getLocalVertex();
 	// save base as floating point number
@@ -647,7 +653,7 @@ void OAgent::nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin) {
     }
     d.setTorque(float(final)/base);
 }
-
+*/
 /// End optimal dispatch
 /// Synchronization methods
 bool OAgent::sync(uint8_t attempts) {
@@ -708,7 +714,7 @@ void OAgent::_initializeFairSplitting(OLocalVertex * s, long x) {
     s->setZ(s->getMax() - s->getMin());     // set initial z value [max - min]
     s->setSigma(s->getZ()/Dout);            // Initialize sigma = z/Dout
 }
-
+/*
 void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
     uint16_t payload[5];           
     long mu    = s->getMuMin(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
@@ -724,10 +730,13 @@ void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
     Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
 #endif
 }
+
+*/
+
 //the same function as the avobe but with the new changes
 void OAgent::_broadcastFairSplitPacketP(OLocalVertex * s) {
     uint16_t payload[7];           
-    float mu   = s->getMuMinP(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
+    float mu   = s->getMuMin(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
     //cambiamos las variables de long a foalt para poder recibir números negativos
     float sigma = s->getSigmaP();// definimos la variable sigma y le asignamos el valor que cogemos de la funcion get sigma
     //cambiamos las variables anteriores de long a foalt para poder recibir números negativos

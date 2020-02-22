@@ -16,8 +16,8 @@
 
 #include "XBee.h"   // Include header for xbee api
 #include "OGraph.h"
-#include "Dyno.h"
-
+//#include "Dyno.h"
+#define base 100000
 #define SCHEDULE_FAIR_SPLIT_HEADER       0x7346 // schedule coordinate header is ascii sC
 #define FAIR_SPLITTING_HEADER            0x6653 // fair splitting ratio-consensus header is ascii fS
 #define OPTIMAL_DISPATCH_HEADER          0x6f44 // optimal dispatch header is ascii oD
@@ -61,23 +61,24 @@ class OAgent {
         inline bool isQuiet() { return _quiet; }
         
         // Fair splitting methods
+        float fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t period);
         float fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t period);
         long computeFairSplitFinalValue(float gamma);
         long leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uint16_t period);
-        void leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
+        //void leaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
         long nonleaderFairSplitRatioConsensus(long initial);
-        void nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin);
-		void reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8_t &ledPin);
+        //void nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin);
+		//void reserveFairSplitRatioConsensusWithDyno(Dyno &d, long trueMax, uint8_t &ledPin);
         
         // Optimal dispatch Methods
         long optimalDispatch(long x, uint8_t iterations, uint16_t period);
-		long optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d);
-		void leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
+		//long optimalDispatchWithDyno(long x, uint8_t iterations, uint16_t period, Dyno &d);
+		//void leaderOptimalDispatchWithDyno(Dyno &d, uint8_t iterations, uint16_t period, uint8_t &ledPin);
         long leaderOptimalDispatch(long initial, uint8_t iterations, uint16_t period, uint8_t &ledPin);
         long nonleaderOptimalDispatch(long initial, uint8_t &ledPin);
-		void nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin);
+		//void nonleaderOptimalDispatchWithDyno(Dyno &d, uint8_t &ledPin);
         
-        void leaderDGC(Dyno &d, float k, int vref, uint8_t epsilon);
+        //void leaderDGC(Dyno &d, float k, int vref, uint8_t epsilon);
         void nonleaderDGC();
         
         // HRT Synchronization methods
@@ -118,6 +119,7 @@ class OAgent {
         }
         inline bool _fairSplitPacketAvailable() { return _packetAvailable(FAIR_SPLITTING_HEADER,true); }
         void _initializeFairSplitting(OLocalVertex * s, long x);
+        void _broadcastFairSplitPacketP(OLocalVertex * s);
         void _broadcastFairSplitPacket(OLocalVertex * s);
         long _getMuFromPacket();
         long _getSigmaFromPacket();

@@ -588,7 +588,8 @@ void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, long lambdaMin, long la
 // Constructors
 OGraph::OGraph() {
     _n = 0;
-    _self = &OLocalVertex();
+    OLocalVertex temp1=OLocalVertex();
+    _self = &temp1;
 }
 
 OGraph::OGraph(OLocalVertex * s) {
