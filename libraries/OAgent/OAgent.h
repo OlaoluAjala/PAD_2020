@@ -119,12 +119,12 @@ class OAgent {
         }
         inline bool _fairSplitPacketAvailable() { return _packetAvailable(FAIR_SPLITTING_HEADER,true); }
         void _initializeFairSplitting(OLocalVertex * s, long x);
-        void _broadcastFairSplitPacketP(OLocalVertex * s);
         void _broadcastFairSplitPacket(OLocalVertex * s);
         long _getMuFromPacket();
         long _getSigmaFromPacket();
-        
-        
+
+        //added by Patricia
+        void _broadcastFairSplitPacketP(OLocalVertex * s);
         float _getMuFromPacketP();
         float _getSigmaFromPacketP();
         
