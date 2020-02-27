@@ -79,20 +79,22 @@ float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t perio
         while(uint16_t(millis()-start) < period) {
             if(_fairSplitPacketAvailable()) {                                   // robust, coordinate value packet available
                 uint8_t i;                                                      // index of remote device in graph in-neighborhood
-                if(_G->isInNeighbor(_rx->getRemoteAddress64().getLsb(),i)) {    // check if remote device is in in-neighborhood
+                //Serial<<"looking at node:"<<i<<endl;                                                      
+                if(_G->isInNeighbor(_rx->getRemoteAddress64().getLsb(),i)) {    // check if remote device is an in-neighborhood
+                    Serial<<"previous mu value: "<<s->getNuMin(i)<<endl;
                     long inMu = _getMuFromPacket();                             // store incoming value of mu
+                    Serial<<"recieved "<<inMu<<" from node "<<_rx->getRemoteAddress64().getLsb()  <<endl;
                     inY += inMu - s->getNuMin(i);                               // add mu from incoming device and subtract last received value
                     s->setNuMin(i,inMu);                                        // save received mu as new nu (nuMin)
                     long inSigma = _getSigmaFromPacket();                       // store incoming value of sigma
                     inZ += inSigma - s->getTau(i);                              // add sigma from incoming device and subtract last received value
                     s->setTau(i,inSigma);                                       // save received sigma as new tau
-                    Serial<<"recieved "<<inY<<" and "<< inZ<<" from node "<< i <<endl;
 
                 }
             } else if((int((millis() - start)) >= txTime) && !txDone) {
                 txDone = true; // toggle txDone
                 _broadcastFairSplitPacket(s);
-             Serial<<"sending "<<s->getYMin()<<" and "<< s->getZ()<<endl;   
+            // Serial<<"sending "<<s->getYMin()<<" and "<< s->getZ()<<endl;   
             }
             delay(5);
         }
@@ -108,7 +110,7 @@ float OAgent::fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t perio
         s->setZ(long(float(s->getZ())/Dout) + inZ);
         s->addToSigma(long(float(s->getZ())/Dout));
 
-       // Serial<<s->getYMin()<<" , "<< s->getZ() <<endl;
+        Serial<<"values: "<<s->getYMin()<<" , "<< s->getZ() <<endl;
     }
     return float(s->getYMin())/float(s->getZ());
 }
@@ -281,6 +283,7 @@ long OAgent::leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uin
     float gamma = 0;
     if(_waitToStart(startTime,false,1800)) {
         gamma = fairSplitRatioConsensus(initial,iterations,period);
+        Serial<<"gamma is: "<<gamma<<endl;
         final = computeFairSplitFinalValue(gamma);
     }
     return final;

@@ -15,12 +15,13 @@ uint8_t sPin = 7;      // synced led
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
   // address, min, max, alpha, beta, out-degree, base
-  OLocalVertex s = OLocalVertex(0x4174F1AA,0*base,1*base,0,0,i,base);    //sets up parameters for local vertex
+  OLocalVertex s = OLocalVertex(0x415786E1,0*base,1*base,0,0,i,base);    //sets up parameters for local vertex
  // OLocalVertex s = OLocalVertex(0x415786E1,0,0.225*D_base,-2.1667*base,0.1667*base,5,D_base,9);
   OGraph g = OGraph(&s);
   OAgent a = OAgent(&xbee,&rx,&g,true,true);
 
 void setup()  {
+  Serial.println("start sync");
   Serial.begin(38400);
   Serial3.begin(38400);
   
@@ -30,8 +31,8 @@ void setup()  {
   pinMode(49,OUTPUT);
   xbee.setSerial(Serial3);
 
-  g.addInNeighbor(0x4174F186);   // node 2
-//  g.addNonNeighbor(0x4151C688);  // node 5
+  g.addInNeighbor(0x415786D3);   // node 10
+//  g.addNonNeighbor(0x415DB664);  // node 14
 
 Serial.println("syncronize has begun");
 //  synchronize all nodes
