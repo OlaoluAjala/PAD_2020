@@ -272,7 +272,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
     float inY;              // incoming state variable
     float inZ;
-    float eps=0.001;       //variable for setting the end point of the iterations
+    float eps=0.01;       //variable for setting the end point of the iterations
     float endY;
     float endZ;
     int count = 3;    
@@ -454,8 +454,8 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         */
         iter++;// increase the iteration count
 
-
-    }while(iter < iterations || endY >= eps || endZ >= eps);
+        Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<" when eps is: "<<eps<<endl;
+    }while(iter < iterations && endY > eps && endZ > eps);
 
     if(s->getZ() != 0)
         _buffer[0] = float(s->getYMin())/float(s->getZ()); 
