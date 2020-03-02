@@ -133,7 +133,7 @@ float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t peri
     float inZ;
 
     for(uint8_t k = 0; k < iterations; k++) {
-        txDone = false;     // initialize toggle to keep track of broadcasts
+        txDone = false;     // initialize+ toggle to keep track of broadcasts
         start = millis();   // initialize timer
         // clear in y and in z
         inY = 0;
@@ -330,7 +330,7 @@ long OAgent::leaderFairSplitRatioConsensus(long initial, uint8_t iterations, uin
     long final = initial;
     float gamma = 0;
     if(_waitToStart(startTime,false,1800)) {
-        gamma = fairSplitRatioConsensus(initial,iterations,period);
+        gamma = fairSplitRatioConsensusP(initial,iterations,period);
         final = computeFairSplitFinalValue(gamma);
     }
     return final;
@@ -367,7 +367,7 @@ long OAgent::nonleaderFairSplitRatioConsensus(long initial) {
     long final = initial;
     float gamma = 0;
     if(_waitToStart(startTime,true,1800)) {
-        gamma = fairSplitRatioConsensus(initial,iterations,period);
+        gamma = fairSplitRatioConsensusP(initial,iterations,period);
         final = computeFairSplitFinalValue(gamma);
     }
     digitalWrite(48,LOW);
@@ -380,7 +380,8 @@ void OAgent::nonleaderFairSplitRatioConsensusWithDyno(Dyno &d, uint8_t &ledPin) 
 	float base = s->getBase();
     // wait for schedule packet
     _waitForScheduleFairSplitPacket(_start_millis,_iterations,_period);
-    // get current torque command
+    // get current torque 
+    command
 	float t = d.getTorqueFloat();
 	long initial = long(t*base);
 	//d.sendShortLogData(LOG_INITIAL_TORQUE_KEY,uint16_t(t*float(100)));
@@ -736,7 +737,7 @@ void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
 //the same function as the avobe but with the new changes
 void OAgent::_broadcastFairSplitPacketP(OLocalVertex * s) {
     uint16_t payload[7];           
-    float mu   = s->getMuMin(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
+    float mu   = s->getMuMinP(); //definimos una variable mu y le asignamos el valor de mumin que cogemos de la función gatMuMin 
     //cambiamos las variables de long a foalt para poder recibir números negativos
     float sigma = s->getSigmaP();// definimos la variable sigma y le asignamos el valor que cogemos de la funcion get sigma
     //cambiamos las variables anteriores de long a foalt para poder recibir números negativos
