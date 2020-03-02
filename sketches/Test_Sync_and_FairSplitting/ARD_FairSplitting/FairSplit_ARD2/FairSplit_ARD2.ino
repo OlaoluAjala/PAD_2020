@@ -96,7 +96,7 @@ void setup()
     if(a.isSynced())
     {
      //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(3, 1, 20, 200);
+      tCmd = a.fairSplitRatioConsensus_RSL(46, 1, 50, 200);
       Serial.print("The new Torque is: ");
       Serial.println(tCmd);   
 

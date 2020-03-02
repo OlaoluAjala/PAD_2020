@@ -272,7 +272,9 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
     float inY;              // incoming state variable
     float inZ;
-    float eps;              //variable for setting the end point of the iterations
+    float eps=0.001;       //variable for setting the end point of the iterations
+    float endY;
+    float endZ;
     int count = 3;    
     int iter;               //variable for the iteration count
     //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
@@ -302,8 +304,10 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         inY = 0;
         inZ = 0;
             
-        Serial<<"Iteration "<<k+1<<". Ratio is: "<<_FLOAT(float(s->getYMin())/float(s->getZ()),4)<<"; Y is: "<<_FLOAT(float(s->getYMin()),4)<<"; Z is: "<<_FLOAT(float(s->getZ()),4)<<endl;
+        Serial<<"Iteration "<<iter+1<<". Ratio is: "<<_FLOAT(float(s->getYMin())/float(s->getZ()),4)<<"; Y is: "<<_FLOAT(float(s->getYMin()),4)<<"; Z is: "<<_FLOAT(float(s->getZ()),4)<<endl;
         delay(5);
+        endY=s->getYMin();
+        endZ=s->getZ();
 
         uint8_t i;
         while(uint16_t(millis()-start) < period)
@@ -450,7 +454,8 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         */
         iter++;// increase the iteration count
 
-    }while(iter<=iterations || s->getYMin() <= eps || s->getZ() <= eps);
+
+    }while(iter < iterations || endY >= eps || endZ >= eps);
 
     if(s->getZ() != 0)
         _buffer[0] = float(s->getYMin())/float(s->getZ()); 
