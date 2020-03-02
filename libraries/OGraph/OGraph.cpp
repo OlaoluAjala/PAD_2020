@@ -18,146 +18,30 @@
 /// Public methods
 // Constructors
 OVertex::OVertex() {
-    _prepareOVertex(0x0,0,0);
+    _prepareOVertex(0x0,0);
 }
 
 OVertex::OVertex(uint32_t aLsb) {
-	_prepareOVertex(aLsb,0,0);
+    _prepareOVertex(aLsb,0);
 }
 
 OVertex::OVertex(XBeeAddress64 a) {
-	_prepareOVertex(a.getLsb(),0,0);
+    _prepareOVertex(a.getLsb(),0);
 }
 
-OVertex::OVertex(uint32_t aLsb, long lambdaMin, long lambdaMax) {
-    _prepareOVertex(aLsb,lambdaMin,lambdaMax);
-}
 
-OVertex::OVertex(XBeeAddress64 a, long lambdaMin, long lambdaMax) {
-    _prepareOVertex(a.getLsb(),lambdaMin,lambdaMax);
-}
 
-// Address least significant bytes
-//uint32_t OVertex::getAddressLsb() {
-//    return _aLsb;
-//}
-
-// States (yMin and yMax)
-//void OVertex::setYMin(long yMin) {
-//    _yMin = yMin;
-//}
-
-//void OVertex::setYMax(long yMax) {
-//    _yMax = yMax;
-//}
-//
-//void OVertex::setYMinYMax(long yMin, long yMax) {
-//    setYMin(yMin);
-//    setYMax(yMax);
-//}
-//
-//void OVertex::addToYMin(long increment) {
-//    _yMin += increment;
-//}
-//
-//void OVertex::addToYMax(long increment) {
-//    _yMax += increment;
-//}
-//
-//void OVertex::addToYMinYMax(long incrementYMin, long incrementYMax) {
-//    addToYMin(incrementYMin);
-//    addToYMax(incrementYMax);
-//}
-
-//long OVertex::getYMin() {
-//    return _yMin;
-//}
-
-//long OVertex::getYMax() {
-//    return _yMax;
-//}
-//
-//void OVertex::getYMinYMax(long &yMin, long &yMax) {
-//    yMin = getYMin();
-//    yMax = getYMax();
-//}
-//
-//void OVertex::clearYMinYMax() {
-//    setYMinYMax(0,0);
-//}
 
 void OVertex::updateYMinYMax(uint8_t weight) {
     setYMinYMax(_yMin/weight+_yMinIn,_yMax/weight+_yMaxIn);
 }
-//
-//// incoming states yMinIn and yMaxIn
-//void OVertex::setYMinIn(long yMinIn) {
-//    _yMinIn = yMinIn;
-//}
-//
-//void OVertex::setYMaxIn(long yMaxIn) {
-//    _yMaxIn = yMaxIn;
-//}
-//
-//void OVertex::setYMinInYMaxIn(long yMinIn, long yMaxIn) {
-//    setYMinIn(yMinIn);
-//    setYMaxIn(yMaxIn);
-//}
-//
-//void OVertex::addToYMinIn(long increment) {
-//    _yMinIn += increment;
-//}
-//
-//void OVertex::addToYMaxIn(long increment) {
-//    _yMaxIn += increment;
-//}
-//
-//void OVertex::addToYMinInYMaxIn(long incrementYMinIn, long incrementYMaxIn) {
-//    addToYMinIn(incrementYMinIn);
-//    addToYMaxIn(incrementYMaxIn);
-//}
-//
-//void OVertex::clearYMinInYMaxIn() {
-//    setYMinInYMaxIn(0,0);
-//}
-
-// Broadcast states muMin and muMax
-//void OVertex::setMuMin(long muMin) {
-//    _muMin = muMin;
-//}
-
-//void OVertex::setMuMax(long muMax) {
-//    _muMax = muMax;
-//}
-//
-//void OVertex::setMuMinMuMax(long muMin, long muMax) {
-//    setMuMin(muMin);
-//    setMuMax(muMax);
-//}
-
-//long OVertex::getMuMin() {
-//    return _muMin;
-//}
-
-//long OVertex::getMuMax() {
-//    return _muMax;
-//}
-//
-//void OVertex::getMuMinMuMax(long &muMin, long &muMax) {
-//    muMin = getMuMin();
-//    muMax = getMuMax();
-//}
-//
-//void OVertex::clearMuMinMuMax() {
-//    setMuMinMuMax(0,0);
-//}
 
 void OVertex::updateMuMinMuMax(uint8_t weight) {
     setMuMinMuMax(_muMin+_yMin/weight,_muMax+_yMax/weight);
 }
 
 // Robust algorithm states nuMin and nuMax
-bool OVertex::setNuMin(uint8_t i, long nuMin) {
+bool OVertex::setNuMin(uint8_t i, float nuMin) {
     if(i < NUM_IN_NEIGHBORS) {
         _nuMin[i] = nuMin;
         return true;
@@ -165,7 +49,7 @@ bool OVertex::setNuMin(uint8_t i, long nuMin) {
     return false;
 }
 
-bool OVertex::setNuMax(uint8_t i, long nuMax) {
+bool OVertex::setNuMax(uint8_t i, float nuMax) {
     if(i < NUM_IN_NEIGHBORS) {
         _nuMax[i] = nuMax;
         return true;
@@ -173,13 +57,13 @@ bool OVertex::setNuMax(uint8_t i, long nuMax) {
     return false;
 }
 
-long OVertex::getNuMin(uint8_t i) {
+float OVertex::getNuMin(uint8_t i) {
     if(i < NUM_IN_NEIGHBORS)
         return _nuMin[i];
     return LONG_ERROR;
 }
 
-long OVertex::getNuMax(uint8_t i) {
+float OVertex::getNuMax(uint8_t i) {
     if(i < NUM_IN_NEIGHBORS)
         return _nuMax[i];
     return LONG_ERROR;
@@ -201,63 +85,12 @@ void OVertex::clearAllNuMinNuMax() {
     }        
 }
 
-// Lambda_min and lambda_max
-//void OVertex::setLambdaMin(long lambdaMin) {
-//    _lambdaMin = lambdaMin;
-//}
-//
-//void OVertex::setLambdaMax(long lambdaMax) {
-//    _lambdaMax = lambdaMax;
-//}
-//
-//void OVertex::setLambdaMinMax(long lambdaMin, long lambdaMax) {
-//    setLambdaMin(lambdaMin);
-//    setLambdaMax(lambdaMax);
-//}
-//
-//long OVertex::getLambdaMin() {
-//    return _lambdaMin;
-//}
-//
-//long OVertex::getLambdaMax() {
-//    return _lambdaMax;
-//}
-//
-//void OVertex::getLambdaMinMax(long &lambdaMin, long &lambdaMax) {
-//    lambdaMin = getLambdaMin();
-//    lambdaMax = getLambdaMax();
-//}
-//
-//void OVertex::setBroadcastLambda(uint8_t broadcastLambda) {
-//    _broadcastLambda = broadcastLambda;
-//}
-//
-//void OVertex::clearBroadcastLambda() {
-//    setBroadcastLambda(0);
-//}
-//
-//void OVertex::incrementBroadcastLambda() {
-//    _broadcastLambda++;
-//}
-//
-//uint8_t OVertex::getBroadcastLambda() {
-//    return _broadcastLambda;
-//}
-
-bool OVertex::unsentValidLambda() {
-    if(_broadcastLambda <= NUM_BROADCAST_LAMBDA && _lambdaMin != 0 && _lambdaMax != 0)
-        return true;
-    return false;
-}
-
 /// End public methods
 /// Private methods
 // Helper functions
-void OVertex::_prepareOVertex(uint32_t aLsb, long lambdaMin, long lambdaMax) {
+void OVertex::_prepareOVertex(uint32_t aLsb, uint8_t nodeID) {
     _aLsb = aLsb;
-    _lambdaMin = lambdaMin;
-    _lambdaMax = lambdaMax;
-    _broadcastLambda = 0;
+    _nodeID = nodeID;
     _yMin   = 0;
     _yMax   = 0;
     _yMinIn = 0;
@@ -269,143 +102,348 @@ void OVertex::_prepareOVertex(uint32_t aLsb, long lambdaMin, long lambdaMax) {
 /// End private methods
 //// End OVertex
 
+
+
+//LinkedList
+//Public mthods
+LinkedList::LinkedList() { 
+    _prepareLinkedList(NUM_REMOTE_VERTICES);
+}
+
+LinkedList::LinkedList(int n) {
+    _prepareLinkedList(n);
+}
+
+//create a linked list of online neighbors, using their node IDs 
+void LinkedList::_prepareLinkedList(int n) {
+    _head = NULL;
+    _tail = NULL;
+    _neighborHead = NULL;
+    _neighborTail = NULL;
+    _activeHead = NULL;
+    _activeTail = NULL;
+    _size = 1;
+    _numActiveLinks = 0;
+
+    for (uint8_t i = 0; i < n; i++)
+    {
+        node *tmp = new node;
+        tmp->data = i + 1;
+        tmp->next = NULL;
+
+        if (_head == NULL)
+        {
+            _head = tmp;
+            _tail = tmp;
+        }
+        else
+        {
+            _tail->next = tmp;
+            _tail = tmp;
+        }
+    }
+}
+
+//create a linked list of online neighbors, using their node IDs 
+void LinkedList::updateLinkedList(uint8_t *r) {
+    uint8_t i=0, j=1;
+    _neighborHead = NULL;
+    node *tmp;
+    tmp = _head;
+    while (tmp != NULL)
+    {
+        if (*(r+i) >= 2)
+        {
+            if (_neighborHead == NULL)
+            {
+                _neighborHead = tmp;
+                _neighborTail = tmp;
+            }
+            else
+            {
+                _neighborTail->neighborNext = tmp;
+                _neighborTail = tmp;
+            }
+            if (*(r+i) == 3)
+                j++;
+            // Serial <<"counter updated to "<<j<<endl;
+            // delay(5);
+        }
+        tmp = tmp->next;
+        i++;
+    }
+    _neighborTail->neighborNext = NULL;
+    setLLsize(j);
+    //Serial<<"The neighborHead is node "<<_neighborHead->data<<endl;
+}
+
+//resets the status of all neighbors from 3 to 2 
+void LinkedList::resetLinkedListStatus(uint8_t *r) {
+    uint8_t i=0;
+    node *tmp;
+    tmp = _neighborHead;
+    while (tmp != NULL)
+    {
+        i = tmp->data;
+        if (*(r+i-1) == 3)
+        {
+            *(r+i-1) = 2;
+            // Serial<< "Status of node "<<i<<" changed from 3 to "<<*(r+i)<<endl;
+            // delay(5);
+        }
+        tmp = tmp->neighborNext;
+    }
+    setLLsize(1);
+}
+
+//display a linked list
+void LinkedList::displayLinkedList() {
+    node *tmp;
+    tmp = _neighborHead;
+    Serial << "Neighbors are: "<<endl;
+    while (tmp != NULL)
+    {
+        Serial << tmp->data <<endl;
+        tmp = tmp->neighborNext;
+    }
+}
+
+//display Active linked lists
+void LinkedList::displayActiveLinkedList(ORemoteVertex *n) {
+    node *tmp;
+    tmp = _activeHead;
+    uint8_t i = 0;
+
+    while (tmp != NULL)
+    {
+        i = tmp->data;   
+        Serial << i << " is an active link"<<endl;
+        tmp = tmp->activeNext;
+    }
+}
+
+//find an inactive communication link and return the ID of its associated neighbor, return 0 if all links are active
+uint8_t LinkedList::findInActiveLink(ORemoteVertex *n) {
+    node *tmp;
+    tmp = _neighborHead;
+    uint8_t i = 0;
+    bool linkStatus;
+
+    while (tmp != NULL)
+    {
+        i = tmp->data;
+        linkStatus = (n+i-1)->getLinkStatus();
+        // Serial <<"link to node "<< i << " has status " << linkStatus << endl;
+        // delay(5);
+        if (!linkStatus)
+        {
+            _neighborHead = tmp->neighborNext;
+            return i;
+        }
+        tmp = tmp->neighborNext;
+    }
+    return 0;
+}
+
+//sets the status of all active links to false 
+void LinkedList::resetActiveLinks(ORemoteVertex *n) {
+    uint8_t i=0;
+    node *tmp;
+    tmp = _activeHead;
+    while (tmp != NULL)
+    {
+        i = tmp->data;
+        (n+i-1)->setLinkStatus(false);
+        tmp = tmp->activeNext;
+    }
+}
+
+void LinkedList::unlinkActiveLink(uint8_t neighborID) {
+    if (_activeHead->data == neighborID)
+    {
+        _activeHead = _activeHead->activeNext;
+        return;
+    }
+
+    node *tmp1, *tmp2;
+    tmp1 = _activeHead;
+    tmp2 = tmp1->activeNext;
+
+    while (tmp2 != NULL)
+    {
+        if (tmp2->data == neighborID)
+        {
+            tmp1->activeNext = tmp2->activeNext;
+            return;
+        }
+        else
+        {
+            tmp1 = tmp2;
+            tmp2 = tmp1->activeNext;
+        }
+    }
+}
+
+bool LinkedList::isLinkActive(uint8_t neighborID) {
+    node *tmp;
+    tmp = _activeHead;
+
+    while (tmp != NULL)
+    {
+        if (tmp->data == neighborID)
+            return true;
+        tmp = tmp->activeNext;
+    }
+    return false;
+}
+
+float LinkedList::addActiveFlows(uint8_t i, ORemoteVertex *n) {
+    node *tmp;
+    tmp = _neighborHead;
+    uint8_t j = 0;
+    float fp = 0;
+    while (tmp != NULL)
+    {
+        j = tmp->data;                                  //get ID of neighbor
+        if (i < j)
+            fp = fp + ((n+j-1)->getActiveFlow());           //get active flow of link associated with neighbor
+        else if (i > j)
+            fp = fp - ((n+j-1)->getActiveFlow());           //get active flow of link associated with neighbor
+        tmp = tmp->neighborNext;
+    }
+    //Serial<<"Sum of Active Flows is "<<fp<<endl;
+    return fp;
+}
+
+float LinkedList::addReactiveFlows(uint8_t i, ORemoteVertex *n) {
+    node *tmp;
+    tmp = _neighborHead;
+    uint8_t j = 0;
+    float fq = 0;
+    while (tmp != NULL)
+    {
+        j = tmp->data;                                  //get ID of neighbor
+        if (i < j)
+            fq = fq + ((n+j-1)->getReactiveFlow());         //get reactive flow of link associated with neighbor
+        else if (i > j)
+            fq = fq - ((n+j-1)->getReactiveFlow());         //get reactive flow of link associated with neighbor
+        tmp = tmp->neighborNext;
+    }
+    //Serial<<"Sum of Reactive Flows is "<<fq<<endl;
+    return fq;
+}
+
+float LinkedList::addLambdas(uint8_t i, ORemoteVertex *n) {
+    node *tmp;
+    tmp = _neighborHead;
+    uint8_t j = 0;
+    float lambda = 0;
+    while (tmp != NULL)
+    {
+        j = tmp->data;                                      //get ID of neighbor
+        if (i < j)
+            lambda = lambda + ((n+j-1)->getLambda());       //get lambda of link associated with neighbor
+        else if (i > j)
+            lambda = lambda - ((n+j-1)->getLambda());       //get lambda of link associated with neighbor
+        tmp = tmp->neighborNext;
+    }
+    //Serial<<"Sum of Lambdas is "<<lambda<<endl;
+    return lambda;
+}
+
+//update the linked list of active links
+void LinkedList::updateActiveLinks(ORemoteVertex *n) {
+    uint8_t i=0, j=0;
+    _activeHead = NULL;
+    node *tmp;
+    tmp = _neighborHead;
+    while (tmp != NULL)
+    {
+        i = tmp->data;                                      //get ID of neighbor
+        if ((n+i-1)->getLinkStatus())                       //check if the link associated with the neighbor is active
+        {
+            if (_activeHead == NULL)
+            {
+                _activeHead = tmp;
+                _activeTail = tmp;
+            }
+            else
+            {
+                _activeTail->activeNext = tmp;
+                _activeTail = tmp;
+            }
+            j++;
+        }
+        tmp = tmp->neighborNext;
+    }
+    _activeTail->activeNext = NULL;
+    setNumActiveLinks(j);
+}
+
+//unlink the first node the linkedlist points to and return its data
+uint8_t LinkedList::unlinkLinkedListNodes() {
+    node *tmp;
+    tmp = _neighborHead;
+    if (tmp != NULL)
+    {
+        _neighborHead = tmp->neighborNext;
+        return tmp->data;
+    }
+    else
+        return 0;
+}
+
+// //get node ID of inheritor
+// void LinkedList::_setInheritorID() {
+//     node *tmp;
+//     tmp = _neighborHead;
+//     int ID = 0;
+//     int index;
+
+//     if (tmp == NULL)
+//     {
+//         return;
+//     }
+//     else
+//     {
+//         // randomly choose an online neighbor to be inheritor
+//         srand (getLLsize());   
+//         index = rand () % getLLsize ();
+//         for (int i = 0; i <= index; i++)
+//         {
+//             ID = tmp->data;
+//             tmp = tmp->neighborNext;
+//         }
+//         _inheritor = ID;
+//     }
+// }
+
+
+/// End private methods
+//// End LinkedList
+
+
+
+
+
 //// OLocalVertex
 /// Public methods
 // Constructors
 OLocalVertex::OLocalVertex() {
-    _prepareOLocalVertex(0x0,0,0,0,0,0,100000);
+    _prepareOLocalVertex(0x0,0,0,0,0,0,0,100000);
 }
 
-OLocalVertex::OLocalVertex(uint32_t aLsb, long min, long max, long alpha, long beta, uint8_t Dout, long base) {
-    _prepareOLocalVertex(aLsb,min,max,alpha,beta,Dout,base);
+OLocalVertex::OLocalVertex(uint32_t aLsb, uint8_t nodeID, float min, float max, float alpha, float beta, uint8_t Dout, long base) {
+    _prepareOLocalVertex(aLsb,nodeID,min,max,alpha,beta,Dout,base);
 }
 
-OLocalVertex::OLocalVertex(XBeeAddress64 a, long min, long max, long alpha, long beta, uint8_t Dout, long base) {
-    _prepareOLocalVertex(a.getLsb(),min,max,alpha,beta,Dout,base);
+OLocalVertex::OLocalVertex(XBeeAddress64 a, uint8_t nodeID, float min, float max, float alpha, float beta, uint8_t Dout, long base) {
+    _prepareOLocalVertex(a.getLsb(),nodeID,min,max,alpha,beta,Dout,base);
 }
 
-// In-degree methods
-//uint8_t OLocalVertex::getInDegree() {
-//    return _inDegree;
-//}
-//
-//void OLocalVertex::incrementInDegree() {
-//	_inDegree++;
-//}
-//
-//// Out-degree methods
-//void OLocalVertex::setOutDegree(uint8_t Dout) {
-//    _outDegree = Dout;
-//}
-//
-//uint8_t OLocalVertex::getOutDegree() {
-//    return _outDegree;
-//}
-
-// Optimal dispatch functions
-long OLocalVertex::g(long lambda) {
-	float b = float(_base);
-    if(0 <= lambda && lambda < _lambdaMin)
-        return _min;
-    else if(_lambdaMin <= lambda && lambda <= _lambdaMax)
-		return _alpha + long(b*((float(lambda)/b)*float(_beta)/b));
-        //return _alpha + _base*((lambda/_base)*float(_beta)/float(_base));
-    else if(_lambdaMax < lambda)
-        return _max;
-    else
-        return LONG_ERROR;
-}
-
-// Base functions
-//void OLocalVertex::setBase(long base) {
-//    _base = base;
-//}
-//
-//long OLocalVertex::getBase() {
-//    return _base;
-//}
-
-// Internal local states yMin and yMax
-void OLocalVertex::initializeYMinYMax() {
-    _yMin = g(_lambdaMin);
-    _yMax = g(_lambdaMax);
-}
-
-// Internal state z
-//void OLocalVertex::setZ(long z) {
-//    _z = z;
-//}
-//
-//void OLocalVertex::addToZ(long increment) {
-//    _z += increment;
-//}
-//
-//long OLocalVertex::getZ() {
-//    return _z;
-//}
-
-void OLocalVertex::updateZ() {
-    //Serial << "zinitial: " << _DEC(_z) << ", zIn: " << _DEC(_zIn);
-    _z = _z/(_outDegree+1) + _zIn;
-    //Serial << " zfinal: " << _DEC(_z) << endl;
-}
-
-// Incoming state z
-//void OLocalVertex::setZIn(long zIn) {
-//    _zIn = zIn;
-//}
-//
-//void OLocalVertex::addToZIn(long increment) {
-//    //Serial << "zIn: " << _DEC(_zIn) << ", increment: " << _DEC(increment);
-//    _zIn += increment;
-//    //Serial << ", new zIn: " << _DEC(_zIn) << endl;
-//}
-//
-//void OLocalVertex::clearZIn() {
-//    setZIn(0);
-//    //Serial << "Clear zIn: " << _DEC(_zIn) << endl;
-//}
-//
-//long OLocalVertex::getZIn() {
-//    return _zIn;
-//}
-
-// Local broadcast states muMin and muMax
-void OLocalVertex::initializeMuMinMuMax() {
-    _muMin = _yMin/(_outDegree+1);
-    _muMax = _yMax/(_outDegree+1);
-}
-
-// Broadcast state sigma
-
-//void OLocalVertex::setSigma(long sigma) {
-//    _sigma = sigma;
-//}
-//
-//void OLocalVertex::addToSigma(long increment) {
-//    _sigma += increment;
-//}
-//
-//long OLocalVertex::getSigma() {
-//    return _sigma;
-//}
-
-void OLocalVertex::updateSigma() {
-    //Serial << "update sigma, z: " << _DEC(_z) << ", sigma: " << _DEC(_sigma);
-    _sigma += _z/(_outDegree+1);
-    //Serial << " new sigma: " << _DEC(_sigma) << endl;
-}
-
-void OLocalVertex::initializeSigma() {
-    _sigma = _z/(_outDegree+1);
-}
-
-//void OLocalVertex::clearSigma() {
-//	setSigma(0);
-//}
 
 // Robust algorithm state tau
-bool OLocalVertex::setTau(uint8_t i, long tau) {
+bool OLocalVertex::setTau(uint8_t i, float tau) {
     if(i < NUM_IN_NEIGHBORS) {
         _tau[i] = tau;
         return true;
@@ -413,7 +451,7 @@ bool OLocalVertex::setTau(uint8_t i, long tau) {
     return false;
 }
 
-long OLocalVertex::getTau(uint8_t i) {
+float OLocalVertex::getTau(uint8_t i) {
     if(i < NUM_IN_NEIGHBORS)
         return _tau[i];
     return LONG_ERROR;
@@ -424,37 +462,16 @@ void OLocalVertex::clearAllTau() {
         setTau(i,0);
 }
 
-// Limits and cost coefficients
-//long OLocalVertex::getMin() {
-//    return _min;
-//}
-//
-//long OLocalVertex::getMax() {
-//    return _max;
-//}
-//
-//long OLocalVertex::getAlpha() {
-//    return _alpha;
-//}
-//
-//long OLocalVertex::getBeta() {
-//    return _beta;
-//}
-//
-//void OLocalVertex::clearZInSigma() {
-//    clearZIn();
-//    clearSigma();
-//}
 /// End public methods
 /// Private methods
 // Helper functions
-void OLocalVertex::_prepareOLocalVertex(uint32_t aLsb, long min, long max, long alpha, long beta, uint8_t Dout, long base) {
+void OLocalVertex::_prepareOLocalVertex(uint32_t aLsb, uint8_t nodeID, float min, float max, float alpha, float beta, uint8_t Dout, long base) {
     // set base
     _base = base;
     // initialize states
-    _z 		= 0;
-    _zIn 	= 0;
-    _sigma 	= 0;
+    _z      = 0;
+    _zIn    = 0;
+    _sigma  = 0;
     clearAllTau();
     // set limits
     _min = min;
@@ -463,14 +480,59 @@ void OLocalVertex::_prepareOLocalVertex(uint32_t aLsb, long min, long max, long 
     _beta = beta;
     // set graph out-degree
     _inDegree = 0;
-    _outDegree = Dout;
-    // set address and lambda_min and lambda_max
-    _prepareOVertex(aLsb,_computeLambda(_min),_computeLambda(_max));
+    _outDegree = 1;     //Dout; assume bidirectional communication
+    //initialize status vector to zero i.e. all other nodes are not neighbors
+    for(int i=0; i< NUM_REMOTE_VERTICES; i++)
+    {
+        _status[i] = 0;
+    }
+    _statusP = &_status[0];
+    //initialize leaderID and deputyID
+    //_leaderID = 0;
+    //_deputyID = 0;
+
+    //number of neighbors
+    _neighborSize = 22;
+
+    //Decision variables for primal dual algorithm
+    _p = 0;
+    _q = 0;
+    _pd = 0;
+    _qd = 0;
+    _sqV = 1;
+    _mu = 0;
+    //_nu = 0;
+
+    //ratio consensus variables for economic dispatch algorithm
+    _lambda = 0;
+    _nu = 1;
+    _gamma = 0;
+    _gammaTMP = 0;
+
+    //weights for primal dual algorithm
+    _Wv = 0;  //voltage weight
+    _Wp = 0; //active power balance weight
+    _Wq = 0; //reactive power balance weight
+    _Dp = 0; //active power injection weight
+    _Dq = 0; //reactive power injection weight
+    _prepareOVertex(aLsb, nodeID);
 }
+
+
+// Inheritor ID selection
+// int OLocalVertex::chooseInheritor() {
+//     //Update linked list based on updated neghbor status, and choose inheritor
+//     _l._updateALL(_statusP);
+//     _l._setInheritorID();
+//     setNeighborSize(_l.getLLsize());
+
+//     return _l.getInheritorID();
+// }
+
 
 // Optimal dispatch functions
 long OLocalVertex::_computeLambda(long limit) {
-	float b = float(_base);
+    float b = float(_base);
     long rslt = long(b*(float(limit - _alpha)/float(_beta)));
     if(rslt > 0)
         return rslt;
@@ -485,24 +547,24 @@ long OLocalVertex::_computeLambda(long limit) {
 /// Public methods
 // Constructors
 OLocalReserveVertex::OLocalReserveVertex() {
-	_prepareOLocalReserveVertex(0x0,0,0,0,0,0,100000);
+    _prepareOLocalReserveVertex(0x0,0,0,0,0,0,100000);
 }
 
 OLocalReserveVertex::OLocalReserveVertex(uint32_t aLsb, long min, long max, long alpha, long beta, uint8_t Dout, long base) {
-	_prepareOLocalReserveVertex(aLsb,min,max,alpha,beta,Dout,base);
+    _prepareOLocalReserveVertex(aLsb,min,max,alpha,beta,Dout,base);
 }
 
 OLocalReserveVertex::OLocalReserveVertex(XBeeAddress64 a, long min, long max, long alpha, long beta, uint8_t Dout, long base) {
-	_prepareOLocalReserveVertex(a.getLsb(),min,max,alpha,beta,Dout,base);
+    _prepareOLocalReserveVertex(a.getLsb(),min,max,alpha,beta,Dout,base);
 }
 /// End public methods
 /// Private methods
 void OLocalReserveVertex::_prepareOLocalReserveVertex(uint32_t aLsb, long min, long max, long alpha, long beta, uint8_t Dout, long base) {
     _reserveMin = min;
     _reserveMax = max;
-	_limitExceeded = false;
-	_limitGamma = 1;
-    _prepareOLocalVertex(aLsb,min,max,alpha,beta,Dout,base);
+    _limitExceeded = false;
+    _limitGamma = 1;
+    _prepareOLocalVertex(aLsb,min,max,alpha,beta,Dout,base,0);
 }
 
 /// End private methods
@@ -515,41 +577,57 @@ ORemoteVertex::ORemoteVertex() {
     _prepareORemoteVertex();
 }
 
-ORemoteVertex::ORemoteVertex(XBeeAddress64 a, bool inNeighbor, uint8_t index) {
-	_prepareORemoteVertex(a.getLsb(),0,0,inNeighbor,index);
+ORemoteVertex::ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, bool inNeighbor) {
+    _prepareORemoteVertex(a.getLsb(),neighborID,0,0,inNeighbor);                      //r, x, set to 0 by default i.e. line impedance is not yet known
 }
 
-ORemoteVertex::ORemoteVertex(uint32_t aLsb, bool inNeighbor, uint8_t index) {
-	_prepareORemoteVertex(aLsb,0,0,inNeighbor,index);
+ORemoteVertex::ORemoteVertex(uint32_t aLsb, uint8_t neighborID, bool inNeighbor) {
+    _prepareORemoteVertex(aLsb,neighborID,0,0,inNeighbor);
 }
 
-ORemoteVertex::ORemoteVertex(XBeeAddress64 a, long lambdaMin, long lambdaMax, bool inNeighbor, uint8_t index) {
-    _prepareORemoteVertex(a.getLsb(),lambdaMin,lambdaMax,inNeighbor,index);
+ORemoteVertex::ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, float r, float x, bool inNeighbor) {
+    _prepareORemoteVertex(a.getLsb(),neighborID,r,x,inNeighbor);
 }
 
-ORemoteVertex::ORemoteVertex(uint32_t aLsb, long lambdaMin, long lambdaMax, bool inNeighbor, uint8_t index) {
-    _prepareORemoteVertex(aLsb,lambdaMin,lambdaMax,inNeighbor,index);
+ORemoteVertex::ORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor) {
+    _prepareORemoteVertex(aLsb,neighborID,r,x,inNeighbor);
 }
-
-//bool ORemoteVertex::isInNeighbor() {
-//    return _inNeighbor;
-//}
-//
-//uint8_t ORemoteVertex::getIndex() {
-//    return _index;
-//}
-//
-//void ORemoteVertex::clearLambdaMinLambdaMax() {
-//    _lambdaMin = 0;
-//    _lambdaMax = 0;
-//}
 
 /// End public methods
 /// Private methods
-void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, long lambdaMin, long lambdaMax, bool inNeighbor, uint8_t index) {
+void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor) {
     _inNeighbor = inNeighbor;
-    _index = index;
-    _prepareOVertex(aLsb,lambdaMin,lambdaMax);
+    _index = neighborID-1;
+    _r = r;
+    _x = x;
+    _fp = 0;
+    _fq = 0;
+    _lambda = 0;
+    _gfp = 0;
+    _gfq = 0;
+    _glambda = 0;
+    _gfpNode = 0;
+    _gfqNode = 0;
+    _glambdaNode = 0;
+    _gfpNeighbor = 0;
+    _gfqNeighbor = 0;
+    _glambdaNeighbor = 0;
+    _gfpTMP = 0;
+    _gfqTMP = 0;
+    _glambdaTMP = 0;
+    _linkStatus = 0;
+    _nodeFlag = false;
+    _neighborFlag = false;
+    _fpNode = 0; //local estimate of per-unit active flow along electrical link
+    _fqNode = 0; //local estimate of per-unit reactive flow along electrical link
+    _lambdaNode = 0; //local estimate of lagrange multiplier for LinDistFlow
+    _fpNeighbor = 0; //remote estimate of per-unit active flow along electrical link
+    _fqNeighbor = 0; //remote estimate of per-unit reactive flow along electrical link
+    _lambdaNeighbor = 0; //remote estimate of lagrange multiplier for LinDistFlow
+    _sumLambda = 0;     //running sum of Lambda for remotevertex
+    _sumNu = 0;        //running sum of Nu for remotevertex
+    _sumGamma = 0;      //running sum of Nu for remotevertex
+    _prepareOVertex(aLsb, neighborID);
 }
 /// End private methods
 //// End ORemoteVertex
@@ -559,13 +637,26 @@ void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, long lambdaMin, long la
 // Constructors
 OGraph::OGraph() {
     _n = 0;
-    OLocalVertex self = OLocalVertex();
-    _self = &self;
+    OLocalVertex s =  OLocalVertex();
+    _self = &s;
+    //linkedlist for online neighbors
+    LinkedList _l = LinkedList();
+    _list = &_l;
 }
 
 OGraph::OGraph(OLocalVertex * s) {
     _n = 1;
     _self = s;
+    //linkedlist for online neighbors
+    LinkedList _l = LinkedList();
+    _list = &_l;
+}
+
+OGraph::OGraph(OLocalVertex * s, LinkedList * l) {
+    _n = 1;
+    _self = s;
+    //linkedlist for online neighbors
+    _list = l;
 }
 
 // Local vertex
@@ -581,7 +672,7 @@ bool OGraph::isLocalVertex(uint32_t aLsb) {
 }
 
 //bool OGraph::isLocalVertex(XBeeAddress64 a) {
-//	return isLocalVertex(a.getLsb());
+//  return isLocalVertex(a.getLsb());
 //}
 
 // Graph properties
@@ -594,23 +685,47 @@ bool OGraph::isLocalVertex(uint32_t aLsb) {
 //}
 
 // Add and remove vertices from in-neighborhood
-bool OGraph::addInNeighbor(XBeeAddress64 a) {
-    return addInNeighbor(a.getLsb());
+bool OGraph::addInNeighbor(XBeeAddress64 a, uint8_t neighborID) {
+    return addInNeighbor(a.getLsb(),neighborID);
 }
 
-bool OGraph::addInNeighbor(uint32_t aLsb) {
-    return addInNeighbor(aLsb,0,0);
+bool OGraph::addInNeighbor(uint32_t aLsb, uint8_t neighborID) {
+    return addInNeighbor(aLsb,neighborID,0,0);
 }
 
-bool OGraph::addInNeighbor(XBeeAddress64 a, long lambdaMin, long lambdaMax) {
-    return addInNeighbor(a.getLsb(),lambdaMin,lambdaMax);
+bool OGraph::addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x) {
+    return addInNeighbor(a.getLsb(),neighborID,r,x);
 }
 
-bool OGraph::addInNeighbor(uint32_t aLsb, long lambdaMin, long lambdaMax) {
+bool OGraph::addInNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x) {
     // make sure we can add another inNeighbor
     if((_self->getInDegree()) < NUM_IN_NEIGHBORS)
-        return _addRemoteVertex(aLsb,lambdaMin,lambdaMax,true);
+        return _addRemoteVertex(aLsb,neighborID,r,x,true);
     return false;
+}
+
+bool OGraph::removeInNeighbor(uint8_t neighborID){
+    
+    ORemoteVertex * neighbor = getRemoteVertex(neighborID-1);
+    uint32_t aLsb = neighbor->getAddressLsb();
+
+    if(isInNeighbor(aLsb))
+    {
+        uint8_t i = _getRemoteVertexIndex(aLsb);
+        _self->decrementInDegree(); 
+
+        //_n = _n - 1;        // _n is the number of nodes in the network
+                            //since one neighbor is no longer in the network, the number of nodes reduces by 1
+        
+        //_n is used as the reference when adding new neighbors so as long as that is reduced the addInNeigbor() works as expected
+
+        uint8_t Dout = _self->getOutDegree();  //since we assume it is a bidirectional graph, InDegree is equivalent to OutDegree
+        _self->setOutDegree(Dout - 1);
+
+        return true;
+    }
+    
+        return false;
 }
 
 // Determine if vertex is in in-neighborhood
@@ -643,20 +758,20 @@ bool OGraph::isInNeighbor(uint32_t aLsb, ORemoteVertex * &v) {
 }
 
 // Add and remove vertices from list of non-neighbors
-bool OGraph::addNonNeighbor(XBeeAddress64 a) {
-    return addNonNeighbor(a.getLsb());
+bool OGraph::addNonNeighbor(XBeeAddress64 a, uint8_t neighborID) {
+    return addNonNeighbor(a.getLsb(),neighborID);
 }
 
-bool OGraph::addNonNeighbor(uint32_t aLsb) {
-    return addNonNeighbor(aLsb,0,0);
+bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID) {
+    return addNonNeighbor(aLsb,neighborID,0,0);
 }
 
-bool OGraph::addNonNeighbor(XBeeAddress64 a, long lambdaMin, long lambdaMax) {
-    return addNonNeighbor(a.getLsb(),lambdaMin,lambdaMax);
+bool OGraph::addNonNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x) {
+    return addNonNeighbor(a.getLsb(),neighborID,r,x);
 }
 
-bool OGraph::addNonNeighbor(uint32_t aLsb, long lambdaMin, long lambdaMax) {
-    return _addRemoteVertex(aLsb,lambdaMin,lambdaMax);
+bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x) {
+    return _addRemoteVertex(aLsb,neighborID,r,x);
 }
 
 // Determine if vertex is non-neighbor
@@ -681,7 +796,7 @@ bool OGraph::isNonNeighbor(uint32_t aLsb, uint8_t &i) {
 
 // Methods to clear various states
 void OGraph::clearAllNuTau() {
-	_self->clearAllTau();
+    _self->clearAllTau();
     _self->clearAllNuMinNuMax();
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
         _remoteVertices[i].clearAllNuMinNuMax();
@@ -690,28 +805,22 @@ void OGraph::clearAllNuTau() {
 
 void OGraph::clearAllYMinYMax() {
     _self->clearYMinYMax();
-	for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++)
-		_remoteVertices[i].clearYMinYMax();
+    for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++)
+        _remoteVertices[i].clearYMinYMax();
 }
 
 void OGraph::clearAllInStates() {
     _self->clearZIn();
     _self->clearYMinInYMaxIn();
-	for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++)
-		_remoteVertices[i].clearYMinInYMaxIn();
+    for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++)
+        _remoteVertices[i].clearYMinInYMaxIn();
 }
 
 void OGraph::clearAllBroadcastStates() {
-	_self->clearSigma();
+    _self->clearSigma();
     _self->clearMuMinMuMax();
-	for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++)
-		_remoteVertices[i].clearMuMinMuMax();
-}
-
-void OGraph::clearAllBroadcastLambda() {
-    _self->clearBroadcastLambda();
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++)
-        _remoteVertices[i].clearBroadcastLambda();
+        _remoteVertices[i].clearMuMinMuMax();
 }
 
 void OGraph::clearAllStates() {
@@ -722,14 +831,11 @@ void OGraph::clearAllStates() {
     _self->clearYMinInYMaxIn();
     _self->clearMuMinMuMax();
     _self->clearAllNuMinNuMax();
-    _self->clearBroadcastLambda();
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
         _remoteVertices[i].clearYMinYMax();
         _remoteVertices[i].clearYMinInYMaxIn();
         _remoteVertices[i].clearMuMinMuMax();
         _remoteVertices[i].clearAllNuMinNuMax();
-        _remoteVertices[i].clearBroadcastLambda();
-        //_remoteVertices[i].clearLambdaMinLambdaMax();
     }    
 }
 
@@ -740,33 +846,33 @@ OVertex * OGraph::getVertexByAddressLsb(uint32_t aLsb) {
 
 // Methods to pointer to vertex
 OVertex * OGraph::getVertexByAddressLsb(uint32_t aLsb, uint8_t &i) {
-	uint8_t j;	// index of in-neighbor or non-neighbor
-	if(isLocalVertex(aLsb)) {
+    uint8_t j;  // index of in-neighbor or non-neighbor
+    if(isLocalVertex(aLsb)) {
         // vertex id of local vertex is 0
         i = 0;
-		return dynamic_cast<OVertex*> (_self);
-	} else if(_isRemoteVertex(aLsb,j)) {
+        return dynamic_cast<OVertex*> (_self);
+    } else if(_isRemoteVertex(aLsb,j)) {
         // vertex id of in-neighbor is index of inNeighbor + 1
         i = j + 1;
-		return dynamic_cast<OVertex*> (&_remoteVertices[j]);
-	}
+        return dynamic_cast<OVertex*> (&_remoteVertices[j]);
+    }
 }
 
 OVertex * OGraph::getVertexByAddress(XBeeAddress64 a) {
-	return getVertexByAddressLsb(a.getLsb());
+    return getVertexByAddressLsb(a.getLsb());
 }
 
 OVertex * OGraph::getVertexByUniqueID(uint8_t i) {
-	if(i == 0) {
-		return dynamic_cast<OVertex*> (_self);
-	} else if(i >= 1 && i <= NUM_REMOTE_VERTICES) {
-		return dynamic_cast<OVertex*> (&_remoteVertices[i-1]);
-	}
+    if(i == 0) {
+        return dynamic_cast<OVertex*> (_self);
+    } else if(i >= 1 && i <= NUM_REMOTE_VERTICES) {
+        return dynamic_cast<OVertex*> (&_remoteVertices[i-1]);
+    }
 }
 
-ORemoteVertex * OGraph::getRemoteVertex(uint8_t i) {
-    if(i < NUM_REMOTE_VERTICES)
-        return &_remoteVertices[i];
+ORemoteVertex * OGraph::getRemoteVertex(uint8_t neighborID) {
+    if(neighborID < NUM_REMOTE_VERTICES)
+        return &_remoteVertices[neighborID-1];
     return 0x0;
 }
 
@@ -774,16 +880,22 @@ ORemoteVertex * OGraph::getRemoteVertex(uint8_t i) {
 /// Private methods
 
 
+void OGraph::configureLinkedList() {
+    _list->updateLinkedList(_self->getStatusP());
+    _list->displayLinkedList();
+    Serial<<"Out degree is: "<<_self->getOutDegree()<<endl;
+}
+
 uint8_t OGraph::_getRemoteVertexIndex(XBeeAddress64 a) {
-	return _getRemoteVertexIndex(a.getLsb());
+    return _getRemoteVertexIndex(a.getLsb());
 }
 
 uint8_t OGraph::_getRemoteVertexIndex(uint32_t aLsb) {
-	for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
-		if(_remoteVertices[i].getAddressLsb() == aLsb)
-			return i;
-	}
-	return INVALID_ARRAY_INDEX;
+    for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
+        if(_remoteVertices[i].getAddressLsb() == aLsb)
+            return i;
+    }
+    return INVALID_ARRAY_INDEX;
 }
 
 bool OGraph::_isRemoteVertex(uint32_t aLsb) {
@@ -798,38 +910,40 @@ bool OGraph::_isRemoteVertex(uint32_t aLsb, uint8_t &i) {
     return false;
 }
 
-bool OGraph::_addRemoteVertex(uint32_t aLsb, long lambdaMin, long lambdaMax, bool inNeighbor) {
-    // get current number of vertices in array of non-neighbors
-    uint8_t s = _n - 1;
-	// check if another vertex can be stored
-	if(s+1 <= NUM_REMOTE_VERTICES) {
-		// there is room for one more non-neighbor in array
-		// check if vertex is already stored in array
+bool OGraph::_addRemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor) {
+    // determine index for new neighbor
+    uint8_t index = neighborID - 1;
+    // check if another vertex can be stored
+    if(_n <= NUM_REMOTE_VERTICES) {
+        // there is room for one more non-neighbor in array
+        // check if vertex is already stored in array
         if(!_isRemoteVertex(aLsb)) {
-            uint8_t index = 0;
             // if vertex is an in-neighbor, increment local vertex in-degree variable
             if(inNeighbor) {
-                index = _self->getInDegree();
                 _self->incrementInDegree();
+                _self->incrementOutDegree(); //assume bidirectional communication
             }
-        	// create new instance of OVertex object and store in array
-            _remoteVertices[s] = ORemoteVertex(aLsb,lambdaMin,lambdaMax,inNeighbor,index);
+            // create new instance of OVertex object and store in array
+            _remoteVertices[index] = ORemoteVertex(aLsb,neighborID,r,x,inNeighbor);
+            if(_self->getID() < neighborID)
+                _remoteVertices[index].setNodeFlag(true);
+            _self->setStatus(neighborID, 2);
             // increment total number of vertices current initialized
             _n++;
 #ifdef VERBOSE
             Serial << _MEM(PSTR("Vertex with address lsb 0x")) << _HEX(aLsb) << _MEM(PSTR(" added array of remote vertices.")) << endl;
 #endif
-            return true;            
+            return true;
         } else {
 #ifdef VERBOSE
             Serial << _MEM(PSTR("Vertex not added. A vertex with the same address is already in the array of remote vertices.")) << endl;
 #endif
         }
-	} else {
+    } else {
 #ifdef VERBOSE
         Serial << _MEM(PSTR("No room to add another vertex to array of remote vertices.")) << endl;
 #endif
     }
-	return false; // anything that comes here is an error /// End private methods
+    return false; // anything that comes here is an error /// End private methods
 }
 //// End OGraph

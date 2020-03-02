@@ -1,24 +1,30 @@
-//void(* resetFunc) (void) = 0; //declare reset function @ address 0
+//void(* resetFunc) (void) = 0; declare reset function @ address 0
 #include <Streaming.h>
 #include <XBee.h>
 #include <OGraph.h>
 #include <OAgent.h>
 
-long base = 100;  // not using floating points so need a base number
-long tCmd;
-uint8_t i=2;
-uint8_t errorPin = 6;
-uint8_t sPin = 7;   // synced led
+long base = 1e4;  // not using floating points so need a base number
+float tCmd;
+uint8_t i=2;//number of inneighbors
 
   //Create objects needed for communication and control
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
   // address, min, max, alpha, beta, out-degree, base
-  OLocalVertex s = OLocalVertex(0x4174F186,0*base,1*base,0,0,i,base);
-  OGraph g = OGraph(&s);
+  OLocalVertex s = OLocalVertex(0x415786D3,10,0,0,0,0,i,base);
+  LinkedList l = LinkedList();
+  OGraph g = OGraph(&s,&l);
   OAgent a = OAgent(&xbee,&rx,&g,false,true);
+  
+uint8_t errorPin = 6;
+uint8_t sPin = 7;   // synced led
+uint8_t cPin = 48;  // coordination enabled led pin
 
-void setup()  {
+//variables for node sync check
+boolean de = false;
+void setup()  
+{
   Serial.begin(38400);
   Serial3.begin(38400);
   pinMode(13, OUTPUT);
@@ -27,27 +33,80 @@ void setup()  {
   pinMode(49,OUTPUT);
   xbee.setSerial(Serial3);
 
-  g.addInNeighbor(0x4174F1AA); // node 1
-  g.addInNeighbor(0x4151C688); // node 5
-  
-//  synchronize all nodes
-  if(a.sync())  {
-    digitalWrite(sPin,HIGH);
-    Serial.println("Ard 2 has been synced");
-    Serial.print("Leader time is ");
-    unsigned long LeaderT = a.myMillis();
-    Serial.println(LeaderT);
-//    if(a.resetSync()){
-//      Serial.println("Reset packet received");
-//      delay(100);
-//      resetFunc();
-//    }
-    digitalWrite(49,HIGH);
-  }
+  g.addInNeighbor(0x415786E1,9,0,0); // node 9
+  g.addInNeighbor(0x415DB664,14,0,0); // node 14
+  g.configureLinkedList();
 }
+  void loop()
+{
+  if(de == false) 
+  {
+    if(!(a.isLeader()))
+    {
+      Serial.println("Still trying to sync");
+      if(a.sync()) 
+      {
+        Serial.println("Communication Link established");
+        Serial.println("c");
+        delay(10);
+        digitalWrite(sPin,HIGH);
+        de = true;
+      }
+      else
+      {
+        de  = false; //means could not sync 
+      }
+    }
+    if (a.isLeader())
+    {
+      Serial.println("Send letter s(r) to sync(resync)"); //let computer know you want to sync
+      while (Serial.available() == 0) 
+      { 
+        //simply makes the arduino wait until commputer sends signal        
+      }
+      if(Serial.available()) 
+      {
+        Serial.println("got some letter");
+        uint8_t b = Serial.read(); //enter the character 's'
+        Serial.println(b);
+        if (b == 'r')
+          {
+            a.setLeader(0);
+          }
+        if ((b == 's')||(b == 'r'))
+        {
+          Serial.println("got the s and about to sync");
+          de = true;
+          if(a.sync()) {
+            Serial.println("Communication Link established");
+            Serial.println("c");
+            digitalWrite(sPin,HIGH);
+            //ce = true;
+          }
+          else
+          {
+            de  = false; //means could not sync 
+          } 
+        }
+      }
+    }
+  }
+  else 
+  {
+    if(a.isSynced())
+    {
+     //run fair splitting algorithm
+      tCmd = a.fairSplitRatioConsensus_RSL(3, 1, 20, 200);
+      Serial.print("The new Torque is: ");
+      Serial.println(tCmd);   
 
-void loop() {
-  tCmd = a.nonleaderFairSplitRatioConsensus(2*base);
-  Serial.print("The new Torque is: ");
-  Serial.println(tCmd);
+      int bbbb = Serial.read();
+
+      while(Serial.available()==0)
+      {
+        
+      }      
+       a.resync();
+    }
+  }
 }
