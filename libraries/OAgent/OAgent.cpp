@@ -259,7 +259,8 @@ float OAgent::fairSplitRatioConsensus(long y, long z, uint8_t iterations, uint16
 
 
 // Resilient Fair splitting RC (added in by Olaolu)
-float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period) {  //,uint8_t round
+float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period) //,uint8_t round
+{  
     OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex 
     float Dout = float(s->getOutDegree() + 1);    // store out degree, the +1 is to account for the self loops
     _initializeFairSplitting_RSL(s,y,z);      // initialize state variables                           
@@ -268,10 +269,12 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     bool mucheck = 0;
     bool sigmacheck = 0;
     //srand(analogRead(0)); //put this instruction in both the leader and nonleader consensus functions
-    uint16_t txTime;       //_genTxTime(period,10,analogRead(0));   // get transmit time; 
-    float inY;                           // incoming state variable
+    uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
+    float inY;              // incoming state variable
     float inZ;
-    int count = 3;
+    float eps;              //variable for setting the end point of the iterations
+    int count = 3;    
+    int iter;               //variable for the iteration count
     //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
     //int step_counter = 0;        //used when adjusting vertex array to account for offline neigbors
@@ -288,8 +291,9 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
 
     //if(txTime <= 0 || txTime > period)
      //   txTime = 25;                      //25 milliseconds
-
-    for(uint8_t k = 0; k < iterations; k++) {
+    iter=0;
+    do
+    {
         srand(analogRead(0));
         txTime =  (rand() % (period - 2*frame)) + frame;  //determines the time window in which a payload is transmitted
         txDone = false;     // initialize toggle to keep track of broadcasts
@@ -444,7 +448,9 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         no_of_nodes = no_of_nodes - step_counter;
         
         */
-    }
+        iter++;// increase the iteration count
+
+    }while(iter<=iterations || s->getYMin() <= eps || s->getZ() <= eps);
 
     if(s->getZ() != 0)
         _buffer[0] = float(s->getYMin())/float(s->getZ()); 
@@ -457,7 +463,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     //Serial << "RC from Library";
     //Serial << float(s->getYMin())/float(s->getZ());
     //Serial <<"\n";  
-    return float (float(s->getYMin())/float(s->getZ()));
+    return (s->getYMin()/s->getZ());
 }
 
 
