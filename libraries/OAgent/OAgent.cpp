@@ -272,7 +272,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
     float inY;              // incoming state variable
     float inZ;
-    float eps=0.01;       //variable for setting the end point of the iterations
+    float eps=0.0001;       //variable for setting the end point of the iterations
     float endY;
     float endZ;
     int count = 3;    
@@ -304,7 +304,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         inY = 0;
         inZ = 0;
             
-        Serial<<"Iteration "<<iter+1<<". Ratio is: "<<_FLOAT(float(s->getYMin())/float(s->getZ()),4)<<"; Y is: "<<_FLOAT(float(s->getYMin()),4)<<"; Z is: "<<_FLOAT(float(s->getZ()),4)<<endl;
+        Serial<<"Iteration "<<iter+1<<". Ratio is: "<<_FLOAT(s->getYMin()/s->getZ(),4)<<"; Y is: "<<_FLOAT(s->getYMin(),4)<<"; Z is: "<<_FLOAT(s->getZ(),4)<<endl;
         delay(5);
         endY=s->getYMin();
         endZ=s->getZ();
@@ -454,11 +454,11 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         */
         iter++;// increase the iteration count
 
-        Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<" when eps is: "<<eps<<endl;
-    }while(iter < iterations && endY > eps && endZ > eps);
+        //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<" when eps is: "<<eps<<endl;
+    }while(iter < iterations && endY > eps && endZ > eps); //we need to implement here the max consensus
 
     if(s->getZ() != 0)
-        _buffer[0] = float(s->getYMin())/float(s->getZ()); 
+        _buffer[0] = (s->getYMin()/s->getZ()); 
 
 
     _buffer[1] = s->getOutDegree();
