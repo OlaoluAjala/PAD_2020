@@ -101,8 +101,8 @@ void loop()
     if(a.isSynced())
     {
      //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(25, 1, 50, 200);
-      Serial.print("The new Torque is: ");
+      tCmd = a.fairSplitRatioConsensus_RSL(50, 1, 30, 200);
+      Serial.print("The value of the RC algorithm is: ");
       Serial.println(tCmd);
 
       int bbbb = Serial.read();

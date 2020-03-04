@@ -12,6 +12,7 @@
 
 #include "OAgent.h"
 #include "Streaming.h"
+#include <cstdlib> 
 //#define VERBOSE
 
 //// Public methods
@@ -272,11 +273,14 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
     float inY;              // incoming state variable
     float inZ;
-    float eps=0.0001;       //variable for setting the end point of the iterations
+    float eps=0.00001;       //variable for setting the end point of the iterations
     float endY;
     float endZ;
     int count = 3;    
     int iter;               //variable for the iteration count
+    float sign_mu;
+    float sign_sigma;
+
     //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
     //int step_counter = 0;        //used when adjusting vertex array to account for offline neigbors
@@ -454,9 +458,9 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         */
         iter++;// increase the iteration count
 
-        //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<" when eps is: "<<eps<<endl;
-    }while(iter < iterations && endY > eps && endZ > eps); //we need to implement here the max consensus
-
+        //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
+    }while(iter < iterations); //we need to implement here the max consensus
+//}while(iter < iterations && -(endY) > eps && (endZ) > eps);
     if(s->getZ() != 0)
         _buffer[0] = (s->getYMin()/s->getZ()); 
 
@@ -3864,7 +3868,7 @@ void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
 
 //leaderfailure-resilient version (Olaolu)
 void OAgent::_broadcastFairSplitPacket_RSL(OLocalVertex * s) {   
-    uint16_t payload[6];                
+    uint16_t payload[8];                
     float mu    = (s->getMuMin())*BASE;
     float sigma = (s->getSigma())*BASE; 
     uint16_t id = s->getID();
@@ -3878,6 +3882,25 @@ void OAgent::_broadcastFairSplitPacket_RSL(OLocalVertex * s) {
     payload[3] = Sigma;
     payload[4] = Sigma >> 16;
     payload[5] = id;
+
+    if(mu<0)
+    {
+        payload[6]=0;   // sign of mu
+
+    }else
+    {
+        payload[6]=1;    //sign of sigma
+
+    }
+    if(sigma<0)
+    {
+        payload[7]=0;   // sign of mu
+
+    }else
+    {
+        payload[7]=1;    //sign of sigma
+
+    }
     //payload[6] = inheritorID;   //added in by Olaolu
     //payload[7] = leaderID;   //added in by Olaolu
     //payload[8] = deputyID;   //added in by Olaolu
@@ -3907,17 +3930,40 @@ void OAgent::_broadcastMaxMinPacket(long max, long min) {
 
 float OAgent::_getMuFromPacket() {
     uint8_t ptr = 2;
+    uint8_t ptr_sign = 12;
     long Mu = _getUint32_tFromPacket(ptr);
     float mu = float(Mu);
-    return (mu/BASE);
+    long Sign = _getUint32_tFromPacket(ptr_sign);
+    
+    if(Sign==0)
+    {
+        return (-mu/BASE);  
+    }else
+    {
+        return (mu/BASE);  
+    }
 }
 
 float OAgent::_getSigmaFromPacket() {
     uint8_t ptr = 6;
+    uint8_t ptr_sign = 14;
     long Sigma = _getUint32_tFromPacket(ptr);
     float sigma = float(Sigma);
-    return (sigma/BASE);
+    long Sign = _getUint32_tFromPacket(ptr_sign);
+
+    if(Sign==0)
+    {
+        return (-sigma/BASE);  
+    }else
+    {
+        return (sigma/BASE);  
+    }
+
+    
 }
+
+
+
 
 /// End fair splitting ratio-consensus methods
 
