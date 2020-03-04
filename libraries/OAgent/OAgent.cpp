@@ -163,6 +163,7 @@ float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t peri
             //Serial << _MEM(PSTR("z(")) << (k+1) << _MEM(PSTR(") = ")) << s->getZ() << _MEM(PSTR(";")) << endl;
             delay(10);
         } else {
+
             delay(25);
         }
         s->setYMinP((s->getYMinP())/Dout + inY);
@@ -170,7 +171,7 @@ float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t peri
         s->setZP((s->getZP())/Dout + inZ);
         s->addToSigmaP((s->getZP())/Dout);
     }
-    return float(s->getYMinP())/(s->getZP());
+    return (s->getYMinP())/(s->getZP());
 }
 
 
