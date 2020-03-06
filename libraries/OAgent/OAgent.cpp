@@ -143,8 +143,8 @@ float OAgent::fairSplitRatioConsensus(long y, long z, uint8_t iterations, uint16
                     
                     long Mudiff = inMu - s->getNuMin(i); 
                     long sigdiff =  inSigma - s->getTau(i);
-                        Serial<<"incoming y from node "<<i<<" is: "<<Mudiff<<endl;
-                        Serial<<"incoming z from node "<<i<<" is: "<<sigdiff<<endl;
+                        Serial<<"incoming µ from node "<<i<<" is: "<<Mudiff<<endl;
+                        Serial<<"incoming σ from node "<<i<<" is: "<<sigdiff<<endl;
                         // if(k==0)
                         //     {
                         //      setneighborY0( (neighborID-1), Mudiff+( Mudiff*(inheritor_id==nodeID) ) );
