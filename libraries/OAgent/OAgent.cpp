@@ -278,8 +278,6 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     float endZ;
     int count = 3;    
     int iter;               //variable for the iteration count
-    float sign_mu;
-    float sign_sigma;
 
     //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
@@ -5948,3 +5946,18 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 
 }
 /// End general helper functions
+
+void OAgent::VoltageControl()
+    {
+      float voltage=;
+      float Vref=1;
+      float Vmax=Vref+0.05*Vref;
+      float Vmin=Vref-0.05*Vref;
+
+
+        
+    }
+
+
+
+

@@ -144,6 +144,7 @@ class OAgent {
         //inline float getneighborY0(int index){ return _neighborY0[index]; }
         //inline float getneighborZ0(int index){ return _neighborZ0[index]; }
                
+        void VoltageControl ();
 
     private:
         // Properties

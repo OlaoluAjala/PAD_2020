@@ -228,6 +228,16 @@ class OLocalVertex : public OVertex {
         inline void setLambda(float lambda) { _lambda = lambda; }
         inline void setGamma(float gamma) { _gamma = gamma; }
         inline void setGammaTMP(float gammaTMP) { _gammaTMP = gammaTMP; }
+
+        // Set directive for Voltage Control algorithm
+        // inline void getVoltage(float V) { _V = V; }
+        // inline void getmuFromNeighbor(float mu) { _mu = mu; }
+        // inline void getnuUpperFromNeighbor(float nuUpperVoltage) { _nuUpperVoltage = nuUpperVoltage; }
+        // inline void getnuLowerFromNeighbor(float nuLowerVoltage) { _nuLowerVoltage = nuLower Voltage; }
+        // inline void getq(float q) { _qtotal = qtotal; }
+        // inline void getqrise(float qrise) { _qrise = qrise; }
+        // inline void getVoltage(float V) { _V = V; }  
+
         
     protected:
         /// Properties
@@ -293,6 +303,16 @@ class OLocalVertex : public OVertex {
         float _buffer_sqV[200];
         float _buffer_mu[200];
         float _buffer_nu[200];
+
+        //Variables for the Voltage control algorithm
+        // float _V;
+        // float _qtotal;
+        // float _qrise;
+        // float _qlower;
+        // float _nuUpperVoltage;
+        // float _nuLowerVoltage;
+        // float _muVoltage;
+        // float _alpha;
 };
 
 class OLocalReserveVertex : public OLocalVertex {
