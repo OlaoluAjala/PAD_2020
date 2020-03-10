@@ -158,12 +158,14 @@ class OLocalVertex : public OVertex {
         bool setTau(uint8_t i, float tau);
         float getTau(uint8_t i);
         void clearAllTau();
+
         // Limits and cost coefficients
         inline float getMin() { return _min; }
         inline float getMax() { return _max; }
         inline void setMax(float max) { _max = max; }
         inline float getAlpha() { return _alpha; }
         inline float getBeta() { return _beta; }
+
         // Clear temporary states (zIn and sigma)
         inline void clearZInSigma() { _zIn = 0; _sigma = 0; }
 
@@ -229,15 +231,40 @@ class OLocalVertex : public OVertex {
         inline void setGamma(float gamma) { _gamma = gamma; }
         inline void setGammaTMP(float gammaTMP) { _gammaTMP = gammaTMP; }
 
-        // Set directive for Voltage Control algorithm
-        // inline void getVoltage(float V) { _V = V; }
-        // inline void getmuFromNeighbor(float mu) { _mu = mu; }
-        // inline void getnuUpperFromNeighbor(float nuUpperVoltage) { _nuUpperVoltage = nuUpperVoltage; }
-        // inline void getnuLowerFromNeighbor(float nuLowerVoltage) { _nuLowerVoltage = nuLower Voltage; }
-        // inline void getq(float q) { _qtotal = qtotal; }
-        // inline void getqrise(float qrise) { _qrise = qrise; }
-        // inline void getVoltage(float V) { _V = V; }  
+        // get directive for Voltage Control algorithm
+        inline float getVoltage() { return _V; }
+        inline float getVref() {return _Vref; }        
+        inline float getTheta() { return _theta; }       
+        inline float getq() { return _qtotal ; }
+        inline float getQrise() { return _qrise; }
+        inline float getQlower() { return _qlower; }
+        inline float getPtotal() { return _ptotal; }
+        inline float getD() { return _D; }
 
+        inline bool getStateOver() {return _over;}
+        inline bool getStateUnder() {return _under;}
+
+        
+        // inline float getmuFromNeighbor() { return _mu; }
+        // inline float getnuUpperFromNeighbor() { return _nuUpperVoltage; }
+        // inline float getnuLowerFromNeighbor() { return _nuLowerVoltage; }
+
+        //set directive for Voltage Control algorithm
+        inline void setVoltage(float V) { _V = V; }
+        inline void setVoltaeg(float V_ref) { _Vref = Vref; }
+        inline void setTheta(float theta) { _theta = theta; }        
+        inline void setq(float q) { _qtotal = qtotal; }
+        inline void setQrise(float qrise) { _qrise = qrise; }
+        inline void setQlower(float qlower) { _qlower = qlower; }
+        inline void setPtotal(float ptotal) { _ptotal = ptotal; }
+        inline void setD(float D) { _D = D; }
+
+        inline void setStateOVer(bool over) { _over = over; }
+        inline void setStateUnder(bool under) { _under = under; }
+        
+        // inline void setmuFromNeighbor(float mu) { _mu = mu; }
+        // inline void setnuUpperFromNeighbor(float nuUpperVoltage) { _nuUpperVoltage = nuUpperVoltage; }
+        // inline void setnuLowerFromNeighbor(float nuLowerVoltage) { _nuLowerVoltage = nuLower Voltage; }
         
     protected:
         /// Properties
@@ -305,14 +332,20 @@ class OLocalVertex : public OVertex {
         float _buffer_nu[200];
 
         //Variables for the Voltage control algorithm
-        // float _V;
-        // float _qtotal;
-        // float _qrise;
-        // float _qlower;
-        // float _nuUpperVoltage;
-        // float _nuLowerVoltage;
-        // float _muVoltage;
-        // float _alpha;
+        float _V;
+        float _Vref;
+        float _theta;
+        float _qtotal;
+        float _ptotal;
+        float _qrise;
+        float _qlower;
+        float _nuUpperVoltage;
+        float _nuLowerVoltage;
+        float _muVoltage;
+        float _alpha;
+
+        bool _over;
+        bool _under;
 };
 
 class OLocalReserveVertex : public OLocalVertex {

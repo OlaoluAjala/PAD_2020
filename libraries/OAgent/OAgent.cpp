@@ -262,11 +262,11 @@ float OAgent::fairSplitRatioConsensus(long y, long z, uint8_t iterations, uint16
 // Resilient Fair splitting RC (added in by Olaolu)
 float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period) //,uint8_t round
 {  
-    OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex 
-    float Dout = float(s->getOutDegree() + 1);    // store out degree, the +1 is to account for the self loops
-    _initializeFairSplitting_RSL(s,y,z);      // initialize state variables                           
-    unsigned long start;                // create variable to store iteration start time
-    bool txDone;                        // create variable to keep track of broadcasts
+    OLocalVertex * s = _G->getLocalVertex();        // store pointer to local vertex 
+    float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops
+    _initializeFairSplitting_RSL(s,y,z);            // initialize state variables                           
+    unsigned long start;                            // create variable to store iteration start time
+    bool txDone;                                    // create variable to keep track of broadcasts
     bool mucheck = 0;
     bool sigmacheck = 0;
     //srand(analogRead(0)); //put this instruction in both the leader and nonleader consensus functions
@@ -3831,7 +3831,7 @@ void OAgent::_initializeFairSplitting_RSL(OLocalVertex * s, float y, float z) {
     // }   
     s->setYMin(y - s->getMin());            // set initial y value (using yMin) [y - min]
     s->setMuMin(s->getYMin()/Dout);         // Initialize mu = y/
-    s->setZ(z - s->getMin());     // set initial z value [z - min]
+    s->setZ(z - s->getMin());               // set initial z value [z - min]
     s->setSigma(s->getZ()/Dout);            // Initialize sigma = z/Dout
 
     //initialize min and max consensus. Min consensus is used to choose leader, max consensus is used to choose deputy
@@ -5947,17 +5947,65 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 }
 /// End general helper functions
 
-void OAgent::VoltageControl()
+float OAgent::VoltageControl( float V, float theta, float q, float qrise, float qlower, float D, float P, float secPercentage )  //it is going to give back the q required to rise or lower
     {
-      float voltage=;
-      float Vref=1;
-      float Vmax=Vref+0.05*Vref;
-      float Vmin=Vref-0.05*Vref;
+      OLocalVertex * s = _G->getLocalVertex();  
+      _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
+      
+
+
+
+
 
 
         
     }
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
+    {
+    _G->clearAllStates(); 
 
+    s->setVoltage(V - getMin());
+    s->setTheta(theta - getMin());
+    s->setQtotal(q - getMin());
+    s->setQrise(qrise - getMin());
+    s->setQlower(qlower - getMin());
+    s->setPtotal(P- getMin());
+    s->setD(D - getMin());
+    s->setVref(float(1));
 
+    //check for overvolrage and
+    isOverVoltage(s, securityPercent);
+    isUnderVoltage(s, securityPercent);
 
+    }
+
+void OAgent::isOverVoltage(OLocalVertex * s, float secPercentage)
+    {
+        if(V > (s->getVref() + (s->getVref() * secPercentage/float (100))))
+        {
+            uint8_t ID = s->getID();
+            Serial<<"node "<<ID<<"is working with over-voltage condition"; 
+            setStateOver(true); 
+            return true;   
+
+        }else
+        {
+            return false;
+        }
+    }
+
+void OAgent::isUnderVoltage(OLocalVertex * s, float secPercentage)
+    {
+        if(V < (s->getVref() - (s->getVref() * secPercentage/float (100))))
+        {
+            uint8_t ID = s->getID();
+            Serial<<"node "<<ID<<"is working with under-voltage condition";  
+            setStateUnde(true);
+            return true;   
+
+        }else
+        {
+            return false;
+        }
+    }
 
