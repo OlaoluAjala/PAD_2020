@@ -5947,12 +5947,15 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 }
 /// End general helper functions
 
-float OAgent::VoltageControl( float V, float theta, float q, float qrise, float qlower, float D, float P, float secPercentage )  //it is going to give back the q required to rise or lower
+//return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
+float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P, float q, float qrise, float qlower, float D )  //it is going to give back the q required to rise or lower
     {
       OLocalVertex * s = _G->getLocalVertex();  
       _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
       
-
+    //check for overvolrage and
+    isOverVoltage(s, securityPercent);
+    isUnderVoltage(s, securityPercent);
 
 
 
@@ -5960,22 +5963,17 @@ float OAgent::VoltageControl( float V, float theta, float q, float qrise, float 
 
         
     }
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
     {
     _G->clearAllStates(); 
 
-    s->setVoltage(V - getMin());
-    s->setTheta(theta - getMin());
-    s->setQtotal(q - getMin());
-    s->setQrise(qrise - getMin());
-    s->setQlower(qlower - getMin());
-    s->setPtotal(P- getMin());
-    s->setD(D - getMin());
+    s->setVoltage(V);
+    s->setQtotal(q);
+    s->setQrise(qrise);
+    s->setQlower(qlower);
+    s->setPtotal(P);
+    s->setD(D);
     s->setVref(float(1));
-
-    //check for overvolrage and
-    isOverVoltage(s, securityPercent);
-    isUnderVoltage(s, securityPercent);
 
     }
 
@@ -5985,12 +5983,11 @@ void OAgent::isOverVoltage(OLocalVertex * s, float secPercentage)
         {
             uint8_t ID = s->getID();
             Serial<<"node "<<ID<<"is working with over-voltage condition"; 
-            setStateOver(true); 
-            return true;   
+            setStateOver(true);    
 
         }else
         {
-            return false;
+            setStateOver(false); 
         }
     }
 
@@ -6000,12 +5997,11 @@ void OAgent::isUnderVoltage(OLocalVertex * s, float secPercentage)
         {
             uint8_t ID = s->getID();
             Serial<<"node "<<ID<<"is working with under-voltage condition";  
-            setStateUnde(true);
-            return true;   
+            setStateUnde(true); 
 
         }else
         {
-            return false;
+            setStateUnder(false); 
         }
     }
 

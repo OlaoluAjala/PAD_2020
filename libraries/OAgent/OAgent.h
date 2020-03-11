@@ -144,7 +144,7 @@ class OAgent {
         //inline float getneighborY0(int index){ return _neighborY0[index]; }
         //inline float getneighborZ0(int index){ return _neighborZ0[index]; }
                
-        void VoltageControl( float V, float theta, float q, float qrise, float qlower, float D, float P, float secPercentage );
+        void VoltageControl( float V, float Vref, float secPercentage, float P, float q, float qrise, float qlower, float D );
         void isOverVoltage(OLocalVertex * s, float secPercentage);
         void isUnderVoltage(OLocalVertex * s, float secPercentage);
 
@@ -380,7 +380,7 @@ class OAgent {
         void _prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader = false, bool quiet = true);
 
         //voltage control functions
-        void _initializeVoltageControl(OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float secPercentage);
+        void _initializeVoltageControl(OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float secPercentage);
 };
 
 #endif // OAgent_h
