@@ -5949,17 +5949,27 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 
 float OAgent::VoltageControl( float V, float theta, float q, float qrise, float qlower, float D, float P, float secPercentage )  //it is going to give back the q required to rise or lower
     {
-      OLocalVertex * s = _G->getLocalVertex();  
-      _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
+    OLocalVertex * s = _G->getLocalVertex();  
+    _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
       
+<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
+
+=======
+    //check for overvolrage and
+    isOverVoltage(s, securityPercent);
+    isUnderVoltage(s, securityPercent);
+<<<<<<< Updated upstream
+>>>>>>> minor update
 
 
-
+=======
+>>>>>>> Stashed changes
 
 
 
         
     }
+<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
     {
     _G->clearAllStates(); 
@@ -5971,6 +5981,27 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, 
     s->setQlower(qlower - getMin());
     s->setPtotal(P- getMin());
     s->setD(D - getMin());
+=======
+<<<<<<< Updated upstream
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
+=======
+    
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
+>>>>>>> Stashed changes
+    {
+    _G->clearAllStates(); 
+
+    s->setVoltage(V);
+<<<<<<< Updated upstream
+=======
+    s->setTheta(theta);
+>>>>>>> Stashed changes
+    s->setQtotal(q);
+    s->setQrise(qrise);
+    s->setQlower(qlower);
+    s->setPtotal(P);
+    s->setD(D);
+>>>>>>> minor update
     s->setVref(float(1));
 
     //check for overvolrage and
