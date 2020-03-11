@@ -5961,14 +5961,20 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P,
     isOverVoltage(s, securityPercent);
     isUnderVoltage(s, securityPercent);
 <<<<<<< Updated upstream
+<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 >>>>>>> minor update
 =======
     //check for overvolrage and
     isOverVoltage(s, securityPercent);
     isUnderVoltage(s, securityPercent);
 >>>>>>> voltage control structure
+=======
+<<<<<<< Updated upstream
+>>>>>>> Auto stash before merge of "sub_dev__DIE" and "origin/sub_dev__DIE"
 
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -5991,8 +5997,11 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, 
     s->setD(D - getMin());
 =======
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
 =======
+=======
+>>>>>>> Stashed changes
     
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
 >>>>>>> Stashed changes
@@ -6001,6 +6010,10 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, 
 
     s->setVoltage(V);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    s->setTheta(theta);
+>>>>>>> Stashed changes
 =======
     s->setTheta(theta);
 >>>>>>> Stashed changes
