@@ -5956,8 +5956,11 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P,
     //check for overvolrage and
     isOverVoltage(s, securityPercent);
     isUnderVoltage(s, securityPercent);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 
+=======
+>>>>>>> sub_dev__DIE
 
 =======
 >>>>>>> Stashed changes
@@ -5966,20 +5969,27 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P,
 
         
     }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
 =======
     
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
 >>>>>>> Stashed changes
+=======
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
+>>>>>>> sub_dev__DIE
     {
     _G->clearAllStates(); 
 
     s->setVoltage(V);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     s->setTheta(theta);
 >>>>>>> Stashed changes
+=======
+>>>>>>> sub_dev__DIE
     s->setQtotal(q);
     s->setQrise(qrise);
     s->setQlower(qlower);
