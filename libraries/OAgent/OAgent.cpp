@@ -5953,28 +5953,12 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P,
     OLocalVertex * s = _G->getLocalVertex();  
     _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
       
-<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
-<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
-
-=======
     //check for overvolrage and
     isOverVoltage(s, securityPercent);
     isUnderVoltage(s, securityPercent);
 <<<<<<< Updated upstream
-<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
->>>>>>> minor update
-=======
-    //check for overvolrage and
-    isOverVoltage(s, securityPercent);
-    isUnderVoltage(s, securityPercent);
->>>>>>> voltage control structure
-=======
-<<<<<<< Updated upstream
->>>>>>> Auto stash before merge of "sub_dev__DIE" and "origin/sub_dev__DIE"
 
 
-=======
->>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -5982,26 +5966,9 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P,
 
         
     }
-<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
-<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
-    {
-    _G->clearAllStates(); 
-
-    s->setVoltage(V - getMin());
-    s->setTheta(theta - getMin());
-    s->setQtotal(q - getMin());
-    s->setQrise(qrise - getMin());
-    s->setQlower(qlower - getMin());
-    s->setPtotal(P- getMin());
-    s->setD(D - getMin());
-=======
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
 =======
-=======
->>>>>>> Stashed changes
     
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
 >>>>>>> Stashed changes
@@ -6010,29 +5977,14 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, 
 
     s->setVoltage(V);
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 =======
     s->setTheta(theta);
 >>>>>>> Stashed changes
-=======
-    s->setTheta(theta);
->>>>>>> Stashed changes
-=======
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
-    {
-    _G->clearAllStates(); 
-
-    s->setVoltage(V);
->>>>>>> voltage control structure
     s->setQtotal(q);
     s->setQrise(qrise);
     s->setQlower(qlower);
     s->setPtotal(P);
     s->setD(D);
-<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
->>>>>>> minor update
-=======
->>>>>>> voltage control structure
     s->setVref(float(1));
 
     }
