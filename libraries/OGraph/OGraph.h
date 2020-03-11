@@ -233,8 +233,7 @@ class OLocalVertex : public OVertex {
 
         // get directive for Voltage Control algorithm
         inline float getVoltage() { return _V; }
-        inline float getVref() {return _Vref; }        
-        inline float getTheta() { return _theta; }       
+        inline float getVref() {return _Vref; }    
         inline float getq() { return _qtotal ; }
         inline float getQrise() { return _qrise; }
         inline float getQlower() { return _qlower; }
@@ -251,8 +250,7 @@ class OLocalVertex : public OVertex {
 
         //set directive for Voltage Control algorithm
         inline void setVoltage(float V) { _V = V; }
-        inline void setVoltaeg(float V_ref) { _Vref = Vref; }
-        inline void setTheta(float theta) { _theta = theta; }        
+        inline void setVoltaeg(float V_ref) { _Vref = Vref; } 
         inline void setq(float q) { _qtotal = qtotal; }
         inline void setQrise(float qrise) { _qrise = qrise; }
         inline void setQlower(float qlower) { _qlower = qlower; }
@@ -334,11 +332,12 @@ class OLocalVertex : public OVertex {
         //Variables for the Voltage control algorithm
         float _V;
         float _Vref;
-        float _theta;
-        float _qtotal;
         float _ptotal;
+        float _qtotal;
         float _qrise;
         float _qlower;
+        float _D;
+        
         float _nuUpperVoltage;
         float _nuLowerVoltage;
         float _muVoltage;

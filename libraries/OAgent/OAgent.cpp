@@ -5947,11 +5947,13 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 }
 /// End general helper functions
 
-float OAgent::VoltageControl( float V, float theta, float q, float qrise, float qlower, float D, float P, float secPercentage )  //it is going to give back the q required to rise or lower
+//return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
+float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P, float q, float qrise, float qlower, float D )  //it is going to give back the q required to rise or lower
     {
     OLocalVertex * s = _G->getLocalVertex();  
     _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
       
+<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 <<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 
 =======
@@ -5960,6 +5962,11 @@ float OAgent::VoltageControl( float V, float theta, float q, float qrise, float 
     isUnderVoltage(s, securityPercent);
 <<<<<<< Updated upstream
 >>>>>>> minor update
+=======
+    //check for overvolrage and
+    isOverVoltage(s, securityPercent);
+    isUnderVoltage(s, securityPercent);
+>>>>>>> voltage control structure
 
 
 =======
@@ -5969,6 +5976,7 @@ float OAgent::VoltageControl( float V, float theta, float q, float qrise, float 
 
         
     }
+<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 <<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
     {
@@ -5996,17 +6004,23 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, 
 =======
     s->setTheta(theta);
 >>>>>>> Stashed changes
+=======
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
+    {
+    _G->clearAllStates(); 
+
+    s->setVoltage(V);
+>>>>>>> voltage control structure
     s->setQtotal(q);
     s->setQrise(qrise);
     s->setQlower(qlower);
     s->setPtotal(P);
     s->setD(D);
+<<<<<<< 2e73020a9cef5cf0b6bb43af6324bc6eddb1bbc5
 >>>>>>> minor update
+=======
+>>>>>>> voltage control structure
     s->setVref(float(1));
-
-    //check for overvolrage and
-    isOverVoltage(s, securityPercent);
-    isUnderVoltage(s, securityPercent);
 
     }
 
@@ -6016,12 +6030,11 @@ void OAgent::isOverVoltage(OLocalVertex * s, float secPercentage)
         {
             uint8_t ID = s->getID();
             Serial<<"node "<<ID<<"is working with over-voltage condition"; 
-            setStateOver(true); 
-            return true;   
+            setStateOver(true);    
 
         }else
         {
-            return false;
+            setStateOver(false); 
         }
     }
 
@@ -6031,12 +6044,11 @@ void OAgent::isUnderVoltage(OLocalVertex * s, float secPercentage)
         {
             uint8_t ID = s->getID();
             Serial<<"node "<<ID<<"is working with under-voltage condition";  
-            setStateUnde(true);
-            return true;   
+            setStateUnde(true); 
 
         }else
         {
-            return false;
+            setStateUnder(false); 
         }
     }
 
