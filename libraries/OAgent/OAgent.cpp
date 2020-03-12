@@ -5954,12 +5954,16 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float p,
         _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qrise, qlower, D ); 
           
         //compute the first stage
-        if(isUnderVoltage(s) || isOverVoltage(s))
+
+        isUnderVoltage(s); 
+        isOverVoltage(s);
+
+        if( s->getStateOver() || s->getStateUnder() )
             {
                 firstStageControl(s)
             
             }else{
-                s->setDeltaQ(0);
+                s->setDeltaQ(float (0));
             }           
 
         secondStageControl(s);
@@ -5969,22 +5973,7 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float p,
         
     }
 
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D )
 
-    {
-        _G->clearAllStates(); 
-
-        s->setVoltage(V);
-        s->setVref(Vref);
-        s->setVmax(Vref+Vref*(secPercentage/float(100)));
-        s->setVmax(Vref-Vref*(secPercentage/float(100)));        
-        s->setP(p);
-        s->setQ(q);
-        s->setQrise(qrise);
-        s->setQlower(qlower);
-        s->setD(D);
-
-    }
 
 void OAgent::isOverVoltage(OLocalVertex * s)
     {
@@ -6026,6 +6015,9 @@ void OAgent::firstStageControl(OLocalVertex * s)
             {
                 s->setStateSaturatedLow(true);
                 deltaQ = s->getQlower();
+            
+            }else{
+                s->setStateSaturatedLow(false);
             }
 
         }
@@ -6037,8 +6029,14 @@ void OAgent::firstStageControl(OLocalVertex * s)
             {
                 s->setStateSaturatedHigh(true);
                 deltaQ = s->getQrise();
+            
+            }else
+            {
+                s->setStateSaturatedHigh(false);
             }
+            
         }
+        
         s->setDeltaQ(deltaQ);
 
     }
@@ -6050,7 +6048,33 @@ void OAgent::secondStageControl(OLocalVertex * s)
 
     } 
 
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D )
+
+{
+    _G->clearAllStates(); 
+
+    s->setVoltage(V);
+    s->setVref(Vref);
+    s->setVmax(Vref+Vref*(secPercentage/float(100)));
+    s->setVmax(Vref-Vref*(secPercentage/float(100)));        
+    s->setP(p);
+    s->setQ(q);
+    s->setQrise(qrise);
+    s->setQlower(qlower);
+    s->setD(D);
+
+}
+
 void OAgent::_initializeVariablesRC(OLocalVertex * s)    
     {
 
     }
+
+
+
+
+
+
+
+
+

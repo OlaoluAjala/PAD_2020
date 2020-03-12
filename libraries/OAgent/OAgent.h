@@ -148,8 +148,7 @@ class OAgent {
         void isOverVoltage(OLocalVertex * s);
         void isUnderVoltage(OLocalVertex * s);
         void firstStageControl(OLocalVertex * s);
-        void OAgent::secondStageControl(OLocalVertex * s);
-        void OAgent::_initializeVariablesRC(OLocalVertex * s);
+        void secondStageControl(OLocalVertex * s);
 
     private:
         // Properties
@@ -383,7 +382,8 @@ class OAgent {
         void _prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader = false, bool quiet = true);
 
         //voltage control functions
-        void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D );
+        void _initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D );
+        void _initializeVariablesRC(OLocalVertex * s);
 };
 
 #endif // OAgent_h

@@ -287,7 +287,27 @@ class OLocalVertex : public OVertex {
         inline void setStateUnder(bool under) { _under = under; }
         inline void setStateSaturatedLow(bool saturatedLow) {_saturatedLow = saturatedLow; }
         inline void setStateSaturatedHigh(bool saturatedHigh) {_saturatedHigh = saturatedHigh; }
-        
+
+        //clear directives for VC
+
+        inline void clearVoltage(){ _V = 0; } 
+        inline void clearVref(){ _Vref = 0; }
+        inline void clearVmax(){ _Vmax = 0; }
+        inline void clearVmin(){ _Vmin = 0; }
+        inline void clearPtotal(){ _ptotal = 0; }
+        inline void clearQ(){ _qtotal = 0; }
+        inline void clearQrise(){ _qrise = 0; }
+        inline void clearQlower(){ _qlower = 0; }
+        inline void clearD(){ _D = 0; }
+        inline void clearAlpha(){ _alpha = 0; }
+
+        inline void clearNuUpperRC() { _nuLowerRC = 0; }
+        inline void clearNuLowerRC() { _nuUpperRC = 0; }
+        inline void clearMuRC() { _muRC = 0; }
+
+        inline void clearDeltaQ() { _deltaQ = 0; } 
+
+
 
         
     protected:

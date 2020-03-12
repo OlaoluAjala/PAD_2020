@@ -831,11 +831,32 @@ void OGraph::clearAllStates() {
     _self->clearYMinInYMaxIn();
     _self->clearMuMinMuMax();
     _self->clearAllNuMinNuMax();
+    //VC
+    _self->clearVoltage();
+    _self->clearVref();
+    _self->clearVmax();
+    _self->clearVmin();
+    _self->clearPtotal();
+    _self->clearQ();
+    _self->clearQrise(); 
+    _self->clearQlower();
+    _self->clearD();
+    _self->clearAlpha(); 
+    _self->clearNuUpperRC();
+    _self->clearNuLowerRC();
+    _self->clearMuRC();
+    _self->clearDeltaQ(); 
+
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
         _remoteVertices[i].clearYMinYMax();
         _remoteVertices[i].clearYMinInYMaxIn();
         _remoteVertices[i].clearMuMinMuMax();
         _remoteVertices[i].clearAllNuMinNuMax();
+        //VC
+        _remoteVertices[i].clearNuUpperRC();
+        _remoteVertices[i].clearNuLowerRC();
+        _remoteVertices[i].clearMuRC();
+        _remoteVertices[i].clearDeltaQ();
     }    
 }
 
