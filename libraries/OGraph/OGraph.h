@@ -232,6 +232,7 @@ class OLocalVertex : public OVertex {
         inline void setGammaTMP(float gammaTMP) { _gammaTMP = gammaTMP; }
 
         // get directive for Voltage Control algorithm
+        //imputs
         inline float getVoltage() { return _V; }
         inline float getVref() {return _Vref; }   
         inline float getVmax() {return _Vmax; } 
@@ -244,6 +245,7 @@ class OLocalVertex : public OVertex {
         inline float getAlpha() {return _alpha; }
 
         //second Stage and ratio consensus
+        inline float getQsecondary() { return _qSecondary; }
         inline float getNuUpperRC() { return _nuUpperRC; }
         inline float getNuLowerRC() { return _nuLowerRC; } 
         inline float getMuRC() {return _muRC}       
@@ -259,7 +261,6 @@ class OLocalVertex : public OVertex {
 
 
         //set directive for Voltage Control algorithm
-
         //imputs
         inline void setVoltage(float V) { _V = V; }
         inline void setVref(float V_ref) { _Vref = Vref; } 
@@ -273,8 +274,7 @@ class OLocalVertex : public OVertex {
         inline void setAlpha(float alpha) {_alpha = alpha; }
 
         //second stage & ratio consensus
-
-        
+        inline void setQsecondary(float qSecondary) { _qSecondary = qSecondary; }
         inline void setNuUpperRC(float nuUpperRC) { _nuUpperRC = nuUpper RC; }
         inline void setNuLowerRC(float nuLowerRC) { _nuLowerRC = nuLower RC; }
         inline void setMuRC(float muRC) { _muRC = muRC; }
@@ -300,7 +300,8 @@ class OLocalVertex : public OVertex {
         inline void clearQlower(){ _qlower = 0; }
         inline void clearD(){ _D = 0; }
         inline void clearAlpha(){ _alpha = 0; }
-
+            //2nd stage
+        inline void clearQsecondary() { _qSecondary = 0; }
         inline void clearNuUpperRC() { _nuLowerRC = 0; }
         inline void clearNuLowerRC() { _nuUpperRC = 0; }
         inline void clearMuRC() { _muRC = 0; }
@@ -385,6 +386,7 @@ class OLocalVertex : public OVertex {
         float _ptotal;
         float _qtotal;
         float _qrise;
+        float _qSecondary;
         float _qlower;
         float _D;
         float _alpha;

@@ -840,6 +840,7 @@ void OGraph::clearAllStates() {
     _self->clearQ();
     _self->clearQrise(); 
     _self->clearQlower();
+    _self->clearQsecondary();
     _self->clearD();
     _self->clearAlpha(); 
     _self->clearNuUpperRC();
