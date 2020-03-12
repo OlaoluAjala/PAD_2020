@@ -846,6 +846,7 @@ void OGraph::clearAllStates() {
     _self->clearNuUpperRC();
     _self->clearNuLowerRC();
     _self->clearMuRC();
+    _self->clearEta()
     _self->clearDeltaQ(); 
 
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
@@ -858,6 +859,7 @@ void OGraph::clearAllStates() {
         _remoteVertices[i].clearNuLowerRC();
         _remoteVertices[i].clearMuRC();
         _remoteVertices[i].clearDeltaQ();
+        _remoteVertices[i].clearEta();
     }    
 }
 
