@@ -233,36 +233,62 @@ class OLocalVertex : public OVertex {
 
         // get directive for Voltage Control algorithm
         inline float getVoltage() { return _V; }
-        inline float getVref() {return _Vref; }    
-        inline float getq() { return _qtotal ; }
+        inline float getVref() {return _Vref; }   
+        inline float getVmax() {return _Vmax; } 
+        inline float getVmin() {return _Vmin; } 
+        inline float getPtotal() { return _ptotal; }         
+        inline float getQ() { return _qtotal ; }
         inline float getQrise() { return _qrise; }
         inline float getQlower() { return _qlower; }
-        inline float getPtotal() { return _ptotal; }
         inline float getD() { return _D; }
+        inline float getAlpha() {return _alpha; }
 
+        //second Stage and ratio consensus
+        inline float getNuUpperRC() { return _nuUpperRC; }
+        inline float getNuLowerRC() { return _nuLowerRC; } 
+        inline float getMuRC() {return _muRC}       
+
+        //results
+        inline float getDeltaQ() { return _deltaQ; }
+
+        //states
         inline bool getStateOver() {return _over;}
         inline bool getStateUnder() {return _under;}
+        inline bool getStateSaturatedLow() { return _saturatedLow; }
+        inline bool getStateSaturatedHigh() { return _saturatedHigh; }
 
-        
-        // inline float getmuFromNeighbor() { return _mu; }
-        // inline float getnuUpperFromNeighbor() { return _nuUpperVoltage; }
-        // inline float getnuLowerFromNeighbor() { return _nuLowerVoltage; }
 
         //set directive for Voltage Control algorithm
+
+        //imputs
         inline void setVoltage(float V) { _V = V; }
-        inline void setVoltaeg(float V_ref) { _Vref = Vref; } 
-        inline void setq(float q) { _qtotal = qtotal; }
+        inline void setVref(float V_ref) { _Vref = Vref; } 
+        inline void setVmax(float V_max) { _Vmax = Vmax; } 
+        inline void setVmin(float V_min) { _Vmin = Vmin; } 
+        inline void setPtotal(float ptotal) { _ptotal = ptotal; }        
+        inline void setQ(float q) { _qtotal = qtotal; }
         inline void setQrise(float qrise) { _qrise = qrise; }
         inline void setQlower(float qlower) { _qlower = qlower; }
-        inline void setPtotal(float ptotal) { _ptotal = ptotal; }
         inline void setD(float D) { _D = D; }
+        inline void setAlpha(float alpha) {_alpha = alpha; }
 
+        //second stage & ratio consensus
+
+        
+        inline void setNuUpperRC(float nuUpperRC) { _nuUpperRC = nuUpper RC; }
+        inline void setNuLowerRC(float nuLowerRC) { _nuLowerRC = nuLower RC; }
+        inline void setMuRC(float muRC) { _muRC = muRC; }
+
+        //results
+        inline void setDeltaQ(float deltaQ) { _deltaQ = deltaQ; }
+
+        //states
         inline void setStateOVer(bool over) { _over = over; }
         inline void setStateUnder(bool under) { _under = under; }
+        inline void setStateSaturatedLow(bool saturatedLow) {_saturatedLow = saturatedLow; }
+        inline void setStateSaturatedHigh(bool saturatedHigh) {_saturatedHigh = saturatedHigh; }
         
-        // inline void setmuFromNeighbor(float mu) { _mu = mu; }
-        // inline void setnuUpperFromNeighbor(float nuUpperVoltage) { _nuUpperVoltage = nuUpperVoltage; }
-        // inline void setnuLowerFromNeighbor(float nuLowerVoltage) { _nuLowerVoltage = nuLower Voltage; }
+
         
     protected:
         /// Properties
@@ -330,21 +356,33 @@ class OLocalVertex : public OVertex {
         float _buffer_nu[200];
 
         //Variables for the Voltage control algorithm
+        
+        //imputs
         float _V;
         float _Vref;
+        float _Vmax;
+        float _Vmin;
         float _ptotal;
         float _qtotal;
         float _qrise;
         float _qlower;
         float _D;
-        
-        float _nuUpperVoltage;
-        float _nuLowerVoltage;
-        float _muVoltage;
         float _alpha;
+        
+        //ratio consensus
+        float _nuUpperRC;
+        float _nuLowerRC;
+        float _muRC;
 
-        bool _over;
-        bool _under;
+        //States
+        bool _over;             //overvoltage condition
+        bool _under;            //undervoltage condition
+        bool _saturatedLow;     //the node is saturated on its lower q
+        bool _saturatedHigh;    //the node is saturated on its higer q
+
+
+        //Results
+        float _deltaQ;
 };
 
 class OLocalReserveVertex : public OLocalVertex {

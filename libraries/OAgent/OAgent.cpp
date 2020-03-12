@@ -5948,82 +5948,109 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 /// End general helper functions
 
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::VoltageControl( float V, float Vref, float secPercentage, float P, float q, float qrise, float qlower, float D )  //it is going to give back the q required to rise or lower
+float OAgent::VoltageControl( float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D )  //it is going to give back the q required to rise or lower
     {
-    OLocalVertex * s = _G->getLocalVertex();  
-    _initializeVoltageControl(s,V,theta,q,qrise,qlower,D,P,secPercentage); 
-      
-    //check for overvolrage and
-    isOverVoltage(s, securityPercent);
-    isUnderVoltage(s, securityPercent);
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+        OLocalVertex * s = _G->getLocalVertex();  
+        _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qrise, qlower, D ); 
+          
+        //compute the first stage
+        if(isUnderVoltage(s) || isOverVoltage(s))
+            {
+                firstStageControl(s)
+            
+            }else{
+                s->setDeltaQ(0);
+            }           
 
-=======
->>>>>>> sub_dev__DIE
-
-=======
->>>>>>> Stashed changes
+        secondStageControl(s);
 
 
 
         
     }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
-=======
-    
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float theta, float q, float qrise, float qlower, float D, float P, float securityPercent )
->>>>>>> Stashed changes
-=======
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float q, float qrise, float qlower, float D, float P, float securityPercent )
->>>>>>> sub_dev__DIE
-    {
-    _G->clearAllStates(); 
 
-    s->setVoltage(V);
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-    s->setTheta(theta);
->>>>>>> Stashed changes
-=======
->>>>>>> sub_dev__DIE
-    s->setQtotal(q);
-    s->setQrise(qrise);
-    s->setQlower(qlower);
-    s->setPtotal(P);
-    s->setD(D);
-    s->setVref(float(1));
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D )
+
+    {
+        _G->clearAllStates(); 
+
+        s->setVoltage(V);
+        s->setVref(Vref);
+        s->setVmax(Vref+Vref*(secPercentage/float(100)));
+        s->setVmax(Vref-Vref*(secPercentage/float(100)));        
+        s->setP(p);
+        s->setQ(q);
+        s->setQrise(qrise);
+        s->setQlower(qlower);
+        s->setD(D);
 
     }
 
-void OAgent::isOverVoltage(OLocalVertex * s, float secPercentage)
+void OAgent::isOverVoltage(OLocalVertex * s)
     {
-        if(V > (s->getVref() + (s->getVref() * secPercentage/float (100))))
+        if(V > s->getVmax())
         {
             uint8_t ID = s->getID();
             Serial<<"node "<<ID<<"is working with over-voltage condition"; 
-            setStateOver(true);    
+            s->setStateOver(true);    
 
         }else
         {
-            setStateOver(false); 
+            s->setStateOver(false); 
         }
     }
 
-void OAgent::isUnderVoltage(OLocalVertex * s, float secPercentage)
+void OAgent::isUnderVoltage(OLocalVertex * s)
     {
-        if(V < (s->getVref() - (s->getVref() * secPercentage/float (100))))
+        if(V < s->getVmin())
         {
             uint8_t ID = s->getID();
             Serial<<"node "<<ID<<"is working with under-voltage condition";  
-            setStateUnde(true); 
+            s->setStateUnder(true); 
 
         }else
         {
-            setStateUnder(false); 
+            s->setStateUnder(false); 
         }
     }
 
+void OAgent::firstStageControl(OLocalVertex * s)
+    {
+        float deltaQ;
+
+        if(s->getStateOver())
+        {
+            deltaQ = s->getD() * s->getAlpha() *(s->getVmax() - s->getVoltage()) //we have to substract this value
+            
+            if(deltaQ < s->getQlower())
+            {
+                s->setStateSaturatedLow(true);
+                deltaQ = s->getQlower();
+            }
+
+        }
+        if(s->getStateUnder())
+        {
+            deltaQ = s->getD() * s->getAlpha() *(s->getVmin() - s->getVoltage())
+
+            if(deltaQ > s->getQrise())
+            {
+                s->setStateSaturatedHigh(true);
+                deltaQ = s->getQrise();
+            }
+        }
+        s->setDeltaQ(deltaQ);
+
+    }
+
+void OAgent::secondStageControl(OLocalVertex * s)
+    {
+
+
+
+    } 
+
+void OAgent::_initializeVariablesRC(OLocalVertex * s)    
+    {
+
+    }
