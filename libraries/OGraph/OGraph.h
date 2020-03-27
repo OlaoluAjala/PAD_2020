@@ -249,7 +249,9 @@ class OLocalVertex : public OVertex {
         inline float getNuUpperRC() { return _nuUpperRC; }
         inline float getNuLowerRC() { return _nuLowerRC; } 
         inline float getMuRC() { return _muRC; }
-        inline float getEta() { return _eta; }       
+        inline float getEtaUpper() { return _etaUpper; }
+        inline float getEtaLower() { return _etaLower; }  
+        inline float getEta() { return _eta; }      
 
         //results
         inline float getDeltaQ() { return _deltaQ; }
@@ -279,6 +281,8 @@ class OLocalVertex : public OVertex {
         inline void setNuUpperRC(float nuUpperRC) { _nuUpperRC = nuUpper RC; }
         inline void setNuLowerRC(float nuLowerRC) { _nuLowerRC = nuLower RC; }
         inline void setMuRC(float muRC) { _muRC = muRC; }
+        inline void setEtaUpper(float etaUpper) { _etaUpper = etaUpper; }
+        inline void setEtaLower(float etaLower) { _etaLower = etaLower; }
         inline void setEta(float eta) { _eta = eta; }
 
         //results
@@ -307,7 +311,10 @@ class OLocalVertex : public OVertex {
         inline void clearNuUpperRC() { _nuLowerRC = 0; }
         inline void clearNuLowerRC() { _nuUpperRC = 0; }
         inline void clearMuRC() { _muRC = 0; }
+        inline void clearEtaUper() { _etaUpper = 0; }
+        inline void clearEtaLower() { _etaLower = 0; }
         inline void clearEta() { _eta = 0; }
+
 
 
         inline void clearDeltaQ() { _deltaQ = 0; } 
@@ -399,7 +406,8 @@ class OLocalVertex : public OVertex {
         float _nuUpperRC;
         float _nuLowerRC;
         float _muRC;
-        float _eta;
+        float _etaUpper;
+        float _etaLower;
 
         //States
         bool _over;             //overvoltage condition

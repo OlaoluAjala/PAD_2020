@@ -383,7 +383,7 @@ class OAgent {
 
         //voltage control functions
         void _initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qrise, float qlower, float D );
-        void _initializeVariablesRC(OLocalVertex * s);
+        void _initializeVariablesSecStage(OLocalVertex * s)
 };
 
 #endif // OAgent_h

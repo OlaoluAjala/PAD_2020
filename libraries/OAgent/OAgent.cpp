@@ -23,7 +23,6 @@ OAgent::OAgent() {
     ZBRxResponse temp2 = ZBRxResponse();
     OGraph temp3 = OGraph();
     _prepareOAgent(&temp1,&temp2,&temp3);
-    //setRS(0);
 }
 
 OAgent::OAgent(XBee * xbee, OGraph * G, bool leader, bool quiet) {
@@ -6001,35 +6000,50 @@ void OAgent::firstStageControl(OLocalVertex * s)
     {
         float deltaQ;
 
-        if(s->getStateOver())
+        if(s->getStateOver())   //we lower the q
         {
             deltaQ = s->getD() * s->getAlpha() *(s->getVmax() - s->getVoltage()) //we have to substract this value
             
-            if(deltaQ < s->getQlower())
+            if(deltaQ < s->getQlower())                     //the node is saturated if the q to lower is greater or equal to the available q
             {
                 s->setStateSaturatedLow(true);
                 s->setqSecondary(deltaQ - s->getQlower());
                 deltaQ = s->getQlower();
             
+            }else if (deltaQ == s->getQlower())
+            {
+                s->setStateSaturatedLow(true);
+                s->setqSecondary(float (0));
+                deltaQ = s->getQlower();
+
             }else{
                 s->setStateSaturatedLow(false);
             }
 
+            setQ( getQ()+ deltaQ );                         //we set the new q value
+
         }
-        if(s->getStateUnder())
+        if(s->getStateUnder())  //we rise the q
         {
             deltaQ = s->getD() * s->getAlpha() *(s->getVmin() - s->getVoltage())
 
-            if(deltaQ > s->getQrise())
+            if(deltaQ > s->getQrise())                      //the node is saturated if the q to rise is greater or equal to the available q
             {
                 s->setStateSaturatedHigh(true);
                 s->setqSecondary( deltaQ - s->getQrise() );
                 deltaQ = s->getQrise();
             
+            }else if (deltaQ == s->getQrise())
+            {
+                s->setStateSaturatedHigh(true);
+                s->setqSecondary(float (0));
+                deltaQ = s->getQrise();
+                
             }else
             {
                 s->setStateSaturatedHigh(false);
             } 
+            setQ( getQ()+ deltaQ );                         //we set the new q value
         }
         
         s->setDeltaQ(deltaQ);
@@ -6038,7 +6052,24 @@ void OAgent::firstStageControl(OLocalVertex * s)
 
 void OAgent::secondStageControl(OLocalVertex * s)
     {
-        _initializeVariablesRC(s);
+        _initializeVariablesSecStage(s);
+
+        s->setEtaLower(getMuRC(),getEtaLower(),30,200);      //(mu,eta,iterations,period)
+        s->setEtaUpper(getMuRC(),getEtaUpper(),30,200);
+
+        if( getMuRC() < 0 )
+        {
+            s->setEta(getEtaLower());
+        
+        }else if( getMuRC() > 0 )
+        {
+            s->setEta(getEtaUpper());
+        
+        }
+
+        
+
+
 
 
     } 
@@ -6060,24 +6091,27 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
 
     }
 
-void OAgent::_initializeVariablesRC(OLocalVertex * s)    
+void OAgent::_initializeVariablesSecStage(OLocalVertex * s)    
     {
-        if(s->getStateSaturatedLow() || s->getStateSaturatedHigh())
+        if((s->getStateSaturatedLow()) || (s->getStateSaturatedHigh())) //if the node is operatin under a saturated state
         {
-            if(s->getStateSaturatedLow())           //undervoltage
+            if(s->getStateSaturatedLow())           //initial values for undervoltage state
             {
                 s->setMuRC( s->getQsecondary());
                 s->setNuUpperRC(float (0));
             }
-            if(s->getStateSaturatedHigh())          //overvoltage
+            if(s->getStateSaturatedHigh())          //initial values for overvoltage state
             {
                 s->setMuRC( s->getQsecondary());
                 s->setNuLowerRC(float (0));
             }
         }else
-        {
+        {                                           //initial values for normal state
             s-> setMuRC(float (0));
             s->setNuUpperRC(-s->getQsecondary());
             s->setNuLowerRC(-s->getQsecondary());
         }
     }
+
+
+
