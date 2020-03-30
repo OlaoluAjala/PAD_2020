@@ -470,7 +470,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     //Serial << float(s->getYMin())/float(s->getZ());
     //Serial <<"\n"; 
 
-    s->setMuRC(getMuMin()); //so as to evaluate the sign for the Voltage control
+    s->setMuRC(s->getMuMin()); //so as to evaluate the sign for the Voltage control
 
     return (s->getYMin()/s->getZ());
 }
@@ -5950,10 +5950,10 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 /// End general helper functions
 
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::voltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D , uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
+float OAgent::voltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D , float alphaVC, uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
 {
     OLocalVertex * s = _G->getLocalVertex();  
-    _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D ); 
+    _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D, alphaVC ); 
       
     //compute the first stage
     isUnderVoltage(s); 
@@ -5961,7 +5961,7 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
 
     if( s->getStateOver() || s->getStateUnder() )
         {
-            firstStageControl(s)
+            firstStageControl(s);
         
         }else{
             s->setDeltaQ(float (0));
@@ -5977,9 +5977,9 @@ void OAgent::firstStageControl( OLocalVertex * s )
 
     if(s->getStateOver())   //we lower the q
     {
-        deltaQ = s->getD() * s->getAlpha() *(s->getVmax() - s->getVoltage())    //this value will be possitive
+        deltaQ = s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage());    //this value will be possitive
         
-        if((s->getQ() +deltaQ) < s->bottom())                     //the node is saturated if the q to lower is greater or equal to the available q
+        if((s->getQ() +deltaQ) < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setStateSaturatedLow(true);
             s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
@@ -6000,7 +6000,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
 
     if(s->getStateUnder())      //we rise the q
     {
-        deltaQ = s->getD() * s->getAlpha() *(s->getVmin() - s->getVoltage())        // this value will be negative
+        deltaQ = s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage());        // this value will be negative
 
         if((s->getQ() +deltaQ) > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
@@ -6030,8 +6030,8 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
     float deltaQ;
     _initializeVariablesSecStage(s);
 
-    s->setEtaLower(s.fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaLower(),iterations,peirod ));      //(mu,eta,iterations,period)
-    s->setEtaUpper(s.fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaUpper(),iterations,period ));
+    s->setEtaLower(s->fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaLower(),iterations,peirod ));      //(mu,eta,iterations,period)
+    s->setEtaUpper(s->fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaUpper(),iterations,period ));
 
     //Ratio Consensus
     if( s->getMuRC() < 0 )
@@ -6091,7 +6091,7 @@ void OAgent::isUnderVoltage(OLocalVertex * s)
     }
 }
 //constructor functions
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D )
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC )
 
 {
     _G->clearAllStates(); 
@@ -6105,6 +6105,7 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
     s->setQtop(qtopq);
     s->setQbottom(qbottom);
     s->setD(D);
+    s->setAlphaVC(alphaVC);
 
 }
 

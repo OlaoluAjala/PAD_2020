@@ -103,7 +103,7 @@ void setup() //setup of the scheme of the network
     if(a.isSynced())
     {
 //run Voltage Control algorithm 
-      deltaQ = a.voltageControl(1,1,5,0.3,0.7,1,-1,0.01,20,200); 
+      deltaQ = a.voltageControl(1,1,5,0.3,0.7,1,-1,0.01,0.3,20,200); 
       //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,iterations,period)
       
       Serial.print("the required variation in Q is: ");

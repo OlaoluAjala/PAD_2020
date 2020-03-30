@@ -842,7 +842,7 @@ void OGraph::clearAllStates() {
     _self->clearQbottom();
     _self->clearQsecondary();
     _self->clearD();
-    _self->clearAlpha(); 
+    _self->clearAlphaVC(); 
     _self->clearNuUpperRC();
     _self->clearNuLowerRC();
     _self->clearMuRC();
@@ -856,14 +856,14 @@ void OGraph::clearAllStates() {
         _remoteVertices[i].clearYMinInYMaxIn();
         _remoteVertices[i].clearMuMinMuMax();
         _remoteVertices[i].clearAllNuMinNuMax();
-        //VC
-        _remoteVertices[i].clearNuUpperRC();
-        _remoteVertices[i].clearNuLowerRC();
-        _remoteVertices[i].clearMuRC();
-        _remoteVertices[i].clearDeltaQ();
-        _remoteVertices[i].clearEtaUpper();
-        _remoteVertices[i].clearEtaLower();
-        _remoteVertices[i].clearEta();
+        // //VC
+        // _remoteVertices[i].clearNuUpperRC();
+        // _remoteVertices[i].clearNuLowerRC();
+        // _remoteVertices[i].clearMuRC();
+        // _remoteVertices[i].clearDeltaQ();
+        // _remoteVertices[i].clearEtaUpper();
+        // _remoteVertices[i].clearEtaLower();
+        // _remoteVertices[i].clearEta();
     }    
 }
 
