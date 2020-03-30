@@ -5951,182 +5951,181 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
 float OAgent::VoltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D )  //it is going to give back the q required to rise or lower
-    {
-        OLocalVertex * s = _G->getLocalVertex();  
-        _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D ); 
-          
-        //compute the first stage
-        isUnderVoltage(s); 
-        isOverVoltage(s);
+{
+    OLocalVertex * s = _G->getLocalVertex();  
+    _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D ); 
+      
+    //compute the first stage
+    isUnderVoltage(s); 
+    isOverVoltage(s);
 
-        if( s->getStateOver() || s->getStateUnder() )
-            {
-                firstStageControl(s)
-            
-            }else{
-                s->setDeltaQ(float (0));
-            }           
-        secondStageControl(s); 
-    }
-
-
-
-void OAgent::isOverVoltage(OLocalVertex * s)
-    {
-        if(V > s->getVmax())
+    if( s->getStateOver() || s->getStateUnder() )
         {
-            uint8_t ID = s->getID();
-            Serial<<"node "<<ID<<"is working with over-voltage condition"; 
-            s->setStateOver(true);    
+            firstStageControl(s)
+        
+        }else{
+            s->setDeltaQ(float (0));
+        }           
+    secondStageControl(s); 
 
-        }else
-        {
-            s->setStateOver(false); 
-        }
-    }
-
-void OAgent::isUnderVoltage(OLocalVertex * s)
-    {
-        if(V < s->getVmin())
-        {
-            uint8_t ID = s->getID();
-            Serial<<"node "<<ID<<"is working with under-voltage condition";  
-            s->setStateUnder(true); 
-
-        }else
-        {
-            s->setStateUnder(false); 
-        }
-    }
+    return s->getDeltaQ();
+}
 
 void OAgent::firstStageControl(OLocalVertex * s)
+{
+    float deltaQ;
+
+    if(s->getStateOver())   //we lower the q
     {
-        float deltaQ;
-
-        if(s->getStateOver())   //we lower the q
-        {
-            deltaQ = s->getD() * s->getAlpha() *(s->getVmax() - s->getVoltage()) //we have to substract this value
-            
-            if((s->getQ() +deltaQ) < s->bottom())                     //the node is saturated if the q to lower is greater or equal to the available q
-            {
-                s->setStateSaturatedLow(true);
-                s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
-                deltaQ = (s->getQbottom() - s->getQ());
-            
-            }else if ((s->getQ() +deltaQ) == s->getQbottom())
-            {
-                s->setStateSaturatedLow(true);
-                s->setQsecondary(float (0));
-                deltaQ = (s->getQbottom() - s->getQ());
-
-            }else{
-                s->setStateSaturatedLow(false);
-            }
-
-            s->setQ( s->getQ()+ deltaQ );                         //we set the new q value
-
-        }
-        if(s->getStateUnder())  //we rise the q
-        {
-            deltaQ = s->getD() * s->getAlpha() *(s->getVmin() - s->getVoltage())
-
-            if((s->getQ() +deltaQ) > s->getQtop())                      //the node is saturated if the q to rise is greater or equal to the available q
-            {
-                s->setStateSaturatedHigh(true);
-                s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
-                deltaQ = (s->getQtop() - s->getQ());
-            
-            }else if ((s->getQ() +deltaQ) == s->getQtop())
-            {
-                s->setStateSaturatedHigh(true);
-                s->setQsecondary(float (0));
-                deltaQ = (s->getQtop() - s->getQ());
-                
-            }else
-            {
-                s->setStateSaturatedHigh(false);
-            } 
-            s->setQ( s->getQ()+ deltaQ );                         //we set the new q value
-        }
+        deltaQ = s->getD() * s->getAlpha() *(s->getVmax() - s->getVoltage())    //this value will be possitive
         
-        s->setDeltaQ(deltaQ);
+        if((s->getQ() +deltaQ) < s->bottom())                     //the node is saturated if the q to lower is greater or equal to the available q
+        {
+            s->setStateSaturatedLow(true);
+            s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
+            deltaQ = (s->getQbottom() - s->getQ());
+        
+        }else if ((s->getQ() +deltaQ) == s->getQbottom())
+        {
+            s->setStateSaturatedLow(true);
+            s->setQsecondary(float (0));
+            deltaQ = (s->getQbottom() - s->getQ());
 
+        }else{
+            s->setStateSaturatedLow(false);
+        }
+
+        s->setQ( s->getQ()+ deltaQ );       //we set the new q value
     }
+
+    if(s->getStateUnder())      //we rise the q
+    {
+        deltaQ = s->getD() * s->getAlpha() *(s->getVmin() - s->getVoltage())        // this value will be negative
+
+        if((s->getQ() +deltaQ) > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
+        {
+            s->setStateSaturatedHigh(true);
+            s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
+            deltaQ = (s->getQtop() - s->getQ());
+        
+        }else if ((s->getQ() +deltaQ) == s->getQtop())
+        {
+            s->setStateSaturatedHigh(true);
+            s->setQsecondary(float (0));
+            deltaQ = (s->getQtop() - s->getQ());
+            
+        }else
+        {
+            s->setStateSaturatedHigh(false);
+        } 
+
+        s->setQ( s->getQ()+ deltaQ );           //we set the new q value
+    }
+    
+    s->setDeltaQ(deltaQ);
+}
 
 void OAgent::secondStageControl(OLocalVertex * s)
+{
+    float deltaQ;
+    _initializeVariablesSecStage(s);
+
+    s->setEtaLower(s.fairSplitRatioConsensus_RSL(s->getMuRC(),s->getEtaLower(),20,200));      //(mu,eta,iterations,period)
+    s->setEtaUpper(s.fairSplitRatioConsensus_RSL(s->getMuRC(),s->getEtaUpper(),20,200));
+
+    //Ratio Consensus
+    if( s->getMuRC() < 0 )
     {
+        s->setEta(s->getEtaLower());
 
-        _initializeVariablesSecStage(s);
+    }else if( s->getMuRC() > 0 )
+    {
+        s->setEta(s->getEtaUpper());
 
-        s->setEtaLower(s.fairSplitRatioConsensus_RSL(s->getMuRC(),s->getEtaLower(),30,200));      //(mu,eta,iterations,period)
-        s->setEtaUpper(s.fairSplitRatioConsensus_RSL(s->getMuRC(),s->getEtaUpper(),30,200));
+    }
 
-        //Ratio Consensus
-        if( s->getMuRC() < 0 )
-        {
-            s->setEta(s->getEtaLower());
-        
-        }else if( s->getMuRC() > 0 )
-        {
-            s->setEta(s->getEtaUpper());
-        
-        }
+    //set the Q levels after the RC
+    if((s->getQ()+s->getEta()) > s->getQtop())          //over the limit
+    {
+        s->setQ(s->getQtop());                  //set new Q
+        deltaQ = (s->getQtop() - s->getQ());    //set new delta Q
 
-        //set the Q levels after the RC
-        if(s->getEta() > s->getQrise())
-        {
+    }else if((s->getQ()+s->getEta()) < s->getQbottom()) //under the limit
+    {
+        s->setQ(s->getQbottom());               //set new Q
+        deltaQ = (s->getQtop() - s->getQ());    //set new delta Q
 
-        }else if(s->getEta() < s->getQlower())
-        {
+    }else                                               //inside the plausible region for Q
+    {
+        s->setQ(s->getQ()+s->getEta());         //set new Q
+        deltaQ = (s->getQ()+s->getEta());       //set new delta Q
+    }
+    s->setDeltaQ(deltaQ);
+} 
+//functions so as to check teh over/undervoltage
+void OAgent::isOverVoltage(OLocalVertex * s)
+{
+    if(V > s->getVmax())
+    {
+        uint8_t ID = s->getID();
+        Serial<<"node "<<ID<<"is working with over-voltage condition"; 
+        s->setStateOver(true);    
 
-        }else
-        {
-            s->setQ(s->getQ()+s->getEta());
-        }
+    }else
+    {
+        s->setStateOver(false); 
+    }
+}
 
+void OAgent::isUnderVoltage(OLocalVertex * s)
+{
+    if(V < s->getVmin())
+    {
+        uint8_t ID = s->getID();
+        Serial<<"node "<<ID<<"is working with under-voltage condition";  
+        s->setStateUnder(true); 
 
-
-
-    } 
-
+    }else
+    {
+        s->setStateUnder(false); 
+    }
+}
+//constructor functions
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D )
 
-    {
-        _G->clearAllStates(); 
+{
+    _G->clearAllStates(); 
 
-        s->setVoltage(V);
-        s->setVref(Vref);
-        s->setVmax(Vref+Vref*(secPercentage/float(100)));
-        s->setVmax(Vref-Vref*(secPercentage/float(100)));        
-        s->setP(p);
-        s->setQ(q);
-        s->setQtop(qtopq);
-        s->setQbottom(qbottom);
-        s->setD(D);
+    s->setVoltage(V);
+    s->setVref(Vref);
+    s->setVmax(Vref+Vref*(secPercentage/float(100)));
+    s->setVmax(Vref-Vref*(secPercentage/float(100)));        
+    s->setP(p);
+    s->setQ(q);
+    s->setQtop(qtopq);
+    s->setQbottom(qbottom);
+    s->setD(D);
 
-    }
+}
 
 void OAgent::_initializeVariablesSecStage(OLocalVertex * s)    
+{
+    if((s->getStateSaturatedLow()) || (s->getStateSaturatedHigh())) //if the node is operatin under a saturated state
     {
-        if((s->getStateSaturatedLow()) || (s->getStateSaturatedHigh())) //if the node is operatin under a saturated state
+        if(s->getStateSaturatedLow())           //initial values for undervoltage state
         {
-            if(s->getStateSaturatedLow())           //initial values for undervoltage state
-            {
-                s->setMuRC( s->getQsecondary());
-                s->setNuUpperRC(float (0));
-            }
-            if(s->getStateSaturatedHigh())          //initial values for overvoltage state
-            {
-                s->setMuRC( s->getQsecondary());
-                s->setNuLowerRC(float (0));
-            }
-        }else
-        {                                           //initial values for normal state
-            s-> setMuRC(float (0));
-            s->setNuUpperRC(-s->getQsecondary());
-            s->setNuLowerRC(-s->getQsecondary());
+            s->setMuRC( s->getQsecondary());
+            s->setNuUpperRC(float (0));
         }
+        if(s->getStateSaturatedHigh())          //initial values for overvoltage state
+        {
+            s->setMuRC( s->getQsecondary());
+            s->setNuLowerRC(float (0));
+        }
+    }else
+    {                                           //initial values for normal state
+        s-> setMuRC(float (0));
+        s->setNuUpperRC(-s->getQsecondary());
+        s->setNuLowerRC(-s->getQsecondary());
     }
-
-
-
+}

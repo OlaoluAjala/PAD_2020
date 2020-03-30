@@ -240,9 +240,7 @@ class OLocalVertex : public OVertex {
         inline float getPtotal() { return _ptotal; }         
         inline float getQ() { return _qtotal ; }
         inline float getQtop() { return _qtop; }
-        inline float getQbottom() { return _qbottom; }        
-        inline float getQrise() { return _qrise; }
-        inline float getQlower() { return _qlower; }
+        inline float getQbottom() { return _qbottom; }
         inline float getD() { return _D; }
         inline float getAlpha() {return _alpha; }
 
@@ -274,9 +272,7 @@ class OLocalVertex : public OVertex {
         inline void setPtotal(float ptotal) { _ptotal = ptotal; }        
         inline void setQ(float q) { _qtotal = qtotal; }
         inline void setQtop(float qtop) { _qtop = qtop; }
-        inline void setQbotom(float qbottom) { _qbottom = qbottom; }    
-        inline void setQrise(float qrise) { _qrise = qrise; }
-        inline void setQlower(float qlower) { _qlower = qlower; }
+        inline void setQbotom(float qbottom) { _qbottom = qbottom; } 
         inline void setD(float D) { _D = D; }
         inline void setAlpha(float alpha) {_alpha = alpha; }
 
@@ -308,8 +304,6 @@ class OLocalVertex : public OVertex {
         inline void clearQ(){ _qtotal = 0; }
         inline void clearQtop(){ _qtop= 0; }
         inline void clearQbottom(){ _qbottom = 0; }
-        inline void clearQrise(){ _qrise = 0; }
-        inline void clearQlower(){ _qlower = 0; }
         inline void clearD(){ _D = 0; }
         inline void clearAlpha(){ _alpha = 0; }
             //2nd stage
@@ -404,8 +398,7 @@ class OLocalVertex : public OVertex {
         float _qtotal;
         float _qtop; 
         float _qbottom;
-        float _qrise; 
-        float _qlower;
+        float _deltaQ;
         float _qSecondary;
         float _D;
         float _alpha;
