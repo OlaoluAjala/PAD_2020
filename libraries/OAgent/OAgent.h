@@ -144,11 +144,11 @@ class OAgent {
         //inline float getneighborY0(int index){ return _neighborY0[index]; }
         //inline float getneighborZ0(int index){ return _neighborZ0[index]; }
                
-        float VoltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D );
-        void isOverVoltage(OLocalVertex * s);
-        void isUnderVoltage(OLocalVertex * s);
+        float voltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, uint8_t iterations, uint16_t period );
         void firstStageControl(OLocalVertex * s);
-        void secondStageControl(OLocalVertex * s);
+        void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period );
+        void isOverVoltage(OLocalVertex * s);
+        void isUnderVoltage(OLocalVertex * s);       
 
     private:
         // Properties

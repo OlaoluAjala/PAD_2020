@@ -82,7 +82,7 @@ void loop()
           de = true;
           if(a.sync()) {
             Serial.println("Communication Link established");
-            Serial.println("c");
+            Serial.println("c"); 
             digitalWrite(sPin,HIGH);
             //ce = true;
           }

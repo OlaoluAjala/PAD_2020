@@ -5950,7 +5950,7 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 /// End general helper functions
 
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::VoltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D )  //it is going to give back the q required to rise or lower
+float OAgent::voltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D , uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
 {
     OLocalVertex * s = _G->getLocalVertex();  
     _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D ); 
@@ -5966,12 +5966,12 @@ float OAgent::VoltageControl( float V, float Vref, float secPercentage, float p,
         }else{
             s->setDeltaQ(float (0));
         }           
-    secondStageControl(s); 
+    secondStageControl( s, iterations, period ); 
 
     return s->getDeltaQ();
 }
 
-void OAgent::firstStageControl(OLocalVertex * s)
+void OAgent::firstStageControl( OLocalVertex * s )
 {
     float deltaQ;
 
@@ -6025,13 +6025,13 @@ void OAgent::firstStageControl(OLocalVertex * s)
     s->setDeltaQ(deltaQ);
 }
 
-void OAgent::secondStageControl(OLocalVertex * s)
+void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period )
 {
     float deltaQ;
     _initializeVariablesSecStage(s);
 
-    s->setEtaLower(s.fairSplitRatioConsensus_RSL(s->getMuRC(),s->getEtaLower(),20,200));      //(mu,eta,iterations,period)
-    s->setEtaUpper(s.fairSplitRatioConsensus_RSL(s->getMuRC(),s->getEtaUpper(),20,200));
+    s->setEtaLower(s.fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaLower(),iterations,peirod ));      //(mu,eta,iterations,period)
+    s->setEtaUpper(s.fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaUpper(),iterations,period ));
 
     //Ratio Consensus
     if( s->getMuRC() < 0 )

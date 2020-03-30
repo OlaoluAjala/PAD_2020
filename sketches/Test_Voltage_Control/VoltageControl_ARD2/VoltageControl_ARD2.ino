@@ -1,31 +1,37 @@
-//void(* resetFunc) (void) = 0; declare reset function @ address 0
+//node 9:(COM 13 , 0x415786E1 )
+//node 10:(COM 14 , 0x415786D3 )
+//node 14:(COM 10 , 0x415DB664 )  
+
 #include <Streaming.h>
 #include <XBee.h>
 #include <OGraph.h>
 #include <OAgent.h>
 
 long base = 1e4;  // not using floating points so need a base number
-float tCmd;
+float deltaQ;
 uint8_t i=2;//number of inneighbors
 
-  //Create objects needed for communication and control
-  XBee xbee = XBee();
-  ZBRxResponse rx = ZBRxResponse();
-  // address, min, max, alpha, beta, out-degree, base
-  OLocalVertex s = OLocalVertex(0x415786D3,10,0,0,0,0,i,base);
-  LinkedList l = LinkedList();
-  OGraph g = OGraph(&s,&l);
-  OAgent a = OAgent(&xbee,&rx,&g,false,true);
-  
-uint8_t errorPin = 6;
-uint8_t sPin = 7;   // synced led
-uint8_t cPin = 48;  // coordination enabled led pin
+//Create objects needed for communication and control
+XBee xbee = XBee();
+ZBRxResponse rx = ZBRxResponse();
+
+OLocalVertex s = OLocalVertex(0x415786D3,10,0,0,0,0,i,base);    //sets up parameters for local vertex
+// OLocalVertex s = OLocalVertex(address,ID,min,max,alpha,beta,out-degree,base);
+
+LinkedList l = LinkedList();
+OGraph g = OGraph(&s,&l);
+OAgent a = OAgent(&xbee,&rx,&g,true,true);
+
+uint8_t errorPin = 6;  // error led pin
+uint8_t sPin = 7;      // synced led
+uint8_t cPin = 48;     // coordination enabled led pin
 
 //variables for node sync check
 boolean de = false;
 
 void setup()  
 {
+  
   Serial.begin(38400);
   Serial3.begin(38400);
   pinMode(13, OUTPUT);
@@ -38,6 +44,7 @@ void setup()
   g.addInNeighbor(0x415DB664,14,0,0); // node 14
   g.configureLinkedList();
 }
+
   void loop()
 {
   if(de == false) 
@@ -82,7 +89,6 @@ void setup()
             Serial.println("Communication Link established");
             Serial.println("c");
             digitalWrite(sPin,HIGH);
-            //ce = true;
           }
           else
           {
@@ -96,10 +102,12 @@ void setup()
   {
     if(a.isSynced())
     {
-     //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(30, 1, 30, 200);
-      Serial.print("The value of the RC algorithm is: ");
-      Serial.println(tCmd);   
+//run Voltage Control algorithm 
+      deltaQ = a.voltageControl(1,1,5,0.7,0.2,1,-1,-0.3,20,200); 
+      //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,iterations,period)
+      
+      Serial.print("the required variation in Q is: ");
+      Serial.println(deltaQ);  
 
       int bbbb = Serial.read();
 
