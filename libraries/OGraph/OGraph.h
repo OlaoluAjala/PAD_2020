@@ -239,6 +239,8 @@ class OLocalVertex : public OVertex {
         inline float getVmin() {return _Vmin; } 
         inline float getPtotal() { return _ptotal; }         
         inline float getQ() { return _qtotal ; }
+        inline float getQtop() { return _qtop; }
+        inline float getQbottom() { return _qbottom; }        
         inline float getQrise() { return _qrise; }
         inline float getQlower() { return _qlower; }
         inline float getD() { return _D; }
@@ -266,11 +268,13 @@ class OLocalVertex : public OVertex {
         //set directive for Voltage Control algorithm
         //imputs
         inline void setVoltage(float V) { _V = V; }
-        inline void setVref(float V_ref) { _Vref = Vref; } 
-        inline void setVmax(float V_max) { _Vmax = Vmax; } 
-        inline void setVmin(float V_min) { _Vmin = Vmin; } 
+        inline void setVref(float Vref) { _Vref = Vref; } 
+        inline void setVmax(float Vmax) { _Vmax = Vmax; } 
+        inline void setVmin(float Vmin) { _Vmin = Vmin; } 
         inline void setPtotal(float ptotal) { _ptotal = ptotal; }        
         inline void setQ(float q) { _qtotal = qtotal; }
+        inline void setQtop(float qtop) { _qtop = qtop; }
+        inline void setQbotom(float qbottom) { _qbottom = qbottom; }    
         inline void setQrise(float qrise) { _qrise = qrise; }
         inline void setQlower(float qlower) { _qlower = qlower; }
         inline void setD(float D) { _D = D; }
@@ -302,6 +306,8 @@ class OLocalVertex : public OVertex {
         inline void clearVmin(){ _Vmin = 0; }
         inline void clearPtotal(){ _ptotal = 0; }
         inline void clearQ(){ _qtotal = 0; }
+        inline void clearQtop(){ _qtop= 0; }
+        inline void clearQbottom(){ _qbottom = 0; }
         inline void clearQrise(){ _qrise = 0; }
         inline void clearQlower(){ _qlower = 0; }
         inline void clearD(){ _D = 0; }
@@ -396,9 +402,11 @@ class OLocalVertex : public OVertex {
         float _Vmin;
         float _ptotal;
         float _qtotal;
-        float _qrise;
-        float _qSecondary;
+        float _qtop; 
+        float _qbottom;
+        float _qrise; 
         float _qlower;
+        float _qSecondary;
         float _D;
         float _alpha;
         
