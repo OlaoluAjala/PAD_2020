@@ -239,12 +239,14 @@ class OLocalVertex : public OVertex {
         inline float getVmin() {return _Vmin; } 
         inline float getP() { return _ptotal; }         
         inline float getQ() { return _qtotal ; }
+        inline float getQtarget() { return _qtarget ; }
         inline float getQtop() { return _qtop; }
         inline float getQbottom() { return _qbottom; }
         inline float getD() { return _D; }
         inline float getAlphaVC() {return _alphaVC; }
 
         //second Stage and ratio consensus
+        inline float getRo(){ return _ro; }
         inline float getQsecondary() { return _qSecondary; }
         inline float getNuUpperRC() { return _nuUpperRC; }
         inline float getNuLowerRC() { return _nuLowerRC; } 
@@ -271,12 +273,14 @@ class OLocalVertex : public OVertex {
         inline void setVmin(float Vmin) { _Vmin = Vmin; } 
         inline void setP(float ptotal) { _ptotal = ptotal; }        
         inline void setQ(float qtotal) { _qtotal = qtotal; }
+        inline void setQtarget(float qtarget) { _qtarget = qtarget; }
         inline void setQtop(float qtop) { _qtop = qtop; }
         inline void setQbottom(float qbottom) { _qbottom = qbottom; } 
         inline void setD(float D) { _D = D; }
         inline void setAlphaVC(float alphaVC) {_alphaVC= alphaVC; }
 
         //second stage & ratio consensus
+        inline void setRo(float ro) { _ro = ro; }
         inline void setQsecondary(float qSecondary) { _qSecondary = qSecondary; }
         inline void setNuUpperRC(float nuUpperRC) { _nuUpperRC = nuUpperRC; }
         inline void setNuLowerRC(float nuLowerRC) { _nuLowerRC = nuLowerRC; }
@@ -302,11 +306,13 @@ class OLocalVertex : public OVertex {
         inline void clearVmin(){ _Vmin = 0; }
         inline void clearP(){ _ptotal = 0; }
         inline void clearQ(){ _qtotal = 0; }
+        inline void clearQtarget(){ _qtarget = 0; }
         inline void clearQtop(){ _qtop= 0; }
         inline void clearQbottom(){ _qbottom = 0; }
         inline void clearD(){ _D = 0; }
         inline void clearAlphaVC(){ _alphaVC = 0; }
             //2nd stage
+        inline void clearRo(){ _ro=0; }
         inline void clearQsecondary() { _qSecondary = 0; }
         inline void clearNuUpperRC() { _nuUpperRC = 0; }
         inline void clearNuLowerRC() { _nuLowerRC = 0; }
@@ -396,6 +402,7 @@ class OLocalVertex : public OVertex {
         float _Vmin;
         float _ptotal;
         float _qtotal;
+        float _qtarget;
         float _qtop; 
         float _qbottom;
         float _qSecondary;
@@ -403,6 +410,7 @@ class OLocalVertex : public OVertex {
         float _alphaVC;
         
         //ratio consensus
+        float _ro;
         float _nuUpperRC;
         float _nuLowerRC;
         float _muRC;

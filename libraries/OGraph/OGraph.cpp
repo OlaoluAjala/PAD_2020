@@ -838,11 +838,13 @@ void OGraph::clearAllStates() {
     _self->clearVmin();
     _self->clearP();
     _self->clearQ();
+    
     _self->clearQtop(); 
     _self->clearQbottom();
     _self->clearQsecondary();
     _self->clearD();
     _self->clearAlphaVC(); 
+    _self->clearRo();
     _self->clearNuUpperRC();
     _self->clearNuLowerRC();
     _self->clearMuRC();

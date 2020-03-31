@@ -305,7 +305,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         inY = 0;
         inZ = 0;
             
-        Serial<<"Iteration "<<iter+1<<". Ratio is: "<<_FLOAT(s->getYMin()/s->getZ(),4)<<"; Y is: "<<_FLOAT(s->getYMin(),4)<<"; Z is: "<<_FLOAT(s->getZ(),4)<<endl;
+        //Serial<<"Iteration "<<iter+1<<". Ratio is: "<<_FLOAT(s->getYMin()/s->getZ(),4)<<"; Y is: "<<_FLOAT(s->getYMin(),4)<<"; Z is: "<<_FLOAT(s->getZ(),4)<<endl;
         delay(5);
         endY=s->getYMin();
         endZ=s->getZ();
@@ -5965,6 +5965,7 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
         
         }else{
             s->setDeltaQ(float (0));
+            s->setQtarget(float (0));
             Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
         }           
     secondStageControl( s, iterations, period ); 
@@ -5974,53 +5975,62 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
 
 void OAgent::firstStageControl( OLocalVertex * s )
 {
-    float deltaQ;
+    // float deltaQ;
 
     if(s->getStateOver())   //we lower the q
     {
-        deltaQ = s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage());    //this value will be possitive
+         s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
+         s->setQtarget(s->getQ()+s->getRo());
         
-        if((s->getQ() +deltaQ) < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
+        if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setStateSaturatedLow(true);
-            s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
-            deltaQ = (s->getQbottom() - s->getQ());
+            s->setQ(s->getQbottom());
+
+            // s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
+            // deltaQ = (s->getQbottom() - s->getQ());
         
-        }else if ((s->getQ() +deltaQ) == s->getQbottom())
+        }else if (s->getQtarget() == s->getQbottom())
         {
             s->setStateSaturatedLow(true);
-            s->setQsecondary(float (0));
-            deltaQ = (s->getQbottom() - s->getQ());
+            s->setQ(s->getQbottom());
+            // s->setQsecondary(float (0));
+            // deltaQ = (s->getQbottom() - s->getQ());
 
         }else{
+            s->setQ(s->getQ() + s->getRo());
             s->setStateSaturatedLow(false);
         }
 
-        s->setQ( s->getQ()+ deltaQ );       //we set the new q value
+        // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
     }
 
     if(s->getStateUnder())      //we rise the q
     {
-        deltaQ = s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage());        // this value will be negative
+        s->setRo (s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));        // this value will be negative
+        s->setQtarget(s->getQ()+s->getRo());
 
-        if((s->getQ() +deltaQ) > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
+        if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
+            s->setQ(s->getQtop());
             s->setStateSaturatedHigh(true);
-            s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
-            deltaQ = (s->getQtop() - s->getQ());
+            // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
+            // deltaQ = (s->getQtop() - s->getQ());
         
-        }else if ((s->getQ() +deltaQ) == s->getQtop())
+        }else if (s->getQtarget() == s->getQtop())
         {
+            s->setQ(s->getQtop());
             s->setStateSaturatedHigh(true);
-            s->setQsecondary(float (0));
-            deltaQ = (s->getQtop() - s->getQ());
+            // s->setQsecondary(float (0));
+            // deltaQ = (s->getQtop() - s->getQ());
             
         }else
         {
+            s->setQ(s->getQ() + s->getRo());
             s->setStateSaturatedHigh(false);
         } 
 
-        s->setQ( s->getQ()+ deltaQ );           //we set the new q value
+        // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
     }
     
     s->setDeltaQ(deltaQ);
@@ -6031,8 +6041,8 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
     float deltaQ;
     _initializeVariablesSecStage(s);
 
-    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaLower(),iterations,period ));      //(mu,eta,iterations,period)
-    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaUpper(),iterations,period ));
+    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
+    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period ));
 
     //Ratio Consensus
     if( s->getMuRC() < 0 )
@@ -6045,23 +6055,46 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
 
     }
 
-    //set the Q levels after the RC
-    if((s->getQ()+s->getEta()) > s->getQtop())          //over the limit
+
+    if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
     {
+        s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
         s->setQ(s->getQtop());                  //set new Q
-        deltaQ = (s->getQtop() - s->getQ());    //set new delta Q
 
-    }else if((s->getQ()+s->getEta()) < s->getQbottom()) //under the limit
+    }else if((s->getQtarget()+s->getEta()) < s->getQbottom()) //under the limit
     {
+        s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
         s->setQ(s->getQbottom());               //set new Q
-        deltaQ = (s->getQtop() - s->getQ());    //set new delta Q
 
-    }else                                               //inside the plausible region for Q
+    }else                                               //inside the plausible region fo
     {
-        s->setQ(s->getQ()+s->getEta());         //set new Q
-        deltaQ = (s->getQ()+s->getEta());       //set new delta Q
+        s->setDeltaQ(s->getQ()+s->getEta());       //set new delta Q
+        s->setQ(s->getQtarget()+s->getEta());         //set new Q
+       
     }
-    s->setDeltaQ(deltaQ);
+
+
+
+
+
+
+    //set the Q levels after the RC
+    // if((s->getQ()+s->getEta()) > s->getQtop())          //over the limit
+    // {
+    //     s->setQ(s->getQtop());                  //set new Q
+    //     deltaQ = (s->getQtop() - s->getQ());    //set new delta Q
+
+    // }else if((s->getQ()+s->getEta()) < s->getQbottom()) //under the limit
+    // {
+    //     s->setQ(s->getQbottom());               //set new Q
+    //     deltaQ = (s->getQtop() - s->getQ());    //set new delta Q
+
+    // }else                                               //inside the plausible region for Q
+    // {
+    //     s->setQ(s->getQ()+s->getEta());         //set new Q
+    //     deltaQ = (s->getQ()+s->getEta());       //set new delta Q
+    // }
+    // s->setDeltaQ(deltaQ);
 } 
 //functions so as to check teh over/undervoltage
 void OAgent::isOverVoltage(OLocalVertex * s)
@@ -6112,22 +6145,40 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
 
 void OAgent::_initializeVariablesSecStage(OLocalVertex * s)    
 {
-    if((s->getStateSaturatedLow()) || (s->getStateSaturatedHigh())) //if the node is operatin under a saturated state
+
+    if(s->getQtarget() > s->getQtop())
     {
-        if(s->getStateSaturatedLow())           //initial values for undervoltage state
-        {
-            s->setMuRC( s->getQsecondary());
-            s->setNuUpperRC(float (0));
-        }
-        if(s->getStateSaturatedHigh())          //initial values for overvoltage state
-        {
-            s->setMuRC( s->getQsecondary());
-            s->setNuLowerRC(float (0));
-        }
+        s->setMuRC( s->getQtarget() - s->getQtop());
+        s->setNuUpperRC(float (0));
+
+    }else if (s->getQtarget() > s->getQbottom())
+    {
+        s->setMuRC( s->getQtarget() - s->getQbottom());
+        s->setNuLowerRC(float (0));
+
     }else
-    {                                           //initial values for normal state
-        s-> setMuRC(float (0));
-        s->setNuUpperRC(-s->getQsecondary());
-        s->setNuLowerRC(-s->getQsecondary());
+    {
+        s->setMuRC(float(0));
+        s->setNuUpperRC(s->getQtop()-s->getQtarget());
+        s->setNuLowerRC(s->getQbottom()-s->getQtarget());        
     }
+
+    // if((s->getStateSaturatedLow()) || (s->getStateSaturatedHigh())) //if the node is operatin under a saturated state
+    // {
+    //     if(s->getStateSaturatedLow())           //initial values for undervoltage state
+    //     {
+    //         s->setMuRC( s->getQsecondary());
+    //         s->setNuUpperRC(float (0));
+    //     }
+    //     if(s->getStateSaturatedHigh())          //initial values for overvoltage state
+    //     {
+    //         s->setMuRC( s->getQsecondary());
+    //         s->setNuLowerRC(float (0));
+    //     }
+    // }else
+    // {                                           //initial values for normal state
+    //     s-> setMuRC(float (0));
+    //     s->setNuUpperRC(-s->getQsecondary());
+    //     s->setNuLowerRC(-s->getQsecondary());
+    // }
 }
