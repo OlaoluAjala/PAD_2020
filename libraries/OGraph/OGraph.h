@@ -237,7 +237,7 @@ class OLocalVertex : public OVertex {
         inline float getVref() {return _Vref; }   
         inline float getVmax() {return _Vmax; } 
         inline float getVmin() {return _Vmin; } 
-        inline float getPtotal() { return _ptotal; }         
+        inline float getP() { return _ptotal; }         
         inline float getQ() { return _qtotal ; }
         inline float getQtop() { return _qtop; }
         inline float getQbottom() { return _qbottom; }
@@ -269,10 +269,10 @@ class OLocalVertex : public OVertex {
         inline void setVref(float Vref) { _Vref = Vref; } 
         inline void setVmax(float Vmax) { _Vmax = Vmax; } 
         inline void setVmin(float Vmin) { _Vmin = Vmin; } 
-        inline void setPtotal(float ptotal) { _ptotal = ptotal; }        
+        inline void setP(float ptotal) { _ptotal = ptotal; }        
         inline void setQ(float qtotal) { _qtotal = qtotal; }
         inline void setQtop(float qtop) { _qtop = qtop; }
-        inline void setQbotom(float qbottom) { _qbottom = qbottom; } 
+        inline void setQbottom(float qbottom) { _qbottom = qbottom; } 
         inline void setD(float D) { _D = D; }
         inline void setAlphaVC(float alphaVC) {_alphaVC= alphaVC; }
 
@@ -289,7 +289,7 @@ class OLocalVertex : public OVertex {
         inline void setDeltaQ(float deltaQ) { _deltaQ = deltaQ; }
 
         //states
-        inline void setStateOVer(bool over) { _over = over; }
+        inline void setStateOver(bool over) { _over = over; }
         inline void setStateUnder(bool under) { _under = under; }
         inline void setStateSaturatedLow(bool saturatedLow) {_saturatedLow = saturatedLow; }
         inline void setStateSaturatedHigh(bool saturatedHigh) {_saturatedHigh = saturatedHigh; }
@@ -300,7 +300,7 @@ class OLocalVertex : public OVertex {
         inline void clearVref(){ _Vref = 0; }
         inline void clearVmax(){ _Vmax = 0; }
         inline void clearVmin(){ _Vmin = 0; }
-        inline void clearPtotal(){ _ptotal = 0; }
+        inline void clearP(){ _ptotal = 0; }
         inline void clearQ(){ _qtotal = 0; }
         inline void clearQtop(){ _qtop= 0; }
         inline void clearQbottom(){ _qbottom = 0; }

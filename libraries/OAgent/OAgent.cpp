@@ -5965,6 +5965,7 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
         
         }else{
             s->setDeltaQ(float (0));
+            Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
         }           
     secondStageControl( s, iterations, period ); 
 
@@ -6030,8 +6031,8 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
     float deltaQ;
     _initializeVariablesSecStage(s);
 
-    s->setEtaLower(s->fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaLower(),iterations,peirod ));      //(mu,eta,iterations,period)
-    s->setEtaUpper(s->fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaUpper(),iterations,period ));
+    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaLower(),iterations,period ));      //(mu,eta,iterations,period)
+    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getEtaUpper(),iterations,period ));
 
     //Ratio Consensus
     if( s->getMuRC() < 0 )
@@ -6065,7 +6066,7 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
 //functions so as to check teh over/undervoltage
 void OAgent::isOverVoltage(OLocalVertex * s)
 {
-    if(V > s->getVmax())
+    if(s->getVoltage() > s->getVmax())
     {
         uint8_t ID = s->getID();
         Serial<<"node "<<ID<<"is working with over-voltage condition"; 
@@ -6079,7 +6080,7 @@ void OAgent::isOverVoltage(OLocalVertex * s)
 
 void OAgent::isUnderVoltage(OLocalVertex * s)
 {
-    if(V < s->getVmin())
+    if(s->getVoltage() < s->getVmin())
     {
         uint8_t ID = s->getID();
         Serial<<"node "<<ID<<"is working with under-voltage condition";  
@@ -6102,7 +6103,7 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
     s->setVmax(Vref-Vref*(secPercentage/float(100)));        
     s->setP(p);
     s->setQ(q);
-    s->setQtop(qtopq);
+    s->setQtop(qtop);
     s->setQbottom(qbottom);
     s->setD(D);
     s->setAlphaVC(alphaVC);

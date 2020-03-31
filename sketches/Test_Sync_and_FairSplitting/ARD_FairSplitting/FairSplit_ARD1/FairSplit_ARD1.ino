@@ -16,7 +16,7 @@ OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,i,base);    //sets up paramet
 // OLocalVertex s = OLocalVertex(0x415786E1,0,0.225*D_base,-2.1667*base,0.1667*base,5,D_base,9);
 LinkedList l = LinkedList();
 OGraph g = OGraph(&s,&l);
-OAgent a = OAgent(&xbee,&rx,&g,true,true);
+OAgent a = OAgent(&xbee,&rx,&g,true,true);//(xbee,rx,leader,...)
 
 uint8_t errorPin = 6;  // error led pin
 uint8_t sPin = 7;      // synced led

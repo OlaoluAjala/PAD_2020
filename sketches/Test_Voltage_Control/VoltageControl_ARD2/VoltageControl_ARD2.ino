@@ -20,7 +20,7 @@ OLocalVertex s = OLocalVertex(0x415786D3,10,0,0,0,0,i,base);    //sets up parame
 
 LinkedList l = LinkedList();
 OGraph g = OGraph(&s,&l);
-OAgent a = OAgent(&xbee,&rx,&g,true,true);
+OAgent a = OAgent(&xbee,&rx,&g,false,true);//(xbee,rx,leader,...)
 
 uint8_t errorPin = 6;  // error led pin
 uint8_t sPin = 7;      // synced led
@@ -103,8 +103,8 @@ void setup()
     if(a.isSynced())
     {
 //run Voltage Control algorithm 
-      deltaQ = a.voltageControl(1,1,5,0.7,0.2,1,-1,-0.3,20,200); 
-      //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,iterations,period)
+      deltaQ = a.voltageControl(1,1,5,0.7,0.2,1,-1,-0.3,0.3,20,200); 
+      //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alpha,iterations,period)
       
       Serial.print("the required variation in Q is: ");
       Serial.println(deltaQ);  
