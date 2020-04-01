@@ -5960,14 +5960,14 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
     isOverVoltage(s);
 
     if( s->getStateOver() || s->getStateUnder() )
-        {
-            firstStageControl(s);
-        
-        }else{
-            s->setDeltaQ(float (0));
-            s->setQtarget(float (0));
-            Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
-        }           
+    {
+        firstStageControl(s);
+    
+    }else{
+        s->setDeltaQ(float (0));
+        s->setQtarget(s->getQ());
+        Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
+    }           
     secondStageControl( s, iterations, period ); 
 
     return s->getDeltaQ();
@@ -5982,63 +5982,65 @@ void OAgent::firstStageControl( OLocalVertex * s )
          s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
          s->setQtarget(s->getQ()+s->getRo());
         
-        if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
-        {
-            s->setStateSaturatedLow(true);
-            s->setQ(s->getQbottom());
+        // if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
+        // {
+        //    // s->setDeltaQ(s->getQbottom()-s->s->getQ());
+        //     s->setStateSaturatedLow(true);
+        //     s->setQ(s->getQbottom());
 
-            // s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
-            // deltaQ = (s->getQbottom() - s->getQ());
+        //     // s->setQsecondary( deltaQ + s->getQ() - s->getQbottom() );//revise
+        //     // deltaQ = (s->getQbottom() - s->getQ());
         
-        }else if (s->getQtarget() == s->getQbottom())
-        {
-            s->setStateSaturatedLow(true);
-            s->setQ(s->getQbottom());
-            // s->setQsecondary(float (0));
-            // deltaQ = (s->getQbottom() - s->getQ());
+        // }else if (s->getQtarget() == s->getQbottom())
+        // {
+        //     //s->setDeltaQ(s->getQbottom()-s->s->getQ());
+        //     s->setStateSaturatedLow(true);
+        //     s->setQ(s->getQbottom());
+        //     // s->setQsecondary(float (0));
+        //     // deltaQ = (s->getQbottom() - s->getQ());
 
-        }else{
-            s->setQ(s->getQ() + s->getRo());
-            s->setStateSaturatedLow(false);
-        }
+        // }else{
+        //     s->setQ(s->getQ() + s->getRo());
+        //     s->setStateSaturatedLow(false);
+        // }
 
         // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
     }
 
     if(s->getStateUnder())      //we rise the q
     {
-        s->setRo (s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));        // this value will be negative
+        s->setRo (s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage()));        // this value will be negative
         s->setQtarget(s->getQ()+s->getRo());
 
-        if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
-        {
-            s->setQ(s->getQtop());
-            s->setStateSaturatedHigh(true);
-            // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
-            // deltaQ = (s->getQtop() - s->getQ());
+        // if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
+        // {
+        //     s->setQ(s->getQtop());
+        //     s->setStateSaturatedHigh(true);
+        //     // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
+        //     // deltaQ = (s->getQtop() - s->getQ());
         
-        }else if (s->getQtarget() == s->getQtop())
-        {
-            s->setQ(s->getQtop());
-            s->setStateSaturatedHigh(true);
-            // s->setQsecondary(float (0));
-            // deltaQ = (s->getQtop() - s->getQ());
+        // }else if (s->getQtarget() == s->getQtop())
+        // {
+        //     s->setQ(s->getQtop());
+        //     s->setStateSaturatedHigh(true);
+        //     // s->setQsecondary(float (0));
+        //     // deltaQ = (s->getQtop() - s->getQ());
             
-        }else
-        {
-            s->setQ(s->getQ() + s->getRo());
-            s->setStateSaturatedHigh(false);
-        } 
+        // }else
+        // {
+        //     s->setQ(s->getQ() + s->getRo());
+        //     s->setStateSaturatedHigh(false);
+        // } 
 
         // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
     }
     
-    s->setDeltaQ(deltaQ);
+    //s->setDeltaQ(deltaQ);
 }
 
 void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period )
 {
-    float deltaQ;
+    //float deltaQ;
     _initializeVariablesSecStage(s);
 
     s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
@@ -6073,11 +6075,6 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
        
     }
 
-
-
-
-
-
     //set the Q levels after the RC
     // if((s->getQ()+s->getEta()) > s->getQtop())          //over the limit
     // {
@@ -6099,13 +6096,15 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
 //functions so as to check teh over/undervoltage
 void OAgent::isOverVoltage(OLocalVertex * s)
 {
+    Serial<<"voltage: "<< s->getVoltage()<<" Vref: "<<s->getVref()<<endl;
     if(s->getVoltage() > s->getVmax())
     {
         uint8_t ID = s->getID();
-        Serial<<"node "<<ID<<"is working with over-voltage condition"; 
+        Serial<<"node "<<ID<<"is working with over-voltage condition"<<endl; 
         s->setStateOver(true);    
 
-    }else
+    }
+    if(s->getVoltage() <= s->getVmax())
     {
         s->setStateOver(false); 
     }
@@ -6113,13 +6112,15 @@ void OAgent::isOverVoltage(OLocalVertex * s)
 
 void OAgent::isUnderVoltage(OLocalVertex * s)
 {
+    Serial<<"voltage: "<< s->getVoltage()<<" Vref: "<<s->getVref()<<endl;
     if(s->getVoltage() < s->getVmin())
     {
         uint8_t ID = s->getID();
-        Serial<<"node "<<ID<<"is working with under-voltage condition";  
+        Serial<<"node "<<ID<<"is working with under-voltage condition"<<endl;  
         s->setStateUnder(true); 
 
-    }else
+    }
+    if(s->getVoltage() >= s->getVmin())
     {
         s->setStateUnder(false); 
     }
