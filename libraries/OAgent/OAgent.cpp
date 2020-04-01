@@ -6041,6 +6041,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
 void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period )
 {
     //float deltaQ;
+    Serial<<"Entering Second Stage Control"<<endl;
     _initializeVariablesSecStage(s);
 
     s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
@@ -6096,7 +6097,7 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
 //functions so as to check teh over/undervoltage
 void OAgent::isOverVoltage(OLocalVertex * s)
 {
-    Serial<<"voltage: "<< s->getVoltage()<<" Vref: "<<s->getVref()<<endl;
+    //Serial<<"voltage: "<< s->getVoltage()<<" Vref: "<<s->getVref()<<" Vmax: "<<s->getVmax()<<" Vmin: "<<s->getVmin()<<endl;
     if(s->getVoltage() > s->getVmax())
     {
         uint8_t ID = s->getID();
@@ -6112,7 +6113,7 @@ void OAgent::isOverVoltage(OLocalVertex * s)
 
 void OAgent::isUnderVoltage(OLocalVertex * s)
 {
-    Serial<<"voltage: "<< s->getVoltage()<<" Vref: "<<s->getVref()<<endl;
+    //Serial<<"voltage: "<< s->getVoltage()<<" Vref: "<<s->getVref()<<endl;
     if(s->getVoltage() < s->getVmin())
     {
         uint8_t ID = s->getID();
@@ -6134,7 +6135,7 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
     s->setVoltage(V);
     s->setVref(Vref);
     s->setVmax(Vref+Vref*(secPercentage/float(100)));
-    s->setVmax(Vref-Vref*(secPercentage/float(100)));        
+    s->setVmin(Vref-Vref*(secPercentage/float(100)));        
     s->setP(p);
     s->setQ(q);
     s->setQtop(qtop);
