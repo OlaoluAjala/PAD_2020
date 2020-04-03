@@ -166,6 +166,7 @@ class OAgent {
         void _updateLambdaMinLambdaMax(OVertex * v, long &z, float &min, float &max, long &lambdaMinus, long &lambdaPlus);
         uint8_t _checkRatio(float &min, float &max, float ratio);
         ////////////
+        void _initializeValues(OLocalVertex * s,float gmax,float gmin,float li,float fijmax[],float fmin[]);
         float _getBjFromPacket();
         void _broadcastBalanceFeasibleFlow(OLocalVertex * s);
         float _getInitialGen(ORemoteVertex*s);

@@ -1052,6 +1052,7 @@ float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OA
   ginicial= 0.5*(s->getGmax()+ s->getGmin());
    return ginicial; }
 
+
 void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint8_t round
 {  
     OLocalVertex * s = _G->getLocalVertex();        // store pointer to local vertex 
@@ -1201,17 +1202,17 @@ void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint
 //}while(iter < iterations && -(endY) > eps && (endZ) > eps);
 }
 
-
-
-
-
-
-
-
-
-
+void OAgent::_initializeValues(OLocalVertex * s, float gmax,float gmin,float li,float fijmax[],float fmin[]) {
+    s->setGMax(gmax);
+    s->setGMin(gmin);
+    s->setLi(li);
+    s->setFlowLimits(fijmax,fijmin);
+}
 
 ////////////////////////////////7
+
+
+
 
 //void OAgent::_waitForScheduleOptimalDispatchPacket(unsigned long &startTime, uint8_t &iterations, uint16_t &period, int timeout) {
 //    _waitForSchedulePacket(SCHEDULE_OPTIMAL_DISPATCH_HEADER,startTime,iterations,period,timeout);
