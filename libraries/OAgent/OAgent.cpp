@@ -5966,7 +5966,6 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
     }else{
         s->setDeltaQ(float (0));
         s->setQtarget(s->getQ());
-        Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
     }           
     secondStageControl( s, iterations, period ); 
 
@@ -5976,12 +5975,16 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
 void OAgent::firstStageControl( OLocalVertex * s )
 {
     // float deltaQ;
+    Serial<<"******************1st Stage******************"<<endl;
 
     if(s->getStateOver())   //we lower the q
     {
-         s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
-         s->setQtarget(s->getQ()+s->getRo());
+        Serial<<"1st stage---Over"<<endl;
+        s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
+        s->setQtarget(s->getQ()+s->getRo());
         
+        Serial<<"∆Q in 1st stage is: "<<getRo()<<endl;
+        Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
         // if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         // {
         //    // s->setDeltaQ(s->getQbottom()-s->s->getQ());
@@ -6009,8 +6012,12 @@ void OAgent::firstStageControl( OLocalVertex * s )
 
     if(s->getStateUnder())      //we rise the q
     {
+        Serial<<"1st stage---Under"<<endl;
         s->setRo (s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage()));        // this value will be negative
         s->setQtarget(s->getQ()+s->getRo());
+
+        Serial<<"∆Q in 1st stage is: "<<getRo()<<endl;
+        Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
 
         // if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         // {
@@ -6041,23 +6048,28 @@ void OAgent::firstStageControl( OLocalVertex * s )
 void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period )
 {
     //float deltaQ;
-    Serial<<"Entering Second Stage Control"<<endl;
+    Serial<<"******************2nd Stage******************"<<endl;
+  
     _initializeVariablesSecStage(s);
 
     s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
     s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period ));
 
+    Serial<<"the value of mu: "s->getMuRC()<<endl;
+
     //Ratio Consensus
     if( s->getMuRC() < 0 )
     {
         s->setEta(s->getEtaLower());
+        Serial<<"the value of eta_lower: "s->getEtaLower()<<endl;
 
     }else if( s->getMuRC() > 0 )
     {
         s->setEta(s->getEtaUpper());
+        Serial<<"the value of eta_upper: "s->getEtaUpper()<<endl;
 
     }
-
+    Serial<<"the eta chosen is: "<<s->getEta()<<endl;
 
     if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
     {
@@ -6107,6 +6119,8 @@ void OAgent::isOverVoltage(OLocalVertex * s)
     }
     if(s->getVoltage() <= s->getVmax())
     {
+        uint8_t ID = s->getID();
+        Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
         s->setStateOver(false); 
     }
 }
@@ -6123,6 +6137,8 @@ void OAgent::isUnderVoltage(OLocalVertex * s)
     }
     if(s->getVoltage() >= s->getVmin())
     {
+        uint8_t ID = s->getID();
+        Serial<<"node "<<s->getID()<<" is working under natural conditions"<<endl;
         s->setStateUnder(false); 
     }
 }
@@ -6130,6 +6146,7 @@ void OAgent::isUnderVoltage(OLocalVertex * s)
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC )
 
 {
+    Serial<<"initialiting VC Variables"<<endl;
     _G->clearAllStates(); 
 
     s->setVoltage(V);
@@ -6147,6 +6164,7 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
 
 void OAgent::_initializeVariablesSecStage(OLocalVertex * s)    
 {
+    Serial<<"initialiting 2nd Stage variables"<<endl;
 
     if(s->getQtarget() > s->getQtop())
     {
@@ -6164,6 +6182,11 @@ void OAgent::_initializeVariablesSecStage(OLocalVertex * s)
         s->setNuUpperRC(s->getQtop()-s->getQtarget());
         s->setNuLowerRC(s->getQbottom()-s->getQtarget());        
     }
+
+        Serial<<"initial values for node "<<s->getID()<<": "<<endl;
+        Serial<<"mu[0] = "<<s->getMuRC()<<endl;
+        Serial<<"nu_Upper[0] = "<<s->getNuUpperRC()<<endl;
+        Serial<<"nu_Lower[0] = "<<s->getNuLowerRC()<<endl;
 
     // if((s->getStateSaturatedLow()) || (s->getStateSaturatedHigh())) //if the node is operatin under a saturated state
     // {
