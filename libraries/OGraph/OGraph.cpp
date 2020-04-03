@@ -506,7 +506,27 @@ long OLocalVertex::_computeLambda(long limit) {
     else
         return LONG_ERROR;
 }
+//////////////////
 
+void OLocalVertex::setFlowLimits( float fijmax[],float fijmin[]) {   
+    uint8_t k;
+    for(k=0;k<NUM_IN_NEIGHBORS;k++){
+        _Fijmin[k]=fijmin[k];
+        _Fijmax[k]=fijmax[k];
+         }
+    }
+
+//creamos una funcion en OLocelVertex para inicializar flujos y genenracion 
+void OLocalVertex::InitializeFlowLimits(){
+uint8_t i;
+
+  for(i=0;i<NUM_IN_NEIGHBORS,i++){
+     _Fij0[i]=0.5*(_Fijmax[i]+_Fijmin[i]);
+  }
+}
+
+
+//////////////////////
 /// End private methods
 //// End OLocalVertex
 

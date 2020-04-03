@@ -163,6 +163,7 @@ float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t peri
             //Serial << _MEM(PSTR("z(")) << (k+1) << _MEM(PSTR(") = ")) << s->getZ() << _MEM(PSTR(";")) << endl;
             delay(10);
         } else {
+
             delay(25);
         }
         s->setYMinP((s->getYMinP())/Dout + inY);
@@ -170,7 +171,7 @@ float OAgent::fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t peri
         s->setZP((s->getZP())/Dout + inZ);
         s->addToSigmaP((s->getZP())/Dout);
     }
-    return float(s->getYMinP())/(s->getZP());
+    return (s->getYMinP())/(s->getZP());
 }
 
 
@@ -916,6 +917,301 @@ void OAgent::_findMinRatioMaxRatio(float ratios[], uint8_t num, float &min, floa
             max = ratios[i];
     }
 }
+/////////////////////////////////777
+//la función leaderfeasible Flow envia al resto de nudos la información para comenzar las iteraciones y realiza el 
+float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
+    unsigned long t0 = myMillis();
+    unsigned long startTime = t0 + RC_DELAY;
+    OLocalVertex * s = _G->getLocalVertex();
+    float gamma = 0;
+    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_FAIR_SPLIT_HEADER,SCHEDULE_TIMEOUT, startTime, iterations, period);
+
+    if (!scheduled) 
+    {
+        Serial<<"RC scheduling was a FAIL!"<<endl;
+        delay(5);
+        gamma = -1;
+    }
+    else
+    {
+        Serial<<"RC scheduling was a SUCCESS!"<<endl;
+        delay(5);
+        Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
+        delay(5);
+        if(_waitToStart(startTime,true,10000))
+        {
+            Serial <<"My startime is "<< myMillis() <<endl;
+            delay(5);
+            feasibleFlowAlgorithm(iterations,period);
+        }
+    }        
+    return gamma;
+}
+//esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
+
+float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
+    unsigned long startTime = 0;
+    //delay(50);
+    float gamma = 0;
+    bool scheduled = _waitForParentSchedulePacketRC(startTime,iterations,period,-1);
+    if(scheduled)
+    {
+        Serial<<"RC scheduling was a SUCCESS!"<<endl;
+        delay(5);
+        Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
+        delay(5);
+        if(_waitToStart(startTime,true,10000)) {
+            Se
+            rial <<"My startime is "<< myMillis() <<endl;
+            delay(5);
+           feasibleFlowAlgorithm(iterations,period);
+        }
+    }
+    else
+    {
+        Serial<<"RC scheduling was a FAIL!"<<endl;
+        delay(5);
+        gamma = -1;
+    }
+    return gamma;
+}
+//esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
+
+float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period) {
+    srand(analogRead(7));    
+    float gamma = 0;
+    if(isLeader())
+    {
+         gamma=leaderfeasibleFlow_RSL(iterations,period);
+    }
+    else
+    {
+        gamma=nonleaderfeasibleFlow_RSL(iterations,period);
+    }
+    return gamma;
+}
+//esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
+
+//La funcion de Feasible flow se definirá en OAgent.h y se desarrolla en OAgent.cpp
+//Esta función tiene comoo objetivo determonar el valor de salida de los generadores para cumplir el balance de potencia
+//para ello podemos hacer dos cosas:1. devolvemos el valor en la función ??? deberiamos crear una variable en OLoaclVertex para la generación?? 
+//esta funcion debe recibir el numero de iteraciones , el periodo , el balance de
+float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OAgent.h
+    float ginicial;
+  ginicial= 0.5*(s->getGmax()+ s->getGmin());
+   return ginicial; }
+// en el caso que no podemos crear el vector de flujos reducidos 
+float OAgent::_ComputeBalance(ORemoteVertex *s, float fij[]){
+
+    float balance;
+    int i;
+    for(i=0;i<NUM_IN_NEIGHBORS;i++){
+         bi=-s->getFlow(i);
+    }
+     bi=bi+ s->getGi() -s->getLi();
+}
+
+void OAgent::_broadcastBalanceFeasibleFlow(OLocalVertex * s) {
+  
+    uint16_t payload[4];   //vector de cuatro, 1 para el HEADER, dos para el valor de bi y otra para el signo 
+    uint8_t wi = s->getOutDegree() + 1;
+
+    payload[0] = FEASIBLE_FLOW_HEADER;
+    payload[1] = _bi/wi; // guardamos el valor de mu los primeros?? 16 bits
+    payload[2] = _bi/wi >> 16;// guardamos el valor de mu los ultimos?? 16 bits
+    if(bi<0){
+        payload[3]=0;//if it is 0 then the coeficient between mu and sigma is negative 
+
+   }else{
+        payload[3]=1;
+   }
+    // multiplicamos por la base para eliminar numeros decimales.
+    bi=bi*base;
+    _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
+    //se ha transformado nuestro vector de 16bits en uno se 8bits --> se ha doblado la longitud del vector
+    unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
+#ifdef VERBOSE
+    Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
+#endif
+}
+
+float OAgent::_getBjFromPacket() {
+    uint8_t ptr = 2;
+    uint8_t ptr1 =6;
+    float Bj;
+
+    if(_getUint32_tFromPacket(ptr1)==0){
+           Bj=-_getUint32_tFromPacket(ptr)/base;
+    }else{
+        Bj=_getUint32_tFromPacket(ptr)/base;
+    }
+    return Bj;
+}
+float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OAgent.h
+    float ginicial;
+  ginicial= 0.5*(s->getGmax()+ s->getGmin());
+   return ginicial; }
+
+void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint8_t round
+{  
+    OLocalVertex * s = _G->getLocalVertex();        // store pointer to local vertex 
+    float Dout = float(s->getOutDegree() + 1);   ??porque lo convierte a float??   // store out degree, the +1 is to account for the self loops
+
+   uint8_t wi = s->getOutDegree() + 1
+   float gi;
+   float fij[wi];  //barajar la posibilidad de que no sea necesario y usar directamente Fij0[]
+   float bi;
+   float bj;
+   float wj;
+   uint8_t count;
+   count =0;
+   //inicializamos la generación 
+   gi=_getInitialGen(s);
+   s->setGi(gi);
+   // acontinuación debemos extraer la igualar fij[] los valores iniciales de los flujos, para ello debemos conocer los ID de los vecinos
+   //Para ello podemos crear otra función a parte 
+    //_setInitialFlows(s,fij);
+   //los valores iniciales de los flujos ya están el el vector_Fij0[]; Por ello no hace falta astualizarlos 
+   //otra opción es seguir el mismo proceso con la generación .
+
+    unsigned long start;                            // create variable to store iteration start time
+    bool txDone;                                    // create variable to keep track of broadcasts
+    bool mucheck = 0;
+    bool sigmacheck = 0;
+    //srand(analogRead(0)); //put this instruction in both the leader and nonleader consensus functions
+    uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
+    float eps=0.00001;       //variable for setting the end point of the iterations
+    int count = 3;    
+    int iter;               //variable for the iteration count
+
+    //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
+    int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
+    //int step_counter = 0;        //used when adjusting vertex array to account for offline neigbors
+    uint32_t aLsb; //variable para almacenar la direccion de memoria
+
+    //este bucle inicializa el vector node_check a cero 
+    for(int i=0; i < NUM_REMOTE_VERTICES; i++)
+    {
+        node_check[i] = 0;
+    }
+    int frame = 30; //??que es frame??
+    //if(txTime <= 0 || txTime > period)
+     //   txTime = 25;                      //25 milliseconds
+    iter=0; // inicializamos la variable que contabiliza la iteraciones
+    //EMPIEZA EL BUCLE
+    do
+    {
+        srand(analogRead(0));
+        txTime =  (rand() % (period - 2*frame)) + frame;  //determines the time window in which a payload is transmitted
+        txDone = false;     // initialize toggle to keep track of broadcasts
+        start = millis();   // initialize timer
+        // clear in y and in z
+        delay(5);
+
+        uint8_t i;
+        //compute bi 
+        bi=_ComputeBalance(s);
+        s->setBi(bi);
+
+        while(uint16_t(millis()-start) < period)
+        {
+            if(_fairSplitPacketAvailable())//perguntamos si hay algún paquete disponible 
+            {                                   // robust, coordinate value packet available
+                aLsb = _rx->getRemoteAddress64().getLsb(); //almacenamos la direccción de memoria del nodo emisor??
+                if(_G->isInNeighbor(aLsb,i))//preguntampos si el nodo emisor es nodo vecino   
+                {    // check if remote device is in in-neighborhoo
+                    //importante en la variable i se devuelve el índice del nodo emisor 
+                    bj=_getBjFromPacket();                       //almacenamos el valor del balance del nodo emisor 
+                    uint8_t neighborID = _getNeighborIDFromPacket();  //obtenemos el ID del nodo emisor 
+                    uint8_t nodeID = s->getID();  //obtenemos el ID del nodo local 
+                    //una vez tenemos el ID del neighbor podemos crear nuestro vector de neighborsIDs 
+                    //float neighborIDs[count]=neighborID;
+                    //count ++;
+
+                    node_check[neighborID -1] = 1;                      //data was received from a neighbor at this iteration   
+                }
+            }
+            if((int((millis() - start)) >= txTime) && !txDone) {
+                txDone = true; // toggle txDone
+                _broadcastBalanceFeasibleFlow(s);
+                    //Serial<<"Sent: "<<s->getMuMin()<<" and "<<s->getSigma()<<" to neighbors"<<endl;
+            }
+        }
+        // Serial<<"Ratio is: "<<_FLOAT(float(s->getYMin())/float(s->getZ()),4)<<"; Y is: "<<_FLOAT(float(s->getYMin()),4)<<"; Z is: "<<_FLOAT(float(s->getZ()),4)<<endl;
+        if(!_quiet) {
+            delay(10);
+        } else {
+            delay(25);
+        }
+        // ahora tenemos que actualizar los valores de flujo y generación 
+        //actualizamos salida de generacion y comprobamos límites 
+        gi=s->getGi()-0.5*s->getBi()/wi;
+        if(gi<s->getGMax()){ 
+            gi=_gmax;
+         }else if(gi>s->getGMin()){
+            gi=_gmin;
+         }
+        s->setGi(gi);
+        /*
+        for(i=0;i<_OutDegree;i++){
+
+        fij[i]=s->getLineFlows(i)-0.5*bj+0.5*bi;
+        }
+        s-setLineFlows(fij);
+        */
+
+        // en el caso de emplear Fij0[]
+        //actualizamos flujos y comprobamos límites
+        if(_G->isInNeighbor(aLsb,i)){
+         float fij=s->getFlow(neighborID-1)-0.5*bj+0.5*bi;
+             if(fij< s->getFlowMax(neighborID-1)){
+                s->setFlowMax(neighborID-1,fij);
+             }else if(fij>s->getFlowMin()){
+                s->setFlowMin(neighborID-1,fij)  
+                   }
+             s->setLineFlow(neighborID-1,fij);
+        }
+
+        //CODE TO IMPROVE RESILIENCY
+                
+        for(int j=0;j < NUM_REMOTE_VERTICES; j++)
+        {
+            if(node_check[j] == 0 && node_counter[j] >= 0)
+                node_counter[j] += 1;
+            else if(node_check[j] == 1 ) 
+                node_counter[j] = 0;
+  
+
+            if(node_counter[j] >= int(iterations/2) )
+            {
+                s->setStatus(j+1, 1);
+                s->decrementInDegree();
+                uint8_t dout = s->getOutDegree();              //since we assume it is a bidirectional graph, InDegree is equivalent to OutDegree
+                s->setOutDegree(dout - 1); 
+                node_counter[j] = -1;                          //set counter to -1 when limit reached to indicate offline link status    
+            }
+            node_check[j] = 0;                                 //reset node_check after each iteration
+        }
+
+  
+        iter++;// increase the iteration count
+
+        //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
+    }while(iter < iterations); //we need to implement here the max consensus
+//}while(iter < iterations && -(endY) > eps && (endZ) > eps);
+}
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////7
 
 //void OAgent::_waitForScheduleOptimalDispatchPacket(unsigned long &startTime, uint8_t &iterations, uint16_t &period, int timeout) {
 //    _waitForSchedulePacket(SCHEDULE_OPTIMAL_DISPATCH_HEADER,startTime,iterations,period,timeout);

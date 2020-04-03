@@ -139,6 +139,18 @@ class OVertex {
         long _nuMax[NUM_IN_NEIGHBORS];
         /// Methods
         // Helper functions
+        ////////////////
+        float _gmin;
+        float _gmax;
+        float _gi;
+        float _li;
+        float _bi;
+        float _Fijmax[NUM_IN_NEIGHBORS];
+        float _Fijmin[NUM_IN_NEIGHBORS];
+        float _Fij0[NUM_IN_NEIGHBORS];
+        ////////////////77
+
+
         void _prepareOVertex(uint32_t aLsb, long lambdaMin, long lambdaMax);
 };
 
@@ -208,6 +220,25 @@ class OLocalVertex : public OVertex {
         inline long getBeta() { return _beta; }
         // Clear temporary states (zIn and sigma)
         inline void clearZInSigma() { _zIn = 0; _sigma = 0; }
+        //////////////
+        inline float getBi(){return _bi;}
+        inline void setBi(bi){ _bi=bi}
+
+        inline void setGi(bgi){ _gi=gi}
+        inline float getGi(){return _gi;}
+
+        inline void setLi(li){ _li=li}
+        inline float getLi(){return _li;}
+
+        inline float getGMin() { return _gmin; }
+        inline void setGMin(gmin){ _gmin=gmin}
+        inline float getGMax() { return _gmax; }
+        inline void setGMax(gmax){ _gmax=gmax;}
+        inline void OLocalVertex::getFlow(uint8_t k){ return _Fij0[k];}
+        inline void OLocalVertex::setLineFlow(uint8_t i, float fij ){ _Fij0[i]=fij;}
+
+        ////////////7777
+
 	protected:
         /// Properties
         long _base;
@@ -235,6 +266,17 @@ class OLocalVertex : public OVertex {
         // Graph degrees
         uint8_t _inDegree;
         uint8_t _outDegree;
+
+             ////////////////
+        float _gmin;
+        float _gmax;
+        float _gi;
+        float _li;
+        float _bi;
+        float _Fijmax[NUM_IN_NEIGHBORS];
+        float _Fijmin[NUM_IN_NEIGHBORS];
+        float _Fij0[NUM_IN_NEIGHBORS];
+        ////////////////77
         /// Methods
         void _prepareOLocalVertex(uint32_t aLsb, long min, long max, long alpha, long beta, uint8_t Dout, long base);
         long _computeLambda(long limit);  
