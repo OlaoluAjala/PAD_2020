@@ -59,7 +59,12 @@ class OAgent {
         // Get / set quiet directive
         inline void setQuiet(bool quiet) { _quiet = quiet; }
         inline bool isQuiet() { return _quiet; }
-        
+        ///////////////77
+        float leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
+        float nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
+        float feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period);
+        void feasibleFlowAlgorithm( uint8_t iterations, uint16_t period);
+        ///////////////////777
         // Fair splitting methods
         float fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t period);
         float fairSplitRatioConsensus(long x, uint8_t iterations, uint16_t period);
@@ -160,7 +165,12 @@ class OAgent {
         long _findLambdaStar(OLocalVertex * s);
         void _updateLambdaMinLambdaMax(OVertex * v, long &z, float &min, float &max, long &lambdaMinus, long &lambdaPlus);
         uint8_t _checkRatio(float &min, float &max, float ratio);
-        
+        ////////////
+        float _getBjFromPacket();
+        void _broadcastBalanceFeasibleFlow(OLocalVertex * s);
+        float _getInitialGen(ORemoteVertex*s);
+        float _ComputeBalance(ORemoteVertex *s, float fij[]);
+        /////////
         // Synchronization helper functions
         bool _leaderSync();
         bool _targetSync(unsigned long tTwo);
