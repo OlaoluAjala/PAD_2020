@@ -5983,7 +5983,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
         s->setQtarget(s->getQ()+s->getRo());
         
-        Serial<<"∆Q in 1st stage is: "<<getRo()<<endl;
+        Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
         Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
         // if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         // {
@@ -6016,7 +6016,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         s->setRo (s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage()));        // this value will be negative
         s->setQtarget(s->getQ()+s->getRo());
 
-        Serial<<"∆Q in 1st stage is: "<<getRo()<<endl;
+        Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
         Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
 
         // if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
@@ -6055,18 +6055,18 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
     s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
     s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period ));
 
-    Serial<<"the value of mu: "s->getMuRC()<<endl;
+    Serial<<"the value of mu: "<<s->getMuRC()<<endl;
 
     //Ratio Consensus
     if( s->getMuRC() < 0 )
     {
         s->setEta(s->getEtaLower());
-        Serial<<"the value of eta_lower: "s->getEtaLower()<<endl;
+        Serial<<"the value of eta_lower: "<<s->getEtaLower()<<endl;
 
     }else if( s->getMuRC() > 0 )
     {
         s->setEta(s->getEtaUpper());
-        Serial<<"the value of eta_upper: "s->getEtaUpper()<<endl;
+        Serial<<"the value of eta_upper: "<<s->getEtaUpper()<<endl;
 
     }
     Serial<<"the eta chosen is: "<<s->getEta()<<endl;
