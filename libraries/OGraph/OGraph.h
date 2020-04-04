@@ -263,6 +263,7 @@ class OLocalVertex : public OVertex {
         inline bool getStateUnder() {return _under;}
         inline bool getStateSaturatedLow() { return _saturatedLow; }
         inline bool getStateSaturatedHigh() { return _saturatedHigh; }
+        inline bool getSecondStageFlag() { return _secondStageFlag; }
 
 
         //set directive for Voltage Control algorithm
@@ -295,8 +296,9 @@ class OLocalVertex : public OVertex {
         //states
         inline void setStateOver(bool over) { _over = over; }
         inline void setStateUnder(bool under) { _under = under; }
-        inline void setStateSaturatedLow(bool saturatedLow) {_saturatedLow = saturatedLow; }
-        inline void setStateSaturatedHigh(bool saturatedHigh) {_saturatedHigh = saturatedHigh; }
+        inline void setStateSaturatedLow(bool saturatedLow) { _saturatedLow = saturatedLow; }
+        inline void setStateSaturatedHigh(bool saturatedHigh) { _saturatedHigh = saturatedHigh; }
+        inline void setSecondStageFlag(bool secondStageFlag) { _secondStageFlag = secondStageFlag; }
 
         //clear directives for VC
 
@@ -321,7 +323,7 @@ class OLocalVertex : public OVertex {
         inline void clearEtaLower() { _etaLower = 0; }
         inline void clearEta() { _eta = 0; }
 
-
+        inline void clearSecondStageFlag() { _secondStageFlag = false; }
 
         inline void clearDeltaQ() { _deltaQ = 0; } 
 
@@ -423,6 +425,7 @@ class OLocalVertex : public OVertex {
         bool _under;            //undervoltage condition
         bool _saturatedLow;     //the node is saturated on its lower q
         bool _saturatedHigh;    //the node is saturated on its higer q
+        bool _secondStageFlag;  //flag to enter second stage
 
 
         //Results

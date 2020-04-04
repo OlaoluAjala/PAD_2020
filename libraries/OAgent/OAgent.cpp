@@ -535,11 +535,11 @@ float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterat
     {
         Serial<<"RC scheduling was a SUCCESS!"<<endl;
         delay(5);
-        Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
+        //Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
         delay(5);
         if(_waitToStart(startTime,true,10000))
         {
-            Serial <<"My startime is "<< myMillis() <<endl;
+            //Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
             gamma = ratiomaxminConsensus(y, z, iterations,period);
         }
@@ -563,10 +563,10 @@ float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t ite
     {
         Serial<<"RC scheduling was a SUCCESS!"<<endl;
         delay(5);
-        Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
+        //Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
         delay(5);
         if(_waitToStart(startTime,true,10000)) {
-            Serial <<"My startime is "<< myMillis() <<endl;
+            //Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
             gamma = ratiomaxminConsensus(y, z, iterations,period);
         }
@@ -3868,7 +3868,7 @@ void OAgent::_broadcastFairSplitPacket(OLocalVertex * s) {
 
 //leaderfailure-resilient version (Olaolu)
 void OAgent::_broadcastFairSplitPacket_RSL(OLocalVertex * s) {   
-    uint16_t payload[8];                
+    uint16_t payload[9];                
     float mu    = (s->getMuMin())*BASE;
     float sigma = (s->getSigma())*BASE; 
     uint16_t id = s->getID();
@@ -3885,22 +3885,27 @@ void OAgent::_broadcastFairSplitPacket_RSL(OLocalVertex * s) {
 
     if(mu<0)
     {
-        payload[6]=0;   // sign of mu
-
+        payload[6]=0;   // sign of mu (0 is negative)
     }else
     {
-        payload[6]=1;    //sign of sigma
-
+        payload[6]=1;    //sign of mu (1 is possitive)
     }
     if(sigma<0)
     {
         payload[7]=0;   // sign of mu
-
     }else
     {
         payload[7]=1;    //sign of sigma
-
     }
+
+    if(s->getSecondStageFlag())
+    {
+        payload[8]=1;
+    }else
+    {
+        payload[8]=0;        
+    }
+
     //payload[6] = inheritorID;   //added in by Olaolu
     //payload[7] = leaderID;   //added in by Olaolu
     //payload[8] = deputyID;   //added in by Olaolu
@@ -5959,15 +5964,49 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
     isUnderVoltage(s); 
     isOverVoltage(s);
 
-    if( s->getStateOver() || s->getStateUnder() )
+    firstStageControl(s);
+
+    shareFlag( s, 3, period );
+
+    if(s->getSecondStageFlag())
     {
-        firstStageControl(s);
-    
+        secondStageControl( s, iterations, period );
+        Serial<<"the eta chosen is: "<<s->getEta()<<endl;
+
+        if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
+        {
+            s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
+            s->setQ(s->getQtop());                  //set new Q
+
+        }else if((s->getQtarget()+s->getEta()) < s->getQbottom()) //under the limit
+        {
+            s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
+            s->setQ(s->getQbottom());               //set new Q
+
+        }else                                               //inside the plausible region fo
+        {
+            s->setDeltaQ( (s->getQtarget() + s->getEta()) - (s->getQ()) );       //set new delta Q
+            s->setQ( s->getQtarget() + s->getEta());         //set new Q
+           
+        }
+ 
     }else{
-        s->setDeltaQ(float (0));
-        s->setQtarget(s->getQ());
-    }           
-    secondStageControl( s, iterations, period ); 
+
+        s->setDeltaQ( (s->getQtarget()) - (s->getQ()) );       //set new delta Q
+        s->setQ(s->getQtarget());         //set new Q
+    }
+
+   
+    // if( s->getStateOver() || s->getStateUnder() )
+    // {
+    //     firstStageControl(s);
+    //     secondStageControl( s, iterations, period ); 
+    
+    // }else{
+    //     s->setDeltaQ(float (0));
+    //     s->setQtarget(s->getQ());
+    //     Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
+    // }           
 
     return s->getDeltaQ();
 }
@@ -5982,11 +6021,14 @@ void OAgent::firstStageControl( OLocalVertex * s )
         Serial<<"1st stage---Over"<<endl;
         s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
         s->setQtarget(s->getQ()+s->getRo());
-        
+
+        Serial<<"Vmax: "<<s->getVmax()<<", and V: "<<s->getVoltage()<<endl;
         Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
         Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
-        // if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
-        // {
+        
+        if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
+        {
+            s->setSecondStageFlag(true);
         //    // s->setDeltaQ(s->getQbottom()-s->s->getQ());
         //     s->setStateSaturatedLow(true);
         //     s->setQ(s->getQbottom());
@@ -6005,22 +6047,22 @@ void OAgent::firstStageControl( OLocalVertex * s )
         // }else{
         //     s->setQ(s->getQ() + s->getRo());
         //     s->setStateSaturatedLow(false);
-        // }
+        }
 
         // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
-    }
-
-    if(s->getStateUnder())      //we rise the q
+    } else if(s->getStateUnder())      //we rise the q
     {
         Serial<<"1st stage---Under"<<endl;
-        s->setRo (s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage()));        // this value will be negative
+        s->setRo (s->getD() * s->getAlphaVC() *( s->getVmin() - s->getVoltage() ));        // this value will be negative
         s->setQtarget(s->getQ()+s->getRo());
 
+        Serial<<"Vmin: "<<s->getVmin()<<", and V: "<<s->getVoltage()<<endl;
         Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
         Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
 
-        // if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
-        // {
+        if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
+        {
+            s->setSecondStageFlag(true);
         //     s->setQ(s->getQtop());
         //     s->setStateSaturatedHigh(true);
         //     // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
@@ -6037,9 +6079,16 @@ void OAgent::firstStageControl( OLocalVertex * s )
         // {
         //     s->setQ(s->getQ() + s->getRo());
         //     s->setStateSaturatedHigh(false);
-        // } 
+        } 
 
         // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
+    }else
+    {
+        s->setSecondStageFlag(false);
+        s->setRo (float (0)); 
+        s->setDeltaQ(float (0));
+        s->setQtarget(s->getQ());
+        Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
     }
     
     //s->setDeltaQ(deltaQ);
@@ -6069,24 +6118,24 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
         Serial<<"the value of eta_upper: "<<s->getEtaUpper()<<endl;
 
     }
-    Serial<<"the eta chosen is: "<<s->getEta()<<endl;
+    // Serial<<"the eta chosen is: "<<s->getEta()<<endl;
 
-    if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
-    {
-        s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
-        s->setQ(s->getQtop());                  //set new Q
+    // if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
+    // {
+    //     s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
+    //     s->setQ(s->getQtop());                  //set new Q
 
-    }else if((s->getQtarget()+s->getEta()) < s->getQbottom()) //under the limit
-    {
-        s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
-        s->setQ(s->getQbottom());               //set new Q
+    // }else if((s->getQtarget()+s->getEta()) < s->getQbottom()) //under the limit
+    // {
+    //     s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
+    //     s->setQ(s->getQbottom());               //set new Q
 
-    }else                                               //inside the plausible region fo
-    {
-        s->setDeltaQ(s->getQ()+s->getEta());       //set new delta Q
-        s->setQ(s->getQtarget()+s->getEta());         //set new Q
+    // }else                                               //inside the plausible region fo
+    // {
+    //     s->setDeltaQ(s->getQtarget()+s->getEta());       //set new delta Q
+    //     s->setQ(s->getQtarget()+s->getEta());         //set new Q
        
-    }
+    // }
 
     //set the Q levels after the RC
     // if((s->getQ()+s->getEta()) > s->getQtop())          //over the limit
@@ -6142,9 +6191,112 @@ void OAgent::isUnderVoltage(OLocalVertex * s)
         s->setStateUnder(false); 
     }
 }
+
+bool OAgent::getSecondStageFlagfromPackage()
+{
+    uint8_t ptr = 16;
+    long Flag = _getUint32_tFromPacket(ptr);
+
+    if(Flag==1)
+    {
+        return (true);  //there needs to be 2nd stage
+    }else
+    {
+        return (false);  //there is no need for 2nd stage
+    }
+}
+
+void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
+{
+
+    float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops                          
+    unsigned long start;                            // create variable to store iteration start time
+    bool txDone;                                    // create variable to keep track of broadcasts
+    
+    uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
+    
+    int iter;               //variable for the iteration count
+
+    int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
+    
+    uint32_t aLsb;
+
+    s->setSecondStageFlag(false);       //initialize the flag to 0
+
+    for(int i=0; i < NUM_REMOTE_VERTICES; i++)
+    {
+        node_check[i] = 0;
+    }
+    int frame = 30;
+   
+    iter=0;
+    do
+    {
+        srand(analogRead(0));
+        txTime =  (rand() % (period - 2*frame)) + frame;  //determines the time window in which a payload is transmitted
+        txDone = false;     // initialize toggle to keep track of broadcasts
+        start = millis();   // initialize time
+
+        uint8_t i;
+        while(uint16_t(millis()-start) < period)
+        {
+            if(_fairSplitPacketAvailable())
+            {                                   // robust, coordinate value packet available
+                aLsb = _rx->getRemoteAddress64().getLsb();
+                if(_G->isInNeighbor(aLsb,i))
+                {    // check if remote device is in in-neighborhood
+            
+                    if(getSecondStageFlagfromPackage())
+                    {
+                        s->setSecondStageFlag(true);
+                    }
+                    uint8_t neighborID = _getNeighborIDFromPacket();
+                    uint8_t nodeID = s->getID();
+
+                    node_check[neighborID -1] = 1;                      //data was received from a neighbor at this iteration
+                }
+            }
+            if((int((millis() - start)) >= txTime) && !txDone) {
+                txDone = true; // toggle txDone
+                _broadcastFairSplitPacket_RSL(s);
+            }
+        }
+        if(!_quiet) {
+           
+            delay(10);
+        } else {
+            delay(25);
+        }
+        //CODE TO IMPROVE RESILIENCY
+
+        for(int j=0;j < NUM_REMOTE_VERTICES; j++)
+        {
+            if(node_check[j] == 0 && node_counter[j] >= 0)
+                node_counter[j] += 1;
+            else if(node_check[j] == 1 ) 
+                node_counter[j] = 0;
+
+            if(node_counter[j] >= int(iterations/2) )
+            {
+                s->setStatus(j+1, 1);
+                s->decrementInDegree();
+                uint8_t dout = s->getOutDegree();              //since we assume it is a bidirectional graph, InDegree is equivalent to OutDegree
+                s->setOutDegree(dout - 1); 
+                node_counter[j] = -1;                          //set counter to -1 when limit reached to indicate offline link status    
+            }
+            node_check[j] = 0;                                 //reset node_check after each iteration
+        }
+        iter++;// increase the iteration count
+
+    }while(iter < iterations); //we need to implement here the max consensus
+
+    _buffer[1] = s->getOutDegree();
+    _buffer[2] = _G->getN() - 1;
+}
+
+
 //constructor functions
 void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC )
-
 {
     Serial<<"initialiting VC Variables"<<endl;
     _G->clearAllStates(); 
@@ -6159,7 +6311,6 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
     s->setQbottom(qbottom);
     s->setD(D);
     s->setAlphaVC(alphaVC);
-
 }
 
 void OAgent::_initializeVariablesSecStage(OLocalVertex * s)    

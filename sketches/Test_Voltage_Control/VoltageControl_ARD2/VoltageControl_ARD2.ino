@@ -1,4 +1,4 @@
-//node 9:(COM 13 , 0x415786E1 )
+//node 9:(COM 6 , 0x415786E1 )
 //node 10:(COM 14 , 0x415786D3 )
 //node 14:(COM 10 , 0x415DB664 )  
 
@@ -103,7 +103,7 @@ void setup()
     if(a.isSynced())
     {
 //run Voltage Control algorithm 
-      deltaQ = a.voltageControl(1,1,5,0.7,0.2,1,-1,-0.3,0.3,20,200); 
+      deltaQ = a.voltageControl(0.7,1,5,0.7,0.2,0.21,-1,0.3,0.3,20,200); 
       //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alpha,iterations,period)
       
       Serial.print("the required variation in Q is: ");

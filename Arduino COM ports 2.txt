@@ -11,7 +11,7 @@ Node 6: COM port 56
 
 
 
-Node 9: COM port 13
+Node 9: COM port 6
 Node 10: COM port 14
 Node 11: COM port 5
 Node 12: COM port 4

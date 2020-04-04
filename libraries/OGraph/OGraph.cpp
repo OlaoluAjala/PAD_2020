@@ -853,6 +853,8 @@ void OGraph::clearAllStates() {
     _self->clearEta();
     _self->clearDeltaQ(); 
 
+    _self->clearSecondStageFlag();
+    
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
         _remoteVertices[i].clearYMinYMax();
         _remoteVertices[i].clearYMinInYMaxIn();

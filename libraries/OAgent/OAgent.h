@@ -149,6 +149,8 @@ class OAgent {
         void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period );
         void isOverVoltage(OLocalVertex * s);
         void isUnderVoltage(OLocalVertex * s);       
+        void shareFlag(OLocalVertex * s, uint8_t iterations, uint16_t period );
+        bool getSecondStageFlagfromPackage();
 
     private:
         // Properties
@@ -247,6 +249,7 @@ class OAgent {
         float _getMuFromPacket();
         float _getSigmaFromPacket();
         long _getpacketcheck();
+        bool _getSecondStageFlagfromPackage();
         
         // Methods dealing with packets
         void _broadcastOptimalDispatchPacket(OLocalVertex * s);
