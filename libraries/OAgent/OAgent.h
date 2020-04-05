@@ -63,7 +63,7 @@ class OAgent {
         float leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
         float nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
         float feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period);
-        void feasibleFlowAlgorithm( uint8_t iterations, uint16_t period);
+        float feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]);
         ///////////////////777
         // Fair splitting methods
         float fairSplitRatioConsensusP(long x, uint8_t iterations, uint16_t period);
@@ -170,7 +170,7 @@ class OAgent {
         float _getBjFromPacket();
         void _broadcastBalanceFeasibleFlow(OLocalVertex * s);
         float _getInitialGen(ORemoteVertex*s);
-        float _ComputeBalance(ORemoteVertex *s, float fij[]);
+        float _ComputeBalance(ORemoteVertex *s);
         /////////
         // Synchronization helper functions
         bool _leaderSync();

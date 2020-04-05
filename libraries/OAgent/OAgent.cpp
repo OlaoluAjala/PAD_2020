@@ -1001,32 +1001,38 @@ float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OA
   ginicial= 0.5*(s->getGmax()+ s->getGmin());
    return ginicial; }
 // en el caso que no podemos crear el vector de flujos reducidos 
-float OAgent::_ComputeBalance(ORemoteVertex *s, float fij[]){
+float OAgent::_ComputeBalance(ORemoteVertex *s){
 
     float balance;
     int i;
+    balance=0;
     for(i=0;i<NUM_IN_NEIGHBORS;i++){
-         bi=-s->getFlow(i);
+         balance=balance-s->getFlow(i);
     }
-     bi=bi+ s->getGi() -s->getLi();
+     balance=balance+ s->getGi() -s->getLi();
+     s->setBi(balance);
 }
+
 
 void OAgent::_broadcastBalanceFeasibleFlow(OLocalVertex * s) {
   
     uint16_t payload[4];   //vector de cuatro, 1 para el HEADER, dos para el valor de bi y otra para el signo 
-    uint8_t wi = s->getOutDegree() + 1;
+    float wi = s->getOutDegree() + 1;
+    float bi = s->getBi();
+
+    bi=bi*base;
+    wi = wi*base;
 
     payload[0] = FEASIBLE_FLOW_HEADER;
-    payload[1] = _bi/wi; // guardamos el valor de mu los primeros?? 16 bits
-    payload[2] = _bi/wi >> 16;// guardamos el valor de mu los ultimos?? 16 bits
+    payload[1] = bi/wi; // guardamos el valor de mu los primeros?? 16 bits
+    payload[2] = bi/wi >> 16;// guardamos el valor de mu los ultimos?? 16 bits
     if(bi<0){
         payload[3]=0;//if it is 0 then the coeficient between mu and sigma is negative 
 
    }else{
         payload[3]=1;
    }
-    // multiplicamos por la base para eliminar numeros decimales.
-    bi=bi*base;
+
     _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
     //se ha transformado nuestro vector de 16bits en uno se 8bits --> se ha doblado la longitud del vector
     unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
@@ -1038,14 +1044,14 @@ void OAgent::_broadcastBalanceFeasibleFlow(OLocalVertex * s) {
 float OAgent::_getBjFromPacket() {
     uint8_t ptr = 2;
     uint8_t ptr1 =6;
-    float Bj;
+    float bj;
 
     if(_getUint32_tFromPacket(ptr1)==0){
-           Bj=-_getUint32_tFromPacket(ptr)/base;
+           bj=-_getUint32_tFromPacket(ptr)/base;
     }else{
-        Bj=_getUint32_tFromPacket(ptr)/base;
+        bj=_getUint32_tFromPacket(ptr)/base;
     }
-    return Bj;
+    return bj;
 }
 float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OAgent.h
     float ginicial;
@@ -1053,19 +1059,26 @@ float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OA
    return ginicial; }
 
 
-void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint8_t round
+
+float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) //,uint8_t round
 {  
     OLocalVertex * s = _G->getLocalVertex();        // store pointer to local vertex 
-    float Dout = float(s->getOutDegree() + 1);   ??porque lo convierte a float??   // store out degree, the +1 is to account for the self loops
-
-   uint8_t wi = s->getOutDegree() + 1
+   float wi = float(s->getOutDegree() + 1);     // store out degree, the +1 is to account for the self loops
    float gi;
-   float fij[wi];  //barajar la posibilidad de que no sea necesario y usar directamente Fij0[]
+   float fij[wi-1];  //barajar la posibilidad de que no sea necesario y usar directamente Fij0[]
    float bi;
    float bj;
    float wj;
-   uint8_t count;
+   uint8_t count ;
+   float neighborsIDs[wi-1];
    count =0;
+
+   //Debemos crear una función que inicialize los valores con lo imputs que recibe la función
+   //esta funcion debe recibir el objeto OLocalvertex s y los valores de gmax,gmin,li,.....
+   //el desarrollo de esta funcion --OAgent,.cpp
+
+    _initializeValues(s,gmax,gmin,li,fijmax,fmin);
+
    //inicializamos la generación 
    gi=_getInitialGen(s);
    s->setGi(gi);
@@ -1125,13 +1138,54 @@ void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint
                     bj=_getBjFromPacket();                       //almacenamos el valor del balance del nodo emisor 
                     uint8_t neighborID = _getNeighborIDFromPacket();  //obtenemos el ID del nodo emisor 
                     uint8_t nodeID = s->getID();  //obtenemos el ID del nodo local 
-                    //una vez tenemos el ID del neighbor podemos crear nuestro vector de neighborsIDs 
-                    //float neighborIDs[count]=neighborID;
-                    //count ++;
+                     /*
+                        //una vez tenemos el ID del neighbor podemos crear nuestro vector de neighborsIDs 
+                        //float neighborIDs[count]=neighborID;
+                        //count ++;
+                        neighborsIDs[count]=neighborsID;
+                        // ahora deberiamos ordenar de menor a mayor los elementos de este vector 
+                        //antes del bucle  deberiamos inicializar el vector a cero
+                        if(neighborsIDs[count]>neighborsIDs[count+1])
+                        {
+                            temporal=neighborsIDs[count];
+                            neighborsIDs[count]=neighborsIDs[count+1];
+                            neighborsIDs[count+1]= temporal;
+                        }
+
+                        fij[count]=s->getFlow(neighborIDs[count]-1);
+                        //una vez ordenado creamos un vector con los flujos de los vecinos
+
+
+                        count ++;
+                        */
+
+                    //finalmente re calculamos los valores y comprobamos que estos estén dentro de los límites.
+                    gi=s->getGi()-0.5*s->getBi()/wi;
+                    if(gi>s->getGMax()){ 
+                        gi=_gmax;
+                     }else if(gi<s->getGMin()){
+                        gi=_gmin;
+                     }
+                    s->setGi(gi);
+
+
+                    if(_G->isInNeighbor(aLsb,i)){
+                     float fij=s->getFlow(neighborID-1)-0.5*bj+0.5*bi;
+                         if(fij< s->getFlowMax(neighborID-1)){
+                            fij = s->getFlowMax(neighborID-1);
+                          }else if(fij>s->getFlowMin()){
+                            fij = s->getFlowMin(neighborID-1); 
+                             }
+                         s->setLineFlow(neighborID-1,fij);
+                    }
+
+                     bi=_ComputeBalance(s);
+                    s->setBi(bi);
 
                     node_check[neighborID -1] = 1;                      //data was received from a neighbor at this iteration   
                 }
             }
+
             if((int((millis() - start)) >= txTime) && !txDone) {
                 txDone = true; // toggle txDone
                 _broadcastBalanceFeasibleFlow(s);
@@ -1144,15 +1198,7 @@ void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint
         } else {
             delay(25);
         }
-        // ahora tenemos que actualizar los valores de flujo y generación 
-        //actualizamos salida de generacion y comprobamos límites 
-        gi=s->getGi()-0.5*s->getBi()/wi;
-        if(gi<s->getGMax()){ 
-            gi=_gmax;
-         }else if(gi>s->getGMin()){
-            gi=_gmin;
-         }
-        s->setGi(gi);
+        
         /*
         for(i=0;i<_OutDegree;i++){
 
@@ -1160,18 +1206,6 @@ void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint
         }
         s-setLineFlows(fij);
         */
-
-        // en el caso de emplear Fij0[]
-        //actualizamos flujos y comprobamos límites
-        if(_G->isInNeighbor(aLsb,i)){
-         float fij=s->getFlow(neighborID-1)-0.5*bj+0.5*bi;
-             if(fij< s->getFlowMax(neighborID-1)){
-                s->setFlowMax(neighborID-1,fij);
-             }else if(fij>s->getFlowMin()){
-                s->setFlowMin(neighborID-1,fij)  
-                   }
-             s->setLineFlow(neighborID-1,fij);
-        }
 
         //CODE TO IMPROVE RESILIENCY
                 
@@ -1200,8 +1234,8 @@ void OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint
         //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
     }while(iter < iterations); //we need to implement here the max consensus
 //}while(iter < iterations && -(endY) > eps && (endZ) > eps);
+    return bi;
 }
-
 void OAgent::_initializeValues(OLocalVertex * s, float gmax,float gmin,float li,float fijmax[],float fmin[]) {
     s->setGMax(gmax);
     s->setGMin(gmin);
