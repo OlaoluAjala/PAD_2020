@@ -6029,6 +6029,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
+            Serial<<"setting flag true"<<endl;
         //    // s->setDeltaQ(s->getQbottom()-s->s->getQ());
         //     s->setStateSaturatedLow(true);
         //     s->setQ(s->getQbottom());
@@ -6063,6 +6064,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
+            Serial<<"setting flag true"<<endl;
         //     s->setQ(s->getQtop());
         //     s->setStateSaturatedHigh(true);
         //     // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
@@ -6199,26 +6201,26 @@ bool OAgent::getSecondStageFlagfromPackage()
 
     if(Flag==1)
     {
+        Serial<<"recieved true flag form package"<<endl;
         return (true);  //there needs to be 2nd stage
     }else
     {
+
+        Serial<<"recieved false flag form package"<<endl;
         return (false);  //there is no need for 2nd stage
     }
 }
 
 void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
 {
-
+    //Serial<<"entering the flag sharing"<<endl;
     float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops                          
+   _initializeFairSplitting_RSL(s,0,0);
     unsigned long start;                            // create variable to store iteration start time
     bool txDone;                                    // create variable to keep track of broadcasts
-    
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
-    
-    int iter;               //variable for the iteration count
-
+    int iter=0;               //variable for the iteration count
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
-    
     uint32_t aLsb;
 
     s->setSecondStageFlag(false);       //initialize the flag to 0
@@ -6229,7 +6231,6 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
     }
     int frame = 30;
    
-    iter=0;
     do
     {
         srand(analogRead(0));
@@ -6245,7 +6246,7 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
                 aLsb = _rx->getRemoteAddress64().getLsb();
                 if(_G->isInNeighbor(aLsb,i))
                 {    // check if remote device is in in-neighborhood
-            
+                    //Serial<<"before flag comprobation"<<endl;
                     if(getSecondStageFlagfromPackage())
                     {
                         s->setSecondStageFlag(true);

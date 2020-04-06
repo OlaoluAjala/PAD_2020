@@ -103,7 +103,7 @@ void setup()
     if(a.isSynced())
     {
 //run Voltage Control algorithm 
-      deltaQ = a.voltageControl(0.7,1,5,0.7,0.2,0.21,-1,0.3,0.3,20,200); 
+      deltaQ = a.voltageControl(0.7,1,5,0.7,0.2,0.2,-1,0.3,0.3,20,200); 
       //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alpha,iterations,period)
       
       Serial.print("the required variation in Q is: ");
