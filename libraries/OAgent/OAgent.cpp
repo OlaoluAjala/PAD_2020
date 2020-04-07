@@ -713,7 +713,38 @@ float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
 }
 //esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
 
-float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
+//la función leaderfeasible Flow envia al resto de nudos la información para comenzar las iteraciones y realiza el 
+float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) {
+    unsigned long t0 = myMillis();
+    unsigned long startTime = t0 + RC_DELAY;
+    OLocalVertex * s = _G->getLocalVertex();
+    float gamma = 0;
+    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_FAIR_SPLIT_HEADER,SCHEDULE_TIMEOUT, startTime, iterations, period);
+
+    if (!scheduled) 
+    {
+        Serial<<"RC scheduling was a FAIL!"<<endl;
+        delay(5);
+        gamma = -1;
+    }
+    else
+    {
+        Serial<<"RC scheduling was a SUCCESS!"<<endl;
+        delay(5);
+        Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
+        delay(5);
+        if(_waitToStart(startTime,true,10000))
+        {
+            Serial <<"My startime is "<< myMillis() <<endl;
+            delay(5);
+            gamma=feasibleFlowAlgorithm(iterations,period,gmax,gmin,li,fijmax,fijmin);
+        }
+    }        
+    return gamma;
+}
+//esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
+
+float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) {
     unsigned long startTime = 0;
     //delay(50);
     float gamma = 0;
@@ -728,7 +759,7 @@ float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
             Se
             rial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-           feasibleFlowAlgorithm(iterations,period);
+           gamma=feasibleFlowAlgorithm(iterations,period,gmax,gmin,li,fijmax,fijmin);
         }
     }
     else
@@ -739,18 +770,17 @@ float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
     }
     return gamma;
 }
-//esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
-
-float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period) {
+//esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctament
+float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) {
     srand(analogRead(7));    
     float gamma = 0;
     if(isLeader())
     {
-         gamma=leaderfeasibleFlow_RSL(iterations,period);
+         gamma=leaderfeasibleFlow_RSL(iterations,period,gmax,gmin,li,fijmax,fijmin);
     }
     else
     {
-        gamma=nonleaderfeasibleFlow_RSL(iterations,period);
+        gamma=nonleaderfeasibleFlow_RSL(iterations,period,gmax,gmin,li,fijmax,fijmin);
     }
     return gamma;
 }
@@ -932,12 +962,6 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,float 
 //}while(iter < iterations && -(endY) > eps && (endZ) > eps);
     return bi;
 }
-
-
-
-
-
-
 
 
 /////////////
