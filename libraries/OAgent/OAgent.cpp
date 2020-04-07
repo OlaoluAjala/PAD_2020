@@ -5959,7 +5959,7 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
 {
     OLocalVertex * s = _G->getLocalVertex();  
     _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D, alphaVC ); 
-      
+     
     //compute the first stage
     isUnderVoltage(s); 
     isOverVoltage(s);
@@ -5991,7 +5991,7 @@ float OAgent::voltageControl( float V, float Vref, float secPercentage, float p,
         }
  
     }else{
-
+        Serial<<"Qtarget: "<<s->getQtarget()<<" Q: "<<s->getQ()<<endl;
         s->setDeltaQ( (s->getQtarget()) - (s->getQ()) );       //set new delta Q
         s->setQ(s->getQtarget());         //set new Q
     }
@@ -6194,20 +6194,28 @@ void OAgent::isUnderVoltage(OLocalVertex * s)
     }
 }
 
-bool OAgent::getSecondStageFlagfromPackage()
+bool OAgent::getSecondStageFlagfromPackage(OLocalVertex * s)
 {
     uint8_t ptr = 16;
     long Flag = _getUint32_tFromPacket(ptr);
-
-    if(Flag==1)
+    Serial<<"flag: "<<Flag<<endl;
+    if(s->getSecondStageFlag())
     {
-        Serial<<"recieved true flag form package"<<endl;
-        return (true);  //there needs to be 2nd stage
+        Serial<<"flag aready true"<<endl;
+       return true; 
     }else
     {
+        if(Flag==0)
+        {
+            Serial<<"recieved false flag form package"<<endl;
+            return false;  //there needs to be 2nd stage
+        }else
+        {
 
-        Serial<<"recieved false flag form package"<<endl;
-        return (false);  //there is no need for 2nd stage
+            Serial<<"recieved true flag form package"<<endl;
+            return true;  //there is no need for 2nd stage
+        }
+    
     }
 }
 
@@ -6223,8 +6231,6 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
     uint32_t aLsb;
 
-    s->setSecondStageFlag(false);       //initialize the flag to 0
-
     for(int i=0; i < NUM_REMOTE_VERTICES; i++)
     {
         node_check[i] = 0;
@@ -6239,16 +6245,19 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
         start = millis();   // initialize time
 
         uint8_t i;
+        //Serial<<"waiting for package for flag"<<endl;
         while(uint16_t(millis()-start) < period)
         {
             if(_fairSplitPacketAvailable())
             {                                   // robust, coordinate value packet available
                 aLsb = _rx->getRemoteAddress64().getLsb();
+                //Serial<<"packet available"<<endl;
                 if(_G->isInNeighbor(aLsb,i))
                 {    // check if remote device is in in-neighborhood
                     //Serial<<"before flag comprobation"<<endl;
-                    if(getSecondStageFlagfromPackage())
+                    if(getSecondStageFlagfromPackage(s))
                     {
+                        Serial<<"recieved flag"<<endl;
                         s->setSecondStageFlag(true);
                     }
                     uint8_t neighborID = _getNeighborIDFromPacket();
@@ -6312,20 +6321,23 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, f
     s->setQbottom(qbottom);
     s->setD(D);
     s->setAlphaVC(alphaVC);
+    s->setSecondStageFlag(false);
 }
 
 void OAgent::_initializeVariablesSecStage(OLocalVertex * s)    
 {
     Serial<<"initialiting 2nd Stage variables"<<endl;
 
-    if(s->getQtarget() > s->getQtop())
+    if((s->getQtarget()) > (s->getQtop()))
     {
         s->setMuRC( s->getQtarget() - s->getQtop());
         s->setNuUpperRC(float (0));
+        s->setNuLowerRC(s->getQbottom() - s->getQtarget());
 
-    }else if (s->getQtarget() > s->getQbottom())
+    }else if ((s->getQtarget()) < (s->getQbottom()))
     {
         s->setMuRC( s->getQtarget() - s->getQbottom());
+        s->setNuUpperRC(s->getQtop() - s->getQtarget());
         s->setNuLowerRC(float (0));
 
     }else

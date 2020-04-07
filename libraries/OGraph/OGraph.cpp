@@ -832,28 +832,28 @@ void OGraph::clearAllStates() {
     _self->clearMuMinMuMax();
     _self->clearAllNuMinNuMax();
     //VC
-    _self->clearVoltage();
-    _self->clearVref();
-    _self->clearVmax();
-    _self->clearVmin();
-    _self->clearP();
-    _self->clearQ();
+    // _self->clearVoltage();
+    // _self->clearVref();
+    // _self->clearVmax();
+    // _self->clearVmin();
+    // _self->clearP();
+    // _self->clearQ();
     
-    _self->clearQtop(); 
-    _self->clearQbottom();
-    _self->clearQsecondary();
-    _self->clearD();
-    _self->clearAlphaVC(); 
-    _self->clearRo();
-    _self->clearNuUpperRC();
-    _self->clearNuLowerRC();
-    _self->clearMuRC();
-    _self->clearEtaUpper();
-    _self->clearEtaLower();
-    _self->clearEta();
-    _self->clearDeltaQ(); 
+    // // _self->clearQtop(); 
+    // _self->clearQbottom();
+    // _self->clearQsecondary();
+    // _self->clearD();
+    // _self->clearAlphaVC(); 
+    // _self->clearRo();
+    // _self->clearNuUpperRC();
+    // _self->clearNuLowerRC();
+    // _self->clearMuRC();
+    // _self->clearEtaUpper();
+    // _self->clearEtaLower();
+    // _self->clearEta();
+    // _self->clearDeltaQ(); 
 
-    _self->clearSecondStageFlag();
+    //_self->clearSecondStageFlag();
     
     for(uint8_t i = 0; i < NUM_REMOTE_VERTICES; i++) {
         _remoteVertices[i].clearYMinYMax();

@@ -150,7 +150,7 @@ class OAgent {
         void isOverVoltage(OLocalVertex * s);
         void isUnderVoltage(OLocalVertex * s);       
         void shareFlag(OLocalVertex * s, uint8_t iterations, uint16_t period );
-        bool getSecondStageFlagfromPackage();
+        bool getSecondStageFlagfromPackage(OLocalVertex * s);
 
     private:
         // Properties
