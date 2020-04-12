@@ -299,8 +299,10 @@ bool LinkedList::isLinkActive(uint8_t neighborID) {
 }
 
 float LinkedList::addActiveFlows(uint8_t i, ORemoteVertex *n) {
-    node *tmp;
-    tmp = _neighborHead;
+//a esta funcion debemos pasarle la direccion del nnodo donde queremos que se realice el valance y un objeto de tipo ORemoteVertex
+
+    node *tmp; //creamos un puntero a una estructura de tipo nodo 
+    tmp = _neighborHead; //apuntamos con ese puntero a la direccion de memoria
     uint8_t j = 0;
     float fp = 0;
     while (tmp != NULL)
@@ -315,6 +317,9 @@ float LinkedList::addActiveFlows(uint8_t i, ORemoteVertex *n) {
     //Serial<<"Sum of Active Flows is "<<fp<<endl;
     return fp;
 }
+
+
+
 
 float LinkedList::addReactiveFlows(uint8_t i, ORemoteVertex *n) {
     node *tmp;
@@ -333,6 +338,52 @@ float LinkedList::addReactiveFlows(uint8_t i, ORemoteVertex *n) {
     //Serial<<"Sum of Reactive Flows is "<<fq<<endl;
     return fq;
 }
+
+////////////////////////////
+void LinkedList::setInitialActiveFlows(uint8_t i, ORemoteVertex *n) {
+//a esta funcion debemos pasarle la direccion del nnodo donde queremos que se realice el valance y un objeto de tipo ORemoteVertex
+
+    node *tmp; //creamos un puntero a una estructura de tipo nodo 
+    tmp = _neighborHead; //apuntamos con ese puntero a la direccion de memoria
+    uint8_t j = 0;
+    float fp0;
+    while (tmp != NULL)
+    {
+        j = tmp->data;                                  //get ID of neighbor
+       
+        fp0 = 0.5*((n+j-1)->getActiveFlowMax() + (n+j-1)->getActiveFlowMin());
+        (n+j-1)->setInitialActiveFlow(fp0);
+        (n+j-1)->setActiveFlow(fp0);
+
+        tmp = tmp->neighborNext;
+    }
+  
+}
+
+
+float LinkedList::addActiveInitialFlows(uint8_t i, ORemoteVertex *n) {
+//a esta funcion debemos pasarle la direccion del nnodo donde queremos que se realice el valance y un objeto de tipo ORemoteVertex
+
+    node *tmp; //creamos un puntero a una estructura de tipo nodo 
+    tmp = _neighborHead; //apuntamos con ese puntero a la direccion de memoria
+    uint8_t j = 0;
+    float fp = 0;
+    while (tmp != NULL)
+    {
+        j = tmp->data;                                  //get ID of neighbor
+        if (i < j)
+            fp = fp + ((n+j-1)->getActiveInitialFlow());           //get active flow of link associated with neighbor
+        else if (i > j)
+            fp = fp - ((n+j-1)->getActiveInitialFlow());           //get active flow of link associated with neighbor
+        tmp = tmp->neighborNext;
+    }
+    //Serial<<"Sum of Active Flows is "<<fp<<endl;
+    return fp;
+}
+
+
+
+///////////////////////////
 
 float LinkedList::addLambdas(uint8_t i, ORemoteVertex *n) {
     node *tmp;
@@ -475,15 +526,6 @@ void OLocalVertex::setFlowLimits( float fijmax[],float fijmin[]) {
     }
 */
 
-//creamos una funcion en OLocelVertex para inicializar flujos y genenracion 
-void OLocalVertex::InitializeFlowLimits(){
-uint8_t i;
-
-  for(i=0;i<NUM_IN_NEIGHBORS,i++){
-     _Fij0[i]=0.5*(_Fijmax[i]+_Fijmin[i]);
-  }
-}
-
 
 
 ///////////////////////
@@ -605,24 +647,33 @@ ORemoteVertex::ORemoteVertex() {
 }
 
 ORemoteVertex::ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, bool inNeighbor) {
-    _prepareORemoteVertex(a.getLsb(),neighborID,0,0,inNeighbor);                      //r, x, set to 0 by default i.e. line impedance is not yet known
+    _prepareORemoteVertex(a.getLsb(),neighborID,0,0,0,0,inNeighbor);                      //r, x, set to 0 by default i.e. line impedance is not yet known
 }
 
 ORemoteVertex::ORemoteVertex(uint32_t aLsb, uint8_t neighborID, bool inNeighbor) {
-    _prepareORemoteVertex(aLsb,neighborID,0,0,inNeighbor);
+    _prepareORemoteVertex(aLsb,neighborID,0,0,0,0,inNeighbor);
 }
 
 ORemoteVertex::ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, float r, float x, bool inNeighbor) {
-    _prepareORemoteVertex(a.getLsb(),neighborID,r,x,inNeighbor);
+    _prepareORemoteVertex(a.getLsb(),neighborID,r,x,0,0,inNeighbor);
 }
 
 ORemoteVertex::ORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor) {
-    _prepareORemoteVertex(aLsb,neighborID,r,x,inNeighbor);
+    _prepareORemoteVertex(aLsb,neighborID,r,x,0,0,inNeighbor);
+}
+
+
+ORemoteVertex::ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, float r, float x, float fpmax , float fpmin ,bool inNeighbor) {
+    _prepareORemoteVertex(a.getLsb(),neighborID,r,x,fpmax,fpmin,inNeighbor);
+}
+
+ORemoteVertex::ORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, float fpmax , float fpmin, bool inNeighbor) {
+    _prepareORemoteVertex(aLsb,neighborID,r,x,fpmax,fpmin,inNeighbor);
 }
 
 /// End public methods
 /// Private methods
-void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor) {
+void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, float fpmax , float fpmin, bool inNeighbor) {
     _inNeighbor = inNeighbor;
     _index = neighborID-1;
     _r = r;
@@ -630,6 +681,8 @@ void ORemoteVertex::_prepareORemoteVertex(uint32_t aLsb, uint8_t neighborID, flo
     _fp = 0;
     _fq = 0;
     _lambda = 0;
+    _fpmax = fpmax;
+    _fpmin = fpmin;
     _gfp = 0;
     _gfq = 0;
     _glambda = 0;
@@ -725,11 +778,24 @@ bool OGraph::addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x
 }
 
 bool OGraph::addInNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x) {
+    return addInNeighbor(a.getLsb(),neighborID,r,x,0,0);
+}
+
+bool OGraph::addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x, float fpmax, float fpmin) {
+    return addInNeighbor(a.getLsb(),neighborID,r,x,fpmax,fpmin);
+}
+
+bool OGraph::addInNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x, float fpmax, float fpmin) {
     // make sure we can add another inNeighbor
     if((_self->getInDegree()) < NUM_IN_NEIGHBORS)
-        return _addRemoteVertex(aLsb,neighborID,r,x,true);
+        return _addRemoteVertex(aLsb,neighborID,r,x,fpmax,fpmin,true);
     return false;
 }
+
+
+
+
+
 
 bool OGraph::removeInNeighbor(uint8_t neighborID){
     
@@ -967,7 +1033,7 @@ bool OGraph::_isRemoteVertex(uint32_t aLsb, uint8_t &i) {
     return false;
 }
 
-bool OGraph::_addRemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor) {
+bool OGraph::_addRemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, float fpmax, float fpmin, bool inNeighbor) {
     // determine index for new neighbor
     uint8_t index = neighborID - 1;
     // check if another vertex can be stored
@@ -981,7 +1047,7 @@ bool OGraph::_addRemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float 
                 _self->incrementOutDegree(); //assume bidirectional communication
             }
             // create new instance of OVertex object and store in array
-            _remoteVertices[index] = ORemoteVertex(aLsb,neighborID,r,x,inNeighbor);
+            _remoteVertices[index] = ORemoteVertex(aLsb,neighborID,r,x,fpmax,fpmin,inNeighbor);
             if(_self->getID() < neighborID)
                 _remoteVertices[index].setNodeFlag(true);
             _self->setStatus(neighborID, 2);

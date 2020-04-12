@@ -1,0 +1,46 @@
+Network ID: 7FFF
+Operating Channel: C
+
+Xbees and addresses
+
+NI = 1; SL = 0x4174F1AA
+
+NI = 2; SL = 0x4174F186
+
+NI = 3; SL = 0x4151C692
+
+NI = 4; SL = 0x4151C48B
+
+NI = 5; SL = 0x4151C688
+
+NI = 6; SL = 0x4151C6AB
+
+NI = 7; SL = 0x4151C6CB
+
+NI = 8; SL = 0x4151C6AC
+
+NI = 9; SL = 0x415786E1
+
+NI = 10; SL = 0x415786D3
+
+NI = 11; SL = 0x415DB670
+
+NI = 12; SL = 0x415786A9
+
+NI = 13; SL = 0x4157847B
+
+NI = 14; SL = 0x415DB664
+
+NI = 15; SL = 0x415DB673
+
+NI = 16; SL = 0x415DB681
+
+NI = 17; SL = 0x415DB683
+
+NI = 18; SL = 0x41516F1B
+
+NI = 19; SL = 0x415DB684
+
+NI = 20; SL = 0x41516F0B
+
+Baud rate = 38400

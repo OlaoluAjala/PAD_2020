@@ -169,28 +169,9 @@ class OLocalVertex : public OVertex {
 
         ////////////////////////////
 
-        inline float getBi(){return _bi;}
-        inline void setBi(bi){ _bi=bi;}
-
         inline void setGi(bi){ _gi=gi;}
         inline float getGi(){return _gi;}
 
-        inline void setLi(li){ _li=li}
-        inline float getLi(){return _li;}
-
-        inline float getGMin() { return _gmin; }
-        inline void setGMin(gmin){ _gmin=gmin;}
-        inline float getGMax() { return _gmax; }
-        inline void setGMax(gmax){ _gmax=gmax;}
-
-        inline void setFlow(uint8_t k,fij){ _Fij0[k]=fij;}
-        inline float getFlow(uint8_t k){ return _Fij0[k];}
-
-        inline float getFlowMax(uint8_t k){ return _FijMax[k];}
-        inline void setFlowMax(uint8_t k,fijmax){ _FijMax[k]=fijmax;}
-        inline float getFlowMin(uint8_t k){ return _FijMin[k];}
-
-        void InitializeFlowLimits();
 
         ////////////////7
         // Clear temporary states (zIn and sigma)
@@ -404,15 +385,6 @@ class OLocalVertex : public OVertex {
         float _mu; //lagrange multiplier for active power balance
         float _nu; //lagrange multiplier for reactive power balance
         //////////////////
-        float _gmin;
-        float _gmax;
-        float _gi;
-        float _li;
-        float _bi;
-        float _Fijmax[NUM_IN_NEIGHBORS];
-        float _Fijmin[NUM_IN_NEIGHBORS];
-        float _Fij0[NUM_IN_NEIGHBORS];
-
 
         ////////////
         //Weights for primal dual algorithm
@@ -498,7 +470,10 @@ class ORemoteVertex : public OVertex {
         ORemoteVertex(uint32_t aLsb, uint8_t neighborID, bool inNeighbor = false);
         ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, float r, float x, bool inNeighbor = false);
         ORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r , float x, bool inNeighbor = false);
-        
+        ORemoteVertex(XBeeAddress64 a, uint8_t neighborID, float r, float x,float fpmax,float fpmin, bool inNeighbor = false);
+        ORemoteVertex(uint32_t aLsb, uint8_t neighborID, float r , float x, float fpmax,float fpmin, bool inNeighbor = false);
+
+
         // Get directive for inNeighbor
         inline bool isInNeighbor() { return _inNeighbor; }
         inline uint8_t getIndex() { return _index; }
@@ -510,7 +485,12 @@ class ORemoteVertex : public OVertex {
         inline float getActiveFlow() { return _fp; }
         inline float getReactiveFlow() { return _fq; }
         inline float getLambda() { return _lambda; }
-        
+
+        inline float getActiveFlowMax() { return _fpmax; }
+        inline float getActiveFlowMin() { return _fpmin; }
+        inline float getActiveInitialFlow() { return _fp0; }
+
+
         inline float getActiveFlowGradient() { return _gfp; }
         inline float getReactiveFlowGradient() { return _gfq; }
         inline float getLambdaGradient() { return _glambda; }        
@@ -553,10 +533,17 @@ class ORemoteVertex : public OVertex {
         // Set directive for primal dual algorithm
         inline void setResistance(float r) {_r = r; }
         inline void setReactance(float x) {_x = x; }
+        ////////
+
+        inline void setActiveInitialFlow(float fp0) {_fp0 = fp0; }
+
+        /////////////
 
         inline void setActiveFlow(float fp) {_fp = fp; }
         inline void setReactiveFlow(float fq) {_fq = fq; }
         inline void setLambda(float lambda) {_lambda = lambda; }
+
+        inline void setActiveFlowMaxMin(float fpmax,float fpmin){_fpmax=fpmax ; _fpmin=fpmin};
 
         inline void setActiveFlowGradient(float gfp) {_gfp = gfp; }
         inline void setReactiveFlowGradient(float gfq) {_gfq = gfq; }
@@ -565,7 +552,7 @@ class ORemoteVertex : public OVertex {
         inline void setActiveFlowGradientTMP(float gfpTMP) {_gfpTMP = gfpTMP; }
         inline void setReactiveFlowGradientTMP(float gfqTMP) {_gfqTMP = gfqTMP; }
         inline void setLambdaGradientTMP(float glambdaTMP) {_glambdaTMP = glambdaTMP; }
-
+      
         inline void setNodeActiveFlowGradient(float gfpNode) {_gfpNode = gfpNode; }
         inline void setNodeReactiveFlowGradient(float gfqNode) {_gfqNode = gfqNode; }
         inline void setNodeLambdaGradient(float glambdaNode) {_glambdaNode = glambdaNode; }
@@ -596,13 +583,15 @@ class ORemoteVertex : public OVertex {
         inline void setSumLambda(float sumLambda) { _sumLambda = sumLambda; }
         inline void setSumNu(float sumNu) { _sumNu = sumNu; }
         inline void setSumGamma(float sumGamma) { _sumGamma = sumGamma; }
+
+
     private:
         /// Properties
         bool _inNeighbor;
         uint8_t _index;
         /// Methods
         // Constructor helper
-        void _prepareORemoteVertex(uint32_t aLsb = 0x0, uint8_t neighborID = 0, float r = 0, float x = 0, bool inNeighbor = false);
+        void _prepareORemoteVertex(uint32_t aLsb = 0x0, uint8_t neighborID = 0, float r = 0, float x = 0, float fpmax , float fpmin, bool inNeighbor = false);
 
         //ratio consensus variables for economic dispatch algorithm
         float _sumLambda;   //running sum of Lambda for remotevertex
@@ -617,7 +606,12 @@ class ORemoteVertex : public OVertex {
         float _fp; //per-unit active flow along electrical link
         float _fq; //per-unit reactive flow along electrical link
         float _lambda; //lagrange multiplier for LinDistFlow
+        ////////////
+        float _fpmax;
+        float _fpmin;
+        float _fp0;
 
+        ///////////////////
         //gradient variables for primal dual algorithm
         float _gfp; //per-unit active flow along electrical link
         float _gfq; //per-unit reactive flow along electrical link
@@ -706,6 +700,11 @@ class LinkedList {
         uint8_t findInActiveLink(ORemoteVertex *n);
 
         float addActiveFlows(uint8_t i, ORemoteVertex *n);
+        ///////////
+        void setInitialActiveFlows(uint8_t i, ORemoteVertex *n);
+        float addActiveInitialFlows(uint8_t i, ORemoteVertex *n);
+        
+        ///////////////
         float addReactiveFlows(uint8_t i, ORemoteVertex *n);
         float addLambdas(uint8_t i, ORemoteVertex *n);
 
@@ -743,6 +742,10 @@ class OGraph {
         bool addInNeighbor(uint32_t aLsb, uint8_t neighborID);
         bool addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x);
         bool addInNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x);
+        bool addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x,float fpmax, float fpmin);
+        bool addInNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x,float fpmax, float fpmin);
+
+
         //Remove in-neighbor
         bool removeInNeighbor(uint8_t neighborID);     //Olaolu
         // Determine if vertex is in-neighbor
@@ -798,7 +801,7 @@ class OGraph {
         //uint8_t _getRemoteVertexIndex(uint32_t aLsb);        made this function public (*Sammy)
         bool _isRemoteVertex(uint32_t aLsb);
         bool _isRemoteVertex(uint32_t aLsb, uint8_t &i);
-        bool _addRemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, bool inNeighbor = false);
+        bool _addRemoteVertex(uint32_t aLsb, uint8_t neighborID, float r, float x, float fpmax, float fpmin, bool inNeighbor = false);
 };
 
 
