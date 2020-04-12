@@ -465,6 +465,7 @@ void OLocalVertex::clearAllTau() {
 
 
 ///////////////////////
+/*
 void OLocalVertex::setFlowLimits( float fijmax[],float fijmin[]) {   
     uint8_t k;
     for(k=0;k<NUM_IN_NEIGHBORS;k++){
@@ -472,6 +473,7 @@ void OLocalVertex::setFlowLimits( float fijmax[],float fijmin[]) {
         _Fijmax[k]=fijmax[k];
          }
     }
+*/
 
 //creamos una funcion en OLocelVertex para inicializar flujos y genenracion 
 void OLocalVertex::InitializeFlowLimits(){

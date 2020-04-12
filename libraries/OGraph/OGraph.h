@@ -166,12 +166,6 @@ class OLocalVertex : public OVertex {
         inline void setMax(float max) { _max = max; }
         inline float getAlpha() { return _alpha; }
         inline float getBeta() { return _beta; }
-        inline void OLocalVertex::setFlow(uint8_t k,fij){ _Fij0[k]=fij;}
-        inline float OLocalVertex::getFlow(uint8_t k){ return _Fij0[k];}
-
-        inline float OLocalVertex::getFlowMax(uint8_t k){ return _FijMax[k];}
-        inline void OLocalVertex::setFlowMax(uint8_t k,fijmax){ _FijMax[k]=fijmax;}
-        inline float OLocalVertex::getFlowMin(uint8_t k){ return _FijMin[k];}
 
         ////////////////////////////
 
@@ -189,6 +183,14 @@ class OLocalVertex : public OVertex {
         inline float getGMax() { return _gmax; }
         inline void setGMax(gmax){ _gmax=gmax;}
 
+        inline void setFlow(uint8_t k,fij){ _Fij0[k]=fij;}
+        inline float getFlow(uint8_t k){ return _Fij0[k];}
+
+        inline float getFlowMax(uint8_t k){ return _FijMax[k];}
+        inline void setFlowMax(uint8_t k,fijmax){ _FijMax[k]=fijmax;}
+        inline float getFlowMin(uint8_t k){ return _FijMin[k];}
+
+        void InitializeFlowLimits();
 
         ////////////////7
         // Clear temporary states (zIn and sigma)
