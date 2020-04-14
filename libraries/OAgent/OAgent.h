@@ -83,10 +83,10 @@ class OAgent {
         inline bool isLeader() { return _leader; }
         
         // Get / set quiet directive
-        inline void setQuiet(bool quiet) { _quiet = quiet; }
+        inline void Quiet(bool quiet) { _quiet = quiet; }
         inline bool isQuiet() { return _quiet; }
 
-        // Set Resilience Strategy for Agent
+        //  Resilience Strategy for Agent
         //inline void setRS(int RS) { _RS = RS;}
         
         // Fair splitting methods
@@ -124,10 +124,12 @@ class OAgent {
         bool standardEconomicDispatchAlgorithm(bool genBus, float alpha, uint16_t iterations);
         bool acceleratedEconomicDispatchAlgorithm(bool genBus, float alpha, uint16_t iterations);
         /////////////7  
-        float leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]);
-        float nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) ;
-        float feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]);
-        float feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]);
+        float leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
+        float nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
+        float feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period);
+        float feasibleFlowAlgorithm( uint8_t iterations, uint16_t period);
+       
+
         ////////////////
 
 
@@ -343,14 +345,11 @@ class OAgent {
         float _getSumGammaFromPacket();        
         ///////////////////////////////
 
-        void _initializeValues(OLocalVertex * s, float gmax,float gmin,float li,float fijmax[],float fmin[]);
+        //void _initializeValues(OLocalVertex * s,ORemoteVertex * neighborP ,float gmax,float gmin,float li,float neighbor_fpmax ,float neighbor_fpmin);
         float _getInitialGen(ORemoteVertex*s);
-        float _ComputeBalance(ORemoteVertex *s);
+        //float _ComputeBalance(ORemoteVertex *s, float sumfp);
         void _broadcastBalanceFeasibleFlow(OLocalVertex * s);
         float _getBjFromPacket();
-   
-
-
 
 
         ////////////////
