@@ -27,7 +27,7 @@ void setup()  {
   pinMode(49,OUTPUT);
   xbee.setSerial(Serial3);;
  
- // g.addNonNeighbor(0x4174F1AA); // node 1
+  g.addNonNeighbor(); // node 1
   g.addInNeighbor(0x4174F186);  // node 2
 
 //  synchronize all nodes
