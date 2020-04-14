@@ -346,8 +346,9 @@ class OAgent {
         ///////////////////////////////
 
         //void _initializeValues(OLocalVertex * s,ORemoteVertex * neighborP ,float gmax,float gmin,float li,float neighbor_fpmax ,float neighbor_fpmin);
-        float _getInitialGen(ORemoteVertex*s);
+        //float _getInitialGen(ORemoteVertex*s);
         //float _ComputeBalance(ORemoteVertex *s, float sumfp);
+        
         void _broadcastBalanceFeasibleFlow(OLocalVertex * s);
         float _getBjFromPacket();
 

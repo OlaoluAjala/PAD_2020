@@ -30,12 +30,12 @@ void setup()
 {
   Serial.println("start sync");
   Serial.begin(38400);
-  Serial3.begin(38400);
+  Serial.begin(38400);
   pinMode(13, OUTPUT);
   pinMode(sPin, OUTPUT);
   pinMode(errorPin,OUTPUT);
   pinMode(49,OUTPUT);
-  xbee.setSerial(Serial3);
+  xbee.setSerial(Serial);
 
   g.addInNeighbor(0x415786D3,10,0,0);   // node 10
 //  g.addNonNeighbor(0x415DB664);  // node 14
@@ -45,7 +45,7 @@ void loop()
 {
   if(de == false)// en el caso de que no se halla sincronizado 
   {
-    if(!(a.isLeader())) si no es leader 
+    if(!(a.isLeader())) //si no es leader 
     {
       Serial.println("Still trying to sync");
       if(a.sync()) // si sincroniza 
@@ -107,7 +107,7 @@ void loop()
       //feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[])
      
       //Serial.print(‘’The value of the generation is : “);
-      Serial.print();
+   
        Serial.print("The value of the RC algorithm is: ");
      // Serial.println(tCmd);
      

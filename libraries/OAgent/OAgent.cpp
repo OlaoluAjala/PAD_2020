@@ -622,8 +622,8 @@ long OAgent::nonleaderFairSplitRatioConsensus(long y, long z) {
 }
 /////////////////
 
-
-float OAgent::_getInitialGen(ORemoteVertex*s){//falat definir la funcioón en OAgent.h
+/*
+float OAgent::_getInitialGen(OLocalVertex*s){
     float ginicial;
   ginicial= 0.5*(s->getMax()+ s->getMin());
    return ginicial; }
@@ -638,6 +638,7 @@ float OAgent::_ComputeBalance(ORemoteVertex *s, float sumfp){
 
      return balance;
 }
+*/
 /*
 float OAgent::_ComputeBalance(ORemoteVertex *s){
 
@@ -655,11 +656,11 @@ float OAgent::_ComputeBalance(ORemoteVertex *s){
 void OAgent::_broadcastBalanceFeasibleFlow(OLocalVertex * s) {
   
     uint16_t payload[4];   //vector de cuatro, 1 para el HEADER, dos para el valor de bi y otra para el signo 
-    float wi = s->getOutDegree() + 1;
-    float bi = s->getBi();
+    float wi = float(s->getOutDegree() + 1);
+    float bi = s->getActiveBalance();
 
-    bi=bi*base;
-    wi = wi*base;
+    bi=bi*BASE;
+    wi = wi*BASE;
 
     payload[0] = FEASIBLE_FLOW_HEADER;
     payload[1] = bi/wi; // guardamos el valor de mu los primeros?? 16 bits
@@ -685,9 +686,9 @@ float OAgent::_getBjFromPacket() {
     float bj;
 
     if(_getUint32_tFromPacket(ptr1)==0){
-           bj=-_getUint32_tFromPacket(ptr)/base;
+           bj=-_getUint32_tFromPacket(ptr)/BASE;
     }else{
-        bj=_getUint32_tFromPacket(ptr)/base;
+        bj=_getUint32_tFromPacket(ptr)/BASE;
     }
     return bj;
 }
@@ -726,7 +727,7 @@ float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
 
 //esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
 
-float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) {
+float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
     unsigned long startTime = 0;
     //delay(50);
     float gamma = 0;
@@ -738,10 +739,9 @@ float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,floa
         Serial << "Correct Startime is " <<startTime<<", and current time is "<< myMillis()<<endl;
         delay(5);
         if(_waitToStart(startTime,true,10000)) {
-            Se
-            rial <<"My startime is "<< myMillis() <<endl;
+            Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-           gamma=feasibleFlowAlgorithm(iterations,period,gmax,gmin,li,fijmax,fijmin);
+           gamma=feasibleFlowAlgorithm(iterations,period);
         }
     }
     else
@@ -753,16 +753,16 @@ float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,floa
     return gamma;
 }
 //esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctament
-float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[]) {
+float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period) {
     srand(analogRead(7));    
     float gamma = 0;
     if(isLeader())
     {
-         gamma=leaderfeasibleFlow_RSL(iterations,period,gmax,gmin,li,fijmax,fijmin);
+         gamma=leaderfeasibleFlow_RSL(iterations,period);
     }
     else
     {
-        gamma=nonleaderfeasibleFlow_RSL(iterations,period,gmax,gmin,li,fijmax,fijmin);
+        gamma=nonleaderfeasibleFlow_RSL(iterations,period);
     }
     return gamma;
 }
@@ -770,7 +770,7 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
 {  
 
     OLocalVertex * s = _G->getLocalVertex();                                                    // store pointer to local vertex
-    ORemoteVertex * n = _G->getRemoteVertex(1);         ???porque a 1??                                        // store pointer to remote vertices
+    ORemoteVertex * n = _G->getRemoteVertex(1);        // ???porque a 1??                                        // store pointer to remote vertices
     LinkedList * l = _G->getLinkedList();
    // l->resetLinkedListStatus(s->getStatusP());
     //l->updateLinkedList(s->getStatusP());
@@ -797,14 +797,16 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
   //inicializamos flujos y generación 
 
    l->setInitialActiveFlows(nodeID,n);      //inicialize the values of flows with neighbors   
-   gi=_getInitialGen(s);
+   //gi=_getInitialGen(s);
+
+   gi= 0.5*(s->getMax()+ s->getMin()); // inicialize the generation 
    s->setGi(gi);                                           
 
    float Pd = s->getActiveDemand(); 
 
    //calculamos el balance inicial 
 
-   float bpinicial = gi - Pd - l->addActiveInitialFlows(nodeID,n);    
+   bpinicial = gi - Pd - l->addActiveInitialFlows(nodeID,n);    
 
    bpinicial = bpinicial/wi;                                              // active balance
 
@@ -872,7 +874,7 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
                     }
                     else
                     {
-                         gi = s->getGi()-0.5*s->getBi()/wi;
+                         gi = s->getGi()-0.5*s->getActiveBalance()/wi;
                         if(gi > s->getMax()){ 
                             gi=s->getMax();
                          }else if(gi < s->getMin()){
@@ -888,14 +890,14 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
 
                         }else if (neighbor_fp < (neighborP)->getActiveFlowMin())
                         {
-                            neighbor_fp = (neighborP)->getActiveFlowMin()
+                            neighbor_fp = (neighborP)->getActiveFlowMin();
                         }
 
-                        (neighborP)->setActiveFlow(fp);
+                        (neighborP)->setActiveFlow(neighbor_fp);
 
                         if(k==(wi-1))
                         {
-                           float bp = s->getGi(gi) - Pd - l->addActiveInitialFlows(nodeID,n);    
+                           float bp = s->getGi() - Pd - l->addActiveInitialFlows(nodeID,n);    
 
                            bp = bp/wi;                                              // active balance
 
