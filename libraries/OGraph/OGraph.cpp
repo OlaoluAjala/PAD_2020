@@ -352,7 +352,7 @@ void LinkedList::setInitialActiveFlows(uint8_t i, ORemoteVertex *n) {
         j = tmp->data;                                  //get ID of neighbor
        
         fp0 = 0.5*((n+j-1)->getActiveFlowMax() + (n+j-1)->getActiveFlowMin());
-        (n+j-1)->setInitialActiveFlow(fp0);
+        (n+j-1)->setActiveInitialFlow(fp0);
         (n+j-1)->setActiveFlow(fp0);
 
         tmp = tmp->neighborNext;
@@ -778,7 +778,7 @@ bool OGraph::addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x
 }
 
 bool OGraph::addInNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x) {
-    return addInNeighbor(a.getLsb(),neighborID,r,x,0,0);
+    return addInNeighbor(aLsb,neighborID,r,x,0,0);
 }
 
 bool OGraph::addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x, float fpmax, float fpmin) {
@@ -862,11 +862,11 @@ bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID) {
 bool OGraph::addNonNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x) {
     return addNonNeighbor(a.getLsb(),neighborID,r,x);
 }
-
+/*
 bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x) {
     return _addRemoteVertex(aLsb,neighborID,r,x);
 }
-
+*/
 // Determine if vertex is non-neighbor
 bool OGraph::isNonNeighbor(XBeeAddress64 a) {
     return isNonNeighbor(a.getLsb());

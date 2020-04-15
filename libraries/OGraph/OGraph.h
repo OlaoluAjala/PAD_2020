@@ -15,7 +15,7 @@
 #define NUM_BROADCAST_LAMBDA 3
 #define LONG_ERROR 2147483647
 
-#define NUM_REMOTE_VERTICES 22      //ENSURE THAT THESE PARAMETERS ARE SET APPROPRIATELY BASED ON GRAPH STRUCTURE
+#define NUM_REMOTE_VERTICES 10      //ENSURE THAT THESE PARAMETERS ARE SET APPROPRIATELY BASED ON GRAPH STRUCTURE
 #define NUM_IN_NEIGHBORS 22         //maximum allowed number of neighbors (does not include itself)
 //#define NULL 0
 
@@ -169,9 +169,30 @@ class OLocalVertex : public OVertex {
 
         ////////////////////////////
 
-        inline void setGi(bi){ _gi=gi;}
-        inline float getGi(){return _gi;}
+        inline void setGi(float p){ _p=p;}
+        inline float getGi(){return _p;}
 
+
+        //inline float getBi(){return _bi;}
+        //inline void setBi( float bi){ _bi=bi;}
+
+        //inline void setLi(float li){ _li=li; }
+        //inline float getLi(){return _li;}
+        /*
+        inline float getGMin() { return _gmin; }
+        inline void setGMin(float gmin){ _gmin=gmin;}
+        inline float getGMax() { return _gmax; }
+        inline void setGMax(float gmax){ _gmax=gmax;}
+        
+        inline void setFlow(uint8_t k,fij){ _Fij0[k]=fij;}
+        inline float getFlow(uint8_t k){ return _Fij0[k];}
+
+        inline float getFlowMax(uint8_t k){ return _FijMax[k];}
+        inline void setFlowMax(uint8_t k,fijmax){ _FijMax[k]=fijmax;}
+        inline float getFlowMin(uint8_t k){ return _FijMin[k];}
+
+        void InitializeFlowLimits();
+        */
 
         ////////////////7
         // Clear temporary states (zIn and sigma)
@@ -543,7 +564,7 @@ class ORemoteVertex : public OVertex {
         inline void setReactiveFlow(float fq) {_fq = fq; }
         inline void setLambda(float lambda) {_lambda = lambda; }
 
-        inline void setActiveFlowMaxMin(float fpmax,float fpmin){_fpmax=fpmax ; _fpmin=fpmin};
+        inline void setActiveFlowMaxMin(float fpmax, float fpmin){_fpmax = fpmax , _fpmin = fpmin; };
 
         inline void setActiveFlowGradient(float gfp) {_gfp = gfp; }
         inline void setReactiveFlowGradient(float gfq) {_gfq = gfq; }
@@ -591,7 +612,7 @@ class ORemoteVertex : public OVertex {
         uint8_t _index;
         /// Methods
         // Constructor helper
-        void _prepareORemoteVertex(uint32_t aLsb = 0x0, uint8_t neighborID = 0, float r = 0, float x = 0, float fpmax , float fpmin, bool inNeighbor = false);
+        void _prepareORemoteVertex(uint32_t aLsb = 0x0, uint8_t neighborID = 0, float r = 0, float x = 0, float fpmax = 0, float fpmin = 0, bool inNeighbor = false);
 
         //ratio consensus variables for economic dispatch algorithm
         float _sumLambda;   //running sum of Lambda for remotevertex
