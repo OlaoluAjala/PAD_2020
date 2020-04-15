@@ -6048,6 +6048,10 @@ void OAgent::firstStageControl( OLocalVertex * s )
         // }else{
         //     s->setQ(s->getQ() + s->getRo());
         //     s->setStateSaturatedLow(false);
+        }else if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
+        {
+            s->setSecondStageFlag(true);
+            Serial<<"setting flag true"<<endl;
         }
 
         // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
@@ -6081,7 +6085,11 @@ void OAgent::firstStageControl( OLocalVertex * s )
         // {
         //     s->setQ(s->getQ() + s->getRo());
         //     s->setStateSaturatedHigh(false);
-        } 
+        } else if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
+        {
+            s->setSecondStageFlag(true);
+            Serial<<"setting flag true"<<endl;
+        }
 
         // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
     }else

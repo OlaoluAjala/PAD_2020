@@ -1,6 +1,6 @@
 #include <Streaming.h>
-#include <XBee.h>
 //#include <Dyno.h>
+#include <XBee.h>
 #include <OGraph_OPF.h>
 #include <OAgent_OPF.h>
 #include <MgsModbus.h>
@@ -8,19 +8,19 @@
 #include <Ethernet.h>
 
 
-//Node 9
+//Node 11
 
-long base = 10000;  // use base to increase precision of results
+long base = 10000;  // not using floating points so need a base number
 
-XBee xbee = XBee();
+XBee xbee = XBee();                  // create an XBee object
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415786E1,9); //address and ID
+OLocalVertex s = OLocalVertex(0x415DB670,11);
 LinkedList l = LinkedList();  //#NODE
 OGraph_OPF g = OGraph_OPF(&s,&l);
 OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
-OAgent_OPF a = OAgent_OPF(&xbee,&rx,&g,&al,true,true); // argument rx?
+OAgent_OPF a = OAgent_OPF(&xbee,&rx,&g,&al,false,true);
 
 uint8_t sPin = 7;      // synced led
 uint8_t cPin = 48;     // coordination enabled led pin
@@ -41,11 +41,11 @@ float u_v =0;
 float u_set=0.85;
 
 //Modbus Communication
-MgsModbus Mb; 
+MgsModbus Mb;
 int val;
 // Ethernet settings (depending on MAC and Local network)
-byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x94, 0xB9 };
-IPAddress ip(192, 168, 2, 9); // What are these addresses
+byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x94, 0xB3 };
+IPAddress ip(192, 168, 2, 3);
 IPAddress gateway(192, 168, 2, 20);
 IPAddress subnet(255, 255,255, 0);
 
@@ -88,7 +88,7 @@ void setup()  {
   //g.addInNeighbor(0x415786E1,9,0,0); // node 9
   //g.addInNeighbor(0x415786D3,10,0,0); // node 10
   //g.addInNeighbor(0x415DB670,11,0,0); // node 11
-  g.addInNeighbor(0x415786A9,12,0,0); // node 12
+  //g.addInNeighbor(0x415786A9,12,0,0); // node 12
   g.addInNeighbor(0x4157847B,13,0,0); // node 13
   //g.addInNeighbor(0x415DB664,14,0,0); // node 14
   
@@ -188,15 +188,15 @@ void loop() {
             
       Serial.println("delta q required");
       Serial.println(deltaQ,4);
-      delay(100);
-      
+      delay(100); 
+           
       f_error1 = a.ratioConsensusAlgorithm(f_error0,D,10,500);
       
-//      Serial.println("ratio consensus result");
-//      Serial.println(f_error1,4);
-//      delay(100);
+      Serial.println("ratio consensus result");
+      Serial.println(f_error1,4);
+      delay(100);
       
-      // frequency controller code
+    // frequency controller code
       if(abs(f_error1) > eps_f)
       {
          error=error + -1*0.707*f_error1;
@@ -258,15 +258,15 @@ void sendConsensusResults()
   //Mb.Build(fc,Ref_high,Ref_low,Count_high,Count_low,Pos_high,Pos_low);
   //Serial.println("Sent Request Packet");
   ////////////////////////////////////////////////////////////////
-  int node9_ip = 69; //part of ip address for node 9 on the HIL side 
-  Mb.Req(MB_FC_WRITE_MULTIPLE_REGISTERS,0,4,0,node9_ip); //(MB_FC FC, word Ref - typhoon, word Count, word Pos - arduino, int nodeip)
+  int node11_ip = 71; //part of ip address for node 11 on the HIL side 
+  Mb.Req(MB_FC_WRITE_MULTIPLE_REGISTERS,0,4,0,node11_ip); //(MB_FC FC, word Ref - typhoon, word Count, word Pos - arduino, int nodeip)
   Mb.MbmRun();
-  //SerialUSB.println("Sent Stuff to typhoon");
+  //Serial.println("Received Response");
 }
 
 void receiveTyphoonData()
 {
-  int node9_ip = 69; //part of ip address for node 9 on the HIL side
-  Mb.Req(MB_FC_READ_INPUT_REGISTER,0,4,0,node9_ip); //(MB_FC FC, word Ref - typhoon, word Count, word Pos -arduino, int nodeip)
+  int node11_ip = 71; //part of ip address for node 11 on the HIL side 
+  Mb.Req(MB_FC_READ_INPUT_REGISTER,0,4,0,node11_ip); //(MB_FC FC, word Ref, word Count, word Pos, int nodeip)
   Mb.MbmRun();
 }
