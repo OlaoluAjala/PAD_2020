@@ -1,8 +1,8 @@
 #include <Streaming.h>
 #include <XBee.h>
 //#include <Dyno.h>
-#include <OGraph_OPF.h>
-#include <OAgent_OPF.h>
+#include <OGraph.h>
+#include <OAgent.h>
 #include <MgsModbus.h>
 #include <SPI.h>
 #include <Ethernet.h>
@@ -18,9 +18,9 @@ ZBRxResponse rx = ZBRxResponse();
 // address, min, max, alpha, beta, out-degree, base
 OLocalVertex s = OLocalVertex(0x415786E1,9); //address and ID
 LinkedList l = LinkedList();  //#NODE
-OGraph_OPF g = OGraph_OPF(&s,&l);
+OGraph g = OGraph(&s,&l);
 OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
-OAgent_OPF a = OAgent_OPF(&xbee,&rx,&g,&al,true,true); // argument rx?
+OAgent a = OAgent(&xbee,&rx,&g,&al,true,true); // argument rx?
 
 uint8_t sPin = 7;      // synced led
 uint8_t cPin = 48;     // coordination enabled led pin
@@ -33,7 +33,7 @@ float f_error0;         // variable to store the read value
 float v_error0;         // variable to store the read value
 float f_error1;         // ratio consensus result for average frequency error
 
-float deltaQ;
+float deltaQ;           //delta q necessary for the voltage violation
 
 float error = 0;
 float u_f =0;
@@ -183,7 +183,7 @@ void loop() {
 
       float q=0.3;
       float p=0.4;
-      deltaQ = a.voltageControl(1,v_error,5,p,q,0.707,-0.707,-0.225736,1/6,20,200);
+      deltaQ = a.voltageControl(1,v_error0,5,p,q,0.707,-0.707,-0.225736,1/6,20,200);
 //voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alphaVC,iterations,period ) 
             
       Serial.println("delta q required");
@@ -194,7 +194,7 @@ void loop() {
       
 //      Serial.println("ratio consensus result");
 //      Serial.println(f_error1,4);
-//      delay(100);
+//      delay(100); 
       
       // frequency controller code
       if(abs(f_error1) > eps_f)
@@ -215,15 +215,17 @@ void loop() {
       Mb.MbData[1]=base*abs(u_f);
 
 
-      // voltage controller code
-      if(abs(v_error0) > eps_v)
-      {
-        u_v=0.01*v_error0;
-      }
-      else
-      {
-        u_v=0;
-      }
+     // voltage controller code
+//      if(abs(v_error0) > eps_v)
+//      {
+//        u_v=0.01*v_error0;
+//      }
+//      else
+//      {
+//        u_v=0;
+//      }
+      u_v=deltaQ;
+
       //Sending Data
       if (u_v<0)
       {

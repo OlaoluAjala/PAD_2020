@@ -1,8 +1,8 @@
 #include <Streaming.h>
-#include <Dyno.h>
+//#include <Dyno.h>
 #include <XBee.h>
-#include <OGraph_SFC.h>
-#include <OAgent_SFC.h>
+#include <OGraph.h>
+#include <OAgent.h>
 #include <MgsModbus.h>
 #include <SPI.h>
 #include <Ethernet.h>
@@ -10,19 +10,18 @@
 
 //Node 13
 
-long base = 10000;  // not using floating points so need a base number
-long D_base = 100000000;
+long base = 10000;  // use base to increase precision of results
 
 XBee xbee = XBee();                  // create an XBee object
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x4157847B,0,0.0479*D_base,-1.5*base,0.5*base,4,D_base,13);
-//OLocalVertex s = OLocalVertex(0x4157847B,0,0,-1.5*base,0.5*base,5,D_base,13);
-OGraph_SFC g = OGraph_SFC(&s);
-OAgent_SFC a = OAgent_SFC(&xbee,&rx,&g,false,true);
+OLocalVertex s = OLocalVertex(0x4157847B,13); //address and ID
+LinkedList l = LinkedList();  //#NODE
+OGraph g = OGraph(&s,&l);
+OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
+OAgent a = OAgent(&xbee,&rx,&g,false,true);
 
-uint8_t errorPin = 6;  // error led pin
 uint8_t sPin = 7;      // synced led
 uint8_t cPin = 48;     // coordination enabled led pin
 
@@ -30,19 +29,23 @@ uint8_t cPin = 48;     // coordination enabled led pin
 boolean de = false;
 
 //AFE and controller variables
-int state;         // variable to store the read value 
-long n;
+float f_error0;         // variable to store the read value 
+float v_error0;         // variable to store the read value
+float f_error1;         // ratio consensus result for average frequency error
+
+float deltaQ;
+
 float error = 0;
-float u =0;
+float u_f =0;
+float u_v =0;
 float u_set=0.85;
-int r = 0;
 
 //Modbus Communication
 MgsModbus Mb;
 int val;
 // Ethernet settings (depending on MAC and Local network)
-byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x94, 0xB4 };
-IPAddress ip(192, 168, 2, 4);
+byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x94, 0xB6 };
+IPAddress ip(192, 168, 2, 6);
 IPAddress gateway(192, 168, 2, 20);
 IPAddress subnet(255, 255,255, 0);
 
@@ -58,13 +61,10 @@ int fc;
 int ref;
 int count;
 int pos;
-long t;
-int res_flag=0;
-float state1 = 0 ;
 
-float eps = 0.0628;
-
-float D;
+float eps_f = 0.001;
+float eps_v = 0.001;
+float D = 1;
 
 void setup()  {
   Serial.begin(38400);
@@ -76,23 +76,27 @@ void setup()  {
   
   xbee.setSerial(Serial3);
 //Define the Neighboring nodes
-  //g.addInNeighbor(0x4174F1AA); // node 1
-  //g.addInNeighbor(0x4174F186); // node 2
-  //g.addInNeighbor(0x4151C692); // node 3
-  //g.addInNeighbor(0x4151C48B); // node 4
-  //g.addInNeighbor(0x4151C688); // node 5
-  //g.addInNeighbor(0x4151C6AB); // node 6
-  //g.addInNeighbor(0x4151C6CB); // node 7
-  //g.addInNeighbor(0x4151C6AC); // node 8
-  g.addInNeighbor(0x415786E1); // node 9
-  g.addInNeighbor(0x415786D3); // node 10
-  g.addInNeighbor(0x415DB670); // node 11
-  //g.addInNeighbor(0x415786A9); // node 12
-  //g.addInNeighbor(0x4157847B); // node 13
-  //g.addInNeighbor(0x415DB664); // node 14
-  //g.addInNeighbor(0x415DB673); // node 15
-  g.addInNeighbor(0x415DB684); // node 19
-  //g.addInNeighbor(0x41516F0B); // node 20
+  //g.addInNeighbor(0x4174F1AA,1,0,0); // node 1
+  //g.addInNeighbor(0x4174F186,2,0,0); // node 2
+  //g.addInNeighbor(0x4151C692,3,0,0); // node 3
+  //g.addInNeighbor(0x4151C48B,4,0,0); // node 4
+  //g.addInNeighbor(0x4151C688,5,0,0); // node 5
+  //g.addInNeighbor(0x4151C6AB,6,0,0); // node 6
+  //g.addInNeighbor(0x4151C6CB,7,0,0); // node 7
+  //g.addInNeighbor(0x4151C6AC,8,0,0); // node 8
+  
+  g.addInNeighbor(0x415786E1,9,0,0);  // node 9
+  //g.addInNeighbor(0x415786D3,10,0,0); // node 10
+  g.addInNeighbor(0x415DB670,11,0,0); // node 11
+  //g.addInNeighbor(0x415786A9,12,0,0); // node 12
+  //g.addInNeighbor(0x4157847B,13,0,0); // node 13
+  //g.addInNeighbor(0x415DB664,14,0,0); // node 14
+  
+  //g.addInNeighbor(0x415DB673,15,0,0); // node 15
+  //g.addInNeighbor(0x415DB684,19,0,0); // node 19
+  //g.addInNeighbor(0x41516F0B,20,0,0); // node 20
+
+  g.configureLinkedList();
   
   digitalWrite(sPin,LOW);
   digitalWrite(cPin,LOW);
@@ -104,9 +108,8 @@ void setup()  {
   }
 }
 
-
 void loop() {
-  if(de == false)  
+  if(de == false) 
   {
     if(!(a.isLeader()))
     {
@@ -157,65 +160,87 @@ void loop() {
       }
     }
   }
-
   
-   else 
-   {
-    if(a.isSynced()) {
+  else 
+  {
+    if(a.isSynced())
+    {
       receiveTyphoonData();
-      state =  Mb.MbData[0];
-      if(state == 0)
-      {
+      int f_error =  Mb.MbData[0]*((-2*Mb.MbData[1])+1);
+      int v_error  = Mb.MbData[2]*((-2*Mb.MbData[3])+1);
+      f_error0 =  float(f_error);
+      v_error0 =  float(v_error);
+      f_error0 =  f_error0/base;
+      v_error0 =  v_error0/base;
       
-        D=0;
+      Serial.print("f error: ");
+      Serial.println(float(f_error0),4);
+      Serial.print("D: ");
+      Serial.println(D,4);
+      Serial.print("v error: ");
+      Serial.println(float(v_error0),4);
+      delay(100);
+
+      float q=0.3;
+      float p=0.4;
+      deltaQ = a.voltageControl(1,v_error,5,p,q,0.707,-0.707,-0.225736,1/6,20,200);
+//voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alphaVC,iterations,period ) 
+            
+      Serial.println("delta q required");
+      Serial.println(deltaQ,4);
+      delay(100);
+      
+      f_error1 = a.ratioConsensusAlgorithm(f_error0,D,10,500);
+      
+//      Serial.println("ratio consensus result");
+//      Serial.println(f_error1,4);
+//      delay(100); 
+      
+      // frequency controller code
+      if(abs(f_error1) > eps_f)
+      {
+         error=error + -1*0.707*f_error1;
+         u_f=u_set+0.7071*error;
+         //Serial.println(u,4);
+      }      
+      //Sending data
+      if (u_f<0)
+      {
+        Mb.MbData[0]=1;
       }
       else
       {
-      
-        D=0.0479;
+        Mb.MbData[0]=0;
       }
-      //Serial.println("Data");
-      //Serial.println(float(state),4);
-      //a.nonleaderFairSplitRatioConsensus(-1*base*state);
-      //a.nonleaderFairSplitRatioConsensus(1*D_base,0);
-      //a.fairSplitRatioConsensus_RSL(D_base*1,0*D_base, 16,160);
-      a.fairSplitRatioConsensus_RSL(-base*state,D*D_base,16,160);
-      state1 = a.getbufferdata(0);
+      Mb.MbData[1]=base*abs(u_f);
 
-      //Serial.println("ratio consensus result");
-      //Serial.println(state1,4);  
-       /* Controller code
-       r=r+1;
-       if(r>2)
-       { 
-       error=error + -1*0.707*state1;
-       u=u_set+0.707*error;
-       Serial.println(u,4);
-       }
-       Mb.MbData[1]=10*base*u;
-       sendConsensusResults();
-       
-      // Controller code over
-      */
-      a.resync();
+
+      // voltage controller code
+      if(abs(v_error0) > eps_v)
+      {
+        u_v=0.01*v_error0;
       }
+      else
+      {
+        u_v=0;
+      }
+      //Sending Data
+      if (u_v<0)
+      {
+        Mb.MbData[2]=1;
+      }
+      else
+      {
+        Mb.MbData[2]=0;
+      }
+      Mb.MbData[3]=base*abs(u_v);
+   // Controller code over
+  
+      sendConsensusResults();     
+      a.resync();
+    }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void sendConsensusResults()
 {
