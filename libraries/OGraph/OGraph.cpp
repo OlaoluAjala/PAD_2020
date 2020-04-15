@@ -862,9 +862,15 @@ bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID) {
 bool OGraph::addNonNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x) {
     return addNonNeighbor(a.getLsb(),neighborID,r,x);
 }
+<<<<<<< Updated upstream
 /*
 bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x) {
     return _addRemoteVertex(aLsb,neighborID,r,x);
+=======
+
+bool OGraph::addNonNeighbor(uint32_t aLsb, uint8_t neighborID, float r, float x, float fpmax, float fpmin) {
+    return _addRemoteVertex(aLsb,neighborID,r,x,fpmax,fpmin);
+>>>>>>> Stashed changes
 }
 */
 // Determine if vertex is non-neighbor
