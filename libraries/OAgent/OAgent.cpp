@@ -5955,10 +5955,10 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 /// End general helper functions
 
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::voltageControl( float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D , float alphaVC, uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
+float OAgent::voltageControl( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D , float alphaVC, uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
 {
     OLocalVertex * s = _G->getLocalVertex();  
-    _initializeVoltageControl( s, V, Vref ,secPercentage ,p, q, qtop, qbottom, D, alphaVC ); 
+    _initializeVoltageControl( s, diffV, Vref ,secPercentage ,p, q, qtop, qbottom, D, alphaVC ); 
      
     //compute the first stage
     isUnderVoltage(s); 
@@ -6314,12 +6314,12 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
 
 
 //constructor functions
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float V, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC )
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC )
 {
     Serial<<"initialiting VC Variables"<<endl;
     _G->clearAllStates(); 
 
-    s->setVoltage(V);
+    s->setVoltage(Vref + diffV);
     s->setVref(Vref);
     s->setVmax(Vref+Vref*(secPercentage/float(100)));
     s->setVmin(Vref-Vref*(secPercentage/float(100)));        

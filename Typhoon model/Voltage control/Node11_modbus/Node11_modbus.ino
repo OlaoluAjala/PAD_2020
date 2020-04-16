@@ -16,11 +16,11 @@ XBee xbee = XBee();                  // create an XBee object
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415DB670,11);
+OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,1,base);
 LinkedList l = LinkedList();  //#NODE
 OGraph g = OGraph(&s,&l);
-OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
-OAgent a = OAgent(&xbee,&rx,&g,&al,false,true);
+//OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
+OAgent a = OAgent(&xbee,&rx,&g,false,true);
 
 uint8_t sPin = 7;      // synced led
 uint8_t cPin = 48;     // coordination enabled led pin
@@ -190,11 +190,11 @@ void loop() {
       Serial.println(deltaQ,4);
       delay(100); 
            
-      f_error1 = a.ratioConsensusAlgorithm(f_error0,D,10,500);
+      //f_error1 = a.ratioConsensusAlgorithm(f_error0,D,10,500);
       
       Serial.println("ratio consensus result");
       Serial.println(f_error1,4);
-      delay(100);
+      delay(100); 
       
     // frequency controller code
       if(abs(f_error1) > eps_f)

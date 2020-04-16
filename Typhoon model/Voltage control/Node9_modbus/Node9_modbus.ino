@@ -16,11 +16,11 @@ XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415786E1,9); //address and ID
+OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,2,base); //address and ID
 LinkedList l = LinkedList();  //#NODE
 OGraph g = OGraph(&s,&l);
-OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
-OAgent a = OAgent(&xbee,&rx,&g,&al,true,true); // argument rx?
+//OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
+OAgent a = OAgent(&xbee,&rx,&g,true,true); // argument rx?
 
 uint8_t sPin = 7;      // synced led
 uint8_t cPin = 48;     // coordination enabled led pin
@@ -190,7 +190,7 @@ void loop() {
       Serial.println(deltaQ,4);
       delay(100);
       
-      f_error1 = a.ratioConsensusAlgorithm(f_error0,D,10,500);
+      //f_error1 = a.fairsplitRatioConsensus_RSL(f_error0,D,10,500);
       
 //      Serial.println("ratio consensus result");
 //      Serial.println(f_error1,4);
