@@ -183,7 +183,7 @@ void loop() {
 
       float q=0.3;
       float p=0.4;
-      deltaQ = a.voltageControl(1,v_error,5,p,q,0.707,-0.707,-0.227252,1/6,20,200);
+      deltaQ = a.voltageControl(1,v_error,5,0.5,0.4,0.707,-0.707,-0.227252,1/6,20,200);
 //voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alphaVC,iterations,period ) 
             
       Serial.println("delta q required");

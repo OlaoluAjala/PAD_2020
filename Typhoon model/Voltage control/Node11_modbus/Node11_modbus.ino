@@ -86,10 +86,10 @@ void setup()  {
   //g.addInNeighbor(0x4151C6AC,8,0,0); // node 8
   
   //g.addInNeighbor(0x415786E1,9,0,0); // node 9
-  //g.addInNeighbor(0x415786D3,10,0,0); // node 10
+  g.addInNeighbor(0x415786D3,10,0,0); // node 10
   //g.addInNeighbor(0x415DB670,11,0,0); // node 11
   //g.addInNeighbor(0x415786A9,12,0,0); // node 12
-  g.addInNeighbor(0x4157847B,13,0,0); // node 13
+  //g.addInNeighbor(0x4157847B,13,0,0); // node 13
   //g.addInNeighbor(0x415DB664,14,0,0); // node 14
   
   //g.addInNeighbor(0x415DB673,15,0,0); // node 15
@@ -183,7 +183,7 @@ void loop() {
 
       float q=0.3;
       float p=0.4;
-      deltaQ = a.voltageControl(1,v_error,5,p,q,0.707,-0.707,-0.258852,1/6,20,200);
+      deltaQ = a.voltageControl(1,v_error,5,0.5,0.4,0.707,-0.707,-0.258852,1/6,20,200);
 //voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alphaVC,iterations,period ) 
             
       Serial.println("delta q required");
@@ -203,6 +203,7 @@ void loop() {
          u_f=u_set+0.7071*error;
          //Serial.println(u,4);
       }      
+      u_f=0.7;
       //Sending data
       if (u_f<0)
       {
@@ -225,7 +226,7 @@ void loop() {
 //        u_v=0;
 //      }
       u_v=deltaQ;
-
+      u_v=3;
       //Sending Data
       if (u_v<0)
       {
