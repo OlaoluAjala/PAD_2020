@@ -656,15 +656,16 @@ float OAgent::_ComputeBalance(ORemoteVertex *s){
 void OAgent::_broadcastBalanceFeasibleFlow(OLocalVertex * s) {
   
     uint16_t payload[4];   //vector de cuatro, 1 para el HEADER, dos para el valor de bi y otra para el signo 
-    float wi = float(s->getOutDegree() + 1);
-    float bi = s->getActiveBalance();
+    float wi = float(s->getOutDegree() + 1)*BASE;
+    float bi =  s->getActiveBalance()*BASE;
 
-    bi=bi*BASE;
-    wi = wi*BASE;
+    long Bi = long(bi);
+    long Wi = long(wi);
+    
 
     payload[0] = FEASIBLE_FLOW_HEADER;
-    payload[1] = bi/wi; // guardamos el valor de mu los primeros?? 16 bits
-    payload[2] = bi/wi >> 16;// guardamos el valor de mu los ultimos?? 16 bits
+    payload[1] = Bi/Wi; // guardamos el valor de mu los primeros?? 16 bits
+    payload[2] = Bi/Wi >> 16;// guardamos el valor de mu los ultimos?? 16 bits
     if(bi<0){
         payload[3]=0;//if it is 0 then the coeficient between mu and sigma is negative 
 
@@ -954,7 +955,7 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
         //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
     }while(iter < iterations); //we need to implement here the max consensus
 //}while(iter < iterations && -(endY) > eps && (endZ) > eps);
-    return bp;
+    return s->getGi();
 }
 
 
@@ -4915,7 +4916,7 @@ void OAgent::_unicastPacket_P(uint16_t recipientID, float fP, float fQ, float La
     }
 
     //construct payload
-    payload[0] = PD_HEADER;
+    payload[0] = (PD_HEADER !=0);
     payload[1] = PD_HEADER >> 8;
     payload[2] = recipientID;
     payload[3] = recipientID >> 8;
@@ -5046,7 +5047,7 @@ void OAgent::_unicastPacket_C(uint16_t recipientID, float fP_c, float fQ_c, floa
     /////////////////////////////////////////////
     /////////////////////////////////////////////
     //construct payload
-    payload[0] = PD_HEADER;
+    payload[0] = (PD_HEADER !=0);
     payload[1] = PD_HEADER >> 8;
     payload[2] = recipientID;
     payload[3] = recipientID >> 8;
@@ -5192,7 +5193,7 @@ void OAgent::_sendToChild(uint16_t recipientID, float fP, float fQ, float Lambda
     }
 
     //construct payload
-    payload[0] = PD_HEADER;
+    payload[0] = (PD_HEADER !=0);
     payload[1] = PD_HEADER >> 8;
     payload[2] = recipientID;
     payload[3] = recipientID >> 8;
@@ -5432,7 +5433,7 @@ void OAgent::_sendToParent(uint16_t recipientID, float fP, float fQ, float Lambd
     }
 
     //construct payload
-    payload[0] = PD_HEADER;
+    payload[0] = (PD_HEADER !=0);
     payload[1] = PD_HEADER >> 8;
     payload[2] = recipientID;
     payload[3] = recipientID >> 8;
@@ -5617,7 +5618,7 @@ void OAgent::_sendToNeighbor(float sumLAMBDA, float sumNU) {
 
 
     //construct payload
-    payload[0] = ED_HEADER;
+    payload[0] = (ED_HEADER !=0);
     payload[1] = ED_HEADER >> 8;
     payload[2] = sign_sumLambda;
     payload[3] = sumLambda;
@@ -5691,7 +5692,7 @@ void OAgent::_sendToNeighbor_ACC(float sumLAMBDA, float sumNU, float sumGAMMA) {
 
 
     //construct payload
-    payload[0] = ED_HEADER;
+    payload[0] = (ED_HEADER !=0);
     payload[1] = ED_HEADER >> 8;
     payload[2] = sign_sumLambda;
     payload[3] = sumLambda;
@@ -5743,7 +5744,7 @@ void OAgent::_broadcastSchedulePacket(uint16_t header, unsigned long startTime, 
 void OAgent::_broadcastSchedulePacketPD(unsigned long startTime, uint16_t numIterations) {
     uint8_t payload[8];
     // put header in payload array
-    payload[0] = SCHEDULE_PD_HEADER;
+    payload[0] = (SCHEDULE_PD_HEADER !=0);
     payload[1] = SCHEDULE_PD_HEADER >> 8;
     // put start time in payload array
     payload[2] = startTime;
@@ -5762,7 +5763,7 @@ void OAgent::_broadcastSchedulePacketPD(unsigned long startTime, uint16_t numIte
 void OAgent::_broadcastSchedulePacketED(unsigned long startTime, uint16_t numIterations) {
     uint8_t payload[8];
     // put header in payload array
-    payload[0] = SCHEDULE_ED_HEADER;
+    payload[0] = (SCHEDULE_ED_HEADER !=0);
     payload[1] = SCHEDULE_ED_HEADER >> 8;
     // put start time in payload array
     payload[2] = startTime;
@@ -6504,7 +6505,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
         s->setQtarget(s->getQ()+s->getRo());
         
-        Serial<<"∆Q in 1st stage is: "<<getRo()<<endl;
+        Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
         Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
         // if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         // {
@@ -6537,7 +6538,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         s->setRo (s->getD() * s->getAlphaVC() *(s->getVmin() - s->getVoltage()));        // this value will be negative
         s->setQtarget(s->getQ()+s->getRo());
 
-        Serial<<"∆Q in 1st stage is: "<<getRo()<<endl;
+        Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
         Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
 
         // if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
@@ -6576,18 +6577,18 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
     s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
     s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period ));
 
-    Serial<<"the value of mu: "s->getMuRC()<<endl;
+    //Serial<<"the value of mu: "s->getMuRC()<<endl;
 
     //Ratio Consensus
     if( s->getMuRC() < 0 )
     {
         s->setEta(s->getEtaLower());
-        Serial<<"the value of eta_lower: "s->getEtaLower()<<endl;
+        //Serial<<"the value of eta_lower: "s->getEtaLower()<<endl;
 
     }else if( s->getMuRC() > 0 )
     {
         s->setEta(s->getEtaUpper());
-        Serial<<"the value of eta_upper: "s->getEtaUpper()<<endl;
+       // Serial<<"the value of eta_upper: "s->getEtaUpper()<<endl;
 
     }
     Serial<<"the eta chosen is: "<<s->getEta()<<endl;

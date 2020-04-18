@@ -30,6 +30,7 @@
 #define PD_HEADER                        0x7550 // Unicast Primal-dual header is ascii uP
 #define ED_HEADER                        0x7540 // Unicast Primal-dual header is ascii uP
 #define PD_ACK_HEADER                    0x6B50 // Primal-dual acknowledgment header is kP
+#define FEASIBLE_FLOW_HEADER             0x7765
 
 #define WINDOW_LENGTH                    5000     // time length for each window in a period
 #define BASE                             10000000  // base for transmitting decimals
