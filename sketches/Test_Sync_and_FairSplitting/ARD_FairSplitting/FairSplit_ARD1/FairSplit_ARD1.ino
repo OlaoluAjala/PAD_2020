@@ -6,7 +6,7 @@
 
 long base = 1e4;  // not using floating points so need a base number
 float tCmd;
-float bi;
+float gi;
 uint8_t i=1;//number of inneighbors
 
 //Create objects needed for communication and control
@@ -103,7 +103,7 @@ void loop()
     {
      //run fair splitting algorithm
       tCmd = a.fairSplitRatioConsensus_RSL(50, 1, 30, 200);
-      bi = a.feasibleFlowAlgorithm_RSL(50, 200);
+     gi = a.feasibleFlowAlgorithm_RSL(50, 200,2);
       //feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,float gmax,float gmin, float li, float fijmax[],float fijmin[])
      
       //Serial.print(‘’The value of the generation is : “);
@@ -112,7 +112,7 @@ void loop()
      // Serial.println(tCmd);
      
       Serial.print("The value of the bi algorithm is: ");
-      Serial.println(bi);
+      Serial.println(gi);
       int bbbb = Serial.read();
 
       while(Serial.available()==0)

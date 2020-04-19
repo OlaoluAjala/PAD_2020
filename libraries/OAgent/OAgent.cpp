@@ -694,7 +694,7 @@ float OAgent::_getBjFromPacket() {
     return bj;
 }
 
-float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
+float OAgent::leaderfeasibleFlow_RSL( uint8_t iterations, uint16_t period, float load ) {
     unsigned long t0 = myMillis();
     unsigned long startTime = t0 + RC_DELAY;
     OLocalVertex * s = _G->getLocalVertex();
@@ -717,7 +717,7 @@ float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
         {
             Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-            feasibleFlowAlgorithm(iterations,period);
+            feasibleFlowAlgorithm(iterations,period,load);
         }
     }        
     return gamma;
@@ -728,7 +728,7 @@ float OAgent::leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
 
 //esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctamente
 
-float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
+float OAgent::nonleaderfeasibleFlow_RSL( uint8_t iterations, uint16_t period, float load ){
     unsigned long startTime = 0;
     //delay(50);
     float gamma = 0;
@@ -742,7 +742,7 @@ float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
         if(_waitToStart(startTime,true,10000)) {
             Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-           gamma=feasibleFlowAlgorithm(iterations,period);
+           gamma=feasibleFlowAlgorithm(iterations,period,load);
         }
     }
     else
@@ -754,28 +754,28 @@ float OAgent::nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period) {
     return gamma;
 }
 //esta función devolvera el valor de -1 si ha fallado y de 0 si se ha ejecutado correctament
-float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period) {
+float OAgent::feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period, float load ) {
     srand(analogRead(7));    
     float gamma = 0;
     if(isLeader())
     {
-         gamma=leaderfeasibleFlow_RSL(iterations,period);
+         gamma=leaderfeasibleFlow_RSL(iterations,period,load);
     }
     else
     {
-        gamma=nonleaderfeasibleFlow_RSL(iterations,period);
+        gamma=nonleaderfeasibleFlow_RSL(iterations,period,load);
     }
     return gamma;
 }
-float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,uint8_t round
+float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period, float load ) //,uint8_t round
 {  
 
     OLocalVertex * s = _G->getLocalVertex();                                                    // store pointer to local vertex
-    ORemoteVertex * n = _G->getRemoteVertex(1);        // ???porque a 1??                                        // store pointer to remote vertices
+    ORemoteVertex * n = _G->getRemoteVertex(1);                                               // store pointer to remote vertices
     LinkedList * l = _G->getLinkedList();
-   // l->resetLinkedListStatus(s->getStatusP());
-    //l->updateLinkedList(s->getStatusP());
-    //uint8_t * neighborStatusP = s->getStatusP();
+    //l->resetLinkedListStatus(s->getStatusP());
+   // l->updateLinkedList(s->getStatusP());
+   // uint8_t * neighborStatusP = s->getStatusP();
 
 
     ORemoteVertex * neighborP;   
@@ -798,18 +798,18 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
   //inicializamos flujos y generación 
 
    l->setInitialActiveFlows(nodeID,n);      //inicialize the values of flows with neighbors   
-   //gi=_getInitialGen(s);
+  
 
-   gi= 0.5*(s->getMax()+ s->getMin()); // inicialize the generation 
+   gi=0.5*(s->getMax()+ s->getMin());// calculamos generacion inicial
    s->setGi(gi);                                           
 
+   s->setActiveDemand(load);
    float Pd = s->getActiveDemand(); 
 
    //calculamos el balance inicial 
 
    bpinicial = gi - Pd - l->addActiveInitialFlows(nodeID,n);    
 
-   bpinicial = bpinicial/wi;                                              // active balance
 
    s->setActiveBalance(bpinicial);
    // acontinuación debemos extraer la igualar fij[] los valores iniciales de los flujos, para ello debemos conocer los ID de los vecinos
@@ -876,6 +876,7 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
                     else
                     {
                          gi = s->getGi()-0.5*s->getActiveBalance()/wi;
+
                         if(gi > s->getMax()){ 
                             gi=s->getMax();
                          }else if(gi < s->getMin()){
@@ -883,7 +884,7 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
                          }
                         s->setGi(gi);
 
-                        neighbor_fp = (neighborP->getActiveFlow()-0.5*bj +0.5*bp);
+                        neighbor_fp = (neighborP->getActiveFlow()-0.5*bj +0.5*bp/wi);
 
                         if (neighbor_fp > (neighborP)->getActiveFlowMax())
                         {
@@ -899,8 +900,6 @@ float  OAgent::feasibleFlowAlgorithm( uint8_t iterations, uint16_t period) //,ui
                         if(k==(wi-1))
                         {
                            float bp = s->getGi() - Pd - l->addActiveInitialFlows(nodeID,n);    
-
-                           bp = bp/wi;                                              // active balance
 
                            s->setActiveBalance(bp);
                         }

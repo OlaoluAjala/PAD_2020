@@ -125,10 +125,10 @@ class OAgent {
         bool standardEconomicDispatchAlgorithm(bool genBus, float alpha, uint16_t iterations);
         bool acceleratedEconomicDispatchAlgorithm(bool genBus, float alpha, uint16_t iterations);
         /////////////7  
-        float leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
-        float nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period);
-        float feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period);
-        float feasibleFlowAlgorithm( uint8_t iterations, uint16_t period);
+        float leaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period, float load);
+        float nonleaderfeasibleFlow_RSL(uint8_t iterations, uint16_t period,  float load);
+        float feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period, float load);
+        float feasibleFlowAlgorithm( uint8_t iterations, uint16_t period,  float load);
        
 
         ////////////////
