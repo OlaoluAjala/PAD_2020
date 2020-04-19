@@ -5092,7 +5092,6 @@ void OAgent::_unicastPacket_C(uint16_t recipientID, float fP_c, float fQ_c, floa
     #endif
 }
 
-
 void OAgent::_sendToChild(uint16_t recipientID, float fP, float fQ, float Lambda, float gfP, float gfQ, float gLambda, bool flag) {
     uint8_t payload[35];
     uint32_t fp;
