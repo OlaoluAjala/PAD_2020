@@ -340,7 +340,7 @@ float LinkedList::addReactiveFlows(uint8_t i, ORemoteVertex *n) {
 }
 
 ////////////////////////////
-void LinkedList::setInitialActiveFlows(uint8_t i, ORemoteVertex *n) {
+void LinkedList::setInitialActiveFlows(ORemoteVertex *n) {
 //a esta funcion debemos pasarle la direccion del nnodo donde queremos que se realice el valance y un objeto de tipo ORemoteVertex
 
     node *tmp; //creamos un puntero a una estructura de tipo nodo 

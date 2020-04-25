@@ -723,7 +723,7 @@ class LinkedList {
 
         float addActiveFlows(uint8_t i, ORemoteVertex *n);
         ///////////
-        void setInitialActiveFlows(uint8_t i, ORemoteVertex *n);
+        void setInitialActiveFlows( ORemoteVertex *n);
         float addActiveInitialFlows(uint8_t i, ORemoteVertex *n);
         
         ///////////////

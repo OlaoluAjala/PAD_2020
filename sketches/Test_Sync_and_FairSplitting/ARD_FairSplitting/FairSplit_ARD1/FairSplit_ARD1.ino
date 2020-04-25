@@ -7,14 +7,14 @@
 
 long base = 1e4;  // not using floating points so need a base number
 float tCmd;
-float bi;
+float gi;
 uint8_t i=1;//number of inneighbors
 
 //Create objects needed for communication and control
 XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415786E1,9,3,1,0,0,i,base);    //sets up parameters for local vertex
+OLocalVertex s = OLocalVertex(0x415786E1,9,1,3,0,0,i,base);    //sets up parameters for local vertex
 // OLocalVertex s = OLocalVertex(0x415786E1,0,0.225*D_base
 //OLocalVertex(XBeeAddress64 a, uint8_t nodeID, float min, float max, float alpha, float beta, uint8_t Dout, long base);2.1667*base,0.1667*base,5,D_base,9);
 LinkedList l = LinkedList();
@@ -32,12 +32,11 @@ void setup()
 {
   Serial.println("start sync");
   Serial.begin(38400);
-  Serial3.begin(38400);
   pinMode(13, OUTPUT);
   pinMode(sPin, OUTPUT);
   pinMode(errorPin,OUTPUT);
   pinMode(49,OUTPUT);
-  xbee.setSerial(Serial3);
+  xbee.setSerial(Serial);
 
   g.addInNeighbor(0x415786D3,10,0,0,3,0);   // node 10
   //bool addInNeighbor(XBeeAddress64 a, uint8_t neighborID, float r, float x,float fpmax, float fpmin);
@@ -108,16 +107,16 @@ void loop()
       tCmd = a.fairSplitRatioConsensus_RSL(50, 1, 30, 200);
 
       //feasibleFlowAlgorithm_RSL( uint8_t iterations, uint16_t period)
-      bi = a.feasibleFlowAlgorithm_RSL(30, 200);
+      gi = a.feasibleFlowAlgorithm_RSL(30, 200,0);
       
 
-      Serial.print();
+   
       Serial.print("The value of the RC algorithm is: ");
       Serial.println(tCmd);
 
-      Serial.print();
+  
       Serial.print("The value of the feasible flow algorithm is: ");
-      Serial.println(bi);
+      Serial.println(gi);
 
       int bbbb = Serial.read();
 
@@ -129,12 +128,12 @@ void loop()
     }
   }
 }
-
-}
-
+/*
 void loop() {
   Serial.print("Leader time is ");
   unsigned long LeaderT = millis();
   Serial.println(LeaderT);
   delay(3000);
 }
+
+*/
