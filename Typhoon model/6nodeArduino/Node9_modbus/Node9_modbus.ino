@@ -31,6 +31,8 @@ boolean de = false;
 //AFE and controller variables
 float f_error0;         // variable to store the read value 
 float v_error0;         // variable to store the read value
+float flow_flag0;         // variable to store the read value 
+float q_level0;         // variable to store the read value 
 float f_error1;         // ratio consensus result for average frequency error
 
 float error = 0;
@@ -82,12 +84,15 @@ void setup()  {
   //g.addInNeighbor(0x4151C6AB,6,0,0); // node 6
   //g.addInNeighbor(0x4151C6CB,7,0,0); // node 7
   //g.addInNeighbor(0x4151C6AC,8,0,0); // node 8
+  
   //g.addInNeighbor(0x415786E1,9,0,0); // node 9
   g.addInNeighbor(0x415786D3,10,0,0); // node 10
   g.addInNeighbor(0x415DB670,11,0,0); // node 11
+  
   //g.addInNeighbor(0x415786A9,12,0,0); // node 12
   //g.addInNeighbor(0x4157847B,13,0,0); // node 13
   //g.addInNeighbor(0x415DB664,14,0,0); // node 14
+  
   //g.addInNeighbor(0x415DB673,15,0,0); // node 15
   //g.addInNeighbor(0x415DB684,19,0,0); // node 19
   //g.addInNeighbor(0x41516F0B,20,0,0); // node 20

@@ -32,6 +32,8 @@ boolean de = false;
 float f_error0;         // variable to store the read value 
 float v_error0;         // variable to store the read value
 float f_error1;         // ratio consensus result for average frequency error
+float q_level0;         // variable to store the read value 
+float f_error1;         // ratio consensus result for average frequency error
 
 float deltaQ;
 
@@ -88,6 +90,7 @@ void setup()  {
   g.addInNeighbor(0x415786E1,9,0,0); // node 9
   //g.addInNeighbor(0x415786D3,10,0,0); // node 10
   g.addInNeighbor(0x415DB670,11,0,0); // node 11
+  
   //g.addInNeighbor(0x415786A9,12,0,0); // node 12
   //g.addInNeighbor(0x4157847B,13,0,0); // node 13
   //g.addInNeighbor(0x415DB664,14,0,0); // node 14
@@ -168,23 +171,33 @@ void loop() {
       receiveTyphoonData();
       int f_error =  Mb.MbData[0]*((-2*Mb.MbData[1])+1);
       int v_error  = Mb.MbData[2]*((-2*Mb.MbData[3])+1);
+      int flow_flag  = Mb.MbData[4]*((-2*Mb.MbData[5])+1);
+      int q_level  = Mb.MbData[6]*((-2*Mb.MbData[7])+1);
+      
       f_error0 =  float(f_error);
       v_error0 =  float(v_error);
+      flow_flag0 =  float(flow_flag);
+      q_level0 =  float(q_level);
+      
       f_error0 =  f_error0/base;
       v_error0 =  v_error0/base;
+      flow_flag0 =  flow_flag0/base;
+      q_level0 =  q_level0/base;
       
       Serial.print("f error: ");
       Serial.println(float(f_error0),4);
-      Serial.print("D: ");
-      Serial.println(D,4);
+//      Serial.print("D: ");
+//      Serial.println(D,4);
       Serial.print("v error: ");
       Serial.println(float(v_error0),4);
+      Serial.print("flow flag: ");
+      Serial.println(float(flow_flag0),4);
+      Serial.print("Q level: ");
+      Serial.println(float(q_level0),4);
       delay(100);
 
-      float q=0.3;
-      float p=0.4;
-      deltaQ = a.voltageControl(1,v_error,5,0.5,0.4,0.707,-0.707,-0.224693,1/6,20,200);
-//voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alphaVC,iterations,period ) 
+      deltaQ = a.voltageControl(1,v_error,5,0.5,q_level,0.707,-0.707,-0.224693,1/3,20,200);
+//voltageControl(Vref,deltaV,secPercentage,p,q_level0,qtop,qbottom,D,alphaVC,iterations,period ) 
       
       Serial.println("delta q required");
       Serial.println(deltaQ,4);
@@ -216,7 +229,6 @@ void loop() {
         Mb.MbData[0]=0;
       }
       Mb.MbData[1]=base*abs(u_f);
-
 
       // voltage controller code
 //      if(abs(v_error0) > eps_v)
@@ -272,6 +284,6 @@ void sendConsensusResults()
 void receiveTyphoonData()
 {
   int node10_ip = 70; //part of ip address for node 10 on the HIL side 
-  Mb.Req(MB_FC_READ_INPUT_REGISTER,0,4,0,node10_ip); //(MB_FC FC, word Ref, word Count, word Pos, int nodeip)
+  Mb.Req(MB_FC_READ_INPUT_REGISTER,0,8,0,node10_ip); //(MB_FC FC, word Ref, word Count, word Pos, int nodeip)
   Mb.MbmRun();
 }
