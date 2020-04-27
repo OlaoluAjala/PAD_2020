@@ -186,8 +186,6 @@ void loop() {
       
       Serial.print("f error: ");
       Serial.println(float(f_error0),4);
-//      Serial.print("D: ");
-//      Serial.println(D,4);
       Serial.print("v error: ");
       Serial.println(float(v_error0),4);
       Serial.print("flow flag: ");
