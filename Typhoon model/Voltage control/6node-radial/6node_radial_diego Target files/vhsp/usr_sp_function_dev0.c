@@ -1,0 +1,6230 @@
+// generated using template: cop_main.template---------------------------------------------
+/******************************************************************************************
+**
+**  Module Name: cop_main.c
+**  NOTE: Automatically generated file. DO NOT MODIFY!
+**  Description:
+**            Main file
+**
+******************************************************************************************/
+// generated using template: arm/custom_include.template-----------------------------------
+
+#include "math.h"
+
+// x86 libraries:
+#include "../include/sp_functions_dev0.h"
+
+// H files from Advanced C Function components
+//#include "example_dll.h"
+
+// Header files from additional sources (Advanced C Function)
+// ----------------------------------------------------------------------------------------
+// generated using template: VirtualHIL/custom_defines.template----------------------------
+
+typedef unsigned char X_UnInt8;
+typedef char X_Int8;
+typedef signed short X_Int16;
+typedef unsigned short X_UnInt16;
+typedef int X_Int32;
+typedef unsigned int X_UnInt32;
+typedef unsigned int uint;
+typedef double real;
+
+// ----------------------------------------------------------------------------------------
+// generated using template: custom_consts.template----------------------------------------
+
+// arithmetic constants
+#define C_SQRT_2                    1.4142135623730950488016887242097f
+#define C_SQRT_3                    1.7320508075688772935274463415059f
+#define C_PI                        3.1415926535897932384626433832795f
+#define C_E                         2.7182818284590452353602874713527f
+#define C_2PI                       6.283185307179586476925286766559f
+
+//@cmp.def.start
+//component defines
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define SQRT_2OVER3 0.8164965809277260327324280249019f
+#define SQRT3_OVER_2 0.8660254037844386467637231707529f
+#define ONE_DIV_BY_SQRT_3 0.57735026918962576450914878f
+
+
+#define SQRT_2OVER3 0.8164965809277260327324280249019f
+#define SQRT3_OVER_2 0.8660254037844386467637231707529f
+#define ONE_DIV_BY_SQRT_3 0.57735026918962576450914878f
+
+
+#define SQRT_2OVER3 0.8164965809277260327324280249019f
+#define SQRT3_OVER_2 0.8660254037844386467637231707529f
+#define ONE_DIV_BY_SQRT_3 0.57735026918962576450914878f
+
+
+#define SQRT_2OVER3 0.8164965809277260327324280249019f
+#define SQRT3_OVER_2 0.8660254037844386467637231707529f
+#define ONE_DIV_BY_SQRT_3 0.57735026918962576450914878f
+
+
+#define SQRT_2OVER3 0.8164965809277260327324280249019f
+#define SQRT3_OVER_2 0.8660254037844386467637231707529f
+#define ONE_DIV_BY_SQRT_3 0.57735026918962576450914878f
+
+
+#define SQRT_2OVER3 0.8164965809277260327324280249019f
+#define SQRT3_OVER_2 0.8660254037844386467637231707529f
+#define ONE_DIV_BY_SQRT_3 0.57735026918962576450914878f
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//@cmp.def.end
+
+
+//-----------------------------------------------------------------------------------------
+// generated using template: common_variables.template-------------------------------------
+// true global variables
+
+
+//@cmp.var.start
+// variables
+double _clock1__out;
+X_UnInt32 _constant1__out = 0;
+double _constant6__out = 10000.0;
+double _constant7__out = 0.0;
+double _constant8__out = 0.0;
+double _constant9__out = 0.0;
+X_UnInt32 _grid_forming_inverter__averaged__connect_g1__out;
+double _grid_forming_inverter__averaged__constant1__out = 900.0;
+double _grid_forming_inverter__averaged__controller_constant1__out = 0.0;
+double _grid_forming_inverter__averaged__controller_frequency_droop_constant4__out = 376.99111843077515;
+double _grid_forming_inverter__averaged__controller_frequency_droop_constant5__out = 0.8841941282883075;
+double _grid_forming_inverter__averaged__controller_frequency_droop_constant6__out = 0.13;
+double _grid_forming_inverter__averaged__controller_integrator1__out;
+double _grid_forming_inverter__averaged__controller_integrator2__out;
+double _grid_forming_inverter__averaged__controller_integrator3__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out = 0.001;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_one__out = 0.001;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_o_ref__out = 0.0;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out = 0.001;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_one__out = 0.001;
+double _grid_forming_inverter__averaged__controller_voltage_droop_constant4__out = 1.0;
+double _grid_forming_inverter__averaged__ea1_va1__out;
+double _grid_forming_inverter__averaged__eb1_va1__out;
+double _grid_forming_inverter__averaged__ec1_va1__out;
+double _grid_forming_inverter__averaged__ia1_ia1__out;
+double _grid_forming_inverter__averaged__ib1_ia1__out;
+double _grid_forming_inverter__averaged__ic1_ia1__out;
+double _grid_forming_inverter__averaged__va2_va1__out;
+double _grid_forming_inverter__averaged__vb2_va1__out;
+double _grid_forming_inverter__averaged__vc2_va1__out;
+double _grid_forming_inverter__averaged__xi_a1_ia1__out;
+double _grid_forming_inverter__averaged__xi_b1_ia1__out;
+double _grid_forming_inverter__averaged__xi_c1_ia1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__out;
+X_UnInt32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__connect_g2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant10__out = 10.0;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant11__out = 306.3278474454356;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant13__out = 0.1;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant3__out = 0.0008841941282883074;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant4__out = 0.0001;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant6__out = 0.001;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant7__out = 0.001;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant9__out = 0.05;
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__out;
+double _grid_forming_inverter__averaged_2_constant1__out = 900.0;
+double _grid_forming_inverter__averaged_2_controller_constant1__out = 0.0;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_constant4__out = 376.99111843077515;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_constant5__out = 0.8841941282883075;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_constant6__out = 0.13;
+double _grid_forming_inverter__averaged_2_controller_integrator1__out;
+double _grid_forming_inverter__averaged_2_controller_integrator2__out;
+double _grid_forming_inverter__averaged_2_controller_integrator3__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out = 0.001;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_one__out = 0.001;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_o_ref__out = 0.0;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out = 0.001;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_one__out = 0.001;
+double _grid_forming_inverter__averaged_2_controller_voltage_droop_constant4__out = 1.0;
+double _grid_forming_inverter__averaged_2_ea1_va1__out;
+double _grid_forming_inverter__averaged_2_eb1_va1__out;
+double _grid_forming_inverter__averaged_2_ec1_va1__out;
+double _grid_forming_inverter__averaged_2_ia1_ia1__out;
+double _grid_forming_inverter__averaged_2_ib1_ia1__out;
+double _grid_forming_inverter__averaged_2_ic1_ia1__out;
+double _grid_forming_inverter__averaged_2_va2_va1__out;
+double _grid_forming_inverter__averaged_2_vag_va1__out;
+double _grid_forming_inverter__averaged_2_vb2_va1__out;
+double _grid_forming_inverter__averaged_2_vbg_va1__out;
+double _grid_forming_inverter__averaged_2_vc2_va1__out;
+double _grid_forming_inverter__averaged_2_vcg_va1__out;
+double _grid_forming_inverter__averaged_2_xi_a1_ia1__out;
+double _grid_forming_inverter__averaged_2_xi_b1_ia1__out;
+double _grid_forming_inverter__averaged_2_xi_c1_ia1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__out;
+X_UnInt32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__connect_g3__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant10__out = 40.0;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant11__out = 306.3278474454356;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant13__out = 0.1;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant3__out = 0.0008841941282883074;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant4__out = 0.0001;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant6__out = 0.001;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant7__out = 0.001;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant9__out = 0.05;
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__out;
+double _grid_forming_inverter__averaged_3_constant1__out = 900.0;
+double _grid_forming_inverter__averaged_3_controller_constant1__out = 0.0;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_constant4__out = 376.99111843077515;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_constant5__out = 0.8841941282883075;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_constant6__out = 0.13;
+double _grid_forming_inverter__averaged_3_controller_integrator1__out;
+double _grid_forming_inverter__averaged_3_controller_integrator2__out;
+double _grid_forming_inverter__averaged_3_controller_integrator3__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out = 0.001;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_one__out = 0.001;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_o_ref__out = 0.0;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out = 0.001;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_one__out = 0.001;
+double _grid_forming_inverter__averaged_3_controller_voltage_droop_constant4__out = 1.0;
+double _grid_forming_inverter__averaged_3_ea1_va1__out;
+double _grid_forming_inverter__averaged_3_eb1_va1__out;
+double _grid_forming_inverter__averaged_3_ec1_va1__out;
+double _grid_forming_inverter__averaged_3_ia1_ia1__out;
+double _grid_forming_inverter__averaged_3_ib1_ia1__out;
+double _grid_forming_inverter__averaged_3_ic1_ia1__out;
+double _grid_forming_inverter__averaged_3_va2_va1__out;
+double _grid_forming_inverter__averaged_3_vag_va1__out;
+double _grid_forming_inverter__averaged_3_vb2_va1__out;
+double _grid_forming_inverter__averaged_3_vbg_va1__out;
+double _grid_forming_inverter__averaged_3_vc2_va1__out;
+double _grid_forming_inverter__averaged_3_vcg_va1__out;
+double _grid_forming_inverter__averaged_3_xi_a1_ia1__out;
+double _grid_forming_inverter__averaged_3_xi_b1_ia1__out;
+double _grid_forming_inverter__averaged_3_xi_c1_ia1__out;
+double _l4_constant_power_l4_cpu_tr3_output__out;
+double _l4_constant_power_l4_cpu_tr4_output__out;
+double _l4_constant1__out = 0.0;
+double _l4_load_4__time;
+double _l4_load_4__var;
+double _l4_load_4__time2;
+
+
+double _l4_load_4__out;
+X_UnInt32 _l4_load_4__status;
+double _l5_constant_power_l5_cpu_tr3_output__out;
+double _l5_constant_power_l5_cpu_tr4_output__out;
+double _l5_constant1__out = 0.0;
+double _l5_load_5__time;
+double _l5_load_5__var;
+double _l5_load_5__time2;
+
+
+double _l5_load_5__out;
+X_UnInt32 _l5_load_5__status;
+double _l6_constant_power_l6_cpu_tr3_output__out;
+double _l6_constant_power_l6_cpu_tr4_output__out;
+double _l6_constant1__out = 0.0;
+double _l6_load_6__time;
+double _l6_load_6__var;
+double _l6_load_6__time2;
+
+
+double _l6_load_6__out;
+X_UnInt32 _l6_load_6__status;
+double _modbus1_c_u11__out = 1.0;
+double _modbus1_c_u12__out = 1.0;
+double _modbus1_c_u13__out = 50.0;
+double _modbus1_constant1__out = 10000.0;
+double _modbus1_constant2__out = 0.0001;
+double _modbus1_constant3__out = 10000.0;
+double _modbus1_constant4__out = 0.0001;
+double _modbus1_constant5__out = 10000.0;
+double _modbus1_constant6__out = 10000.0;
+double _modbus1_modbus_device2__config1__comp_coil_out__out;
+double _modbus1_modbus_device2__config1__comp_holding_out__out[4];
+double _modbus2_c_u11__out = 1.0;
+double _modbus2_c_u12__out = 1.0;
+double _modbus2_c_u13__out = 50.0;
+double _modbus2_constant1__out = 10000.0;
+double _modbus2_constant2__out = 0.0001;
+double _modbus2_constant3__out = 10000.0;
+double _modbus2_constant4__out = 0.0001;
+double _modbus2_constant5__out = 10000.0;
+double _modbus2_constant6__out = 10000.0;
+double _modbus2_modbus_device2__config2__comp_coil_out__out;
+double _modbus2_modbus_device2__config2__comp_holding_out__out[4];
+double _modbus3_c_u11__out = 1.0;
+double _modbus3_c_u12__out = 1.0;
+double _modbus3_c_u13__out = 50.0;
+double _modbus3_constant1__out = 10000.0;
+double _modbus3_constant2__out = 0.0001;
+double _modbus3_constant3__out = 10000.0;
+double _modbus3_constant4__out = 0.0001;
+double _modbus3_constant5__out = 10000.0;
+double _modbus3_constant6__out = 10000.0;
+double _modbus3_modbus_device3__config3__comp_coil_out__out;
+double _modbus3_modbus_device3__config3__comp_holding_out__out[4];
+double _measurement1_three_phase_meter1_ia_ia1__out;
+double _measurement1_three_phase_meter1_ib_ia1__out;
+double _measurement1_three_phase_meter1_ic_ia1__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__out;
+double _measurement1_three_phase_meter1_van_va1__out;
+double _measurement1_three_phase_meter1_vbn_va1__out;
+double _measurement1_three_phase_meter1_vcn_va1__out;
+double _measurement2_three_phase_meter2_ia_ia1__out;
+double _measurement2_three_phase_meter2_ib_ia1__out;
+double _measurement2_three_phase_meter2_ic_ia1__out;
+double _measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__out;
+double _measurement2_three_phase_meter2_van_va1__out;
+double _measurement2_three_phase_meter2_vbn_va1__out;
+double _measurement2_three_phase_meter2_vcn_va1__out;
+double _measurement3_three_phase_meter3_ia_ia1__out;
+double _measurement3_three_phase_meter3_ib_ia1__out;
+double _measurement3_three_phase_meter3_ic_ia1__out;
+double _measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__out;
+double _measurement3_three_phase_meter3_van_va1__out;
+double _measurement3_three_phase_meter3_vbn_va1__out;
+double _measurement3_three_phase_meter3_vcn_va1__out;
+double _measurement4_three_phase_meter4_ia_ia1__out;
+double _measurement4_three_phase_meter4_ib_ia1__out;
+double _measurement4_three_phase_meter4_ic_ia1__out;
+double _measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__out;
+double _measurement4_three_phase_meter4_van_va1__out;
+double _measurement4_three_phase_meter4_vbn_va1__out;
+double _measurement4_three_phase_meter4_vcn_va1__out;
+double _measurement5_three_phase_meter5_ia_ia1__out;
+double _measurement5_three_phase_meter5_ib_ia1__out;
+double _measurement5_three_phase_meter5_ic_ia1__out;
+double _measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__out;
+double _measurement5_three_phase_meter5_van_va1__out;
+double _measurement5_three_phase_meter5_vbn_va1__out;
+double _measurement5_three_phase_meter5_vcn_va1__out;
+double _measurement6_three_phase_meter6_ia_ia1__out;
+double _measurement6_three_phase_meter6_ib_ia1__out;
+double _measurement6_three_phase_meter6_ic_ia1__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__out;
+double _measurement6_three_phase_meter6_van_va1__out;
+double _measurement6_three_phase_meter6_vbn_va1__out;
+double _measurement6_three_phase_meter6_vcn_va1__out;
+X_UnInt32 _grid_forming_inverter__averaged__logical_operator2__out;
+X_UnInt32 _grid_forming_inverter__averaged__product2__out;
+float _grid_forming_inverter__averaged__gridconnect1__tmp;
+double _grid_forming_inverter__averaged__gain1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator5__out;
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_gain4__out;
+double _grid_forming_inverter__averaged_2_controller_voltage_droop_gain4__out;
+double _grid_forming_inverter__averaged_2_gain1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator5__out;
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_gain4__out;
+double _grid_forming_inverter__averaged_3_controller_voltage_droop_gain4__out;
+double _grid_forming_inverter__averaged_3_gain1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__gamma;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__gamma;
+X_UnInt32 _l4_logical_operator2__out;
+float _l4_gridconnect4__tmp;
+X_UnInt32 _l5_logical_operator2__out;
+float _l5_gridconnect5__tmp;
+X_UnInt32 _l6_logical_operator2__out;
+float _l6_gridconnect6__tmp;
+double _modbus1_product5__out;
+double _modbus1_bus_split1__out;
+double _modbus1_bus_split1__out1;
+double _modbus1_bus_split1__out2;
+double _modbus1_bus_split1__out3;
+double _modbus2_product5__out;
+double _modbus2_bus_split1__out;
+double _modbus2_bus_split1__out1;
+double _modbus2_bus_split1__out2;
+double _modbus2_bus_split1__out3;
+double _modbus3_product5__out;
+double _modbus3_bus_split1__out;
+double _modbus3_bus_split1__out1;
+double _modbus3_bus_split1__out2;
+double _modbus3_bus_split1__out3;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _measurement1_three_phase_meter1_power_meter__Pdc;
+double _measurement1_three_phase_meter1_power_meter__Qdc;
+double _measurement1_three_phase_meter1_power_meter__P0dc;
+double _measurement1_three_phase_meter1_power_meter__Pac;
+double _measurement1_three_phase_meter1_power_meter__Qac;
+double _measurement1_three_phase_meter1_power_meter__P0ac;
+double _measurement1_three_phase_meter1_power_meter__apparent;
+double _measurement1_three_phase_meter1_power_meter__k_factor;
+double _measurement1_three_phase_meter1_power_meter__v_alpha;
+double _measurement1_three_phase_meter1_power_meter__v_beta;
+double _measurement1_three_phase_meter1_power_meter__i_alpha;
+double _measurement1_three_phase_meter1_power_meter__i_beta;
+double _measurement1_three_phase_meter1_power_meter__v_zero;
+double _measurement1_three_phase_meter1_power_meter__i_zero;
+double _measurement1_three_phase_meter1_power_meter__filter_1_output;
+double _measurement1_three_phase_meter1_power_meter__filter_1_outputQ;
+double _measurement1_three_phase_meter1_power_meter__filter_1_outputP0;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _measurement2_three_phase_meter2_power_meter__Pdc;
+double _measurement2_three_phase_meter2_power_meter__Qdc;
+double _measurement2_three_phase_meter2_power_meter__P0dc;
+double _measurement2_three_phase_meter2_power_meter__Pac;
+double _measurement2_three_phase_meter2_power_meter__Qac;
+double _measurement2_three_phase_meter2_power_meter__P0ac;
+double _measurement2_three_phase_meter2_power_meter__apparent;
+double _measurement2_three_phase_meter2_power_meter__k_factor;
+double _measurement2_three_phase_meter2_power_meter__v_alpha;
+double _measurement2_three_phase_meter2_power_meter__v_beta;
+double _measurement2_three_phase_meter2_power_meter__i_alpha;
+double _measurement2_three_phase_meter2_power_meter__i_beta;
+double _measurement2_three_phase_meter2_power_meter__v_zero;
+double _measurement2_three_phase_meter2_power_meter__i_zero;
+double _measurement2_three_phase_meter2_power_meter__filter_1_output;
+double _measurement2_three_phase_meter2_power_meter__filter_1_outputQ;
+double _measurement2_three_phase_meter2_power_meter__filter_1_outputP0;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _measurement3_three_phase_meter3_power_meter__Pdc;
+double _measurement3_three_phase_meter3_power_meter__Qdc;
+double _measurement3_three_phase_meter3_power_meter__P0dc;
+double _measurement3_three_phase_meter3_power_meter__Pac;
+double _measurement3_three_phase_meter3_power_meter__Qac;
+double _measurement3_three_phase_meter3_power_meter__P0ac;
+double _measurement3_three_phase_meter3_power_meter__apparent;
+double _measurement3_three_phase_meter3_power_meter__k_factor;
+double _measurement3_three_phase_meter3_power_meter__v_alpha;
+double _measurement3_three_phase_meter3_power_meter__v_beta;
+double _measurement3_three_phase_meter3_power_meter__i_alpha;
+double _measurement3_three_phase_meter3_power_meter__i_beta;
+double _measurement3_three_phase_meter3_power_meter__v_zero;
+double _measurement3_three_phase_meter3_power_meter__i_zero;
+double _measurement3_three_phase_meter3_power_meter__filter_1_output;
+double _measurement3_three_phase_meter3_power_meter__filter_1_outputQ;
+double _measurement3_three_phase_meter3_power_meter__filter_1_outputP0;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _measurement4_three_phase_meter4_power_meter__Pdc;
+double _measurement4_three_phase_meter4_power_meter__Qdc;
+double _measurement4_three_phase_meter4_power_meter__P0dc;
+double _measurement4_three_phase_meter4_power_meter__Pac;
+double _measurement4_three_phase_meter4_power_meter__Qac;
+double _measurement4_three_phase_meter4_power_meter__P0ac;
+double _measurement4_three_phase_meter4_power_meter__apparent;
+double _measurement4_three_phase_meter4_power_meter__k_factor;
+double _measurement4_three_phase_meter4_power_meter__v_alpha;
+double _measurement4_three_phase_meter4_power_meter__v_beta;
+double _measurement4_three_phase_meter4_power_meter__i_alpha;
+double _measurement4_three_phase_meter4_power_meter__i_beta;
+double _measurement4_three_phase_meter4_power_meter__v_zero;
+double _measurement4_three_phase_meter4_power_meter__i_zero;
+double _measurement4_three_phase_meter4_power_meter__filter_1_output;
+double _measurement4_three_phase_meter4_power_meter__filter_1_outputQ;
+double _measurement4_three_phase_meter4_power_meter__filter_1_outputP0;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _measurement5_three_phase_meter5_power_meter__Pdc;
+double _measurement5_three_phase_meter5_power_meter__Qdc;
+double _measurement5_three_phase_meter5_power_meter__P0dc;
+double _measurement5_three_phase_meter5_power_meter__Pac;
+double _measurement5_three_phase_meter5_power_meter__Qac;
+double _measurement5_three_phase_meter5_power_meter__P0ac;
+double _measurement5_three_phase_meter5_power_meter__apparent;
+double _measurement5_three_phase_meter5_power_meter__k_factor;
+double _measurement5_three_phase_meter5_power_meter__v_alpha;
+double _measurement5_three_phase_meter5_power_meter__v_beta;
+double _measurement5_three_phase_meter5_power_meter__i_alpha;
+double _measurement5_three_phase_meter5_power_meter__i_beta;
+double _measurement5_three_phase_meter5_power_meter__v_zero;
+double _measurement5_three_phase_meter5_power_meter__i_zero;
+double _measurement5_three_phase_meter5_power_meter__filter_1_output;
+double _measurement5_three_phase_meter5_power_meter__filter_1_outputQ;
+double _measurement5_three_phase_meter5_power_meter__filter_1_outputP0;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma;
+double _measurement6_three_phase_meter6_power_meter__Pdc;
+double _measurement6_three_phase_meter6_power_meter__Qdc;
+double _measurement6_three_phase_meter6_power_meter__P0dc;
+double _measurement6_three_phase_meter6_power_meter__Pac;
+double _measurement6_three_phase_meter6_power_meter__Qac;
+double _measurement6_three_phase_meter6_power_meter__P0ac;
+double _measurement6_three_phase_meter6_power_meter__apparent;
+double _measurement6_three_phase_meter6_power_meter__k_factor;
+double _measurement6_three_phase_meter6_power_meter__v_alpha;
+double _measurement6_three_phase_meter6_power_meter__v_beta;
+double _measurement6_three_phase_meter6_power_meter__i_alpha;
+double _measurement6_three_phase_meter6_power_meter__i_beta;
+double _measurement6_three_phase_meter6_power_meter__v_zero;
+double _measurement6_three_phase_meter6_power_meter__i_zero;
+double _measurement6_three_phase_meter6_power_meter__filter_1_output;
+double _measurement6_three_phase_meter6_power_meter__filter_1_outputQ;
+double _measurement6_three_phase_meter6_power_meter__filter_1_outputP0;
+float _grid_forming_inverter__averaged__griddisconnect1__tmp;
+double _grid_forming_inverter__averaged__controller_frequency_droop_signal_switch1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2;
+float _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__digital_probe1__tmp;
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator2__out;
+X_UnInt32 _grid_forming_inverter__averaged_2_product2__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2;
+float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe1__tmp;
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator2__out;
+X_UnInt32 _grid_forming_inverter__averaged_3_product2__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1;
+double _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2;
+float _l4_griddisconnect4__tmp;
+float _l5_griddisconnect5__tmp;
+float _l6_griddisconnect6__tmp;
+X_Int32 _modbus1_c_function5__in;
+
+
+X_Int32 _modbus1_c_function5__out;
+X_Int32 _modbus1_c_function5__sign;
+double _modbus1_c_function2__in;
+double _modbus1_c_function2__sign;
+
+
+double _modbus1_c_function2__out;
+double _modbus1_c_function4__in;
+double _modbus1_c_function4__sign;
+
+
+double _modbus1_c_function4__out;
+X_Int32 _modbus2_c_function5__in;
+
+
+X_Int32 _modbus2_c_function5__out;
+X_Int32 _modbus2_c_function5__sign;
+double _modbus2_c_function2__in;
+double _modbus2_c_function2__sign;
+
+
+double _modbus2_c_function2__out;
+double _modbus2_c_function4__in;
+double _modbus2_c_function4__sign;
+
+
+double _modbus2_c_function4__out;
+X_Int32 _modbus3_c_function5__in;
+
+
+X_Int32 _modbus3_c_function5__out;
+X_Int32 _modbus3_c_function5__sign;
+double _modbus3_c_function2__in;
+double _modbus3_c_function2__sign;
+
+
+double _modbus3_c_function2__out;
+double _modbus3_c_function4__in;
+double _modbus3_c_function4__sign;
+
+
+double _modbus3_c_function4__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1;
+double _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2;
+double _measurement1_three_phase_meter1_gain1__out;
+double _measurement1_three_phase_meter1_gain2__out;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1;
+double _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2;
+double _measurement2_three_phase_meter2_gain1__out;
+double _measurement2_three_phase_meter2_gain2__out;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1;
+double _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2;
+double _measurement3_three_phase_meter3_gain1__out;
+double _measurement3_three_phase_meter3_gain2__out;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1;
+double _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2;
+double _measurement4_three_phase_meter4_gain1__out;
+double _measurement4_three_phase_meter4_gain2__out;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1;
+double _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2;
+double _measurement5_three_phase_meter5_gain1__out;
+double _measurement5_three_phase_meter5_gain2__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1;
+double _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2;
+double _measurement6_three_phase_meter6_gain1__out;
+double _measurement6_three_phase_meter6_gain2__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out;
+double _grid_forming_inverter__averaged__controller_gain5__out;
+double _grid_forming_inverter__averaged__controller_gain8__out;
+double _grid_forming_inverter__averaged__controller_gain11__out;
+double _grid_forming_inverter__averaged__controller_gain12__out;
+double _grid_forming_inverter__averaged__controller_gain10__out;
+double _grid_forming_inverter__averaged__controller_gain9__out;
+double _grid_forming_inverter__averaged__controller_gain6__out;
+double _grid_forming_inverter__averaged__controller_gain7__out;
+float _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__digital_probe6__tmp;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_signal_switch1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain7__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain8__out;
+double _grid_forming_inverter__averaged_2_controller_gain5__out;
+double _grid_forming_inverter__averaged_2_controller_gain8__out;
+double _grid_forming_inverter__averaged_2_controller_gain11__out;
+double _grid_forming_inverter__averaged_2_controller_gain12__out;
+double _grid_forming_inverter__averaged_2_controller_gain10__out;
+double _grid_forming_inverter__averaged_2_controller_gain9__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain5__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out;
+double _grid_forming_inverter__averaged_2_controller_gain6__out;
+double _grid_forming_inverter__averaged_2_controller_gain7__out;
+float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe6__tmp;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_signal_switch1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain7__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain8__out;
+double _grid_forming_inverter__averaged_3_controller_gain5__out;
+double _grid_forming_inverter__averaged_3_controller_gain8__out;
+double _grid_forming_inverter__averaged_3_controller_gain11__out;
+double _grid_forming_inverter__averaged_3_controller_gain12__out;
+double _grid_forming_inverter__averaged_3_controller_gain10__out;
+double _grid_forming_inverter__averaged_3_controller_gain9__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain5__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out;
+double _grid_forming_inverter__averaged_3_controller_gain6__out;
+double _grid_forming_inverter__averaged_3_controller_gain7__out;
+double _modbus1_product2__out;
+double _modbus1_product4__out;
+double _modbus2_product2__out;
+double _modbus2_product4__out;
+double _modbus3_product2__out;
+double _modbus3_product4__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_gain3__out;
+double _modbus1_product6__out;
+double _measurement2_three_phase_meter2_phase_locked_loop_gain3__out;
+double _modbus2_product6__out;
+double _measurement3_three_phase_meter3_phase_locked_loop_gain3__out;
+double _modbus3_product6__out;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+double _measurement5_three_phase_meter5_phase_locked_loop_gain3__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_gain3__out;
+double _grid_forming_inverter__averaged__controller_product10__out;
+double _grid_forming_inverter__averaged__controller_product111__out;
+double _grid_forming_inverter__averaged__controller_product12__out;
+double _grid_forming_inverter__averaged__controller_product13__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum10__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum11__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product2__out;
+double _grid_forming_inverter__averaged_2_controller_product10__out;
+double _grid_forming_inverter__averaged_2_controller_product111__out;
+double _grid_forming_inverter__averaged_2_controller_product12__out;
+double _grid_forming_inverter__averaged_2_controller_product13__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product3__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product4__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum10__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum11__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product2__out;
+double _grid_forming_inverter__averaged_3_controller_product10__out;
+double _grid_forming_inverter__averaged_3_controller_product111__out;
+double _grid_forming_inverter__averaged_3_controller_product12__out;
+double _grid_forming_inverter__averaged_3_controller_product13__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit2__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product3__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product4__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum10__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum11__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out;
+double _grid_forming_inverter__averaged__controller_frequency_droop_sum1__out;
+double _grid_forming_inverter__averaged__controller_voltage_droop_sum2__out;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_sum1__out;
+double _grid_forming_inverter__averaged_2_controller_voltage_droop_sum2__out;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_sum1__out;
+double _grid_forming_inverter__averaged_3_controller_voltage_droop_sum2__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out;
+X_Int32 _modbus1_c_function6__in;
+
+
+X_Int32 _modbus1_c_function6__out;
+X_Int32 _modbus1_c_function6__sign;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out;
+X_Int32 _modbus2_c_function6__in;
+
+
+X_Int32 _modbus2_c_function6__out;
+X_Int32 _modbus2_c_function6__sign;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out;
+X_Int32 _modbus3_c_function6__in;
+
+
+X_Int32 _modbus3_c_function6__out;
+X_Int32 _modbus3_c_function6__sign;
+double _measurement4_three_phase_meter4_phase_locked_loop_gain4__out;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__in;
+
+
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__out;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_gain1__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_gain1__out;
+double _grid_forming_inverter__averaged__controller_sum2__out;
+double _grid_forming_inverter__averaged__controller_sum1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain3__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain4__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__trigonometric_function1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum4__out;
+double _grid_forming_inverter__averaged_2_controller_sum2__out;
+double _grid_forming_inverter__averaged_2_controller_sum1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__trigonometric_function2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain3__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__var;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum5__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain3__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain4__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__trigonometric_function1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum4__out;
+double _grid_forming_inverter__averaged_3_controller_sum2__out;
+double _grid_forming_inverter__averaged_3_controller_sum1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__trigonometric_function2__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain3__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__var;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum5__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain3__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain4__out;
+double _grid_forming_inverter__averaged__controller_frequency_droop_product1__out;
+double _modbus1_product1__out;
+double _grid_forming_inverter__averaged__controller_voltage_droop_gain3__out;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_product1__out;
+double _modbus2_product1__out;
+double _grid_forming_inverter__averaged_2_controller_voltage_droop_gain3__out;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_product1__out;
+double _modbus3_product1__out;
+double _grid_forming_inverter__averaged_3_controller_voltage_droop_gain3__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract;
+double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__fMax;
+X_Int32 _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset;
+X_Int32 _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__cycle_counter;
+double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Freq;
+
+
+double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract;
+X_Int32 _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode;
+X_Int32 _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__submode;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__x;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__floor_in;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__in;
+
+
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__out;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__out;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+double _grid_forming_inverter__averaged__controller_gain14__out;
+double _grid_forming_inverter__averaged__controller_gain17__out;
+double _grid_forming_inverter__averaged__controller_sum5__out;
+double _grid_forming_inverter__averaged__controller_gain15__out;
+double _grid_forming_inverter__averaged__controller_gain16__out;
+double _grid_forming_inverter__averaged__controller_sum4__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum8__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__x;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__floor_in;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__mathematical_function1__out;
+double _grid_forming_inverter__averaged_2_controller_gain14__out;
+double _grid_forming_inverter__averaged_2_controller_gain17__out;
+double _grid_forming_inverter__averaged_2_controller_sum5__out;
+double _grid_forming_inverter__averaged_2_controller_gain15__out;
+double _grid_forming_inverter__averaged_2_controller_gain16__out;
+double _grid_forming_inverter__averaged_2_controller_sum4__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__x;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__floor_in;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__x;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__mathematical_function2__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum8__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__x;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__floor_in;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__mathematical_function1__out;
+double _grid_forming_inverter__averaged_3_controller_gain14__out;
+double _grid_forming_inverter__averaged_3_controller_gain17__out;
+double _grid_forming_inverter__averaged_3_controller_sum5__out;
+double _grid_forming_inverter__averaged_3_controller_gain15__out;
+double _grid_forming_inverter__averaged_3_controller_gain16__out;
+double _grid_forming_inverter__averaged_3_controller_sum4__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__x;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__floor_in;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__x;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__mathematical_function2__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum8__out;
+double _grid_forming_inverter__averaged__controller_frequency_droop_sum4__out;
+X_Int32 _modbus1_c_function1__in;
+
+
+X_Int32 _modbus1_c_function1__out;
+X_Int32 _modbus1_c_function1__sign;
+double _grid_forming_inverter__averaged__controller_voltage_droop_sum3__out;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_sum5__out;
+X_Int32 _modbus2_c_function1__in;
+
+
+X_Int32 _modbus2_c_function1__out;
+X_Int32 _modbus2_c_function1__sign;
+double _grid_forming_inverter__averaged_2_controller_voltage_droop_sum4__out;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_sum5__out;
+X_Int32 _modbus3_c_function1__in;
+
+
+X_Int32 _modbus3_c_function1__out;
+X_Int32 _modbus3_c_function1__sign;
+double _grid_forming_inverter__averaged_3_controller_voltage_droop_sum4__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_gain4__out;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__var;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__in;
+
+
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__out;
+double _measurement2_three_phase_meter2_phase_locked_loop_gain4__out;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__var;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__in;
+
+
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__out;
+double _measurement3_three_phase_meter3_phase_locked_loop_gain4__out;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__var;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__in;
+
+
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__out;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum1;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum2;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum3;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__IN1;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__IN2;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__IN3;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__dFract;
+X_Int32 _measurement4_three_phase_meter4_vln_rms_calc_rms__mode;
+
+
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS1;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS2;
+double _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS3;
+double _measurement5_three_phase_meter5_phase_locked_loop_gain4__out;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__var;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__in;
+
+
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_gain4__out;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__var;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__in;
+
+
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__out;
+double _grid_forming_inverter__averaged__controller_gain13__out;
+double _grid_forming_inverter__averaged__controller_gain4__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out;
+double _grid_forming_inverter__averaged_2_controller_gain13__out;
+double _grid_forming_inverter__averaged_2_controller_gain4__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum1__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum3__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out;
+double _grid_forming_inverter__averaged_3_controller_gain13__out;
+double _grid_forming_inverter__averaged_3_controller_gain4__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum3__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out;
+double _grid_forming_inverter__averaged__controller_gain1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum7__out;
+double _grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out;
+double _grid_forming_inverter__averaged_2_controller_voltage_droop_sum3__out;
+double _grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out;
+double _grid_forming_inverter__averaged_3_controller_voltage_droop_sum3__out;
+double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract;
+double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__fMax;
+X_Int32 _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset;
+X_Int32 _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__cycle_counter;
+double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Freq;
+
+
+double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract;
+X_Int32 _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode;
+X_Int32 _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__submode;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__x;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__floor_in;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__in;
+
+
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__out;
+double _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract;
+double _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+double _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__fMax;
+X_Int32 _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset;
+X_Int32 _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__cycle_counter;
+double _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Freq;
+
+
+double _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract;
+X_Int32 _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode;
+X_Int32 _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__submode;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__x;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__floor_in;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__in;
+
+
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__out;
+double _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract;
+double _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+double _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__fMax;
+X_Int32 _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset;
+X_Int32 _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__cycle_counter;
+double _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Freq;
+
+
+double _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract;
+X_Int32 _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode;
+X_Int32 _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__submode;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__x;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__floor_in;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__in;
+
+
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__out;
+double _measurement4_three_phase_meter4_sumvln_rms__out;
+double _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract;
+double _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+double _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__fMax;
+X_Int32 _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset;
+X_Int32 _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__cycle_counter;
+double _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Freq;
+
+
+double _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract;
+X_Int32 _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode;
+X_Int32 _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__submode;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__x;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__floor_in;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__in;
+
+
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__out;
+double _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract;
+double _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+double _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__fMax;
+X_Int32 _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset;
+X_Int32 _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__cycle_counter;
+double _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Freq;
+
+
+double _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract;
+X_Int32 _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode;
+X_Int32 _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__submode;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__x;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__floor_in;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__in;
+
+
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs2__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain4__out;
+double _grid_forming_inverter__averaged_2_controller_gain1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum7__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain4__out;
+double _grid_forming_inverter__averaged_3_controller_gain1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum7__out;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum1;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum2;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum3;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__IN1;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__IN2;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__IN3;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__dFract;
+X_Int32 _measurement1_three_phase_meter1_vln_rms_calc_rms__mode;
+
+
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS1;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS2;
+double _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS3;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum1;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum2;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum3;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__IN1;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__IN2;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__IN3;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__dFract;
+X_Int32 _measurement2_three_phase_meter2_vln_rms_calc_rms__mode;
+
+
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS1;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS2;
+double _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS3;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum1;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum2;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum3;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__IN1;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__IN2;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__IN3;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__dFract;
+X_Int32 _measurement3_three_phase_meter3_vln_rms_calc_rms__mode;
+
+
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS1;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS2;
+double _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS3;
+double _measurement4_three_phase_meter4_gainvln_rms__out;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum1;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum2;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum3;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__IN1;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__IN2;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__IN3;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__dFract;
+X_Int32 _measurement5_three_phase_meter5_vln_rms_calc_rms__mode;
+
+
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS1;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS2;
+double _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS3;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum1;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum2;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum3;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__IN1;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__IN2;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__IN3;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__dFract;
+X_Int32 _measurement6_three_phase_meter6_vln_rms_calc_rms__mode;
+
+
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS1;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS2;
+double _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS3;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs4__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator4__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__var;
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__connect;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs4__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator4__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__var;
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__connect;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
+double _measurement1_three_phase_meter1_sumvln_rms__out;
+double _measurement2_three_phase_meter2_sumvln_rms__out;
+double _measurement3_three_phase_meter3_sumvln_rms__out;
+double _measurement5_three_phase_meter5_sumvln_rms__out;
+double _measurement6_three_phase_meter6_sumvln_rms__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator1__out;
+float _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__digital_probe5__tmp;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator1__out;
+float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe5__tmp;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs5__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs5__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
+double _measurement1_three_phase_meter1_gainvln_rms__out;
+double _measurement2_three_phase_meter2_gainvln_rms__out;
+double _measurement3_three_phase_meter3_gainvln_rms__out;
+double _measurement5_three_phase_meter5_gainvln_rms__out;
+double _measurement6_three_phase_meter6_gainvln_rms__out;
+float _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__digital_probe3__tmp;
+float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe3__tmp;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator2__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__var;
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__connect;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__in;
+
+
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator2__out;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__var;
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__connect;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__in;
+
+
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out;
+double _measurement1_gain1__out;
+double _measurement2_gain1__out;
+double _measurement3_gain1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int;
+float _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__digital_probe4__tmp;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out;
+float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe4__tmp;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out;
+double _measurement1_violation__V;
+
+
+double _measurement1_violation__violation;
+double _measurement2_voltage_deviation__V;
+
+
+double _measurement2_voltage_deviation__violation;
+double _measurement3_violation__V;
+
+
+double _measurement3_violation__violation;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__connect;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__in;
+
+
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__connect;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__in;
+
+
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int;
+double _modbus1_product3__out;
+double _modbus2_product3__out;
+double _modbus3_product3__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain6__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain5__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out;
+X_Int32 _modbus1_c_function3__in;
+
+
+X_Int32 _modbus1_c_function3__out;
+X_Int32 _modbus1_c_function3__sign;
+X_Int32 _modbus2_c_function3__in;
+
+
+X_Int32 _modbus2_c_function3__out;
+X_Int32 _modbus2_c_function3__sign;
+X_Int32 _modbus3_c_function3__in;
+
+
+X_Int32 _modbus3_c_function3__out;
+X_Int32 _modbus3_c_function3__sign;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain6__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain5__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain6__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain5__out;
+X_Int32 _modbus1_bus_join2__out[8];
+X_Int32 _modbus2_bus_join2__out[8];
+X_Int32 _modbus3_bus_join2__out[8];
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2;
+double _grid_forming_inverter__averaged__controller_bus_join1__out[3];
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C;
+double _grid_forming_inverter__averaged__product1__out[3];
+double _grid_forming_inverter__averaged_2_controller_bus_join1__out[3];
+double _grid_forming_inverter__averaged_3_controller_bus_join1__out[3];
+double _grid_forming_inverter__averaged__bus_split1__out;
+double _grid_forming_inverter__averaged__bus_split1__out1;
+double _grid_forming_inverter__averaged__bus_split1__out2;
+double _grid_forming_inverter__averaged_2_product1__out[3];
+double _grid_forming_inverter__averaged_3_product1__out[3];
+double _grid_forming_inverter__averaged_2_bus_split1__out;
+double _grid_forming_inverter__averaged_2_bus_split1__out1;
+double _grid_forming_inverter__averaged_2_bus_split1__out2;
+double _grid_forming_inverter__averaged_3_bus_split1__out;
+double _grid_forming_inverter__averaged_3_bus_split1__out1;
+double _grid_forming_inverter__averaged_3_bus_split1__out2;     //@cmp.var.end
+
+//@cmp.svar.start
+// state variables
+double _clock1__state;
+double _grid_forming_inverter__averaged__controller_integrator1__state;
+double _grid_forming_inverter__averaged__controller_integrator2__state;
+double _grid_forming_inverter__averaged__controller_integrator3__state;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__state;
+X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__state;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__state;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__state;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__state;
+double _grid_forming_inverter__averaged_2_controller_integrator1__state;
+double _grid_forming_inverter__averaged_2_controller_integrator2__state;
+double _grid_forming_inverter__averaged_2_controller_integrator3__state;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__state;
+X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__state;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__state;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__state;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__state;
+double _grid_forming_inverter__averaged_3_controller_integrator1__state;
+double _grid_forming_inverter__averaged_3_controller_integrator2__state;
+double _grid_forming_inverter__averaged_3_controller_integrator3__state;
+double _measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__state;
+double _measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__state;
+double _measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__state;
+double _measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__state;
+double _measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__state;
+double _measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__state;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state;
+double _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1;
+double _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1;
+double _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1Q;
+double _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1Q;
+double _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1P0;
+double _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1P0;
+double _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1;
+double _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1;
+double _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1Q;
+double _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1Q;
+double _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1P0;
+double _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1P0;
+double _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1;
+double _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1;
+double _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1Q;
+double _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1Q;
+double _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1P0;
+double _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1P0;
+double _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1;
+double _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1;
+double _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1Q;
+double _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1Q;
+double _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1P0;
+double _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1P0;
+double _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1;
+double _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1;
+double _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1Q;
+double _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1Q;
+double _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1P0;
+double _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1P0;
+double _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1;
+double _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1;
+double _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1Q;
+double _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1Q;
+double _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1P0;
+double _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1P0;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__integrator_state;
+X_UnInt32 _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__av_active;
+double _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__filter_state;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active;
+double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__filter_state;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active;
+double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__filter_state;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__integrator_state;
+X_UnInt32 _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active;
+double _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__filter_state;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state;
+X_UnInt32 _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active;
+double _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__filter_state;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state;
+X_UnInt32 _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active;
+double _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__filter_state;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__integrator_state;
+X_UnInt32 _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__av_active;
+double _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__filter_state;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__integrator_state;
+X_UnInt32 _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__av_active;
+double _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__filter_state;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__filter_state;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__filter_state;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__filter_state;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__filter_state;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__filter_state;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__filter_state;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__filter_state;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__filter_state;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__filter_state;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__filter_state;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__filter_state;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state;
+X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__filter_state;
+//@cmp.svar.end
+
+
+
+// generated using template: virtual_hil/custom_functions.template---------------------------------
+void ReInit_user_sp_cpu_dev0() {
+#if DEBUG_MODE
+    printf("\n\rReInitTimer");
+#endif
+    //@cmp.init.block.start
+    _clock1__state = 0.0f;
+    _grid_forming_inverter__averaged__controller_integrator1__state = 0.0;
+    _grid_forming_inverter__averaged__controller_integrator2__state = 0.0;
+    _grid_forming_inverter__averaged__controller_integrator3__state = 0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__state = 0.0f;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__state = 0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__state = 0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__state = 0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__state = 0.0;
+    _grid_forming_inverter__averaged_2_controller_integrator1__state = 0.0;
+    _grid_forming_inverter__averaged_2_controller_integrator2__state = 0.0;
+    _grid_forming_inverter__averaged_2_controller_integrator3__state = 0.0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__state = 0.0f;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__state = 0.0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__state = 0.0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__state = 0.0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__state = 0.0;
+    _grid_forming_inverter__averaged_3_controller_integrator1__state = 0.0;
+    _grid_forming_inverter__averaged_3_controller_integrator2__state = 0.0;
+    _grid_forming_inverter__averaged_3_controller_integrator3__state = 0.0;
+    _l4_load_4__time = 0;
+    _l4_load_4__time2 = 0;
+    _l4_load_4__var = 0;
+    _l5_load_5__time = 0;
+    _l5_load_5__time2 = 0;
+    _l5_load_5__var = 0;
+    _l6_load_6__time = 0;
+    _l6_load_6__time2 = 0;
+    _l6_load_6__var = 0;
+    XIo_OutFloat(0x55000160, 0.0);
+    XIo_OutFloat(0x55000164, 0.0);
+    XIo_OutFloat(0x55000168, 0.0);
+    XIo_OutFloat(0x5500016c, 0.0);
+    XIo_OutFloat(0x55000170, 0.0);
+    XIo_OutFloat(0x55000174, 0.0);
+    XIo_OutFloat(0x55000178, 0.0);
+    XIo_OutFloat(0x5500017c, 0.0);
+    XIo_OutFloat(0x55000180, 0.0);
+    XIo_OutFloat(0x55000184, 0.0);
+    XIo_OutFloat(0x55000188, 0.0);
+    XIo_OutFloat(0x5500018c, 0.0);
+    XIo_OutFloat(0x55000190, 0.0);
+    XIo_OutFloat(0x55000194, 0.0);
+    XIo_OutFloat(0x55000198, 0.0);
+    _measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__state = 0.0;
+    _measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__state = 0.0;
+    _measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__state = 0.0;
+    _measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__state = 0.0;
+    _measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__state = 0.0;
+    _measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__state = 0.0;
+    HIL_OutAO(0x404b, 0.0f);
+    HIL_OutAO(0x4003, 0.0f);
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 0.0f;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 0.0f;
+    HIL_OutAO(0x400e, 0.0f);
+    HIL_OutAO(0x400f, 0.0f);
+    HIL_OutAO(0x4010, 0.0f);
+    HIL_OutAO(0x4017, 0.0f);
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 0.0f;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 0.0f;
+    HIL_OutAO(0x4022, 0.0f);
+    HIL_OutAO(0x4023, 0.0f);
+    HIL_OutAO(0x4024, 0.0f);
+    HIL_OutAO(0x402b, 0.0f);
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 0.0f;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 0.0f;
+    HIL_OutAO(0x4036, 0.0f);
+    HIL_OutAO(0x4037, 0.0f);
+    HIL_OutAO(0x4038, 0.0f);
+    XIo_OutFloat(0x55000140, 0.0f);
+    XIo_OutFloat(0x5500013c, 0.0f);
+    XIo_OutFloat(0x55000148, 0.0f);
+    XIo_OutFloat(0x55000144, 0.0f);
+    XIo_OutFloat(0x55000150, 0.0f);
+    XIo_OutFloat(0x5500014c, 0.0f);
+    XIo_OutFloat(0x5500019c, 0.0f);
+    XIo_OutFloat(0x550001a0, 0.0f);
+    XIo_OutFloat(0x550001a4, 0.0f);
+    XIo_OutFloat(0x550001c8, 0.0f);
+    XIo_OutFloat(0x550001cc, 0.0f);
+    XIo_OutFloat(0x550001d0, 0.0f);
+    XIo_OutFloat(0x550001f4, 0.0f);
+    XIo_OutFloat(0x550001f8, 0.0f);
+    XIo_OutFloat(0x550001fc, 0.0f);
+    _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1 = 0.0;
+    _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1 = 0.0;
+    _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1Q = 0.0;
+    _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1Q = 0.0;
+    _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1P0 = 0.0;
+    _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1P0 = 0.0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1 = 0.0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1 = 0.0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1Q = 0.0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1Q = 0.0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1P0 = 0.0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1P0 = 0.0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1 = 0.0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1 = 0.0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1Q = 0.0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1Q = 0.0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1P0 = 0.0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1P0 = 0.0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1 = 0.0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1 = 0.0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1Q = 0.0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1Q = 0.0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1P0 = 0.0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1P0 = 0.0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1 = 0.0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1 = 0.0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1Q = 0.0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1Q = 0.0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1P0 = 0.0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1P0 = 0.0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1 = 0.0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1 = 0.0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1Q = 0.0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1Q = 0.0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1P0 = 0.0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1P0 = 0.0;
+    HIL_OutAO(0x403e, 0.0f);
+    HIL_OutAO(0x4044, 0.0f);
+    HIL_OutAO(0x404a, 0.0f);
+    HIL_OutAO(0x404e, 0.0f);
+    HIL_OutAO(0x4050, 0.0f);
+    HIL_OutAO(0x4054, 0.0f);
+    HIL_OutAO(0x4056, 0.0f);
+    HIL_OutAO(0x405a, 0.0f);
+    HIL_OutAO(0x405c, 0.0f);
+    HIL_OutAO(0x4060, 0.0f);
+    HIL_OutAO(0x4062, 0.0f);
+    HIL_OutAO(0x4066, 0.0f);
+    HIL_OutAO(0x4068, 0.0f);
+    HIL_OutAO(0x406c, 0.0f);
+    HIL_OutAO(0x406e, 0.0f);
+    HIL_OutAO(0x403a, 0.0f);
+    HIL_OutAO(0x403b, 0.0f);
+    HIL_OutAO(0x4040, 0.0f);
+    HIL_OutAO(0x4041, 0.0f);
+    HIL_OutAO(0x4046, 0.0f);
+    HIL_OutAO(0x4047, 0.0f);
+    HIL_OutAO(0x404d, 0.0f);
+    HIL_OutAO(0x404f, 0.0f);
+    HIL_OutAO(0x4053, 0.0f);
+    HIL_OutAO(0x4055, 0.0f);
+    HIL_OutAO(0x4059, 0.0f);
+    HIL_OutAO(0x405b, 0.0f);
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x405f, 0.0f);
+    HIL_OutAO(0x4061, 0.0f);
+    HIL_OutAO(0x4065, 0.0f);
+    HIL_OutAO(0x4067, 0.0f);
+    HIL_OutAO(0x406b, 0.0f);
+    HIL_OutAO(0x406d, 0.0f);
+    HIL_OutAO(0x4000, 0.0f);
+    HIL_OutAO(0x4002, 0.0f);
+    HIL_OutAO(0x400b, 0.0f);
+    HIL_OutAO(0x400c, 0.0f);
+    HIL_OutAO(0x4016, 0.0f);
+    HIL_OutAO(0x4014, 0.0f);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state =  376.99111843077515;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x402a, 0.0f);
+    HIL_OutAO(0x4028, 0.0f);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state =  376.99111843077515;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x403c, 0.0f);
+    HIL_OutAO(0x4042, 0.0f);
+    HIL_OutAO(0x4048, 0.0f);
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var = 0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__var = 0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__var = 0;
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x405e, 0.0f);
+    _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
+    _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
+    _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+    _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__floor_in = 0;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__floor_in = 0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__floor_in = 0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in = 0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__floor_in = 0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__floor_in = 0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in = 0;
+    HIL_OutAO(0x4004, 0.0f);
+    HIL_OutAO(0x4039, 0.0f);
+    HIL_OutAO(0x400a, 0.0f);
+    HIL_OutAO(0x403f, 0.0f);
+    HIL_OutAO(0x4045, 0.0f);
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__var = 0;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__var = 0;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__var = 0;
+    _measurement4_three_phase_meter4_vln_rms_calc_rms__mode = 1;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__var = 0;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__var = 0;
+    HIL_OutAO(0x4007, 0.0f);
+    HIL_OutAO(0x4008, 0.0f);
+    HIL_OutAO(0x4005, 0.0f);
+    HIL_OutAO(0x4006, 0.0f);
+    HIL_OutAO(0x401e, 0.0f);
+    HIL_OutAO(0x401f, 0.0f);
+    HIL_OutAO(0x401c, 0.0f);
+    HIL_OutAO(0x401d, 0.0f);
+    HIL_OutAO(0x4032, 0.0f);
+    HIL_OutAO(0x4033, 0.0f);
+    HIL_OutAO(0x4030, 0.0f);
+    HIL_OutAO(0x4031, 0.0f);
+    HIL_OutAO(0x4001, 0.0f);
+    HIL_OutAO(0x4009, 0.0f);
+    HIL_OutAO(0x404c, 0.0f);
+    _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
+    _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
+    _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+    _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__floor_in = 0;
+    HIL_OutAO(0x4052, 0.0f);
+    _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
+    _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
+    _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+    _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__floor_in = 0;
+    HIL_OutAO(0x4058, 0.0f);
+    _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
+    _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
+    _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+    _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__floor_in = 0;
+    HIL_OutAO(0x4064, 0.0f);
+    _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
+    _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
+    _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+    _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__floor_in = 0;
+    HIL_OutAO(0x406a, 0.0f);
+    _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
+    _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
+    _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+    _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__floor_in = 0;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state =  0.0;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__filter_state =  0.0;
+    HIL_OutAO(0x4013, 0.0f);
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__filter_state =  0.0;
+    HIL_OutAO(0x4027, 0.0f);
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__filter_state =  0.0;
+    HIL_OutAO(0x400d, 0.0f);
+    HIL_OutAO(0x4015, 0.0f);
+    HIL_OutAO(0x4020, 0.0f);
+    HIL_OutAO(0x4029, 0.0f);
+    HIL_OutAO(0x4034, 0.0f);
+    _measurement1_three_phase_meter1_vln_rms_calc_rms__mode = 1;
+    _measurement2_three_phase_meter2_vln_rms_calc_rms__mode = 1;
+    _measurement3_three_phase_meter3_vln_rms_calc_rms__mode = 1;
+    _measurement5_three_phase_meter5_vln_rms_calc_rms__mode = 1;
+    _measurement6_three_phase_meter6_vln_rms_calc_rms__mode = 1;
+    HIL_OutAO(0x4011, 0.0f);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__var = 0;
+    HIL_OutAO(0x4019, 0.0f);
+    HIL_OutAO(0x4025, 0.0f);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__var = 0;
+    HIL_OutAO(0x402d, 0.0f);
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state =  0.0;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__filter_state =  0.0;
+    HIL_OutAO(0x4021, 0.0f);
+    HIL_OutAO(0x4035, 0.0f);
+    HIL_OutAO(0x4063, 0.0f);
+    HIL_OutAO(0x4012, 0.0f);
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__filter_state =  0.0;
+    HIL_OutAO(0x4026, 0.0f);
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__filter_state =  0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__var = 0;
+    HIL_OutAO(0x4018, 0.0f);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__var = 0;
+    HIL_OutAO(0x402c, 0.0f);
+    HIL_OutAO(0x4051, 0.0f);
+    HIL_OutAO(0x4057, 0.0f);
+    HIL_OutAO(0x405d, 0.0f);
+    HIL_OutAO(0x4069, 0.0f);
+    HIL_OutAO(0x406f, 0.0f);
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state =  0.0;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__filter_state =  0.0;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state =  0.0;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__filter_state =  0.0;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__connect = 0;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__filter_state =  0.0;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__filter_state =  0.0;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__connect = 0;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__filter_state =  0.0;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state =  0.0;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x401b, 0.0f);
+    HIL_OutAO(0x401a, 0.0f);
+    HIL_OutAO(0x402f, 0.0f);
+    HIL_OutAO(0x402e, 0.0f);
+    HIL_OutAO(0x403d, 0.0f);
+    HIL_OutAO(0x4043, 0.0f);
+    HIL_OutAO(0x4049, 0.0f);
+    XIo_OutInt32(0x550001a8, 0);
+    XIo_OutInt32(0x550001d4, 0);
+    XIo_OutInt32(0x55000200, 0);
+    HIL_OutFloat(149684224, 0.0);
+    HIL_OutFloat(149684225, 0.0);
+    HIL_OutFloat(149684226, 0.0);
+    HIL_OutFloat(153878528, 0.0);
+    HIL_OutFloat(153878529, 0.0);
+    HIL_OutFloat(153878530, 0.0);
+    HIL_OutFloat(158072832, 0.0);
+    HIL_OutFloat(158072833, 0.0);
+    HIL_OutFloat(158072834, 0.0);
+    //@cmp.init.block.end
+}
+
+void ReInit_sp_scope_user_sp_cpu_dev0() {
+    // initialise SP Scope buffer pointer
+}
+
+void init_fmu_objects_dev0(void) {
+    return;
+}
+
+
+void terminate_fmu_objects_dev0(void) {
+    return;
+}
+
+// generated using template: common_timer_counter_handler.template-------------------------
+
+/*****************************************************************************************/
+/**
+* This function is the handler which performs processing for the timer counter.
+* It is called from an interrupt context such that the amount of processing
+* performed should be minimized.  It is called when the timer counter expires
+* if interrupts are enabled.
+*
+*
+* @param    None
+*
+* @return   None
+*
+* @note     None
+*
+*****************************************************************************************/
+
+void TimerCounterHandler_0_user_sp_cpu_dev0() {
+#if DEBUG_MODE
+    printf("\n\rTimerCounterHandler_0");
+#endif
+    //////////////////////////////////////////////////////////////////////////
+    // Output block
+    //////////////////////////////////////////////////////////////////////////
+    //@cmp.out.block.start
+    // Generated from the component: Clock1
+    _clock1__out = _clock1__state;
+    // Generated from the component: Constant1
+    // Generated from the component: Constant6
+    // Generated from the component: Constant7
+    // Generated from the component: Constant8
+    // Generated from the component: Constant9
+    // Generated from the component: Grid forming inverter (averaged).Connect G1
+    _grid_forming_inverter__averaged__connect_g1__out = XIo_InInt32(0x55000154);
+    // Generated from the component: Grid forming inverter (averaged).Constant1
+    // Generated from the component: Grid forming inverter (averaged).Controller.Constant1
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Constant4
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Constant5
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Constant6
+    // Generated from the component: Grid forming inverter (averaged).Controller.Integrator1
+    _grid_forming_inverter__averaged__controller_integrator1__out = _grid_forming_inverter__averaged__controller_integrator1__state;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Integrator2
+    _grid_forming_inverter__averaged__controller_integrator2__out = _grid_forming_inverter__averaged__controller_integrator2__state;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Integrator3
+    _grid_forming_inverter__averaged__controller_integrator3__out = _grid_forming_inverter__averaged__controller_integrator3__state;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Limit_zero
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.one
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.o_ref
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Limit_zero
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.one
+    // Generated from the component: Grid forming inverter (averaged).Controller.Voltage droop.Constant4
+    // Generated from the component: Grid forming inverter (averaged).Ea1.Va1
+    _grid_forming_inverter__averaged__ea1_va1__out = (HIL_InFloat(0xc80000 + 0x606));
+    // Generated from the component: Grid forming inverter (averaged).Eb1.Va1
+    _grid_forming_inverter__averaged__eb1_va1__out = (HIL_InFloat(0xc80000 + 0x607));
+    // Generated from the component: Grid forming inverter (averaged).Ec1.Va1
+    _grid_forming_inverter__averaged__ec1_va1__out = (HIL_InFloat(0xc80000 + 0x608));
+    // Generated from the component: Grid forming inverter (averaged).Ia1.Ia1
+    _grid_forming_inverter__averaged__ia1_ia1__out = (HIL_InFloat(0xc80000 + 0x19));
+    // Generated from the component: Grid forming inverter (averaged).Ib1.Ia1
+    _grid_forming_inverter__averaged__ib1_ia1__out = (HIL_InFloat(0xc80000 + 0x1a));
+    // Generated from the component: Grid forming inverter (averaged).Ic1.Ia1
+    _grid_forming_inverter__averaged__ic1_ia1__out = (HIL_InFloat(0xc80000 + 0x1b));
+    // Generated from the component: Grid forming inverter (averaged).Va2.Va1
+    _grid_forming_inverter__averaged__va2_va1__out = (HIL_InFloat(0xc80000 + 0x609));
+    // Generated from the component: Grid forming inverter (averaged).Vb2.Va1
+    _grid_forming_inverter__averaged__vb2_va1__out = (HIL_InFloat(0xc80000 + 0x60a));
+    // Generated from the component: Grid forming inverter (averaged).Vc2.Va1
+    _grid_forming_inverter__averaged__vc2_va1__out = (HIL_InFloat(0xc80000 + 0x60b));
+    // Generated from the component: Grid forming inverter (averaged).Xi_a1.Ia1
+    _grid_forming_inverter__averaged__xi_a1_ia1__out = (HIL_InFloat(0xc80000 + 0x60c));
+    // Generated from the component: Grid forming inverter (averaged).Xi_b1.Ia1
+    _grid_forming_inverter__averaged__xi_b1_ia1__out = (HIL_InFloat(0xc80000 + 0x60d));
+    // Generated from the component: Grid forming inverter (averaged).Xi_c1.Ia1
+    _grid_forming_inverter__averaged__xi_c1_ia1__out = (HIL_InFloat(0xc80000 + 0x60e));
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Clock1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__state;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Connect G2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__connect_g2__out = XIo_InInt32(0x55000158);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant10
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant11
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant13
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant3
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant4
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant6
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant7
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Constant9
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__state;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__state;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay3
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__state;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__state;
+    // Generated from the component: Grid forming inverter (averaged)2.Constant1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Constant1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Constant4
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Constant5
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Constant6
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Integrator1
+    _grid_forming_inverter__averaged_2_controller_integrator1__out = _grid_forming_inverter__averaged_2_controller_integrator1__state;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Integrator2
+    _grid_forming_inverter__averaged_2_controller_integrator2__out = _grid_forming_inverter__averaged_2_controller_integrator2__state;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Integrator3
+    _grid_forming_inverter__averaged_2_controller_integrator3__out = _grid_forming_inverter__averaged_2_controller_integrator3__state;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Limit_zero
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.one
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.o_ref
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Limit_zero
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.one
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.Constant4
+    // Generated from the component: Grid forming inverter (averaged)2.Ea1.Va1
+    _grid_forming_inverter__averaged_2_ea1_va1__out = (HIL_InFloat(0xc80000 + 0x806));
+    // Generated from the component: Grid forming inverter (averaged)2.Eb1.Va1
+    _grid_forming_inverter__averaged_2_eb1_va1__out = (HIL_InFloat(0xc80000 + 0x807));
+    // Generated from the component: Grid forming inverter (averaged)2.Ec1.Va1
+    _grid_forming_inverter__averaged_2_ec1_va1__out = (HIL_InFloat(0xc80000 + 0x808));
+    // Generated from the component: Grid forming inverter (averaged)2.Ia1.Ia1
+    _grid_forming_inverter__averaged_2_ia1_ia1__out = (HIL_InFloat(0xc80000 + 0x215));
+    // Generated from the component: Grid forming inverter (averaged)2.Ib1.Ia1
+    _grid_forming_inverter__averaged_2_ib1_ia1__out = (HIL_InFloat(0xc80000 + 0x216));
+    // Generated from the component: Grid forming inverter (averaged)2.Ic1.Ia1
+    _grid_forming_inverter__averaged_2_ic1_ia1__out = (HIL_InFloat(0xc80000 + 0x217));
+    // Generated from the component: Grid forming inverter (averaged)2.Va2.Va1
+    _grid_forming_inverter__averaged_2_va2_va1__out = (HIL_InFloat(0xc80000 + 0x809));
+    // Generated from the component: Grid forming inverter (averaged)2.VaG.Va1
+    _grid_forming_inverter__averaged_2_vag_va1__out = (HIL_InFloat(0xc80000 + 0x20b));
+    // Generated from the component: Grid forming inverter (averaged)2.Vb2.Va1
+    _grid_forming_inverter__averaged_2_vb2_va1__out = (HIL_InFloat(0xc80000 + 0x80a));
+    // Generated from the component: Grid forming inverter (averaged)2.VbG.Va1
+    _grid_forming_inverter__averaged_2_vbg_va1__out = (HIL_InFloat(0xc80000 + 0x20c));
+    // Generated from the component: Grid forming inverter (averaged)2.Vc2.Va1
+    _grid_forming_inverter__averaged_2_vc2_va1__out = (HIL_InFloat(0xc80000 + 0x80b));
+    // Generated from the component: Grid forming inverter (averaged)2.VcG.Va1
+    _grid_forming_inverter__averaged_2_vcg_va1__out = (HIL_InFloat(0xc80000 + 0x20d));
+    // Generated from the component: Grid forming inverter (averaged)2.Xi_a1.Ia1
+    _grid_forming_inverter__averaged_2_xi_a1_ia1__out = (HIL_InFloat(0xc80000 + 0x80c));
+    // Generated from the component: Grid forming inverter (averaged)2.Xi_b1.Ia1
+    _grid_forming_inverter__averaged_2_xi_b1_ia1__out = (HIL_InFloat(0xc80000 + 0x80d));
+    // Generated from the component: Grid forming inverter (averaged)2.Xi_c1.Ia1
+    _grid_forming_inverter__averaged_2_xi_c1_ia1__out = (HIL_InFloat(0xc80000 + 0x80e));
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Clock1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__state;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Connect G3
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__connect_g3__out = XIo_InInt32(0x5500015c);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant10
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant11
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant13
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant3
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant4
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant6
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant7
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Constant9
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__state;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__state;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay3
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__state;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__state;
+    // Generated from the component: Grid forming inverter (averaged)3.Constant1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Constant1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Constant4
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Constant5
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Constant6
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Integrator1
+    _grid_forming_inverter__averaged_3_controller_integrator1__out = _grid_forming_inverter__averaged_3_controller_integrator1__state;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Integrator2
+    _grid_forming_inverter__averaged_3_controller_integrator2__out = _grid_forming_inverter__averaged_3_controller_integrator2__state;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Integrator3
+    _grid_forming_inverter__averaged_3_controller_integrator3__out = _grid_forming_inverter__averaged_3_controller_integrator3__state;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Limit_zero
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.one
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.o_ref
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Limit_zero
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.one
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.Constant4
+    // Generated from the component: Grid forming inverter (averaged)3.Ea1.Va1
+    _grid_forming_inverter__averaged_3_ea1_va1__out = (HIL_InFloat(0xc80000 + 0xa06));
+    // Generated from the component: Grid forming inverter (averaged)3.Eb1.Va1
+    _grid_forming_inverter__averaged_3_eb1_va1__out = (HIL_InFloat(0xc80000 + 0xa07));
+    // Generated from the component: Grid forming inverter (averaged)3.Ec1.Va1
+    _grid_forming_inverter__averaged_3_ec1_va1__out = (HIL_InFloat(0xc80000 + 0xa08));
+    // Generated from the component: Grid forming inverter (averaged)3.Ia1.Ia1
+    _grid_forming_inverter__averaged_3_ia1_ia1__out = (HIL_InFloat(0xc80000 + 0x413));
+    // Generated from the component: Grid forming inverter (averaged)3.Ib1.Ia1
+    _grid_forming_inverter__averaged_3_ib1_ia1__out = (HIL_InFloat(0xc80000 + 0x414));
+    // Generated from the component: Grid forming inverter (averaged)3.Ic1.Ia1
+    _grid_forming_inverter__averaged_3_ic1_ia1__out = (HIL_InFloat(0xc80000 + 0x415));
+    // Generated from the component: Grid forming inverter (averaged)3.Va2.Va1
+    _grid_forming_inverter__averaged_3_va2_va1__out = (HIL_InFloat(0xc80000 + 0xa09));
+    // Generated from the component: Grid forming inverter (averaged)3.VaG.Va1
+    _grid_forming_inverter__averaged_3_vag_va1__out = (HIL_InFloat(0xc80000 + 0x409));
+    // Generated from the component: Grid forming inverter (averaged)3.Vb2.Va1
+    _grid_forming_inverter__averaged_3_vb2_va1__out = (HIL_InFloat(0xc80000 + 0xa0a));
+    // Generated from the component: Grid forming inverter (averaged)3.VbG.Va1
+    _grid_forming_inverter__averaged_3_vbg_va1__out = (HIL_InFloat(0xc80000 + 0x40a));
+    // Generated from the component: Grid forming inverter (averaged)3.Vc2.Va1
+    _grid_forming_inverter__averaged_3_vc2_va1__out = (HIL_InFloat(0xc80000 + 0xa0b));
+    // Generated from the component: Grid forming inverter (averaged)3.VcG.Va1
+    _grid_forming_inverter__averaged_3_vcg_va1__out = (HIL_InFloat(0xc80000 + 0x40b));
+    // Generated from the component: Grid forming inverter (averaged)3.Xi_a1.Ia1
+    _grid_forming_inverter__averaged_3_xi_a1_ia1__out = (HIL_InFloat(0xc80000 + 0xa0c));
+    // Generated from the component: Grid forming inverter (averaged)3.Xi_b1.Ia1
+    _grid_forming_inverter__averaged_3_xi_b1_ia1__out = (HIL_InFloat(0xc80000 + 0xa0d));
+    // Generated from the component: Grid forming inverter (averaged)3.Xi_c1.Ia1
+    _grid_forming_inverter__averaged_3_xi_c1_ia1__out = (HIL_InFloat(0xc80000 + 0xa0e));
+    // Generated from the component: L4.Constant Power L4.cpu_tr3.Output
+    _l4_constant_power_l4_cpu_tr3_output__out = XIo_InFloat(0x55000124);
+    // Generated from the component: L4.Constant Power L4.cpu_tr4.Output
+    _l4_constant_power_l4_cpu_tr4_output__out = XIo_InFloat(0x55000128);
+    // Generated from the component: L4.Constant1
+    // Generated from the component: L4.Load 4
+    _l4_load_4__out = _l4_load_4__var;
+    if (_l4_load_4__out == 0) {
+        _l4_load_4__status = 0;
+    }
+    else _l4_load_4__status = 1;
+    // Generated from the component: L5.Constant Power L5.cpu_tr3.Output
+    _l5_constant_power_l5_cpu_tr3_output__out = XIo_InFloat(0x5500012c);
+    // Generated from the component: L5.Constant Power L5.cpu_tr4.Output
+    _l5_constant_power_l5_cpu_tr4_output__out = XIo_InFloat(0x55000130);
+    // Generated from the component: L5.Constant1
+    // Generated from the component: L5.Load 5
+    _l5_load_5__out = _l5_load_5__var;
+    if (_l5_load_5__out == 0) {
+        _l5_load_5__status = 0;
+    }
+    else _l5_load_5__status = 1;
+    // Generated from the component: L6.Constant Power L6.cpu_tr3.Output
+    _l6_constant_power_l6_cpu_tr3_output__out = XIo_InFloat(0x55000134);
+    // Generated from the component: L6.Constant Power L6.cpu_tr4.Output
+    _l6_constant_power_l6_cpu_tr4_output__out = XIo_InFloat(0x55000138);
+    // Generated from the component: L6.Constant1
+    // Generated from the component: L6.Load 6
+    _l6_load_6__out = _l6_load_6__var;
+    if (_l6_load_6__out == 0) {
+        _l6_load_6__status = 0;
+    }
+    else _l6_load_6__status = 1;
+    // Generated from the component: Modbus1.C_u11
+    // Generated from the component: Modbus1.C_u12
+    // Generated from the component: Modbus1.C_u13
+    // Generated from the component: Modbus1.Constant1
+    // Generated from the component: Modbus1.Constant2
+    // Generated from the component: Modbus1.Constant3
+    // Generated from the component: Modbus1.Constant4
+    // Generated from the component: Modbus1.Constant5
+    // Generated from the component: Modbus1.Constant6
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_coil_out
+    _modbus1_modbus_device2__config1__comp_coil_out__out = XIo_InFloat(0x55000160);
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_holding_out
+    _modbus1_modbus_device2__config1__comp_holding_out__out[0] = XIo_InFloat(0x55000164);
+    _modbus1_modbus_device2__config1__comp_holding_out__out[1] = XIo_InFloat(0x55000168);
+    _modbus1_modbus_device2__config1__comp_holding_out__out[2] = XIo_InFloat(0x5500016c);
+    _modbus1_modbus_device2__config1__comp_holding_out__out[3] = XIo_InFloat(0x55000170);
+    // Generated from the component: Modbus2.C_u11
+    // Generated from the component: Modbus2.C_u12
+    // Generated from the component: Modbus2.C_u13
+    // Generated from the component: Modbus2.Constant1
+    // Generated from the component: Modbus2.Constant2
+    // Generated from the component: Modbus2.Constant3
+    // Generated from the component: Modbus2.Constant4
+    // Generated from the component: Modbus2.Constant5
+    // Generated from the component: Modbus2.Constant6
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_coil_out
+    _modbus2_modbus_device2__config2__comp_coil_out__out = XIo_InFloat(0x55000174);
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_holding_out
+    _modbus2_modbus_device2__config2__comp_holding_out__out[0] = XIo_InFloat(0x55000178);
+    _modbus2_modbus_device2__config2__comp_holding_out__out[1] = XIo_InFloat(0x5500017c);
+    _modbus2_modbus_device2__config2__comp_holding_out__out[2] = XIo_InFloat(0x55000180);
+    _modbus2_modbus_device2__config2__comp_holding_out__out[3] = XIo_InFloat(0x55000184);
+    // Generated from the component: Modbus3.C_u11
+    // Generated from the component: Modbus3.C_u12
+    // Generated from the component: Modbus3.C_u13
+    // Generated from the component: Modbus3.Constant1
+    // Generated from the component: Modbus3.Constant2
+    // Generated from the component: Modbus3.Constant3
+    // Generated from the component: Modbus3.Constant4
+    // Generated from the component: Modbus3.Constant5
+    // Generated from the component: Modbus3.Constant6
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_coil_out
+    _modbus3_modbus_device3__config3__comp_coil_out__out = XIo_InFloat(0x55000188);
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_holding_out
+    _modbus3_modbus_device3__config3__comp_holding_out__out[0] = XIo_InFloat(0x5500018c);
+    _modbus3_modbus_device3__config3__comp_holding_out__out[1] = XIo_InFloat(0x55000190);
+    _modbus3_modbus_device3__config3__comp_holding_out__out[2] = XIo_InFloat(0x55000194);
+    _modbus3_modbus_device3__config3__comp_holding_out__out[3] = XIo_InFloat(0x55000198);
+    // Generated from the component: measurement1.Three-phase Meter1.IA.Ia1
+    _measurement1_three_phase_meter1_ia_ia1__out = (HIL_InFloat(0xc80000 + 0x1f));
+    // Generated from the component: measurement1.Three-phase Meter1.IB.Ia1
+    _measurement1_three_phase_meter1_ib_ia1__out = (HIL_InFloat(0xc80000 + 0x20));
+    // Generated from the component: measurement1.Three-phase Meter1.IC.Ia1
+    _measurement1_three_phase_meter1_ic_ia1__out = (HIL_InFloat(0xc80000 + 0x21));
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Unit Delay1
+    _measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__out = _measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__state;
+    // Generated from the component: measurement1.Three-phase Meter1.VAn.Va1
+    _measurement1_three_phase_meter1_van_va1__out = (HIL_InFloat(0xc80000 + 0x13));
+    // Generated from the component: measurement1.Three-phase Meter1.VBn.Va1
+    _measurement1_three_phase_meter1_vbn_va1__out = (HIL_InFloat(0xc80000 + 0x14));
+    // Generated from the component: measurement1.Three-phase Meter1.VCn.Va1
+    _measurement1_three_phase_meter1_vcn_va1__out = (HIL_InFloat(0xc80000 + 0x15));
+    // Generated from the component: measurement2.Three-phase Meter2.IA.Ia1
+    _measurement2_three_phase_meter2_ia_ia1__out = (HIL_InFloat(0xc80000 + 0x21b));
+    // Generated from the component: measurement2.Three-phase Meter2.IB.Ia1
+    _measurement2_three_phase_meter2_ib_ia1__out = (HIL_InFloat(0xc80000 + 0x21c));
+    // Generated from the component: measurement2.Three-phase Meter2.IC.Ia1
+    _measurement2_three_phase_meter2_ic_ia1__out = (HIL_InFloat(0xc80000 + 0x21d));
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Unit Delay1
+    _measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__out = _measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__state;
+    // Generated from the component: measurement2.Three-phase Meter2.VAn.Va1
+    _measurement2_three_phase_meter2_van_va1__out = (HIL_InFloat(0xc80000 + 0x20f));
+    // Generated from the component: measurement2.Three-phase Meter2.VBn.Va1
+    _measurement2_three_phase_meter2_vbn_va1__out = (HIL_InFloat(0xc80000 + 0x210));
+    // Generated from the component: measurement2.Three-phase Meter2.VCn.Va1
+    _measurement2_three_phase_meter2_vcn_va1__out = (HIL_InFloat(0xc80000 + 0x211));
+    // Generated from the component: measurement3.Three-phase Meter3.IA.Ia1
+    _measurement3_three_phase_meter3_ia_ia1__out = (HIL_InFloat(0xc80000 + 0x419));
+    // Generated from the component: measurement3.Three-phase Meter3.IB.Ia1
+    _measurement3_three_phase_meter3_ib_ia1__out = (HIL_InFloat(0xc80000 + 0x41a));
+    // Generated from the component: measurement3.Three-phase Meter3.IC.Ia1
+    _measurement3_three_phase_meter3_ic_ia1__out = (HIL_InFloat(0xc80000 + 0x41b));
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Unit Delay1
+    _measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__out = _measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__state;
+    // Generated from the component: measurement3.Three-phase Meter3.VAn.Va1
+    _measurement3_three_phase_meter3_van_va1__out = (HIL_InFloat(0xc80000 + 0x40d));
+    // Generated from the component: measurement3.Three-phase Meter3.VBn.Va1
+    _measurement3_three_phase_meter3_vbn_va1__out = (HIL_InFloat(0xc80000 + 0x40e));
+    // Generated from the component: measurement3.Three-phase Meter3.VCn.Va1
+    _measurement3_three_phase_meter3_vcn_va1__out = (HIL_InFloat(0xc80000 + 0x40f));
+    // Generated from the component: measurement4.Three-phase Meter4.IA.Ia1
+    _measurement4_three_phase_meter4_ia_ia1__out = (HIL_InFloat(0xc80000 + 0x22));
+    // Generated from the component: measurement4.Three-phase Meter4.IB.Ia1
+    _measurement4_three_phase_meter4_ib_ia1__out = (HIL_InFloat(0xc80000 + 0x23));
+    // Generated from the component: measurement4.Three-phase Meter4.IC.Ia1
+    _measurement4_three_phase_meter4_ic_ia1__out = (HIL_InFloat(0xc80000 + 0x24));
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.Unit Delay1
+    _measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__out = _measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__state;
+    // Generated from the component: measurement4.Three-phase Meter4.VAn.Va1
+    _measurement4_three_phase_meter4_van_va1__out = (HIL_InFloat(0xc80000 + 0x16));
+    // Generated from the component: measurement4.Three-phase Meter4.VBn.Va1
+    _measurement4_three_phase_meter4_vbn_va1__out = (HIL_InFloat(0xc80000 + 0x17));
+    // Generated from the component: measurement4.Three-phase Meter4.VCn.Va1
+    _measurement4_three_phase_meter4_vcn_va1__out = (HIL_InFloat(0xc80000 + 0x18));
+    // Generated from the component: measurement5.Three-phase Meter5.IA.Ia1
+    _measurement5_three_phase_meter5_ia_ia1__out = (HIL_InFloat(0xc80000 + 0x41c));
+    // Generated from the component: measurement5.Three-phase Meter5.IB.Ia1
+    _measurement5_three_phase_meter5_ib_ia1__out = (HIL_InFloat(0xc80000 + 0x41d));
+    // Generated from the component: measurement5.Three-phase Meter5.IC.Ia1
+    _measurement5_three_phase_meter5_ic_ia1__out = (HIL_InFloat(0xc80000 + 0x41e));
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.Unit Delay1
+    _measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__out = _measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__state;
+    // Generated from the component: measurement5.Three-phase Meter5.VAn.Va1
+    _measurement5_three_phase_meter5_van_va1__out = (HIL_InFloat(0xc80000 + 0x410));
+    // Generated from the component: measurement5.Three-phase Meter5.VBn.Va1
+    _measurement5_three_phase_meter5_vbn_va1__out = (HIL_InFloat(0xc80000 + 0x411));
+    // Generated from the component: measurement5.Three-phase Meter5.VCn.Va1
+    _measurement5_three_phase_meter5_vcn_va1__out = (HIL_InFloat(0xc80000 + 0x412));
+    // Generated from the component: measurement6.Three-phase Meter6.IA.Ia1
+    _measurement6_three_phase_meter6_ia_ia1__out = (HIL_InFloat(0xc80000 + 0x21e));
+    // Generated from the component: measurement6.Three-phase Meter6.IB.Ia1
+    _measurement6_three_phase_meter6_ib_ia1__out = (HIL_InFloat(0xc80000 + 0x21f));
+    // Generated from the component: measurement6.Three-phase Meter6.IC.Ia1
+    _measurement6_three_phase_meter6_ic_ia1__out = (HIL_InFloat(0xc80000 + 0x220));
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.Unit Delay1
+    _measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__out = _measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__state;
+    // Generated from the component: measurement6.Three-phase Meter6.VAn.Va1
+    _measurement6_three_phase_meter6_van_va1__out = (HIL_InFloat(0xc80000 + 0x212));
+    // Generated from the component: measurement6.Three-phase Meter6.VBn.Va1
+    _measurement6_three_phase_meter6_vbn_va1__out = (HIL_InFloat(0xc80000 + 0x213));
+    // Generated from the component: measurement6.Three-phase Meter6.VCn.Va1
+    _measurement6_three_phase_meter6_vcn_va1__out = (HIL_InFloat(0xc80000 + 0x214));
+    // Generated from the component: Timer
+    HIL_OutAO(0x404b, (float)_clock1__out);
+    // Generated from the component: Grid forming inverter (averaged).Logical operator2
+    _grid_forming_inverter__averaged__logical_operator2__out = !_grid_forming_inverter__averaged__connect_g1__out;
+    // Generated from the component: Grid forming inverter (averaged).Product2
+    _grid_forming_inverter__averaged__product2__out = (_grid_forming_inverter__averaged__connect_g1__out * _constant1__out);
+    // Generated from the component: Grid forming inverter (averaged).S2.CTC_Wrapper
+    if (_grid_forming_inverter__averaged__connect_g1__out == 0x0) {
+        HIL_OutInt32(0x8240480, 0x0);
+    }
+    else {
+        HIL_OutInt32(0x8240480, 0x1);
+    }
+    // Generated from the component: Grid forming inverter (averaged).gridconnect1
+    HIL_OutInt32(0xf00403, _grid_forming_inverter__averaged__connect_g1__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged).Gain1
+    _grid_forming_inverter__averaged__gain1__out = 0.5 * _grid_forming_inverter__averaged__constant1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.E_qREF1
+    HIL_OutAO(0x4003, (float)_grid_forming_inverter__averaged__controller_constant1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Comparator1
+    if (_grid_forming_inverter__averaged__constant1__out < _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = 0;
+    } else if (_grid_forming_inverter__averaged__constant1__out > _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = 1;
+    } else {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Comparator1
+    if (_grid_forming_inverter__averaged__constant1__out < _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = 0;
+    } else if (_grid_forming_inverter__averaged__constant1__out > _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = 1;
+    } else {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Ea_1
+    HIL_OutAO(0x400e, (float)_grid_forming_inverter__averaged__ea1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged).Eb_1
+    HIL_OutAO(0x400f, (float)_grid_forming_inverter__averaged__eb1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq2.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged__ea1_va1__out - _grid_forming_inverter__averaged__eb1_va1__out - _grid_forming_inverter__averaged__ec1_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged__eb1_va1__out - _grid_forming_inverter__averaged__ec1_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged__ea1_va1__out + _grid_forming_inverter__averaged__eb1_va1__out + _grid_forming_inverter__averaged__ec1_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged).Ec_1
+    HIL_OutAO(0x4010, (float)_grid_forming_inverter__averaged__ec1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq4.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged__ia1_ia1__out - _grid_forming_inverter__averaged__ib1_ia1__out - _grid_forming_inverter__averaged__ic1_ia1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged__ib1_ia1__out - _grid_forming_inverter__averaged__ic1_ia1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged__ia1_ia1__out + _grid_forming_inverter__averaged__ib1_ia1__out + _grid_forming_inverter__averaged__ic1_ia1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq3.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged__va2_va1__out - _grid_forming_inverter__averaged__vb2_va1__out - _grid_forming_inverter__averaged__vc2_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged__vb2_va1__out - _grid_forming_inverter__averaged__vc2_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged__va2_va1__out + _grid_forming_inverter__averaged__vb2_va1__out + _grid_forming_inverter__averaged__vc2_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged__xi_a1_ia1__out - _grid_forming_inverter__averaged__xi_b1_ia1__out - _grid_forming_inverter__averaged__xi_c1_ia1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged__xi_b1_ia1__out - _grid_forming_inverter__averaged__xi_c1_ia1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged__xi_a1_ia1__out + _grid_forming_inverter__averaged__xi_b1_ia1__out + _grid_forming_inverter__averaged__xi_c1_ia1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Relational operator5
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator5__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__out > _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant10__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Signal switch1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__out != 1.0) ? _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__out : _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__connect_g2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Gain4
+    _grid_forming_inverter__averaged_2_controller_frequency_droop_gain4__out = 1.1309733552923256 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.Gain4
+    _grid_forming_inverter__averaged_2_controller_voltage_droop_gain4__out = 0.001958685783886737 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Gain1
+    _grid_forming_inverter__averaged_2_gain1__out = 0.5 * _grid_forming_inverter__averaged_2_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.E_qREF1
+    HIL_OutAO(0x4017, (float)_grid_forming_inverter__averaged_2_controller_constant1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Comparator1
+    if (_grid_forming_inverter__averaged_2_constant1__out < _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = 0;
+    } else if (_grid_forming_inverter__averaged_2_constant1__out > _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Comparator1
+    if (_grid_forming_inverter__averaged_2_constant1__out < _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = 0;
+    } else if (_grid_forming_inverter__averaged_2_constant1__out > _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Ea_1
+    HIL_OutAO(0x4022, (float)_grid_forming_inverter__averaged_2_ea1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Eb_1
+    HIL_OutAO(0x4023, (float)_grid_forming_inverter__averaged_2_eb1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Current_abc_to_dq3.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_2_ea1_va1__out - _grid_forming_inverter__averaged_2_eb1_va1__out - _grid_forming_inverter__averaged_2_ec1_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_2_eb1_va1__out - _grid_forming_inverter__averaged_2_ec1_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_2_ea1_va1__out + _grid_forming_inverter__averaged_2_eb1_va1__out + _grid_forming_inverter__averaged_2_ec1_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq2.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_2_ea1_va1__out - _grid_forming_inverter__averaged_2_eb1_va1__out - _grid_forming_inverter__averaged_2_ec1_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_2_eb1_va1__out - _grid_forming_inverter__averaged_2_ec1_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_2_ea1_va1__out + _grid_forming_inverter__averaged_2_eb1_va1__out + _grid_forming_inverter__averaged_2_ec1_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)2.Ec_1
+    HIL_OutAO(0x4024, (float)_grid_forming_inverter__averaged_2_ec1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq4.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_2_ia1_ia1__out - _grid_forming_inverter__averaged_2_ib1_ia1__out - _grid_forming_inverter__averaged_2_ic1_ia1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_2_ib1_ia1__out - _grid_forming_inverter__averaged_2_ic1_ia1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_2_ia1_ia1__out + _grid_forming_inverter__averaged_2_ib1_ia1__out + _grid_forming_inverter__averaged_2_ic1_ia1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq3.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_2_va2_va1__out - _grid_forming_inverter__averaged_2_vb2_va1__out - _grid_forming_inverter__averaged_2_vc2_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_2_vb2_va1__out - _grid_forming_inverter__averaged_2_vc2_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_2_va2_va1__out + _grid_forming_inverter__averaged_2_vb2_va1__out + _grid_forming_inverter__averaged_2_vc2_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_2_vag_va1__out - _grid_forming_inverter__averaged_2_vbg_va1__out - _grid_forming_inverter__averaged_2_vcg_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_2_vbg_va1__out - _grid_forming_inverter__averaged_2_vcg_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_2_vag_va1__out + _grid_forming_inverter__averaged_2_vbg_va1__out + _grid_forming_inverter__averaged_2_vcg_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_2_xi_a1_ia1__out - _grid_forming_inverter__averaged_2_xi_b1_ia1__out - _grid_forming_inverter__averaged_2_xi_c1_ia1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_2_xi_b1_ia1__out - _grid_forming_inverter__averaged_2_xi_c1_ia1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_2_xi_a1_ia1__out + _grid_forming_inverter__averaged_2_xi_b1_ia1__out + _grid_forming_inverter__averaged_2_xi_c1_ia1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Relational operator5
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator5__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__out > _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant10__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Signal switch1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__out != 1.0) ? _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__out : _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__connect_g3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Gain4
+    _grid_forming_inverter__averaged_3_controller_frequency_droop_gain4__out = 1.1309733552923256 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.Gain4
+    _grid_forming_inverter__averaged_3_controller_voltage_droop_gain4__out = 0.001958685783886737 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Gain1
+    _grid_forming_inverter__averaged_3_gain1__out = 0.5 * _grid_forming_inverter__averaged_3_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.E_qREF1
+    HIL_OutAO(0x402b, (float)_grid_forming_inverter__averaged_3_controller_constant1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Comparator1
+    if (_grid_forming_inverter__averaged_3_constant1__out < _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = 0;
+    } else if (_grid_forming_inverter__averaged_3_constant1__out > _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Comparator1
+    if (_grid_forming_inverter__averaged_3_constant1__out < _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = 0;
+    } else if (_grid_forming_inverter__averaged_3_constant1__out > _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Ea_1
+    HIL_OutAO(0x4036, (float)_grid_forming_inverter__averaged_3_ea1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Eb_1
+    HIL_OutAO(0x4037, (float)_grid_forming_inverter__averaged_3_eb1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Current_abc_to_dq3.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_3_ea1_va1__out - _grid_forming_inverter__averaged_3_eb1_va1__out - _grid_forming_inverter__averaged_3_ec1_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_3_eb1_va1__out - _grid_forming_inverter__averaged_3_ec1_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_3_ea1_va1__out + _grid_forming_inverter__averaged_3_eb1_va1__out + _grid_forming_inverter__averaged_3_ec1_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq2.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_3_ea1_va1__out - _grid_forming_inverter__averaged_3_eb1_va1__out - _grid_forming_inverter__averaged_3_ec1_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_3_eb1_va1__out - _grid_forming_inverter__averaged_3_ec1_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_3_ea1_va1__out + _grid_forming_inverter__averaged_3_eb1_va1__out + _grid_forming_inverter__averaged_3_ec1_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)3.Ec_1
+    HIL_OutAO(0x4038, (float)_grid_forming_inverter__averaged_3_ec1_va1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq4.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_3_ia1_ia1__out - _grid_forming_inverter__averaged_3_ib1_ia1__out - _grid_forming_inverter__averaged_3_ic1_ia1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_3_ib1_ia1__out - _grid_forming_inverter__averaged_3_ic1_ia1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_3_ia1_ia1__out + _grid_forming_inverter__averaged_3_ib1_ia1__out + _grid_forming_inverter__averaged_3_ic1_ia1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq3.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_3_va2_va1__out - _grid_forming_inverter__averaged_3_vb2_va1__out - _grid_forming_inverter__averaged_3_vc2_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_3_vb2_va1__out - _grid_forming_inverter__averaged_3_vc2_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_3_va2_va1__out + _grid_forming_inverter__averaged_3_vb2_va1__out + _grid_forming_inverter__averaged_3_vc2_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_3_vag_va1__out - _grid_forming_inverter__averaged_3_vbg_va1__out - _grid_forming_inverter__averaged_3_vcg_va1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_3_vbg_va1__out - _grid_forming_inverter__averaged_3_vcg_va1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_3_vag_va1__out + _grid_forming_inverter__averaged_3_vbg_va1__out + _grid_forming_inverter__averaged_3_vcg_va1__out) * 0.3333333333333333;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq.abc to dq1.abc to alpha beta
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _grid_forming_inverter__averaged_3_xi_a1_ia1__out - _grid_forming_inverter__averaged_3_xi_b1_ia1__out - _grid_forming_inverter__averaged_3_xi_c1_ia1__out) * 0.3333333333333333;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta = (_grid_forming_inverter__averaged_3_xi_b1_ia1__out - _grid_forming_inverter__averaged_3_xi_c1_ia1__out) * 0.5773502691896258;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__gamma = (_grid_forming_inverter__averaged_3_xi_a1_ia1__out + _grid_forming_inverter__averaged_3_xi_b1_ia1__out + _grid_forming_inverter__averaged_3_xi_c1_ia1__out) * 0.3333333333333333;
+    // Generated from the component: L4.Termination1
+    // Generated from the component: L4.Termination2
+    // Generated from the component: L4.Constant Power L4.cpu_tr2.Input
+    XIo_OutFloat(0x55000140, _l4_constant1__out);
+    // Generated from the component: L4.Constant Power L4.cpu_tr1.Input
+    XIo_OutFloat(0x5500013c, _l4_load_4__out);
+    // Generated from the component: L4.Logical operator2
+    _l4_logical_operator2__out = !_l4_load_4__status;
+    // Generated from the component: L4.gridconnect4
+    HIL_OutInt32(0xf0040f, _l4_load_4__status != 0x0);
+    // Generated from the component: L5.Termination1
+    // Generated from the component: L5.Termination2
+    // Generated from the component: L5.Constant Power L5.cpu_tr2.Input
+    XIo_OutFloat(0x55000148, _l5_constant1__out);
+    // Generated from the component: L5.Constant Power L5.cpu_tr1.Input
+    XIo_OutFloat(0x55000144, _l5_load_5__out);
+    // Generated from the component: L5.Logical operator2
+    _l5_logical_operator2__out = !_l5_load_5__status;
+    // Generated from the component: L5.gridconnect5
+    HIL_OutInt32(0xf00411, _l5_load_5__status != 0x0);
+    // Generated from the component: L6.Termination1
+    // Generated from the component: L6.Termination2
+    // Generated from the component: L6.Constant Power L6.cpu_tr2.Input
+    XIo_OutFloat(0x55000150, _l6_constant1__out);
+    // Generated from the component: L6.Constant Power L6.cpu_tr1.Input
+    XIo_OutFloat(0x5500014c, _l6_load_6__out);
+    // Generated from the component: L6.Logical operator2
+    _l6_logical_operator2__out = !_l6_load_6__status;
+    // Generated from the component: L6.gridconnect6
+    HIL_OutInt32(0xf00413, _l6_load_6__status != 0x0);
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_coil_in
+    XIo_OutFloat(0x5500019c, _modbus1_c_u11__out);
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_discrete_in
+    XIo_OutFloat(0x550001a0, _modbus1_c_u12__out);
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_holding_in
+    XIo_OutFloat(0x550001a4, _modbus1_c_u13__out);
+    // Generated from the component: Modbus1.Product5
+    _modbus1_product5__out = (_constant7__out * _modbus1_constant5__out);
+    // Generated from the component: Modbus1.Termination1
+    // Generated from the component: Modbus1.Bus Split1
+    _modbus1_bus_split1__out = _modbus1_modbus_device2__config1__comp_holding_out__out[0];
+    _modbus1_bus_split1__out1 = _modbus1_modbus_device2__config1__comp_holding_out__out[1];
+    _modbus1_bus_split1__out2 = _modbus1_modbus_device2__config1__comp_holding_out__out[2];
+    _modbus1_bus_split1__out3 = _modbus1_modbus_device2__config1__comp_holding_out__out[3];
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_coil_in
+    XIo_OutFloat(0x550001c8, _modbus2_c_u11__out);
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_discrete_in
+    XIo_OutFloat(0x550001cc, _modbus2_c_u12__out);
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_holding_in
+    XIo_OutFloat(0x550001d0, _modbus2_c_u13__out);
+    // Generated from the component: Modbus2.Product5
+    _modbus2_product5__out = (_constant8__out * _modbus2_constant5__out);
+    // Generated from the component: Modbus2.Termination1
+    // Generated from the component: Modbus2.Bus Split1
+    _modbus2_bus_split1__out = _modbus2_modbus_device2__config2__comp_holding_out__out[0];
+    _modbus2_bus_split1__out1 = _modbus2_modbus_device2__config2__comp_holding_out__out[1];
+    _modbus2_bus_split1__out2 = _modbus2_modbus_device2__config2__comp_holding_out__out[2];
+    _modbus2_bus_split1__out3 = _modbus2_modbus_device2__config2__comp_holding_out__out[3];
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_coil_in
+    XIo_OutFloat(0x550001f4, _modbus3_c_u11__out);
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_discrete_in
+    XIo_OutFloat(0x550001f8, _modbus3_c_u12__out);
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_holding_in
+    XIo_OutFloat(0x550001fc, _modbus3_c_u13__out);
+    // Generated from the component: Modbus3.Product5
+    _modbus3_product5__out = (_constant9__out * _modbus3_constant5__out);
+    // Generated from the component: Modbus3.Termination1
+    // Generated from the component: Modbus3.Bus Split1
+    _modbus3_bus_split1__out = _modbus3_modbus_device3__config3__comp_holding_out__out[0];
+    _modbus3_bus_split1__out1 = _modbus3_modbus_device3__config3__comp_holding_out__out[1];
+    _modbus3_bus_split1__out2 = _modbus3_modbus_device3__config3__comp_holding_out__out[2];
+    _modbus3_bus_split1__out3 = _modbus3_modbus_device3__config3__comp_holding_out__out[3];
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.abc to dq1.abc to alpha beta
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _measurement1_three_phase_meter1_van_va1__out - _measurement1_three_phase_meter1_vbn_va1__out - _measurement1_three_phase_meter1_vcn_va1__out) * 0.3333333333333333;
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta = (_measurement1_three_phase_meter1_vbn_va1__out - _measurement1_three_phase_meter1_vcn_va1__out) * 0.5773502691896258;
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma = (_measurement1_three_phase_meter1_van_va1__out + _measurement1_three_phase_meter1_vbn_va1__out + _measurement1_three_phase_meter1_vcn_va1__out) * 0.3333333333333333;
+    // Generated from the component: measurement1.Three-phase Meter1.Power Meter
+    _measurement1_three_phase_meter1_power_meter__v_alpha = SQRT_2OVER3 * ( _measurement1_three_phase_meter1_van_va1__out - 0.5f * _measurement1_three_phase_meter1_vbn_va1__out - 0.5f * _measurement1_three_phase_meter1_vcn_va1__out);
+    _measurement1_three_phase_meter1_power_meter__v_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement1_three_phase_meter1_vbn_va1__out - SQRT3_OVER_2 * _measurement1_three_phase_meter1_vcn_va1__out);
+    _measurement1_three_phase_meter1_power_meter__i_alpha = SQRT_2OVER3 * ( _measurement1_three_phase_meter1_ia_ia1__out - 0.5f * _measurement1_three_phase_meter1_ib_ia1__out - 0.5f * _measurement1_three_phase_meter1_ic_ia1__out);
+    _measurement1_three_phase_meter1_power_meter__i_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement1_three_phase_meter1_ib_ia1__out - SQRT3_OVER_2 * _measurement1_three_phase_meter1_ic_ia1__out);
+    _measurement1_three_phase_meter1_power_meter__v_zero = ONE_DIV_BY_SQRT_3 * (_measurement1_three_phase_meter1_van_va1__out + _measurement1_three_phase_meter1_vbn_va1__out + _measurement1_three_phase_meter1_vcn_va1__out);
+    _measurement1_three_phase_meter1_power_meter__i_zero = ONE_DIV_BY_SQRT_3 * (_measurement1_three_phase_meter1_ia_ia1__out + _measurement1_three_phase_meter1_ib_ia1__out + _measurement1_three_phase_meter1_ic_ia1__out);
+    _measurement1_three_phase_meter1_power_meter__Pac = _measurement1_three_phase_meter1_power_meter__v_alpha * _measurement1_three_phase_meter1_power_meter__i_alpha + _measurement1_three_phase_meter1_power_meter__v_beta * _measurement1_three_phase_meter1_power_meter__i_beta;
+    _measurement1_three_phase_meter1_power_meter__Qac = _measurement1_three_phase_meter1_power_meter__v_beta * _measurement1_three_phase_meter1_power_meter__i_alpha - _measurement1_three_phase_meter1_power_meter__v_alpha * _measurement1_three_phase_meter1_power_meter__i_beta;
+    _measurement1_three_phase_meter1_power_meter__P0ac = _measurement1_three_phase_meter1_power_meter__v_zero * _measurement1_three_phase_meter1_power_meter__i_zero;
+    _measurement1_three_phase_meter1_power_meter__filter_1_output = 0.018500823612264846 * (_measurement1_three_phase_meter1_power_meter__Pac + _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1) - (-0.9629983527754703) * _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1;
+    _measurement1_three_phase_meter1_power_meter__filter_1_outputQ = 0.018500823612264846 * (_measurement1_three_phase_meter1_power_meter__Qac + _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1Q) - (-0.9629983527754703) * _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1Q;
+    _measurement1_three_phase_meter1_power_meter__filter_1_outputP0 = 0.018500823612264846 * (_measurement1_three_phase_meter1_power_meter__P0ac + _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1P0) - (-0.9629983527754703) * _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1P0;
+    _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1 = _measurement1_three_phase_meter1_power_meter__Pac;
+    _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1 = _measurement1_three_phase_meter1_power_meter__filter_1_output;
+    _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1Q = _measurement1_three_phase_meter1_power_meter__Qac;;
+    _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1Q = _measurement1_three_phase_meter1_power_meter__filter_1_outputQ;
+    _measurement1_three_phase_meter1_power_meter__filter_1_input_k_minus_1P0 = _measurement1_three_phase_meter1_power_meter__P0ac;
+    _measurement1_three_phase_meter1_power_meter__filter_1_output_k_minus_1P0 = _measurement1_three_phase_meter1_power_meter__filter_1_outputP0;
+    _measurement1_three_phase_meter1_power_meter__Pdc = _measurement1_three_phase_meter1_power_meter__filter_1_output;
+    _measurement1_three_phase_meter1_power_meter__Qdc = _measurement1_three_phase_meter1_power_meter__filter_1_outputQ;
+    _measurement1_three_phase_meter1_power_meter__P0dc = _measurement1_three_phase_meter1_power_meter__filter_1_outputP0;
+    _measurement1_three_phase_meter1_power_meter__apparent = sqrt(pow(_measurement1_three_phase_meter1_power_meter__Pdc, 2) + pow(_measurement1_three_phase_meter1_power_meter__Qdc, 2));
+    if (_measurement1_three_phase_meter1_power_meter__apparent > 0)
+        _measurement1_three_phase_meter1_power_meter__k_factor = _measurement1_three_phase_meter1_power_meter__Pdc / _measurement1_three_phase_meter1_power_meter__apparent;
+    else
+        _measurement1_three_phase_meter1_power_meter__k_factor = 0;
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.abc to dq1.abc to alpha beta
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _measurement2_three_phase_meter2_van_va1__out - _measurement2_three_phase_meter2_vbn_va1__out - _measurement2_three_phase_meter2_vcn_va1__out) * 0.3333333333333333;
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta = (_measurement2_three_phase_meter2_vbn_va1__out - _measurement2_three_phase_meter2_vcn_va1__out) * 0.5773502691896258;
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma = (_measurement2_three_phase_meter2_van_va1__out + _measurement2_three_phase_meter2_vbn_va1__out + _measurement2_three_phase_meter2_vcn_va1__out) * 0.3333333333333333;
+    // Generated from the component: measurement2.Three-phase Meter2.Power Meter
+    _measurement2_three_phase_meter2_power_meter__v_alpha = SQRT_2OVER3 * ( _measurement2_three_phase_meter2_van_va1__out - 0.5f * _measurement2_three_phase_meter2_vbn_va1__out - 0.5f * _measurement2_three_phase_meter2_vcn_va1__out);
+    _measurement2_three_phase_meter2_power_meter__v_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement2_three_phase_meter2_vbn_va1__out - SQRT3_OVER_2 * _measurement2_three_phase_meter2_vcn_va1__out);
+    _measurement2_three_phase_meter2_power_meter__i_alpha = SQRT_2OVER3 * ( _measurement2_three_phase_meter2_ia_ia1__out - 0.5f * _measurement2_three_phase_meter2_ib_ia1__out - 0.5f * _measurement2_three_phase_meter2_ic_ia1__out);
+    _measurement2_three_phase_meter2_power_meter__i_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement2_three_phase_meter2_ib_ia1__out - SQRT3_OVER_2 * _measurement2_three_phase_meter2_ic_ia1__out);
+    _measurement2_three_phase_meter2_power_meter__v_zero = ONE_DIV_BY_SQRT_3 * (_measurement2_three_phase_meter2_van_va1__out + _measurement2_three_phase_meter2_vbn_va1__out + _measurement2_three_phase_meter2_vcn_va1__out);
+    _measurement2_three_phase_meter2_power_meter__i_zero = ONE_DIV_BY_SQRT_3 * (_measurement2_three_phase_meter2_ia_ia1__out + _measurement2_three_phase_meter2_ib_ia1__out + _measurement2_three_phase_meter2_ic_ia1__out);
+    _measurement2_three_phase_meter2_power_meter__Pac = _measurement2_three_phase_meter2_power_meter__v_alpha * _measurement2_three_phase_meter2_power_meter__i_alpha + _measurement2_three_phase_meter2_power_meter__v_beta * _measurement2_three_phase_meter2_power_meter__i_beta;
+    _measurement2_three_phase_meter2_power_meter__Qac = _measurement2_three_phase_meter2_power_meter__v_beta * _measurement2_three_phase_meter2_power_meter__i_alpha - _measurement2_three_phase_meter2_power_meter__v_alpha * _measurement2_three_phase_meter2_power_meter__i_beta;
+    _measurement2_three_phase_meter2_power_meter__P0ac = _measurement2_three_phase_meter2_power_meter__v_zero * _measurement2_three_phase_meter2_power_meter__i_zero;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output = 0.018500823612264846 * (_measurement2_three_phase_meter2_power_meter__Pac + _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1) - (-0.9629983527754703) * _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1;
+    _measurement2_three_phase_meter2_power_meter__filter_1_outputQ = 0.018500823612264846 * (_measurement2_three_phase_meter2_power_meter__Qac + _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1Q) - (-0.9629983527754703) * _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1Q;
+    _measurement2_three_phase_meter2_power_meter__filter_1_outputP0 = 0.018500823612264846 * (_measurement2_three_phase_meter2_power_meter__P0ac + _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1P0) - (-0.9629983527754703) * _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1P0;
+    _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1 = _measurement2_three_phase_meter2_power_meter__Pac;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1 = _measurement2_three_phase_meter2_power_meter__filter_1_output;
+    _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1Q = _measurement2_three_phase_meter2_power_meter__Qac;;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1Q = _measurement2_three_phase_meter2_power_meter__filter_1_outputQ;
+    _measurement2_three_phase_meter2_power_meter__filter_1_input_k_minus_1P0 = _measurement2_three_phase_meter2_power_meter__P0ac;
+    _measurement2_three_phase_meter2_power_meter__filter_1_output_k_minus_1P0 = _measurement2_three_phase_meter2_power_meter__filter_1_outputP0;
+    _measurement2_three_phase_meter2_power_meter__Pdc = _measurement2_three_phase_meter2_power_meter__filter_1_output;
+    _measurement2_three_phase_meter2_power_meter__Qdc = _measurement2_three_phase_meter2_power_meter__filter_1_outputQ;
+    _measurement2_three_phase_meter2_power_meter__P0dc = _measurement2_three_phase_meter2_power_meter__filter_1_outputP0;
+    _measurement2_three_phase_meter2_power_meter__apparent = sqrt(pow(_measurement2_three_phase_meter2_power_meter__Pdc, 2) + pow(_measurement2_three_phase_meter2_power_meter__Qdc, 2));
+    if (_measurement2_three_phase_meter2_power_meter__apparent > 0)
+        _measurement2_three_phase_meter2_power_meter__k_factor = _measurement2_three_phase_meter2_power_meter__Pdc / _measurement2_three_phase_meter2_power_meter__apparent;
+    else
+        _measurement2_three_phase_meter2_power_meter__k_factor = 0;
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.abc to dq1.abc to alpha beta
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _measurement3_three_phase_meter3_van_va1__out - _measurement3_three_phase_meter3_vbn_va1__out - _measurement3_three_phase_meter3_vcn_va1__out) * 0.3333333333333333;
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta = (_measurement3_three_phase_meter3_vbn_va1__out - _measurement3_three_phase_meter3_vcn_va1__out) * 0.5773502691896258;
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma = (_measurement3_three_phase_meter3_van_va1__out + _measurement3_three_phase_meter3_vbn_va1__out + _measurement3_three_phase_meter3_vcn_va1__out) * 0.3333333333333333;
+    // Generated from the component: measurement3.Three-phase Meter3.Power Meter
+    _measurement3_three_phase_meter3_power_meter__v_alpha = SQRT_2OVER3 * ( _measurement3_three_phase_meter3_van_va1__out - 0.5f * _measurement3_three_phase_meter3_vbn_va1__out - 0.5f * _measurement3_three_phase_meter3_vcn_va1__out);
+    _measurement3_three_phase_meter3_power_meter__v_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement3_three_phase_meter3_vbn_va1__out - SQRT3_OVER_2 * _measurement3_three_phase_meter3_vcn_va1__out);
+    _measurement3_three_phase_meter3_power_meter__i_alpha = SQRT_2OVER3 * ( _measurement3_three_phase_meter3_ia_ia1__out - 0.5f * _measurement3_three_phase_meter3_ib_ia1__out - 0.5f * _measurement3_three_phase_meter3_ic_ia1__out);
+    _measurement3_three_phase_meter3_power_meter__i_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement3_three_phase_meter3_ib_ia1__out - SQRT3_OVER_2 * _measurement3_three_phase_meter3_ic_ia1__out);
+    _measurement3_three_phase_meter3_power_meter__v_zero = ONE_DIV_BY_SQRT_3 * (_measurement3_three_phase_meter3_van_va1__out + _measurement3_three_phase_meter3_vbn_va1__out + _measurement3_three_phase_meter3_vcn_va1__out);
+    _measurement3_three_phase_meter3_power_meter__i_zero = ONE_DIV_BY_SQRT_3 * (_measurement3_three_phase_meter3_ia_ia1__out + _measurement3_three_phase_meter3_ib_ia1__out + _measurement3_three_phase_meter3_ic_ia1__out);
+    _measurement3_three_phase_meter3_power_meter__Pac = _measurement3_three_phase_meter3_power_meter__v_alpha * _measurement3_three_phase_meter3_power_meter__i_alpha + _measurement3_three_phase_meter3_power_meter__v_beta * _measurement3_three_phase_meter3_power_meter__i_beta;
+    _measurement3_three_phase_meter3_power_meter__Qac = _measurement3_three_phase_meter3_power_meter__v_beta * _measurement3_three_phase_meter3_power_meter__i_alpha - _measurement3_three_phase_meter3_power_meter__v_alpha * _measurement3_three_phase_meter3_power_meter__i_beta;
+    _measurement3_three_phase_meter3_power_meter__P0ac = _measurement3_three_phase_meter3_power_meter__v_zero * _measurement3_three_phase_meter3_power_meter__i_zero;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output = 0.018500823612264846 * (_measurement3_three_phase_meter3_power_meter__Pac + _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1) - (-0.9629983527754703) * _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1;
+    _measurement3_three_phase_meter3_power_meter__filter_1_outputQ = 0.018500823612264846 * (_measurement3_three_phase_meter3_power_meter__Qac + _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1Q) - (-0.9629983527754703) * _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1Q;
+    _measurement3_three_phase_meter3_power_meter__filter_1_outputP0 = 0.018500823612264846 * (_measurement3_three_phase_meter3_power_meter__P0ac + _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1P0) - (-0.9629983527754703) * _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1P0;
+    _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1 = _measurement3_three_phase_meter3_power_meter__Pac;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1 = _measurement3_three_phase_meter3_power_meter__filter_1_output;
+    _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1Q = _measurement3_three_phase_meter3_power_meter__Qac;;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1Q = _measurement3_three_phase_meter3_power_meter__filter_1_outputQ;
+    _measurement3_three_phase_meter3_power_meter__filter_1_input_k_minus_1P0 = _measurement3_three_phase_meter3_power_meter__P0ac;
+    _measurement3_three_phase_meter3_power_meter__filter_1_output_k_minus_1P0 = _measurement3_three_phase_meter3_power_meter__filter_1_outputP0;
+    _measurement3_three_phase_meter3_power_meter__Pdc = _measurement3_three_phase_meter3_power_meter__filter_1_output;
+    _measurement3_three_phase_meter3_power_meter__Qdc = _measurement3_three_phase_meter3_power_meter__filter_1_outputQ;
+    _measurement3_three_phase_meter3_power_meter__P0dc = _measurement3_three_phase_meter3_power_meter__filter_1_outputP0;
+    _measurement3_three_phase_meter3_power_meter__apparent = sqrt(pow(_measurement3_three_phase_meter3_power_meter__Pdc, 2) + pow(_measurement3_three_phase_meter3_power_meter__Qdc, 2));
+    if (_measurement3_three_phase_meter3_power_meter__apparent > 0)
+        _measurement3_three_phase_meter3_power_meter__k_factor = _measurement3_three_phase_meter3_power_meter__Pdc / _measurement3_three_phase_meter3_power_meter__apparent;
+    else
+        _measurement3_three_phase_meter3_power_meter__k_factor = 0;
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.abc to dq1.abc to alpha beta
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _measurement4_three_phase_meter4_van_va1__out - _measurement4_three_phase_meter4_vbn_va1__out - _measurement4_three_phase_meter4_vcn_va1__out) * 0.3333333333333333;
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta = (_measurement4_three_phase_meter4_vbn_va1__out - _measurement4_three_phase_meter4_vcn_va1__out) * 0.5773502691896258;
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma = (_measurement4_three_phase_meter4_van_va1__out + _measurement4_three_phase_meter4_vbn_va1__out + _measurement4_three_phase_meter4_vcn_va1__out) * 0.3333333333333333;
+    // Generated from the component: measurement4.Three-phase Meter4.Power Meter
+    _measurement4_three_phase_meter4_power_meter__v_alpha = SQRT_2OVER3 * ( _measurement4_three_phase_meter4_van_va1__out - 0.5f * _measurement4_three_phase_meter4_vbn_va1__out - 0.5f * _measurement4_three_phase_meter4_vcn_va1__out);
+    _measurement4_three_phase_meter4_power_meter__v_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement4_three_phase_meter4_vbn_va1__out - SQRT3_OVER_2 * _measurement4_three_phase_meter4_vcn_va1__out);
+    _measurement4_three_phase_meter4_power_meter__i_alpha = SQRT_2OVER3 * ( _measurement4_three_phase_meter4_ia_ia1__out - 0.5f * _measurement4_three_phase_meter4_ib_ia1__out - 0.5f * _measurement4_three_phase_meter4_ic_ia1__out);
+    _measurement4_three_phase_meter4_power_meter__i_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement4_three_phase_meter4_ib_ia1__out - SQRT3_OVER_2 * _measurement4_three_phase_meter4_ic_ia1__out);
+    _measurement4_three_phase_meter4_power_meter__v_zero = ONE_DIV_BY_SQRT_3 * (_measurement4_three_phase_meter4_van_va1__out + _measurement4_three_phase_meter4_vbn_va1__out + _measurement4_three_phase_meter4_vcn_va1__out);
+    _measurement4_three_phase_meter4_power_meter__i_zero = ONE_DIV_BY_SQRT_3 * (_measurement4_three_phase_meter4_ia_ia1__out + _measurement4_three_phase_meter4_ib_ia1__out + _measurement4_three_phase_meter4_ic_ia1__out);
+    _measurement4_three_phase_meter4_power_meter__Pac = _measurement4_three_phase_meter4_power_meter__v_alpha * _measurement4_three_phase_meter4_power_meter__i_alpha + _measurement4_three_phase_meter4_power_meter__v_beta * _measurement4_three_phase_meter4_power_meter__i_beta;
+    _measurement4_three_phase_meter4_power_meter__Qac = _measurement4_three_phase_meter4_power_meter__v_beta * _measurement4_three_phase_meter4_power_meter__i_alpha - _measurement4_three_phase_meter4_power_meter__v_alpha * _measurement4_three_phase_meter4_power_meter__i_beta;
+    _measurement4_three_phase_meter4_power_meter__P0ac = _measurement4_three_phase_meter4_power_meter__v_zero * _measurement4_three_phase_meter4_power_meter__i_zero;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output = 0.018500823612264846 * (_measurement4_three_phase_meter4_power_meter__Pac + _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1) - (-0.9629983527754703) * _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1;
+    _measurement4_three_phase_meter4_power_meter__filter_1_outputQ = 0.018500823612264846 * (_measurement4_three_phase_meter4_power_meter__Qac + _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1Q) - (-0.9629983527754703) * _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1Q;
+    _measurement4_three_phase_meter4_power_meter__filter_1_outputP0 = 0.018500823612264846 * (_measurement4_three_phase_meter4_power_meter__P0ac + _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1P0) - (-0.9629983527754703) * _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1P0;
+    _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1 = _measurement4_three_phase_meter4_power_meter__Pac;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1 = _measurement4_three_phase_meter4_power_meter__filter_1_output;
+    _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1Q = _measurement4_three_phase_meter4_power_meter__Qac;;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1Q = _measurement4_three_phase_meter4_power_meter__filter_1_outputQ;
+    _measurement4_three_phase_meter4_power_meter__filter_1_input_k_minus_1P0 = _measurement4_three_phase_meter4_power_meter__P0ac;
+    _measurement4_three_phase_meter4_power_meter__filter_1_output_k_minus_1P0 = _measurement4_three_phase_meter4_power_meter__filter_1_outputP0;
+    _measurement4_three_phase_meter4_power_meter__Pdc = _measurement4_three_phase_meter4_power_meter__filter_1_output;
+    _measurement4_three_phase_meter4_power_meter__Qdc = _measurement4_three_phase_meter4_power_meter__filter_1_outputQ;
+    _measurement4_three_phase_meter4_power_meter__P0dc = _measurement4_three_phase_meter4_power_meter__filter_1_outputP0;
+    _measurement4_three_phase_meter4_power_meter__apparent = sqrt(pow(_measurement4_three_phase_meter4_power_meter__Pdc, 2) + pow(_measurement4_three_phase_meter4_power_meter__Qdc, 2));
+    if (_measurement4_three_phase_meter4_power_meter__apparent > 0)
+        _measurement4_three_phase_meter4_power_meter__k_factor = _measurement4_three_phase_meter4_power_meter__Pdc / _measurement4_three_phase_meter4_power_meter__apparent;
+    else
+        _measurement4_three_phase_meter4_power_meter__k_factor = 0;
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.abc to dq1.abc to alpha beta
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _measurement5_three_phase_meter5_van_va1__out - _measurement5_three_phase_meter5_vbn_va1__out - _measurement5_three_phase_meter5_vcn_va1__out) * 0.3333333333333333;
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta = (_measurement5_three_phase_meter5_vbn_va1__out - _measurement5_three_phase_meter5_vcn_va1__out) * 0.5773502691896258;
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma = (_measurement5_three_phase_meter5_van_va1__out + _measurement5_three_phase_meter5_vbn_va1__out + _measurement5_three_phase_meter5_vcn_va1__out) * 0.3333333333333333;
+    // Generated from the component: measurement5.Three-phase Meter5.Power Meter
+    _measurement5_three_phase_meter5_power_meter__v_alpha = SQRT_2OVER3 * ( _measurement5_three_phase_meter5_van_va1__out - 0.5f * _measurement5_three_phase_meter5_vbn_va1__out - 0.5f * _measurement5_three_phase_meter5_vcn_va1__out);
+    _measurement5_three_phase_meter5_power_meter__v_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement5_three_phase_meter5_vbn_va1__out - SQRT3_OVER_2 * _measurement5_three_phase_meter5_vcn_va1__out);
+    _measurement5_three_phase_meter5_power_meter__i_alpha = SQRT_2OVER3 * ( _measurement5_three_phase_meter5_ia_ia1__out - 0.5f * _measurement5_three_phase_meter5_ib_ia1__out - 0.5f * _measurement5_three_phase_meter5_ic_ia1__out);
+    _measurement5_three_phase_meter5_power_meter__i_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement5_three_phase_meter5_ib_ia1__out - SQRT3_OVER_2 * _measurement5_three_phase_meter5_ic_ia1__out);
+    _measurement5_three_phase_meter5_power_meter__v_zero = ONE_DIV_BY_SQRT_3 * (_measurement5_three_phase_meter5_van_va1__out + _measurement5_three_phase_meter5_vbn_va1__out + _measurement5_three_phase_meter5_vcn_va1__out);
+    _measurement5_three_phase_meter5_power_meter__i_zero = ONE_DIV_BY_SQRT_3 * (_measurement5_three_phase_meter5_ia_ia1__out + _measurement5_three_phase_meter5_ib_ia1__out + _measurement5_three_phase_meter5_ic_ia1__out);
+    _measurement5_three_phase_meter5_power_meter__Pac = _measurement5_three_phase_meter5_power_meter__v_alpha * _measurement5_three_phase_meter5_power_meter__i_alpha + _measurement5_three_phase_meter5_power_meter__v_beta * _measurement5_three_phase_meter5_power_meter__i_beta;
+    _measurement5_three_phase_meter5_power_meter__Qac = _measurement5_three_phase_meter5_power_meter__v_beta * _measurement5_three_phase_meter5_power_meter__i_alpha - _measurement5_three_phase_meter5_power_meter__v_alpha * _measurement5_three_phase_meter5_power_meter__i_beta;
+    _measurement5_three_phase_meter5_power_meter__P0ac = _measurement5_three_phase_meter5_power_meter__v_zero * _measurement5_three_phase_meter5_power_meter__i_zero;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output = 0.018500823612264846 * (_measurement5_three_phase_meter5_power_meter__Pac + _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1) - (-0.9629983527754703) * _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1;
+    _measurement5_three_phase_meter5_power_meter__filter_1_outputQ = 0.018500823612264846 * (_measurement5_three_phase_meter5_power_meter__Qac + _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1Q) - (-0.9629983527754703) * _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1Q;
+    _measurement5_three_phase_meter5_power_meter__filter_1_outputP0 = 0.018500823612264846 * (_measurement5_three_phase_meter5_power_meter__P0ac + _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1P0) - (-0.9629983527754703) * _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1P0;
+    _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1 = _measurement5_three_phase_meter5_power_meter__Pac;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1 = _measurement5_three_phase_meter5_power_meter__filter_1_output;
+    _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1Q = _measurement5_three_phase_meter5_power_meter__Qac;;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1Q = _measurement5_three_phase_meter5_power_meter__filter_1_outputQ;
+    _measurement5_three_phase_meter5_power_meter__filter_1_input_k_minus_1P0 = _measurement5_three_phase_meter5_power_meter__P0ac;
+    _measurement5_three_phase_meter5_power_meter__filter_1_output_k_minus_1P0 = _measurement5_three_phase_meter5_power_meter__filter_1_outputP0;
+    _measurement5_three_phase_meter5_power_meter__Pdc = _measurement5_three_phase_meter5_power_meter__filter_1_output;
+    _measurement5_three_phase_meter5_power_meter__Qdc = _measurement5_three_phase_meter5_power_meter__filter_1_outputQ;
+    _measurement5_three_phase_meter5_power_meter__P0dc = _measurement5_three_phase_meter5_power_meter__filter_1_outputP0;
+    _measurement5_three_phase_meter5_power_meter__apparent = sqrt(pow(_measurement5_three_phase_meter5_power_meter__Pdc, 2) + pow(_measurement5_three_phase_meter5_power_meter__Qdc, 2));
+    if (_measurement5_three_phase_meter5_power_meter__apparent > 0)
+        _measurement5_three_phase_meter5_power_meter__k_factor = _measurement5_three_phase_meter5_power_meter__Pdc / _measurement5_three_phase_meter5_power_meter__apparent;
+    else
+        _measurement5_three_phase_meter5_power_meter__k_factor = 0;
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.abc to dq1.abc to alpha beta
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha = (2.0 * _measurement6_three_phase_meter6_van_va1__out - _measurement6_three_phase_meter6_vbn_va1__out - _measurement6_three_phase_meter6_vcn_va1__out) * 0.3333333333333333;
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta = (_measurement6_three_phase_meter6_vbn_va1__out - _measurement6_three_phase_meter6_vcn_va1__out) * 0.5773502691896258;
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__gamma = (_measurement6_three_phase_meter6_van_va1__out + _measurement6_three_phase_meter6_vbn_va1__out + _measurement6_three_phase_meter6_vcn_va1__out) * 0.3333333333333333;
+    // Generated from the component: measurement6.Three-phase Meter6.Power Meter
+    _measurement6_three_phase_meter6_power_meter__v_alpha = SQRT_2OVER3 * ( _measurement6_three_phase_meter6_van_va1__out - 0.5f * _measurement6_three_phase_meter6_vbn_va1__out - 0.5f * _measurement6_three_phase_meter6_vcn_va1__out);
+    _measurement6_three_phase_meter6_power_meter__v_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement6_three_phase_meter6_vbn_va1__out - SQRT3_OVER_2 * _measurement6_three_phase_meter6_vcn_va1__out);
+    _measurement6_three_phase_meter6_power_meter__i_alpha = SQRT_2OVER3 * ( _measurement6_three_phase_meter6_ia_ia1__out - 0.5f * _measurement6_three_phase_meter6_ib_ia1__out - 0.5f * _measurement6_three_phase_meter6_ic_ia1__out);
+    _measurement6_three_phase_meter6_power_meter__i_beta = SQRT_2OVER3 * (SQRT3_OVER_2 * _measurement6_three_phase_meter6_ib_ia1__out - SQRT3_OVER_2 * _measurement6_three_phase_meter6_ic_ia1__out);
+    _measurement6_three_phase_meter6_power_meter__v_zero = ONE_DIV_BY_SQRT_3 * (_measurement6_three_phase_meter6_van_va1__out + _measurement6_three_phase_meter6_vbn_va1__out + _measurement6_three_phase_meter6_vcn_va1__out);
+    _measurement6_three_phase_meter6_power_meter__i_zero = ONE_DIV_BY_SQRT_3 * (_measurement6_three_phase_meter6_ia_ia1__out + _measurement6_three_phase_meter6_ib_ia1__out + _measurement6_three_phase_meter6_ic_ia1__out);
+    _measurement6_three_phase_meter6_power_meter__Pac = _measurement6_three_phase_meter6_power_meter__v_alpha * _measurement6_three_phase_meter6_power_meter__i_alpha + _measurement6_three_phase_meter6_power_meter__v_beta * _measurement6_three_phase_meter6_power_meter__i_beta;
+    _measurement6_three_phase_meter6_power_meter__Qac = _measurement6_three_phase_meter6_power_meter__v_beta * _measurement6_three_phase_meter6_power_meter__i_alpha - _measurement6_three_phase_meter6_power_meter__v_alpha * _measurement6_three_phase_meter6_power_meter__i_beta;
+    _measurement6_three_phase_meter6_power_meter__P0ac = _measurement6_three_phase_meter6_power_meter__v_zero * _measurement6_three_phase_meter6_power_meter__i_zero;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output = 0.018500823612264846 * (_measurement6_three_phase_meter6_power_meter__Pac + _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1) - (-0.9629983527754703) * _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1;
+    _measurement6_three_phase_meter6_power_meter__filter_1_outputQ = 0.018500823612264846 * (_measurement6_three_phase_meter6_power_meter__Qac + _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1Q) - (-0.9629983527754703) * _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1Q;
+    _measurement6_three_phase_meter6_power_meter__filter_1_outputP0 = 0.018500823612264846 * (_measurement6_three_phase_meter6_power_meter__P0ac + _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1P0) - (-0.9629983527754703) * _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1P0;
+    _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1 = _measurement6_three_phase_meter6_power_meter__Pac;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1 = _measurement6_three_phase_meter6_power_meter__filter_1_output;
+    _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1Q = _measurement6_three_phase_meter6_power_meter__Qac;;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1Q = _measurement6_three_phase_meter6_power_meter__filter_1_outputQ;
+    _measurement6_three_phase_meter6_power_meter__filter_1_input_k_minus_1P0 = _measurement6_three_phase_meter6_power_meter__P0ac;
+    _measurement6_three_phase_meter6_power_meter__filter_1_output_k_minus_1P0 = _measurement6_three_phase_meter6_power_meter__filter_1_outputP0;
+    _measurement6_three_phase_meter6_power_meter__Pdc = _measurement6_three_phase_meter6_power_meter__filter_1_output;
+    _measurement6_three_phase_meter6_power_meter__Qdc = _measurement6_three_phase_meter6_power_meter__filter_1_outputQ;
+    _measurement6_three_phase_meter6_power_meter__P0dc = _measurement6_three_phase_meter6_power_meter__filter_1_outputP0;
+    _measurement6_three_phase_meter6_power_meter__apparent = sqrt(pow(_measurement6_three_phase_meter6_power_meter__Pdc, 2) + pow(_measurement6_three_phase_meter6_power_meter__Qdc, 2));
+    if (_measurement6_three_phase_meter6_power_meter__apparent > 0)
+        _measurement6_three_phase_meter6_power_meter__k_factor = _measurement6_three_phase_meter6_power_meter__Pdc / _measurement6_three_phase_meter6_power_meter__apparent;
+    else
+        _measurement6_three_phase_meter6_power_meter__k_factor = 0;
+    // Generated from the component: Grid forming inverter (averaged).griddisconnect1
+    HIL_OutInt32(0xf00404, _grid_forming_inverter__averaged__logical_operator2__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Signal switch1
+    _grid_forming_inverter__averaged__controller_frequency_droop_signal_switch1__out = (_grid_forming_inverter__averaged__product2__out != 1.0) ? _grid_forming_inverter__averaged__controller_frequency_droop_constant5__out : _grid_forming_inverter__averaged__controller_frequency_droop_constant6__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Signal switch1
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out = (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out < 0.5f) ? _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_one__out : _grid_forming_inverter__averaged__constant1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Signal switch1
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out = (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out < 0.5f) ? _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_one__out : _grid_forming_inverter__averaged__constant1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq2.Termination1
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq2.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq4.Termination1
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq4.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq3.Termination1
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq3.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq.Termination1
+    // Generated from the component: Grid forming inverter (averaged).Controller.Current_abc_to_dq.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Digital Probe1
+    HIL_OutInt32(0xf00405, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Logical operator2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator2__out = !_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Product2
+    _grid_forming_inverter__averaged_2_product2__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out * _constant1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.S2.CTC_Wrapper
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out == 0x0) {
+        HIL_OutInt32(0x8640480, 0x0);
+    }
+    else {
+        HIL_OutInt32(0x8640480, 0x1);
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Signal switch1
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out = (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out < 0.5f) ? _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_one__out : _grid_forming_inverter__averaged_2_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Signal switch1
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out = (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out < 0.5f) ? _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_one__out : _grid_forming_inverter__averaged_2_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Current_abc_to_dq3.Termination
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Current_abc_to_dq3.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq2.Termination1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq2.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq4.Termination1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq4.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq3.Termination1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq3.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Termination1
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq.Termination1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Current_abc_to_dq.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Digital Probe1
+    HIL_OutInt32(0xf0040a, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Logical operator2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator2__out = !_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Product2
+    _grid_forming_inverter__averaged_3_product2__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out * _constant1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.S2.CTC_Wrapper
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out == 0x0) {
+        HIL_OutInt32(0x8a40480, 0x0);
+    }
+    else {
+        HIL_OutInt32(0x8a40480, 0x1);
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Signal switch1
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out = (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__out < 0.5f) ? _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_one__out : _grid_forming_inverter__averaged_3_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Signal switch1
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out = (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__out < 0.5f) ? _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_one__out : _grid_forming_inverter__averaged_3_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Current_abc_to_dq3.Termination
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Current_abc_to_dq3.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq2.Termination1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq2.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq4.Termination1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq4.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq3.Termination1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq3.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Termination1
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__out);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq.Termination1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Current_abc_to_dq.abc to dq1.alpha beta to dq
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha - _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q = _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k1 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__alpha + _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: L4.griddisconnect4
+    HIL_OutInt32(0xf00410, _l4_logical_operator2__out != 0x0);
+    // Generated from the component: L5.griddisconnect5
+    HIL_OutInt32(0xf00412, _l5_logical_operator2__out != 0x0);
+    // Generated from the component: L6.griddisconnect6
+    HIL_OutInt32(0xf00414, _l6_logical_operator2__out != 0x0);
+    // Generated from the component: Modbus1.C function5
+    _modbus1_c_function5__in = _modbus1_product5__out;
+    if (_modbus1_c_function5__in >= 0) {
+        _modbus1_c_function5__out = _modbus1_c_function5__in;
+        _modbus1_c_function5__sign = 0;
+    }
+    else {
+        _modbus1_c_function5__out = _modbus1_c_function5__in * -1;
+        _modbus1_c_function5__sign = 1;
+    }
+    // Generated from the component: Modbus1.flow
+    HIL_OutAO(0x403e, (float)_modbus1_product5__out);
+    // Generated from the component: Modbus1.C function2
+    _modbus1_c_function2__in = _modbus1_bus_split1__out1;
+    _modbus1_c_function2__sign = _modbus1_bus_split1__out;
+    _modbus1_c_function2__out = _modbus1_c_function2__in * ((-2 * _modbus1_c_function2__sign) + 1);
+    // Generated from the component: Modbus1.C function4
+    _modbus1_c_function4__in = _modbus1_bus_split1__out3;
+    _modbus1_c_function4__sign = _modbus1_bus_split1__out2;
+    _modbus1_c_function4__out = _modbus1_c_function4__in * ((-2 * _modbus1_c_function4__sign) + 1);
+    // Generated from the component: Modbus2.C function5
+    _modbus2_c_function5__in = _modbus2_product5__out;
+    if (_modbus2_c_function5__in >= 0) {
+        _modbus2_c_function5__out = _modbus2_c_function5__in;
+        _modbus2_c_function5__sign = 0;
+    }
+    else {
+        _modbus2_c_function5__out = _modbus2_c_function5__in * -1;
+        _modbus2_c_function5__sign = 1;
+    }
+    // Generated from the component: Modbus2.flow
+    HIL_OutAO(0x4044, (float)_modbus2_product5__out);
+    // Generated from the component: Modbus2.C function2
+    _modbus2_c_function2__in = _modbus2_bus_split1__out1;
+    _modbus2_c_function2__sign = _modbus2_bus_split1__out;
+    _modbus2_c_function2__out = _modbus2_c_function2__in * ((-2 * _modbus2_c_function2__sign) + 1);
+    // Generated from the component: Modbus2.C function4
+    _modbus2_c_function4__in = _modbus2_bus_split1__out3;
+    _modbus2_c_function4__sign = _modbus2_bus_split1__out2;
+    _modbus2_c_function4__out = _modbus2_c_function4__in * ((-2 * _modbus2_c_function4__sign) + 1);
+    // Generated from the component: Modbus3.C function5
+    _modbus3_c_function5__in = _modbus3_product5__out;
+    if (_modbus3_c_function5__in >= 0) {
+        _modbus3_c_function5__out = _modbus3_c_function5__in;
+        _modbus3_c_function5__sign = 0;
+    }
+    else {
+        _modbus3_c_function5__out = _modbus3_c_function5__in * -1;
+        _modbus3_c_function5__sign = 1;
+    }
+    // Generated from the component: Modbus3.flow
+    HIL_OutAO(0x404a, (float)_modbus3_product5__out);
+    // Generated from the component: Modbus3.C function2
+    _modbus3_c_function2__in = _modbus3_bus_split1__out1;
+    _modbus3_c_function2__sign = _modbus3_bus_split1__out;
+    _modbus3_c_function2__out = _modbus3_c_function2__in * ((-2 * _modbus3_c_function2__sign) + 1);
+    // Generated from the component: Modbus3.C function4
+    _modbus3_c_function4__in = _modbus3_bus_split1__out3;
+    _modbus3_c_function4__sign = _modbus3_bus_split1__out2;
+    _modbus3_c_function4__out = _modbus3_c_function4__in * ((-2 * _modbus3_c_function4__sign) + 1);
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Termination1
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.abc to dq1.alpha beta to dq
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__out);
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__out);
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d = _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha - _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q = _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha + _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: measurement1.Three-phase Meter1.Gain1
+    _measurement1_three_phase_meter1_gain1__out = 0.001 * _measurement1_three_phase_meter1_power_meter__Pdc;
+    // Generated from the component: measurement1.Three-phase Meter1.Gain2
+    _measurement1_three_phase_meter1_gain2__out = 0.001 * _measurement1_three_phase_meter1_power_meter__Qdc;
+    // Generated from the component: measurement1.Three-phase Meter1.POWER_PF
+    HIL_OutAO(0x404e, (float)_measurement1_three_phase_meter1_power_meter__k_factor);
+    // Generated from the component: measurement1.Three-phase Meter1.POWER_S
+    HIL_OutAO(0x4050, (float)_measurement1_three_phase_meter1_power_meter__apparent);
+    // Generated from the component: measurement1.Three-phase Meter1.TRMpac
+    // Generated from the component: measurement1.Three-phase Meter1.TRMqac
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Termination1
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.abc to dq1.alpha beta to dq
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__out);
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__out);
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d = _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha - _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q = _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha + _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: measurement2.Three-phase Meter2.Gain1
+    _measurement2_three_phase_meter2_gain1__out = 0.001 * _measurement2_three_phase_meter2_power_meter__Pdc;
+    // Generated from the component: measurement2.Three-phase Meter2.Gain2
+    _measurement2_three_phase_meter2_gain2__out = 0.001 * _measurement2_three_phase_meter2_power_meter__Qdc;
+    // Generated from the component: measurement2.Three-phase Meter2.POWER_PF
+    HIL_OutAO(0x4054, (float)_measurement2_three_phase_meter2_power_meter__k_factor);
+    // Generated from the component: measurement2.Three-phase Meter2.POWER_S
+    HIL_OutAO(0x4056, (float)_measurement2_three_phase_meter2_power_meter__apparent);
+    // Generated from the component: measurement2.Three-phase Meter2.TRMpac
+    // Generated from the component: measurement2.Three-phase Meter2.TRMqac
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Termination1
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.abc to dq1.alpha beta to dq
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__out);
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__out);
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d = _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha - _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q = _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha + _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: measurement3.Three-phase Meter3.Gain1
+    _measurement3_three_phase_meter3_gain1__out = 0.001 * _measurement3_three_phase_meter3_power_meter__Pdc;
+    // Generated from the component: measurement3.Three-phase Meter3.Gain2
+    _measurement3_three_phase_meter3_gain2__out = 0.001 * _measurement3_three_phase_meter3_power_meter__Qdc;
+    // Generated from the component: measurement3.Three-phase Meter3.POWER_PF
+    HIL_OutAO(0x405a, (float)_measurement3_three_phase_meter3_power_meter__k_factor);
+    // Generated from the component: measurement3.Three-phase Meter3.POWER_S
+    HIL_OutAO(0x405c, (float)_measurement3_three_phase_meter3_power_meter__apparent);
+    // Generated from the component: measurement3.Three-phase Meter3.TRMpac
+    // Generated from the component: measurement3.Three-phase Meter3.TRMqac
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.Termination1
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.abc to dq1.alpha beta to dq
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__out);
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__out);
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d = _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha - _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q = _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha + _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: measurement4.Three-phase Meter4.Gain1
+    _measurement4_three_phase_meter4_gain1__out = 0.001 * _measurement4_three_phase_meter4_power_meter__Pdc;
+    // Generated from the component: measurement4.Three-phase Meter4.Gain2
+    _measurement4_three_phase_meter4_gain2__out = 0.001 * _measurement4_three_phase_meter4_power_meter__Qdc;
+    // Generated from the component: measurement4.Three-phase Meter4.POWER_PF
+    HIL_OutAO(0x4060, (float)_measurement4_three_phase_meter4_power_meter__k_factor);
+    // Generated from the component: measurement4.Three-phase Meter4.POWER_S
+    HIL_OutAO(0x4062, (float)_measurement4_three_phase_meter4_power_meter__apparent);
+    // Generated from the component: measurement4.Three-phase Meter4.TRMpac
+    // Generated from the component: measurement4.Three-phase Meter4.TRMqac
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.Termination1
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.abc to dq1.alpha beta to dq
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__out);
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__out);
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d = _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha - _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q = _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha + _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: measurement5.Three-phase Meter5.Gain1
+    _measurement5_three_phase_meter5_gain1__out = 0.001 * _measurement5_three_phase_meter5_power_meter__Pdc;
+    // Generated from the component: measurement5.Three-phase Meter5.Gain2
+    _measurement5_three_phase_meter5_gain2__out = 0.001 * _measurement5_three_phase_meter5_power_meter__Qdc;
+    // Generated from the component: measurement5.Three-phase Meter5.POWER_PF
+    HIL_OutAO(0x4066, (float)_measurement5_three_phase_meter5_power_meter__k_factor);
+    // Generated from the component: measurement5.Three-phase Meter5.POWER_S
+    HIL_OutAO(0x4068, (float)_measurement5_three_phase_meter5_power_meter__apparent);
+    // Generated from the component: measurement5.Three-phase Meter5.TRMpac
+    // Generated from the component: measurement5.Three-phase Meter5.TRMqac
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.Termination1
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.abc to dq1.alpha beta to dq
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 = cos(_measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__out);
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 = sin(_measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__out);
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__d = _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha - _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q = _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k1 * _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__alpha + _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__k2 * _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_abc_to_alpha_beta__beta;
+    // Generated from the component: measurement6.Three-phase Meter6.Gain1
+    _measurement6_three_phase_meter6_gain1__out = 0.001 * _measurement6_three_phase_meter6_power_meter__Pdc;
+    // Generated from the component: measurement6.Three-phase Meter6.Gain2
+    _measurement6_three_phase_meter6_gain2__out = 0.001 * _measurement6_three_phase_meter6_power_meter__Qdc;
+    // Generated from the component: measurement6.Three-phase Meter6.POWER_PF
+    HIL_OutAO(0x406c, (float)_measurement6_three_phase_meter6_power_meter__k_factor);
+    // Generated from the component: measurement6.Three-phase Meter6.POWER_S
+    HIL_OutAO(0x406e, (float)_measurement6_three_phase_meter6_power_meter__apparent);
+    // Generated from the component: measurement6.Three-phase Meter6.TRMpac
+    // Generated from the component: measurement6.Three-phase Meter6.TRMqac
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain5
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out = 0.5 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain5
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out = 0.5 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain5
+    _grid_forming_inverter__averaged__controller_gain5__out = 0.0025527320620452976 * _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain8
+    _grid_forming_inverter__averaged__controller_gain8__out = 0.0025527320620452976 * _grid_forming_inverter__averaged__controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain11
+    _grid_forming_inverter__averaged__controller_gain11__out = 0.0019586857838867367 * _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain12
+    _grid_forming_inverter__averaged__controller_gain12__out = 0.0019586857838867367 * _grid_forming_inverter__averaged__controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain10
+    _grid_forming_inverter__averaged__controller_gain10__out = 0.0025527320620452976 * _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain9
+    _grid_forming_inverter__averaged__controller_gain9__out = 0.0025527320620452976 * _grid_forming_inverter__averaged__controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain6
+    _grid_forming_inverter__averaged__controller_gain6__out = 0.0019586857838867367 * _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain7
+    _grid_forming_inverter__averaged__controller_gain7__out = 0.0019586857838867367 * _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Digital Probe6
+    HIL_OutInt32(0xf00409, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator2__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Signal switch1
+    _grid_forming_inverter__averaged_2_controller_frequency_droop_signal_switch1__out = (_grid_forming_inverter__averaged_2_product2__out != 1.0) ? _grid_forming_inverter__averaged_2_controller_frequency_droop_constant5__out : _grid_forming_inverter__averaged_2_controller_frequency_droop_constant6__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain5
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out = 0.5 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain5
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out = 0.5 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Gain7
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain7__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Gain8
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain8__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain5
+    _grid_forming_inverter__averaged_2_controller_gain5__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain8
+    _grid_forming_inverter__averaged_2_controller_gain8__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain11
+    _grid_forming_inverter__averaged_2_controller_gain11__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain12
+    _grid_forming_inverter__averaged_2_controller_gain12__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain10
+    _grid_forming_inverter__averaged_2_controller_gain10__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain9
+    _grid_forming_inverter__averaged_2_controller_gain9__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Gain5
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain5__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Gain6
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain6
+    _grid_forming_inverter__averaged_2_controller_gain6__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain7
+    _grid_forming_inverter__averaged_2_controller_gain7__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Digital Probe6
+    HIL_OutInt32(0xf0040e, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator2__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Signal switch1
+    _grid_forming_inverter__averaged_3_controller_frequency_droop_signal_switch1__out = (_grid_forming_inverter__averaged_3_product2__out != 1.0) ? _grid_forming_inverter__averaged_3_controller_frequency_droop_constant5__out : _grid_forming_inverter__averaged_3_controller_frequency_droop_constant6__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain5
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out = 0.5 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain5
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out = 0.5 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Gain7
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain7__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Gain8
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain8__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain5
+    _grid_forming_inverter__averaged_3_controller_gain5__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain8
+    _grid_forming_inverter__averaged_3_controller_gain8__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq2_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain11
+    _grid_forming_inverter__averaged_3_controller_gain11__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain12
+    _grid_forming_inverter__averaged_3_controller_gain12__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq4_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain10
+    _grid_forming_inverter__averaged_3_controller_gain10__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain9
+    _grid_forming_inverter__averaged_3_controller_gain9__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Gain5
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain5__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Gain6
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out = 0.0025527320620452976 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain6
+    _grid_forming_inverter__averaged_3_controller_gain6__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__d;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain7
+    _grid_forming_inverter__averaged_3_controller_gain7__out = 0.0019586857838867367 * _grid_forming_inverter__averaged_3_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: Modbus1.Probe2
+    HIL_OutAO(0x403a, (float)_modbus1_c_function2__out);
+    // Generated from the component: Modbus1.Product2
+    _modbus1_product2__out = (_modbus1_c_function2__out * _modbus1_constant2__out);
+    // Generated from the component: Modbus1.Probe3
+    HIL_OutAO(0x403b, (float)_modbus1_c_function4__out);
+    // Generated from the component: Modbus1.Product4
+    _modbus1_product4__out = (_modbus1_c_function4__out * _modbus1_constant4__out);
+    // Generated from the component: Modbus2.Probe2
+    HIL_OutAO(0x4040, (float)_modbus2_c_function2__out);
+    // Generated from the component: Modbus2.Product2
+    _modbus2_product2__out = (_modbus2_c_function2__out * _modbus2_constant2__out);
+    // Generated from the component: Modbus2.Probe3
+    HIL_OutAO(0x4041, (float)_modbus2_c_function4__out);
+    // Generated from the component: Modbus2.Product4
+    _modbus2_product4__out = (_modbus2_c_function4__out * _modbus2_constant4__out);
+    // Generated from the component: Modbus3.Probe2
+    HIL_OutAO(0x4046, (float)_modbus3_c_function2__out);
+    // Generated from the component: Modbus3.Product2
+    _modbus3_product2__out = (_modbus3_c_function2__out * _modbus3_constant2__out);
+    // Generated from the component: Modbus3.Probe3
+    HIL_OutAO(0x4047, (float)_modbus3_c_function4__out);
+    // Generated from the component: Modbus3.Product4
+    _modbus3_product4__out = (_modbus3_c_function4__out * _modbus3_constant4__out);
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Gain3
+    _measurement1_three_phase_meter1_phase_locked_loop_gain3__out = -1.0 * _measurement1_three_phase_meter1_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Termination2
+    // Generated from the component: measurement1.Three-phase Meter1.POWER_P
+    HIL_OutAO(0x404d, (float)_measurement1_three_phase_meter1_gain1__out);
+    // Generated from the component: Modbus1.Product6
+    _modbus1_product6__out = (_measurement1_three_phase_meter1_gain2__out * _modbus1_constant6__out);
+    // Generated from the component: measurement1.Three-phase Meter1.POWER_Q
+    HIL_OutAO(0x404f, (float)_measurement1_three_phase_meter1_gain2__out);
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Gain3
+    _measurement2_three_phase_meter2_phase_locked_loop_gain3__out = -1.0 * _measurement2_three_phase_meter2_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Termination2
+    // Generated from the component: measurement2.Three-phase Meter2.POWER_P
+    HIL_OutAO(0x4053, (float)_measurement2_three_phase_meter2_gain1__out);
+    // Generated from the component: Modbus2.Product6
+    _modbus2_product6__out = (_measurement2_three_phase_meter2_gain2__out * _modbus2_constant6__out);
+    // Generated from the component: measurement2.Three-phase Meter2.POWER_Q
+    HIL_OutAO(0x4055, (float)_measurement2_three_phase_meter2_gain2__out);
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Gain3
+    _measurement3_three_phase_meter3_phase_locked_loop_gain3__out = -1.0 * _measurement3_three_phase_meter3_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Termination2
+    // Generated from the component: measurement3.Three-phase Meter3.POWER_P
+    HIL_OutAO(0x4059, (float)_measurement3_three_phase_meter3_gain1__out);
+    // Generated from the component: Modbus3.Product6
+    _modbus3_product6__out = (_measurement3_three_phase_meter3_gain2__out * _modbus3_constant6__out);
+    // Generated from the component: measurement3.Three-phase Meter3.POWER_Q
+    HIL_OutAO(0x405b, (float)_measurement3_three_phase_meter3_gain2__out);
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.PID controller1
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+    if (_measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out = 358.1415625092364;
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else if (_measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int > 395.84067435231395) {
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out = 395.84067435231395;
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else {
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out = _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.Termination2
+    // Generated from the component: measurement4.Three-phase Meter4.POWER_P
+    HIL_OutAO(0x405f, (float)_measurement4_three_phase_meter4_gain1__out);
+    // Generated from the component: measurement4.Three-phase Meter4.POWER_Q
+    HIL_OutAO(0x4061, (float)_measurement4_three_phase_meter4_gain2__out);
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.Gain3
+    _measurement5_three_phase_meter5_phase_locked_loop_gain3__out = -1.0 * _measurement5_three_phase_meter5_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.Termination2
+    // Generated from the component: measurement5.Three-phase Meter5.POWER_P
+    HIL_OutAO(0x4065, (float)_measurement5_three_phase_meter5_gain1__out);
+    // Generated from the component: measurement5.Three-phase Meter5.POWER_Q
+    HIL_OutAO(0x4067, (float)_measurement5_three_phase_meter5_gain2__out);
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.Gain3
+    _measurement6_three_phase_meter6_phase_locked_loop_gain3__out = -1.0 * _measurement6_three_phase_meter6_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q;
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.Termination2
+    // Generated from the component: measurement6.Three-phase Meter6.POWER_P
+    HIL_OutAO(0x406b, (float)_measurement6_three_phase_meter6_gain1__out);
+    // Generated from the component: measurement6.Three-phase Meter6.POWER_Q
+    HIL_OutAO(0x406d, (float)_measurement6_three_phase_meter6_gain2__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.E_d1
+    HIL_OutAO(0x4000, (float)_grid_forming_inverter__averaged__controller_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.E_q1
+    HIL_OutAO(0x4002, (float)_grid_forming_inverter__averaged__controller_gain8__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Product10
+    _grid_forming_inverter__averaged__controller_product10__out = (_grid_forming_inverter__averaged__controller_gain11__out * _grid_forming_inverter__averaged__controller_gain8__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Product111
+    _grid_forming_inverter__averaged__controller_product111__out = (_grid_forming_inverter__averaged__controller_gain5__out * _grid_forming_inverter__averaged__controller_gain11__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Product12
+    _grid_forming_inverter__averaged__controller_product12__out = (_grid_forming_inverter__averaged__controller_gain5__out * _grid_forming_inverter__averaged__controller_gain12__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Product13
+    _grid_forming_inverter__averaged__controller_product13__out = (_grid_forming_inverter__averaged__controller_gain8__out * _grid_forming_inverter__averaged__controller_gain12__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain4
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out = 0.00015 * _grid_forming_inverter__averaged__controller_gain10__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain6
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out = 0.00015 * _grid_forming_inverter__averaged__controller_gain9__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Sum10
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum10__out = _grid_forming_inverter__averaged__controller_gain11__out - _grid_forming_inverter__averaged__controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain7
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out = 0.006 * _grid_forming_inverter__averaged__controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Xi_d1
+    HIL_OutAO(0x400b, (float)_grid_forming_inverter__averaged__controller_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Sum11
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum11__out = _grid_forming_inverter__averaged__controller_gain12__out - _grid_forming_inverter__averaged__controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain6
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out = 0.006 * _grid_forming_inverter__averaged__controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Xi_q1
+    HIL_OutAO(0x400c, (float)_grid_forming_inverter__averaged__controller_gain7__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Limit1
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain7__out < 1e-12) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit1__out = 1e-12;
+    } else {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain7__out;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Product1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product1__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain7__out * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain7__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Product2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product2__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain8__out * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain8__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.E_q1
+    HIL_OutAO(0x4016, (float)_grid_forming_inverter__averaged_2_controller_gain8__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Product10
+    _grid_forming_inverter__averaged_2_controller_product10__out = (_grid_forming_inverter__averaged_2_controller_gain11__out * _grid_forming_inverter__averaged_2_controller_gain8__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Product111
+    _grid_forming_inverter__averaged_2_controller_product111__out = (_grid_forming_inverter__averaged_2_controller_gain5__out * _grid_forming_inverter__averaged_2_controller_gain11__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Product12
+    _grid_forming_inverter__averaged_2_controller_product12__out = (_grid_forming_inverter__averaged_2_controller_gain5__out * _grid_forming_inverter__averaged_2_controller_gain12__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Product13
+    _grid_forming_inverter__averaged_2_controller_product13__out = (_grid_forming_inverter__averaged_2_controller_gain8__out * _grid_forming_inverter__averaged_2_controller_gain12__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain4
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out = 0.00015 * _grid_forming_inverter__averaged_2_controller_gain10__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.E_d1
+    HIL_OutAO(0x4014, (float)_grid_forming_inverter__averaged_2_controller_gain9__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain6
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out = 0.00015 * _grid_forming_inverter__averaged_2_controller_gain9__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Limit2
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain5__out < 1e-12) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit2__out = 1e-12;
+    } else {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit2__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain5__out;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Product3
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product3__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain5__out * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.PID controller1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state + 1.0 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out;
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int < 373.84952577718536) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__out = 373.84952577718536;
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int > 380.132711084365) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__out = 380.132711084365;
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int;
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Product4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product4__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Sum10
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum10__out = _grid_forming_inverter__averaged_2_controller_gain11__out - _grid_forming_inverter__averaged_2_controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain7
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out = 0.006 * _grid_forming_inverter__averaged_2_controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Sum11
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum11__out = _grid_forming_inverter__averaged_2_controller_gain12__out - _grid_forming_inverter__averaged_2_controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain6
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out = 0.006 * _grid_forming_inverter__averaged_2_controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Limit1
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain7__out < 1e-12) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit1__out = 1e-12;
+    } else {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain7__out;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Product1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product1__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain7__out * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain7__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Product2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product2__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain8__out * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain8__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.E_q1
+    HIL_OutAO(0x402a, (float)_grid_forming_inverter__averaged_3_controller_gain8__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Product10
+    _grid_forming_inverter__averaged_3_controller_product10__out = (_grid_forming_inverter__averaged_3_controller_gain11__out * _grid_forming_inverter__averaged_3_controller_gain8__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Product111
+    _grid_forming_inverter__averaged_3_controller_product111__out = (_grid_forming_inverter__averaged_3_controller_gain5__out * _grid_forming_inverter__averaged_3_controller_gain11__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Product12
+    _grid_forming_inverter__averaged_3_controller_product12__out = (_grid_forming_inverter__averaged_3_controller_gain5__out * _grid_forming_inverter__averaged_3_controller_gain12__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Product13
+    _grid_forming_inverter__averaged_3_controller_product13__out = (_grid_forming_inverter__averaged_3_controller_gain8__out * _grid_forming_inverter__averaged_3_controller_gain12__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain4
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out = 0.00015 * _grid_forming_inverter__averaged_3_controller_gain10__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.E_d1
+    HIL_OutAO(0x4028, (float)_grid_forming_inverter__averaged_3_controller_gain9__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Gain6
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out = 0.00015 * _grid_forming_inverter__averaged_3_controller_gain9__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Limit2
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain5__out < 1e-12) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit2__out = 1e-12;
+    } else {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit2__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain5__out;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Product3
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product3__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain5__out * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).PLL.PID controller1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state + 1.0 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out;
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int < 373.84952577718536) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__out = 373.84952577718536;
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int > 380.132711084365) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__out = 380.132711084365;
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__pi_reg_out_int;
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Product4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product4__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Sum10
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum10__out = _grid_forming_inverter__averaged_3_controller_gain11__out - _grid_forming_inverter__averaged_3_controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain7
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out = 0.006 * _grid_forming_inverter__averaged_3_controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Sum11
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum11__out = _grid_forming_inverter__averaged_3_controller_gain12__out - _grid_forming_inverter__averaged_3_controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Gain6
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out = 0.006 * _grid_forming_inverter__averaged_3_controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Sum1
+    _grid_forming_inverter__averaged__controller_frequency_droop_sum1__out = _modbus1_product2__out - _grid_forming_inverter__averaged__controller_integrator2__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Voltage droop.Sum2
+    _grid_forming_inverter__averaged__controller_voltage_droop_sum2__out = _modbus1_product4__out - _grid_forming_inverter__averaged__controller_integrator3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Sum1
+    _grid_forming_inverter__averaged_2_controller_frequency_droop_sum1__out = _modbus2_product2__out - _grid_forming_inverter__averaged_2_controller_integrator2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.Sum2
+    _grid_forming_inverter__averaged_2_controller_voltage_droop_sum2__out = _modbus2_product4__out - _grid_forming_inverter__averaged_2_controller_integrator3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Sum1
+    _grid_forming_inverter__averaged_3_controller_frequency_droop_sum1__out = _modbus3_product2__out - _grid_forming_inverter__averaged_3_controller_integrator2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.Sum2
+    _grid_forming_inverter__averaged_3_controller_voltage_droop_sum2__out = _modbus3_product4__out - _grid_forming_inverter__averaged_3_controller_integrator3__out;
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.Gain1
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement1_three_phase_meter1_phase_locked_loop_gain3__out;
+    // Generated from the component: Modbus1.C function6
+    _modbus1_c_function6__in = _modbus1_product6__out;
+    if (_modbus1_c_function6__in >= 0) {
+        _modbus1_c_function6__out = _modbus1_c_function6__in;
+        _modbus1_c_function6__sign = 0;
+    }
+    else {
+        _modbus1_c_function6__out = _modbus1_c_function6__in * -1;
+        _modbus1_c_function6__sign = 1;
+    }
+    // Generated from the component: Modbus1.Q_level
+    HIL_OutAO(0x403c, (float)_modbus1_product6__out);
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.Gain1
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement2_three_phase_meter2_phase_locked_loop_gain3__out;
+    // Generated from the component: Modbus2.C function6
+    _modbus2_c_function6__in = _modbus2_product6__out;
+    if (_modbus2_c_function6__in >= 0) {
+        _modbus2_c_function6__out = _modbus2_c_function6__in;
+        _modbus2_c_function6__sign = 0;
+    }
+    else {
+        _modbus2_c_function6__out = _modbus2_c_function6__in * -1;
+        _modbus2_c_function6__sign = 1;
+    }
+    // Generated from the component: Modbus2.Q_level
+    HIL_OutAO(0x4042, (float)_modbus2_product6__out);
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.Gain1
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement3_three_phase_meter3_phase_locked_loop_gain3__out;
+    // Generated from the component: Modbus3.C function6
+    _modbus3_c_function6__in = _modbus3_product6__out;
+    if (_modbus3_c_function6__in >= 0) {
+        _modbus3_c_function6__out = _modbus3_c_function6__in;
+        _modbus3_c_function6__sign = 0;
+    }
+    else {
+        _modbus3_c_function6__out = _modbus3_c_function6__in * -1;
+        _modbus3_c_function6__sign = 1;
+    }
+    // Generated from the component: Modbus3.Q_level
+    HIL_OutAO(0x4048, (float)_modbus3_product6__out);
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.Gain4
+    _measurement4_three_phase_meter4_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out;
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.C function1
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__in = _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out;
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__out = _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var;
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.Gain1
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement5_three_phase_meter5_phase_locked_loop_gain3__out;
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.Gain1
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement6_three_phase_meter6_phase_locked_loop_gain3__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Sum2
+    _grid_forming_inverter__averaged__controller_sum2__out = _grid_forming_inverter__averaged__controller_product10__out - _grid_forming_inverter__averaged__controller_product12__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Sum1
+    _grid_forming_inverter__averaged__controller_sum1__out = _grid_forming_inverter__averaged__controller_product111__out + _grid_forming_inverter__averaged__controller_product13__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Gain3
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain3__out = 0.015 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum10__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Gain4
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain4__out = 0.015 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum11__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Trigonometric function1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__trigonometric_function1__out = atan2(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain8__out, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Sum4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum4__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product1__out + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Sum2
+    _grid_forming_inverter__averaged_2_controller_sum2__out = _grid_forming_inverter__averaged_2_controller_product10__out - _grid_forming_inverter__averaged_2_controller_product12__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Sum1
+    _grid_forming_inverter__averaged_2_controller_sum1__out = _grid_forming_inverter__averaged_2_controller_product111__out + _grid_forming_inverter__averaged_2_controller_product13__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Trigonometric function2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__trigonometric_function2__out = atan2(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__limit2__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Gain3
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain3__out = 0.0026525823848649226 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.C function1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__var;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Sum5
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum5__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product3__out + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__product4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Gain3
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain3__out = 0.015 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum10__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Gain4
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain4__out = 0.015 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum11__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Trigonometric function1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__trigonometric_function1__out = atan2(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain8__out, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Sum4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum4__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product1__out + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Sum2
+    _grid_forming_inverter__averaged_3_controller_sum2__out = _grid_forming_inverter__averaged_3_controller_product10__out - _grid_forming_inverter__averaged_3_controller_product12__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Sum1
+    _grid_forming_inverter__averaged_3_controller_sum1__out = _grid_forming_inverter__averaged_3_controller_product111__out + _grid_forming_inverter__averaged_3_controller_product13__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Trigonometric function2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__trigonometric_function2__out = atan2(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__limit2__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Gain3
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain3__out = 0.0026525823848649226 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).PLL.C function1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__var;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Sum5
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum5__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product3__out + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__product4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Gain3
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain3__out = 0.015 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum10__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Gain4
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain4__out = 0.015 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum11__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Product1
+    _grid_forming_inverter__averaged__controller_frequency_droop_product1__out = (_grid_forming_inverter__averaged__controller_frequency_droop_sum1__out) * 1.0 / (_grid_forming_inverter__averaged__controller_frequency_droop_signal_switch1__out);
+    // Generated from the component: Modbus1.Product1
+    _modbus1_product1__out = (_grid_forming_inverter__averaged__controller_frequency_droop_sum1__out * _modbus1_constant1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Voltage droop.Gain3
+    _grid_forming_inverter__averaged__controller_voltage_droop_gain3__out = 0.001958685783886737 * _grid_forming_inverter__averaged__controller_voltage_droop_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Product1
+    _grid_forming_inverter__averaged_2_controller_frequency_droop_product1__out = (_grid_forming_inverter__averaged_2_controller_frequency_droop_sum1__out) * 1.0 / (_grid_forming_inverter__averaged_2_controller_frequency_droop_signal_switch1__out);
+    // Generated from the component: Modbus2.Product1
+    _modbus2_product1__out = (_grid_forming_inverter__averaged_2_controller_frequency_droop_sum1__out * _modbus2_constant1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.Gain3
+    _grid_forming_inverter__averaged_2_controller_voltage_droop_gain3__out = 0.001958685783886737 * _grid_forming_inverter__averaged_2_controller_voltage_droop_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Product1
+    _grid_forming_inverter__averaged_3_controller_frequency_droop_product1__out = (_grid_forming_inverter__averaged_3_controller_frequency_droop_sum1__out) * 1.0 / (_grid_forming_inverter__averaged_3_controller_frequency_droop_signal_switch1__out);
+    // Generated from the component: Modbus3.Product1
+    _modbus3_product1__out = (_grid_forming_inverter__averaged_3_controller_frequency_droop_sum1__out * _modbus3_constant1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.Gain3
+    _grid_forming_inverter__averaged_3_controller_voltage_droop_gain3__out = 0.001958685783886737 * _grid_forming_inverter__averaged_3_controller_voltage_droop_sum2__out;
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.PID controller1
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out;
+    if (_measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out = 358.1415625092364;
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else if (_measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int > 395.84067435231395) {
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out = 395.84067435231395;
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else {
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out = _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.PID controller1
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out;
+    if (_measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out = 358.1415625092364;
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else if (_measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int > 395.84067435231395) {
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out = 395.84067435231395;
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else {
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out = _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.PID controller1
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out;
+    if (_measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out = 358.1415625092364;
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else if (_measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int > 395.84067435231395) {
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out = 395.84067435231395;
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else {
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out = _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: measurement4.Three-phase Meter4.Freq
+    HIL_OutAO(0x405e, (float)_measurement4_three_phase_meter4_phase_locked_loop_gain4__out);
+    // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.measSM.mode_and_dFract
+    _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Freq = _measurement4_three_phase_meter4_phase_locked_loop_gain4__out;
+    _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__freqAbs = fabs(_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Freq);
+    if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset == 1) {
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode = 1;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract = 0.0;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset = 0;
+    }
+    else if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__freqAbs < 1.0) {
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode = 2;
+        if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract > 0.0) {
+            _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+        }
+    }
+    else if ((_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract < 1.0) && (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__freqAbs < _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__fMax)) {
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract = 0.0002 * _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract += _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract;
+        if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+            _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__cycle_counter += 1;
+            if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__cycle_counter >= 1) {
+                _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract = 1.0 - (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract - _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract);
+            }
+            else {
+                _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract -= 1.0;
+            }
+        }
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract /= 1;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode = 3;
+        if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.25) {
+            _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__submode = 1;
+        }
+        else if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.5) {
+            _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__submode = 2;
+        }
+        else if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.75) {
+            _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__submode = 3;
+        }
+        else {
+            _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__submode = 4;
+        }
+    }
+    else if (_measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode = 4;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    else {
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode = 5;
+        _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.confine phase
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__in = _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__out;
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__x = _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__in / 6.283185307179586;
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__floor_in = floor(_measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__x);
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__out = _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__in - (6.283185307179586 * _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__floor_in);
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.PID controller1
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement5_three_phase_meter5_phase_locked_loop_pll1_gain1__out;
+    if (_measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__out = 358.1415625092364;
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else if (_measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int > 395.84067435231395) {
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__out = 395.84067435231395;
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else {
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__out = _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.PID controller1
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement6_three_phase_meter6_phase_locked_loop_pll1_gain1__out;
+    if (_measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__out = 358.1415625092364;
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else if (_measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int > 395.84067435231395) {
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__out = 395.84067435231395;
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__av_active = 1;
+    } else {
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__out = _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain14
+    _grid_forming_inverter__averaged__controller_gain14__out = 200.0 * _grid_forming_inverter__averaged__controller_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain17
+    _grid_forming_inverter__averaged__controller_gain17__out = 2.5 * _grid_forming_inverter__averaged__controller_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Sum5
+    _grid_forming_inverter__averaged__controller_sum5__out = _grid_forming_inverter__averaged__controller_sum2__out - _grid_forming_inverter__averaged__controller_integrator3__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain15
+    _grid_forming_inverter__averaged__controller_gain15__out = 200.0 * _grid_forming_inverter__averaged__controller_sum1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain16
+    _grid_forming_inverter__averaged__controller_gain16__out = 2.5 * _grid_forming_inverter__averaged__controller_sum1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Sum4
+    _grid_forming_inverter__averaged__controller_sum4__out = _grid_forming_inverter__averaged__controller_sum1__out - _grid_forming_inverter__averaged__controller_integrator2__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Sum8
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum8__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain4__out + _grid_forming_inverter__averaged__controller_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).confine phase1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__trigonometric_function1__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__x = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__in / 6.283185307179586;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__floor_in = floor(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__x);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__in - (6.283185307179586 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__floor_in);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Mathematical function1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__mathematical_function1__out = sqrt(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum4__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain14
+    _grid_forming_inverter__averaged_2_controller_gain14__out = 200.0 * _grid_forming_inverter__averaged_2_controller_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain17
+    _grid_forming_inverter__averaged_2_controller_gain17__out = 2.857142857142857 * _grid_forming_inverter__averaged_2_controller_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Sum5
+    _grid_forming_inverter__averaged_2_controller_sum5__out = _grid_forming_inverter__averaged_2_controller_sum2__out - _grid_forming_inverter__averaged_2_controller_integrator3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain15
+    _grid_forming_inverter__averaged_2_controller_gain15__out = 200.0 * _grid_forming_inverter__averaged_2_controller_sum1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain16
+    _grid_forming_inverter__averaged_2_controller_gain16__out = 2.857142857142857 * _grid_forming_inverter__averaged_2_controller_sum1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Sum4
+    _grid_forming_inverter__averaged_2_controller_sum4__out = _grid_forming_inverter__averaged_2_controller_sum1__out - _grid_forming_inverter__averaged_2_controller_integrator2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).confine phase2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__trigonometric_function2__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__x = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__in / 6.283185307179586;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__floor_in = floor(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__x);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__in - (6.283185307179586 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__floor_in);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.confine phase
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__x = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__in / 6.283185307179586;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in = floor(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__x);
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__in - (6.283185307179586 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Mathematical function2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__mathematical_function2__out = sqrt(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum5__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Sum8
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum8__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain4__out + _grid_forming_inverter__averaged_2_controller_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).confine phase1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__trigonometric_function1__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__x = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__in / 6.283185307179586;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__floor_in = floor(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__x);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__in - (6.283185307179586 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__floor_in);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Mathematical function1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__mathematical_function1__out = sqrt(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum4__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain14
+    _grid_forming_inverter__averaged_3_controller_gain14__out = 200.0 * _grid_forming_inverter__averaged_3_controller_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain17
+    _grid_forming_inverter__averaged_3_controller_gain17__out = 3.3333333333333335 * _grid_forming_inverter__averaged_3_controller_sum2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Sum5
+    _grid_forming_inverter__averaged_3_controller_sum5__out = _grid_forming_inverter__averaged_3_controller_sum2__out - _grid_forming_inverter__averaged_3_controller_integrator3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain15
+    _grid_forming_inverter__averaged_3_controller_gain15__out = 200.0 * _grid_forming_inverter__averaged_3_controller_sum1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain16
+    _grid_forming_inverter__averaged_3_controller_gain16__out = 3.3333333333333335 * _grid_forming_inverter__averaged_3_controller_sum1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Sum4
+    _grid_forming_inverter__averaged_3_controller_sum4__out = _grid_forming_inverter__averaged_3_controller_sum1__out - _grid_forming_inverter__averaged_3_controller_integrator2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).confine phase2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__trigonometric_function2__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__x = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__in / 6.283185307179586;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__floor_in = floor(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__x);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__in - (6.283185307179586 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__floor_in);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).PLL.confine phase
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__x = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__in / 6.283185307179586;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in = floor(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__x);
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__in - (6.283185307179586 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__floor_in);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Mathematical function2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__mathematical_function2__out = sqrt(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum5__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Sum8
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum8__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain4__out + _grid_forming_inverter__averaged_3_controller_constant1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.P_diff1
+    HIL_OutAO(0x4004, (float)_grid_forming_inverter__averaged__controller_frequency_droop_product1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Frequency droop.Sum4
+    _grid_forming_inverter__averaged__controller_frequency_droop_sum4__out = _grid_forming_inverter__averaged__controller_frequency_droop_product1__out + _grid_forming_inverter__averaged__controller_frequency_droop_constant4__out;
+    // Generated from the component: Modbus1.C function1
+    _modbus1_c_function1__in = _modbus1_product1__out;
+    if (_modbus1_c_function1__in >= 0) {
+        _modbus1_c_function1__out = _modbus1_c_function1__in;
+        _modbus1_c_function1__sign = 0;
+    }
+    else {
+        _modbus1_c_function1__out = _modbus1_c_function1__in * -1;
+        _modbus1_c_function1__sign = 1;
+    }
+    // Generated from the component: Modbus1.Probe1
+    HIL_OutAO(0x4039, (float)_modbus1_product1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Voltage droop.Q_diff1
+    HIL_OutAO(0x400a, (float)_grid_forming_inverter__averaged__controller_voltage_droop_gain3__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Voltage droop.Sum3
+    _grid_forming_inverter__averaged__controller_voltage_droop_sum3__out = _grid_forming_inverter__averaged__controller_voltage_droop_gain3__out + _grid_forming_inverter__averaged__controller_voltage_droop_constant4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Sum5
+    _grid_forming_inverter__averaged_2_controller_frequency_droop_sum5__out = _grid_forming_inverter__averaged_2_controller_frequency_droop_product1__out + _grid_forming_inverter__averaged_2_controller_frequency_droop_gain4__out;
+    // Generated from the component: Modbus2.C function1
+    _modbus2_c_function1__in = _modbus2_product1__out;
+    if (_modbus2_c_function1__in >= 0) {
+        _modbus2_c_function1__out = _modbus2_c_function1__in;
+        _modbus2_c_function1__sign = 0;
+    }
+    else {
+        _modbus2_c_function1__out = _modbus2_c_function1__in * -1;
+        _modbus2_c_function1__sign = 1;
+    }
+    // Generated from the component: Modbus2.Probe1
+    HIL_OutAO(0x403f, (float)_modbus2_product1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.Sum4
+    _grid_forming_inverter__averaged_2_controller_voltage_droop_sum4__out = _grid_forming_inverter__averaged_2_controller_voltage_droop_gain3__out + _grid_forming_inverter__averaged_2_controller_voltage_droop_gain4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Sum5
+    _grid_forming_inverter__averaged_3_controller_frequency_droop_sum5__out = _grid_forming_inverter__averaged_3_controller_frequency_droop_product1__out + _grid_forming_inverter__averaged_3_controller_frequency_droop_gain4__out;
+    // Generated from the component: Modbus3.C function1
+    _modbus3_c_function1__in = _modbus3_product1__out;
+    if (_modbus3_c_function1__in >= 0) {
+        _modbus3_c_function1__out = _modbus3_c_function1__in;
+        _modbus3_c_function1__sign = 0;
+    }
+    else {
+        _modbus3_c_function1__out = _modbus3_c_function1__in * -1;
+        _modbus3_c_function1__sign = 1;
+    }
+    // Generated from the component: Modbus3.Probe1
+    HIL_OutAO(0x4045, (float)_modbus3_product1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.Sum4
+    _grid_forming_inverter__averaged_3_controller_voltage_droop_sum4__out = _grid_forming_inverter__averaged_3_controller_voltage_droop_gain3__out + _grid_forming_inverter__averaged_3_controller_voltage_droop_gain4__out;
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Gain4
+    _measurement1_three_phase_meter1_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out;
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.C function1
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__in = _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out;
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__out = _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__var;
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Gain4
+    _measurement2_three_phase_meter2_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out;
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.C function1
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__in = _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__out = _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__var;
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Gain4
+    _measurement3_three_phase_meter3_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out;
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.C function1
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__in = _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__out = _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__var;
+    // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.RMS
+    _measurement4_three_phase_meter4_vln_rms_calc_rms__IN1 = _measurement4_three_phase_meter4_van_va1__out;
+    _measurement4_three_phase_meter4_vln_rms_calc_rms__IN2 = _measurement4_three_phase_meter4_vbn_va1__out;
+    _measurement4_three_phase_meter4_vln_rms_calc_rms__IN3 = _measurement4_three_phase_meter4_vcn_va1__out;
+    _measurement4_three_phase_meter4_vln_rms_calc_rms__dFract = _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract;
+    _measurement4_three_phase_meter4_vln_rms_calc_rms__mode = _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__mode;
+    switch (_measurement4_three_phase_meter4_vln_rms_calc_rms__mode) {
+    case 1:
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum1 = 0.0;
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum2 = 0.0;
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum3 = 0.0;
+        break ;
+    case 2:
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS1 = _measurement4_three_phase_meter4_vln_rms_calc_rms__IN1;
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS2 = _measurement4_three_phase_meter4_vln_rms_calc_rms__IN2;
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS3 = _measurement4_three_phase_meter4_vln_rms_calc_rms__IN3;
+        break ;
+    case 3:
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum1 += _measurement4_three_phase_meter4_vln_rms_calc_rms__dFract * (_measurement4_three_phase_meter4_vln_rms_calc_rms__IN1 * _measurement4_three_phase_meter4_vln_rms_calc_rms__IN1);
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum2 += _measurement4_three_phase_meter4_vln_rms_calc_rms__dFract * (_measurement4_three_phase_meter4_vln_rms_calc_rms__IN2 * _measurement4_three_phase_meter4_vln_rms_calc_rms__IN2);
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum3 += _measurement4_three_phase_meter4_vln_rms_calc_rms__dFract * (_measurement4_three_phase_meter4_vln_rms_calc_rms__IN3 * _measurement4_three_phase_meter4_vln_rms_calc_rms__IN3);
+        break ;
+    case 4:
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS1 = sqrt(_measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum1);
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS2 = sqrt(_measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum2);
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS3 = sqrt(_measurement4_three_phase_meter4_vln_rms_calc_rms__rmsSum3);
+        break ;
+    case 5:
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS1 = fabs(_measurement4_three_phase_meter4_vln_rms_calc_rms__IN1);
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS2 = fabs(_measurement4_three_phase_meter4_vln_rms_calc_rms__IN2);
+        _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS3 = fabs(_measurement4_three_phase_meter4_vln_rms_calc_rms__IN3);
+        break ;
+    }
+    // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.termSubMode
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.Gain4
+    _measurement5_three_phase_meter5_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__out;
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.C function1
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__in = _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__out;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__out = _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__var;
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.Gain4
+    _measurement6_three_phase_meter6_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__out;
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.C function1
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__in = _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__out;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__out = _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__var;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Q1
+    HIL_OutAO(0x4007, (float)_grid_forming_inverter__averaged__controller_gain14__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Qpu
+    HIL_OutAO(0x4008, (float)_grid_forming_inverter__averaged__controller_gain17__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain13
+    _grid_forming_inverter__averaged__controller_gain13__out = 2.0 * _grid_forming_inverter__averaged__controller_sum5__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.P1
+    HIL_OutAO(0x4005, (float)_grid_forming_inverter__averaged__controller_gain15__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Ppu
+    HIL_OutAO(0x4006, (float)_grid_forming_inverter__averaged__controller_gain16__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain4
+    _grid_forming_inverter__averaged__controller_gain4__out = 2.0 * _grid_forming_inverter__averaged__controller_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum11
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum8__out - _grid_forming_inverter__averaged__controller_gain10__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Q1
+    HIL_OutAO(0x401e, (float)_grid_forming_inverter__averaged_2_controller_gain14__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Qpu
+    HIL_OutAO(0x401f, (float)_grid_forming_inverter__averaged_2_controller_gain17__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain13
+    _grid_forming_inverter__averaged_2_controller_gain13__out = 2.0 * _grid_forming_inverter__averaged_2_controller_sum5__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.P1
+    HIL_OutAO(0x401c, (float)_grid_forming_inverter__averaged_2_controller_gain15__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Ppu
+    HIL_OutAO(0x401d, (float)_grid_forming_inverter__averaged_2_controller_gain16__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain4
+    _grid_forming_inverter__averaged_2_controller_gain4__out = 2.0 * _grid_forming_inverter__averaged_2_controller_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Sum1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum1__out =  - _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase1__out + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Sum3
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum3__out =  - _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__mathematical_function1__out + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__mathematical_function2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum11
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum8__out - _grid_forming_inverter__averaged_2_controller_gain10__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Q1
+    HIL_OutAO(0x4032, (float)_grid_forming_inverter__averaged_3_controller_gain14__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Qpu
+    HIL_OutAO(0x4033, (float)_grid_forming_inverter__averaged_3_controller_gain17__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain13
+    _grid_forming_inverter__averaged_3_controller_gain13__out = 2.0 * _grid_forming_inverter__averaged_3_controller_sum5__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.P1
+    HIL_OutAO(0x4030, (float)_grid_forming_inverter__averaged_3_controller_gain15__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Ppu
+    HIL_OutAO(0x4031, (float)_grid_forming_inverter__averaged_3_controller_gain16__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain4
+    _grid_forming_inverter__averaged_3_controller_gain4__out = 2.0 * _grid_forming_inverter__averaged_3_controller_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Sum1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum1__out =  - _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase1__out + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Sum3
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum3__out =  - _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__mathematical_function1__out + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__mathematical_function2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum11
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum8__out - _grid_forming_inverter__averaged_3_controller_gain10__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Gain1
+    _grid_forming_inverter__averaged__controller_gain1__out = 0.15915494309189535 * _grid_forming_inverter__averaged__controller_frequency_droop_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product6
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out = (_grid_forming_inverter__averaged__controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product8
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out = (_grid_forming_inverter__averaged__controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product1
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out = (_grid_forming_inverter__averaged__controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product2
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out = (_grid_forming_inverter__averaged__controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.E_dREF1
+    HIL_OutAO(0x4001, (float)_grid_forming_inverter__averaged__controller_voltage_droop_sum3__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Sum7
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum7__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain3__out + _grid_forming_inverter__averaged__controller_voltage_droop_sum3__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Voltage droop.E_1
+    HIL_OutAO(0x4009, (float)_grid_forming_inverter__averaged__controller_voltage_droop_sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Frequency droop.Sum4
+    _grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out = _grid_forming_inverter__averaged_2_controller_frequency_droop_sum5__out + _grid_forming_inverter__averaged_2_controller_frequency_droop_constant4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.Sum3
+    _grid_forming_inverter__averaged_2_controller_voltage_droop_sum3__out = _grid_forming_inverter__averaged_2_controller_voltage_droop_sum4__out + _grid_forming_inverter__averaged_2_controller_voltage_droop_constant4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Frequency droop.Sum4
+    _grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out = _grid_forming_inverter__averaged_3_controller_frequency_droop_sum5__out + _grid_forming_inverter__averaged_3_controller_frequency_droop_constant4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.Sum3
+    _grid_forming_inverter__averaged_3_controller_voltage_droop_sum3__out = _grid_forming_inverter__averaged_3_controller_voltage_droop_sum4__out + _grid_forming_inverter__averaged_3_controller_voltage_droop_constant4__out;
+    // Generated from the component: measurement1.Three-phase Meter1.Freq
+    HIL_OutAO(0x404c, (float)_measurement1_three_phase_meter1_phase_locked_loop_gain4__out);
+    // Generated from the component: measurement1.Three-phase Meter1.VLn_RMS_calc.measSM.mode_and_dFract
+    _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Freq = _measurement1_three_phase_meter1_phase_locked_loop_gain4__out;
+    _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__freqAbs = fabs(_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Freq);
+    if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset == 1) {
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode = 1;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract = 0.0;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset = 0;
+    }
+    else if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__freqAbs < 1.0) {
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode = 2;
+        if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract > 0.0) {
+            _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+        }
+    }
+    else if ((_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract < 1.0) && (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__freqAbs < _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__fMax)) {
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract = 0.0002 * _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract += _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract;
+        if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+            _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__cycle_counter += 1;
+            if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__cycle_counter >= 1) {
+                _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract = 1.0 - (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract - _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract);
+            }
+            else {
+                _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract -= 1.0;
+            }
+        }
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract /= 1;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode = 3;
+        if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.25) {
+            _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__submode = 1;
+        }
+        else if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.5) {
+            _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__submode = 2;
+        }
+        else if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.75) {
+            _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__submode = 3;
+        }
+        else {
+            _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__submode = 4;
+        }
+    }
+    else if (_measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode = 4;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    else {
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode = 5;
+        _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.confine phase
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__in = _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__out;
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__x = _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__in / 6.283185307179586;
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__floor_in = floor(_measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__x);
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__out = _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__in - (6.283185307179586 * _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__floor_in);
+    // Generated from the component: measurement2.Three-phase Meter2.Freq
+    HIL_OutAO(0x4052, (float)_measurement2_three_phase_meter2_phase_locked_loop_gain4__out);
+    // Generated from the component: measurement2.Three-phase Meter2.VLn_RMS_calc.measSM.mode_and_dFract
+    _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Freq = _measurement2_three_phase_meter2_phase_locked_loop_gain4__out;
+    _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__freqAbs = fabs(_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Freq);
+    if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset == 1) {
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode = 1;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract = 0.0;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset = 0;
+    }
+    else if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__freqAbs < 1.0) {
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode = 2;
+        if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract > 0.0) {
+            _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+        }
+    }
+    else if ((_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract < 1.0) && (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__freqAbs < _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__fMax)) {
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract = 0.0002 * _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract += _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract;
+        if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+            _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__cycle_counter += 1;
+            if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__cycle_counter >= 1) {
+                _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract = 1.0 - (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract - _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract);
+            }
+            else {
+                _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract -= 1.0;
+            }
+        }
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract /= 1;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode = 3;
+        if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.25) {
+            _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__submode = 1;
+        }
+        else if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.5) {
+            _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__submode = 2;
+        }
+        else if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.75) {
+            _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__submode = 3;
+        }
+        else {
+            _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__submode = 4;
+        }
+    }
+    else if (_measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode = 4;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    else {
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode = 5;
+        _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.confine phase
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__in = _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__out;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__x = _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__in / 6.283185307179586;
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__floor_in = floor(_measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__x);
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__out = _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__in - (6.283185307179586 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__floor_in);
+    // Generated from the component: measurement3.Three-phase Meter3.Freq
+    HIL_OutAO(0x4058, (float)_measurement3_three_phase_meter3_phase_locked_loop_gain4__out);
+    // Generated from the component: measurement3.Three-phase Meter3.VLn_RMS_calc.measSM.mode_and_dFract
+    _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Freq = _measurement3_three_phase_meter3_phase_locked_loop_gain4__out;
+    _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__freqAbs = fabs(_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Freq);
+    if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset == 1) {
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode = 1;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract = 0.0;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset = 0;
+    }
+    else if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__freqAbs < 1.0) {
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode = 2;
+        if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract > 0.0) {
+            _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+        }
+    }
+    else if ((_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract < 1.0) && (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__freqAbs < _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__fMax)) {
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract = 0.0002 * _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract += _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract;
+        if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+            _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__cycle_counter += 1;
+            if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__cycle_counter >= 1) {
+                _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract = 1.0 - (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract - _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract);
+            }
+            else {
+                _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract -= 1.0;
+            }
+        }
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract /= 1;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode = 3;
+        if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.25) {
+            _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__submode = 1;
+        }
+        else if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.5) {
+            _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__submode = 2;
+        }
+        else if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.75) {
+            _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__submode = 3;
+        }
+        else {
+            _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__submode = 4;
+        }
+    }
+    else if (_measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode = 4;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    else {
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode = 5;
+        _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.confine phase
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__in = _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__out;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__x = _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__in / 6.283185307179586;
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__floor_in = floor(_measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__x);
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__out = _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__in - (6.283185307179586 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__floor_in);
+    // Generated from the component: measurement4.Three-phase Meter4.sumVLn_RMS
+    _measurement4_three_phase_meter4_sumvln_rms__out = _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS1 + _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS2 + _measurement4_three_phase_meter4_vln_rms_calc_rms__RMS3;
+    // Generated from the component: measurement5.Three-phase Meter5.Freq
+    HIL_OutAO(0x4064, (float)_measurement5_three_phase_meter5_phase_locked_loop_gain4__out);
+    // Generated from the component: measurement5.Three-phase Meter5.VLn_RMS_calc.measSM.mode_and_dFract
+    _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Freq = _measurement5_three_phase_meter5_phase_locked_loop_gain4__out;
+    _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__freqAbs = fabs(_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Freq);
+    if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset == 1) {
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode = 1;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract = 0.0;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset = 0;
+    }
+    else if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__freqAbs < 1.0) {
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode = 2;
+        if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract > 0.0) {
+            _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+        }
+    }
+    else if ((_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract < 1.0) && (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__freqAbs < _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__fMax)) {
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract = 0.0002 * _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract += _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract;
+        if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+            _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__cycle_counter += 1;
+            if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__cycle_counter >= 1) {
+                _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract = 1.0 - (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract - _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract);
+            }
+            else {
+                _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract -= 1.0;
+            }
+        }
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract /= 1;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode = 3;
+        if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.25) {
+            _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__submode = 1;
+        }
+        else if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.5) {
+            _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__submode = 2;
+        }
+        else if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.75) {
+            _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__submode = 3;
+        }
+        else {
+            _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__submode = 4;
+        }
+    }
+    else if (_measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode = 4;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    else {
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode = 5;
+        _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.confine phase
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__in = _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__out;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__x = _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__in / 6.283185307179586;
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__floor_in = floor(_measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__x);
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__out = _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__in - (6.283185307179586 * _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__floor_in);
+    // Generated from the component: measurement6.Three-phase Meter6.Freq
+    HIL_OutAO(0x406a, (float)_measurement6_three_phase_meter6_phase_locked_loop_gain4__out);
+    // Generated from the component: measurement6.Three-phase Meter6.VLn_RMS_calc.measSM.mode_and_dFract
+    _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Freq = _measurement6_three_phase_meter6_phase_locked_loop_gain4__out;
+    _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__freqAbs = fabs(_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Freq);
+    if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset == 1) {
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode = 1;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract = 0.0;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__cycle_counter = 0;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset = 0;
+    }
+    else if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__freqAbs < 1.0) {
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode = 2;
+        if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract > 0.0) {
+            _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+        }
+    }
+    else if ((_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract < 1.0) && (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__freqAbs < _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__fMax)) {
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract = 0.0002 * _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract += _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract;
+        if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+            _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__cycle_counter += 1;
+            if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__cycle_counter >= 1) {
+                _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract = 1.0 - (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract - _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract);
+            }
+            else {
+                _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract -= 1.0;
+            }
+        }
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract /= 1;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode = 3;
+        if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.25) {
+            _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__submode = 1;
+        }
+        else if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.5) {
+            _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__submode = 2;
+        }
+        else if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract < 0.75) {
+            _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__submode = 3;
+        }
+        else {
+            _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__submode = 4;
+        }
+    }
+    else if (_measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__Tfract >= 1.0) {
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode = 4;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    else {
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode = 5;
+        _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__reset = 1;
+    }
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.confine phase
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__in = _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__out;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__x = _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__in / 6.283185307179586;
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__floor_in = floor(_measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__x);
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__out = _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__in - (6.283185307179586 * _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__floor_in);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller4
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state + 0.03 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out;
+    if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int < -0.4) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = -0.4;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 1;
+    } else if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int > 0.4) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = 0.4;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).confine phase
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum1__out;
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in > 0) {
+        if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in > (6.283185307179586 / 2))_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in - 6.283185307179586;
+        else _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in;
+    }
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in < 0) {
+        if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in < (-6.283185307179586 / 2))_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in + 6.283185307179586;
+        else _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__in;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Abs2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs2__out = fabs(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum3__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant11__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant13__out;
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV >= _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q;
+    }
+    else if ((_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV < _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip) && (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV >= 0)) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV / _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip;
+    }
+    else if ((_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV < 0) && (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV >= -1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip)) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV / _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip;
+    }
+    else if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV < (-1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip)) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = -1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).volt_diff3
+    HIL_OutAO(0x4013, (float)_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller4
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state + 0.03 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out;
+    if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int < -0.35) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = -0.35;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int > 0.35) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = 0.35;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).confine phase
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum1__out;
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in > 0) {
+        if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in > (6.283185307179586 / 2))_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in - 6.283185307179586;
+        else _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in;
+    }
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in < 0) {
+        if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in < (-6.283185307179586 / 2))_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in + 6.283185307179586;
+        else _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__in;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Abs2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs2__out = fabs(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum3__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant11__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant13__out;
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV >= _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q;
+    }
+    else if ((_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV < _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip) && (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV >= 0)) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV / _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip;
+    }
+    else if ((_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV < 0) && (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV >= -1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip)) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV / _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip;
+    }
+    else if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__dV < (-1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_slip)) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q = -1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__max_Q;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).volt_diff3
+    HIL_OutAO(0x4027, (float)_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller4
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state + 0.03 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out;
+    if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int < -0.3) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = -0.3;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int > 0.3) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = 0.3;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Controller.f1
+    HIL_OutAO(0x400d, (float)_grid_forming_inverter__averaged__controller_gain1__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum10
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out = _grid_forming_inverter__averaged__controller_gain11__out - _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum13
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out = _grid_forming_inverter__averaged__controller_gain12__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum5
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out = _grid_forming_inverter__averaged__controller_gain5__out - _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum6
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out = _grid_forming_inverter__averaged__controller_gain8__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum8
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum7__out - _grid_forming_inverter__averaged__controller_gain9__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Gain4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain4__out = 0.0026525823848649226 * _grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Gain1
+    _grid_forming_inverter__averaged_2_controller_gain1__out = 0.15915494309189535 * _grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product6
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out = (_grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product8
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out = (_grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product1
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out = (_grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product2
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out = (_grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.E_dREF1
+    HIL_OutAO(0x4015, (float)_grid_forming_inverter__averaged_2_controller_voltage_droop_sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Sum7
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum7__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain3__out + _grid_forming_inverter__averaged_2_controller_voltage_droop_sum3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Voltage droop.E_1
+    HIL_OutAO(0x4020, (float)_grid_forming_inverter__averaged_2_controller_voltage_droop_sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Gain4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain4__out = 0.0026525823848649226 * _grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Gain1
+    _grid_forming_inverter__averaged_3_controller_gain1__out = 0.15915494309189535 * _grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product6
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out = (_grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain4__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product8
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out = (_grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product1
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out = (_grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain6__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product2
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out = (_grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain7__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.E_dREF1
+    HIL_OutAO(0x4029, (float)_grid_forming_inverter__averaged_3_controller_voltage_droop_sum3__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Sum7
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum7__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain3__out + _grid_forming_inverter__averaged_3_controller_voltage_droop_sum3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Voltage droop.E_1
+    HIL_OutAO(0x4034, (float)_grid_forming_inverter__averaged_3_controller_voltage_droop_sum3__out);
+    // Generated from the component: measurement1.Three-phase Meter1.VLn_RMS_calc.RMS
+    _measurement1_three_phase_meter1_vln_rms_calc_rms__IN1 = _measurement1_three_phase_meter1_van_va1__out;
+    _measurement1_three_phase_meter1_vln_rms_calc_rms__IN2 = _measurement1_three_phase_meter1_vbn_va1__out;
+    _measurement1_three_phase_meter1_vln_rms_calc_rms__IN3 = _measurement1_three_phase_meter1_vcn_va1__out;
+    _measurement1_three_phase_meter1_vln_rms_calc_rms__dFract = _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__dFract;
+    _measurement1_three_phase_meter1_vln_rms_calc_rms__mode = _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__mode;
+    switch (_measurement1_three_phase_meter1_vln_rms_calc_rms__mode) {
+    case 1:
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum1 = 0.0;
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum2 = 0.0;
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum3 = 0.0;
+        break ;
+    case 2:
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS1 = _measurement1_three_phase_meter1_vln_rms_calc_rms__IN1;
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS2 = _measurement1_three_phase_meter1_vln_rms_calc_rms__IN2;
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS3 = _measurement1_three_phase_meter1_vln_rms_calc_rms__IN3;
+        break ;
+    case 3:
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum1 += _measurement1_three_phase_meter1_vln_rms_calc_rms__dFract * (_measurement1_three_phase_meter1_vln_rms_calc_rms__IN1 * _measurement1_three_phase_meter1_vln_rms_calc_rms__IN1);
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum2 += _measurement1_three_phase_meter1_vln_rms_calc_rms__dFract * (_measurement1_three_phase_meter1_vln_rms_calc_rms__IN2 * _measurement1_three_phase_meter1_vln_rms_calc_rms__IN2);
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum3 += _measurement1_three_phase_meter1_vln_rms_calc_rms__dFract * (_measurement1_three_phase_meter1_vln_rms_calc_rms__IN3 * _measurement1_three_phase_meter1_vln_rms_calc_rms__IN3);
+        break ;
+    case 4:
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS1 = sqrt(_measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum1);
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS2 = sqrt(_measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum2);
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS3 = sqrt(_measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum3);
+        break ;
+    case 5:
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS1 = fabs(_measurement1_three_phase_meter1_vln_rms_calc_rms__IN1);
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS2 = fabs(_measurement1_three_phase_meter1_vln_rms_calc_rms__IN2);
+        _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS3 = fabs(_measurement1_three_phase_meter1_vln_rms_calc_rms__IN3);
+        break ;
+    }
+    // Generated from the component: measurement1.Three-phase Meter1.VLn_RMS_calc.termSubMode
+    // Generated from the component: measurement2.Three-phase Meter2.VLn_RMS_calc.RMS
+    _measurement2_three_phase_meter2_vln_rms_calc_rms__IN1 = _measurement2_three_phase_meter2_van_va1__out;
+    _measurement2_three_phase_meter2_vln_rms_calc_rms__IN2 = _measurement2_three_phase_meter2_vbn_va1__out;
+    _measurement2_three_phase_meter2_vln_rms_calc_rms__IN3 = _measurement2_three_phase_meter2_vcn_va1__out;
+    _measurement2_three_phase_meter2_vln_rms_calc_rms__dFract = _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__dFract;
+    _measurement2_three_phase_meter2_vln_rms_calc_rms__mode = _measurement2_three_phase_meter2_vln_rms_calc_meassm_mode_and_dfract__mode;
+    switch (_measurement2_three_phase_meter2_vln_rms_calc_rms__mode) {
+    case 1:
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum1 = 0.0;
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum2 = 0.0;
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum3 = 0.0;
+        break ;
+    case 2:
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS1 = _measurement2_three_phase_meter2_vln_rms_calc_rms__IN1;
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS2 = _measurement2_three_phase_meter2_vln_rms_calc_rms__IN2;
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS3 = _measurement2_three_phase_meter2_vln_rms_calc_rms__IN3;
+        break ;
+    case 3:
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum1 += _measurement2_three_phase_meter2_vln_rms_calc_rms__dFract * (_measurement2_three_phase_meter2_vln_rms_calc_rms__IN1 * _measurement2_three_phase_meter2_vln_rms_calc_rms__IN1);
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum2 += _measurement2_three_phase_meter2_vln_rms_calc_rms__dFract * (_measurement2_three_phase_meter2_vln_rms_calc_rms__IN2 * _measurement2_three_phase_meter2_vln_rms_calc_rms__IN2);
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum3 += _measurement2_three_phase_meter2_vln_rms_calc_rms__dFract * (_measurement2_three_phase_meter2_vln_rms_calc_rms__IN3 * _measurement2_three_phase_meter2_vln_rms_calc_rms__IN3);
+        break ;
+    case 4:
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS1 = sqrt(_measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum1);
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS2 = sqrt(_measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum2);
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS3 = sqrt(_measurement2_three_phase_meter2_vln_rms_calc_rms__rmsSum3);
+        break ;
+    case 5:
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS1 = fabs(_measurement2_three_phase_meter2_vln_rms_calc_rms__IN1);
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS2 = fabs(_measurement2_three_phase_meter2_vln_rms_calc_rms__IN2);
+        _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS3 = fabs(_measurement2_three_phase_meter2_vln_rms_calc_rms__IN3);
+        break ;
+    }
+    // Generated from the component: measurement2.Three-phase Meter2.VLn_RMS_calc.termSubMode
+    // Generated from the component: measurement3.Three-phase Meter3.VLn_RMS_calc.RMS
+    _measurement3_three_phase_meter3_vln_rms_calc_rms__IN1 = _measurement3_three_phase_meter3_van_va1__out;
+    _measurement3_three_phase_meter3_vln_rms_calc_rms__IN2 = _measurement3_three_phase_meter3_vbn_va1__out;
+    _measurement3_three_phase_meter3_vln_rms_calc_rms__IN3 = _measurement3_three_phase_meter3_vcn_va1__out;
+    _measurement3_three_phase_meter3_vln_rms_calc_rms__dFract = _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__dFract;
+    _measurement3_three_phase_meter3_vln_rms_calc_rms__mode = _measurement3_three_phase_meter3_vln_rms_calc_meassm_mode_and_dfract__mode;
+    switch (_measurement3_three_phase_meter3_vln_rms_calc_rms__mode) {
+    case 1:
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum1 = 0.0;
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum2 = 0.0;
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum3 = 0.0;
+        break ;
+    case 2:
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS1 = _measurement3_three_phase_meter3_vln_rms_calc_rms__IN1;
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS2 = _measurement3_three_phase_meter3_vln_rms_calc_rms__IN2;
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS3 = _measurement3_three_phase_meter3_vln_rms_calc_rms__IN3;
+        break ;
+    case 3:
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum1 += _measurement3_three_phase_meter3_vln_rms_calc_rms__dFract * (_measurement3_three_phase_meter3_vln_rms_calc_rms__IN1 * _measurement3_three_phase_meter3_vln_rms_calc_rms__IN1);
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum2 += _measurement3_three_phase_meter3_vln_rms_calc_rms__dFract * (_measurement3_three_phase_meter3_vln_rms_calc_rms__IN2 * _measurement3_three_phase_meter3_vln_rms_calc_rms__IN2);
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum3 += _measurement3_three_phase_meter3_vln_rms_calc_rms__dFract * (_measurement3_three_phase_meter3_vln_rms_calc_rms__IN3 * _measurement3_three_phase_meter3_vln_rms_calc_rms__IN3);
+        break ;
+    case 4:
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS1 = sqrt(_measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum1);
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS2 = sqrt(_measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum2);
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS3 = sqrt(_measurement3_three_phase_meter3_vln_rms_calc_rms__rmsSum3);
+        break ;
+    case 5:
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS1 = fabs(_measurement3_three_phase_meter3_vln_rms_calc_rms__IN1);
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS2 = fabs(_measurement3_three_phase_meter3_vln_rms_calc_rms__IN2);
+        _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS3 = fabs(_measurement3_three_phase_meter3_vln_rms_calc_rms__IN3);
+        break ;
+    }
+    // Generated from the component: measurement3.Three-phase Meter3.VLn_RMS_calc.termSubMode
+    // Generated from the component: measurement4.Three-phase Meter4.gainVLn_RMS
+    _measurement4_three_phase_meter4_gainvln_rms__out = 0.3333333333333333 * _measurement4_three_phase_meter4_sumvln_rms__out;
+    // Generated from the component: measurement5.Three-phase Meter5.VLn_RMS_calc.RMS
+    _measurement5_three_phase_meter5_vln_rms_calc_rms__IN1 = _measurement5_three_phase_meter5_van_va1__out;
+    _measurement5_three_phase_meter5_vln_rms_calc_rms__IN2 = _measurement5_three_phase_meter5_vbn_va1__out;
+    _measurement5_three_phase_meter5_vln_rms_calc_rms__IN3 = _measurement5_three_phase_meter5_vcn_va1__out;
+    _measurement5_three_phase_meter5_vln_rms_calc_rms__dFract = _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__dFract;
+    _measurement5_three_phase_meter5_vln_rms_calc_rms__mode = _measurement5_three_phase_meter5_vln_rms_calc_meassm_mode_and_dfract__mode;
+    switch (_measurement5_three_phase_meter5_vln_rms_calc_rms__mode) {
+    case 1:
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum1 = 0.0;
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum2 = 0.0;
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum3 = 0.0;
+        break ;
+    case 2:
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS1 = _measurement5_three_phase_meter5_vln_rms_calc_rms__IN1;
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS2 = _measurement5_three_phase_meter5_vln_rms_calc_rms__IN2;
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS3 = _measurement5_three_phase_meter5_vln_rms_calc_rms__IN3;
+        break ;
+    case 3:
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum1 += _measurement5_three_phase_meter5_vln_rms_calc_rms__dFract * (_measurement5_three_phase_meter5_vln_rms_calc_rms__IN1 * _measurement5_three_phase_meter5_vln_rms_calc_rms__IN1);
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum2 += _measurement5_three_phase_meter5_vln_rms_calc_rms__dFract * (_measurement5_three_phase_meter5_vln_rms_calc_rms__IN2 * _measurement5_three_phase_meter5_vln_rms_calc_rms__IN2);
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum3 += _measurement5_three_phase_meter5_vln_rms_calc_rms__dFract * (_measurement5_three_phase_meter5_vln_rms_calc_rms__IN3 * _measurement5_three_phase_meter5_vln_rms_calc_rms__IN3);
+        break ;
+    case 4:
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS1 = sqrt(_measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum1);
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS2 = sqrt(_measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum2);
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS3 = sqrt(_measurement5_three_phase_meter5_vln_rms_calc_rms__rmsSum3);
+        break ;
+    case 5:
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS1 = fabs(_measurement5_three_phase_meter5_vln_rms_calc_rms__IN1);
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS2 = fabs(_measurement5_three_phase_meter5_vln_rms_calc_rms__IN2);
+        _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS3 = fabs(_measurement5_three_phase_meter5_vln_rms_calc_rms__IN3);
+        break ;
+    }
+    // Generated from the component: measurement5.Three-phase Meter5.VLn_RMS_calc.termSubMode
+    // Generated from the component: measurement6.Three-phase Meter6.VLn_RMS_calc.RMS
+    _measurement6_three_phase_meter6_vln_rms_calc_rms__IN1 = _measurement6_three_phase_meter6_van_va1__out;
+    _measurement6_three_phase_meter6_vln_rms_calc_rms__IN2 = _measurement6_three_phase_meter6_vbn_va1__out;
+    _measurement6_three_phase_meter6_vln_rms_calc_rms__IN3 = _measurement6_three_phase_meter6_vcn_va1__out;
+    _measurement6_three_phase_meter6_vln_rms_calc_rms__dFract = _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__dFract;
+    _measurement6_three_phase_meter6_vln_rms_calc_rms__mode = _measurement6_three_phase_meter6_vln_rms_calc_meassm_mode_and_dfract__mode;
+    switch (_measurement6_three_phase_meter6_vln_rms_calc_rms__mode) {
+    case 1:
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum1 = 0.0;
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum2 = 0.0;
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum3 = 0.0;
+        break ;
+    case 2:
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS1 = _measurement6_three_phase_meter6_vln_rms_calc_rms__IN1;
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS2 = _measurement6_three_phase_meter6_vln_rms_calc_rms__IN2;
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS3 = _measurement6_three_phase_meter6_vln_rms_calc_rms__IN3;
+        break ;
+    case 3:
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum1 += _measurement6_three_phase_meter6_vln_rms_calc_rms__dFract * (_measurement6_three_phase_meter6_vln_rms_calc_rms__IN1 * _measurement6_three_phase_meter6_vln_rms_calc_rms__IN1);
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum2 += _measurement6_three_phase_meter6_vln_rms_calc_rms__dFract * (_measurement6_three_phase_meter6_vln_rms_calc_rms__IN2 * _measurement6_three_phase_meter6_vln_rms_calc_rms__IN2);
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum3 += _measurement6_three_phase_meter6_vln_rms_calc_rms__dFract * (_measurement6_three_phase_meter6_vln_rms_calc_rms__IN3 * _measurement6_three_phase_meter6_vln_rms_calc_rms__IN3);
+        break ;
+    case 4:
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS1 = sqrt(_measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum1);
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS2 = sqrt(_measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum2);
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS3 = sqrt(_measurement6_three_phase_meter6_vln_rms_calc_rms__rmsSum3);
+        break ;
+    case 5:
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS1 = fabs(_measurement6_three_phase_meter6_vln_rms_calc_rms__IN1);
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS2 = fabs(_measurement6_three_phase_meter6_vln_rms_calc_rms__IN2);
+        _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS3 = fabs(_measurement6_three_phase_meter6_vln_rms_calc_rms__IN3);
+        break ;
+    }
+    // Generated from the component: measurement6.Three-phase Meter6.VLn_RMS_calc.termSubMode
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Abs4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs4__out = fabs(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).angle_diff3
+    HIL_OutAO(0x4011, (float)_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__confine_phase__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Relational operator4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator4__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs2__out < _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant9__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Hold after connect1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__connect = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__var;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.EQ_ctrl
+    HIL_OutAO(0x4019, (float)_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Abs4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs4__out = fabs(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).angle_diff3
+    HIL_OutAO(0x4025, (float)_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__confine_phase__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Relational operator4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator4__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs2__out < _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant9__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Hold after connect1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__connect = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer1__del_Q;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__var;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.EQ_ctrl
+    HIL_OutAO(0x402d, (float)_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product5
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out = (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out) * 1.0 / (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product7
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out = (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out) * 1.0 / (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product3
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out = (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out) * 1.0 / (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product4
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out = (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out) * 1.0 / (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller3
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state + 0.03 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
+    if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int < -0.4) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = -0.4;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 1;
+    } else if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int > 0.4) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = 0.4;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Sum2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out =  - _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain4__out + _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.f1
+    HIL_OutAO(0x4021, (float)_grid_forming_inverter__averaged_2_controller_gain1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum10
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out = _grid_forming_inverter__averaged_2_controller_gain11__out - _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum13
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out = _grid_forming_inverter__averaged_2_controller_gain12__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum5
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out = _grid_forming_inverter__averaged_2_controller_gain5__out - _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum6
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out = _grid_forming_inverter__averaged_2_controller_gain8__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum8
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum7__out - _grid_forming_inverter__averaged_2_controller_gain9__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Sum2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out =  - _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain4__out + _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.f1
+    HIL_OutAO(0x4035, (float)_grid_forming_inverter__averaged_3_controller_gain1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum10
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out = _grid_forming_inverter__averaged_3_controller_gain11__out - _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum13
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out = _grid_forming_inverter__averaged_3_controller_gain12__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum5
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out = _grid_forming_inverter__averaged_3_controller_gain5__out - _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum6
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out = _grid_forming_inverter__averaged_3_controller_gain8__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum8
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum7__out - _grid_forming_inverter__averaged_3_controller_gain9__out;
+    // Generated from the component: measurement1.Three-phase Meter1.sumVLn_RMS
+    _measurement1_three_phase_meter1_sumvln_rms__out = _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS1 + _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS2 + _measurement1_three_phase_meter1_vln_rms_calc_rms__RMS3;
+    // Generated from the component: measurement2.Three-phase Meter2.sumVLn_RMS
+    _measurement2_three_phase_meter2_sumvln_rms__out = _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS1 + _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS2 + _measurement2_three_phase_meter2_vln_rms_calc_rms__RMS3;
+    // Generated from the component: measurement3.Three-phase Meter3.sumVLn_RMS
+    _measurement3_three_phase_meter3_sumvln_rms__out = _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS1 + _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS2 + _measurement3_three_phase_meter3_vln_rms_calc_rms__RMS3;
+    // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS
+    HIL_OutAO(0x4063, (float)_measurement4_three_phase_meter4_gainvln_rms__out);
+    // Generated from the component: measurement5.Three-phase Meter5.sumVLn_RMS
+    _measurement5_three_phase_meter5_sumvln_rms__out = _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS1 + _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS2 + _measurement5_three_phase_meter5_vln_rms_calc_rms__RMS3;
+    // Generated from the component: measurement6.Three-phase Meter6.sumVLn_RMS
+    _measurement6_three_phase_meter6_sumvln_rms__out = _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS1 + _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS2 + _measurement6_three_phase_meter6_vln_rms_calc_rms__RMS3;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Relational operator1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator1__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant6__out > _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs4__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Digital Probe5
+    HIL_OutInt32(0xf00408, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator4__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Relational operator1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator1__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant6__out > _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs4__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Digital Probe5
+    HIL_OutInt32(0xf0040d, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator4__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum12
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum9
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Abs5
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs5__out = fabs(_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs4__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant3__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant4__out;
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df >= _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T;
+    }
+    else if ((_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df < _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip) && (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df >= 0)) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T * (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df + 1e-4) / _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip + (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip * 1 * 0.8841941282883075);
+    }
+    else if ((_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df < 0) && (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df > (-_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip))) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T * (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df + 1e-4) / _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip + (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip * 1 * 0.8841941282883075);
+    }
+    else if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df <= (-1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip)) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = -1 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).frequency_diff3
+    HIL_OutAO(0x4012, (float)_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product5
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out = (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out) * 1.0 / (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product7
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out = (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out) * 1.0 / (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product3
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out = (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out) * 1.0 / (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product4
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out = (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out) * 1.0 / (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller3
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state + 0.03 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
+    if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int < -0.35) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = -0.35;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int > 0.35) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = 0.35;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Abs5
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs5__out = fabs(_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs4__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant3__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant4__out;
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df >= _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T;
+    }
+    else if ((_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df < _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip) && (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df >= 0)) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T * (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df + 1e-4) / _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip + (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip * 1 * 0.8841941282883075);
+    }
+    else if ((_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df < 0) && (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df > (-_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip))) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T * (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df + 1e-4) / _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip + (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__angle_slip * 1 * 0.8841941282883075);
+    }
+    else if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__df <= (-1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_slip)) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P = -1 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__max_T;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).frequency_diff3
+    HIL_OutAO(0x4026, (float)_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product5
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out = (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out) * 1.0 / (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Product7
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out = (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out) * 1.0 / (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product3
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out = (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out) * 1.0 / (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Product4
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out = (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out) * 1.0 / (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_gain5__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller3
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state + 0.03 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
+    if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int < -0.3) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = -0.3;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int > 0.3) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = 0.3;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active = 0;
+    }
+    // Generated from the component: measurement1.Three-phase Meter1.gainVLn_RMS
+    _measurement1_three_phase_meter1_gainvln_rms__out = 0.3333333333333333 * _measurement1_three_phase_meter1_sumvln_rms__out;
+    // Generated from the component: measurement2.Three-phase Meter2.gainVLn_RMS
+    _measurement2_three_phase_meter2_gainvln_rms__out = 0.3333333333333333 * _measurement2_three_phase_meter2_sumvln_rms__out;
+    // Generated from the component: measurement3.Three-phase Meter3.gainVLn_RMS
+    _measurement3_three_phase_meter3_gainvln_rms__out = 0.3333333333333333 * _measurement3_three_phase_meter3_sumvln_rms__out;
+    // Generated from the component: measurement5.Three-phase Meter5.gainVLn_RMS
+    _measurement5_three_phase_meter5_gainvln_rms__out = 0.3333333333333333 * _measurement5_three_phase_meter5_sumvln_rms__out;
+    // Generated from the component: measurement6.Three-phase Meter6.gainVLn_RMS
+    _measurement6_three_phase_meter6_gainvln_rms__out = 0.3333333333333333 * _measurement6_three_phase_meter6_sumvln_rms__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Digital Probe3
+    HIL_OutInt32(0xf00406, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator1__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Digital Probe3
+    HIL_OutInt32(0xf0040b, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator1__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum9
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out - _grid_forming_inverter__averaged__controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum8
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out - _grid_forming_inverter__averaged__controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Relational operator2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator2__out = (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__constant7__out > _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__abs5__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Hold after connect
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__connect = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__signal_switch1__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__var;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum12
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.ED_ctrl
+    HIL_OutAO(0x4018, (float)_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum9
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Relational operator2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator2__out = (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__constant7__out > _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__abs5__out) ? 1 : 0;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Hold after connect
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__connect = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__signal_switch1__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__be1_25a_synchronizer__del_P;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__var;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum12
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.ED_ctrl
+    HIL_OutAO(0x402c, (float)_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Sum9
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
+    // Generated from the component: measurement1.Gain1
+    _measurement1_gain1__out = 0.0020833333333333333 * _measurement1_three_phase_meter1_gainvln_rms__out;
+    // Generated from the component: measurement1.Three-phase Meter1.VLn_RMS
+    HIL_OutAO(0x4051, (float)_measurement1_three_phase_meter1_gainvln_rms__out);
+    // Generated from the component: measurement2.Gain1
+    _measurement2_gain1__out = 0.0020833333333333333 * _measurement2_three_phase_meter2_gainvln_rms__out;
+    // Generated from the component: measurement2.Three-phase Meter2.VLn_RMS
+    HIL_OutAO(0x4057, (float)_measurement2_three_phase_meter2_gainvln_rms__out);
+    // Generated from the component: measurement3.Gain1
+    _measurement3_gain1__out = 0.0020833333333333333 * _measurement3_three_phase_meter3_gainvln_rms__out;
+    // Generated from the component: measurement3.Three-phase Meter3.VLn_RMS
+    HIL_OutAO(0x405d, (float)_measurement3_three_phase_meter3_gainvln_rms__out);
+    // Generated from the component: measurement5.Three-phase Meter5.VLn_RMS
+    HIL_OutAO(0x4069, (float)_measurement5_three_phase_meter5_gainvln_rms__out);
+    // Generated from the component: measurement6.Three-phase Meter6.VLn_RMS
+    HIL_OutAO(0x406f, (float)_measurement6_three_phase_meter6_gainvln_rms__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller2
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state + 0.01 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out;
+    if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int < -1.0) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = -1.0;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 1;
+    } else if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int > 1.0) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = 1.0;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller1
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state + 0.01 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out;
+    if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int < -1.0) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = -1.0;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 1;
+    } else if (_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int > 1.0) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = 1.0;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int;
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Digital Probe4
+    HIL_OutInt32(0xf00407, _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator2__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Logical operator1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator1__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator1__out && _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator2__out && _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator4__out && _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__relational_operator5__out ;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum9
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out - _grid_forming_inverter__averaged_2_controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum8
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out - _grid_forming_inverter__averaged_2_controller_gain6__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Digital Probe4
+    HIL_OutInt32(0xf0040c, _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator2__out != 0x0);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Logical operator1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator1__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator1__out && _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator2__out && _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator4__out && _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__relational_operator5__out ;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum9
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum12__out - _grid_forming_inverter__averaged_3_controller_gain7__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum8
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum9__out - _grid_forming_inverter__averaged_3_controller_gain6__out;
+    // Generated from the component: measurement1.Violation
+    _measurement1_violation__V = _measurement1_gain1__out;
+    if (_measurement1_violation__V > 1.05)_measurement1_violation__violation = 1.05 - _measurement1_violation__V;
+    else if (_measurement1_violation__V < 0.95)_measurement1_violation__violation = _measurement1_violation__V - 0.95;
+    else _measurement1_violation__violation = 0;
+    // Generated from the component: measurement2.Voltage Deviation
+    _measurement2_voltage_deviation__V = _measurement2_gain1__out;
+    if (_measurement2_voltage_deviation__V > 1.05)_measurement2_voltage_deviation__violation = 1.05 - _measurement2_voltage_deviation__V;
+    else if (_measurement2_voltage_deviation__V < 0.95)_measurement2_voltage_deviation__violation = _measurement2_voltage_deviation__V - 0.95;
+    else _measurement2_voltage_deviation__violation = 0;
+    // Generated from the component: measurement3.Violation
+    _measurement3_violation__V = _measurement3_gain1__out;
+    if (_measurement3_violation__V > 1.05)_measurement3_violation__violation = 1.05 - _measurement3_violation__V;
+    else if (_measurement3_violation__V < 0.95)_measurement3_violation__violation = _measurement3_violation__V - 0.95;
+    else _measurement3_violation__violation = 0;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum7
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum3
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).stay connected
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__in = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator1__out;
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__out = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__connect;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller2
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state + 0.01 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out;
+    if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int < -1.0) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = -1.0;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int > 1.0) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = 1.0;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller1
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state + 0.01 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out;
+    if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int < -1.0) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = -1.0;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int > 1.0) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = 1.0;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int;
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).stay connected
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__in = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator1__out;
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__out = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__connect;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller2
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state + 0.01 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out;
+    if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int < -1.0) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = -1.0;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int > 1.0) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = 1.0;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__pi_reg_out_int;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active = 0;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller1
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state + 0.01 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out;
+    if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int < -1.0) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = -1.0;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 1;
+    } else if (_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int > 1.0) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = 1.0;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 1;
+    } else {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__pi_reg_out_int;
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active = 0;
+    }
+    // Generated from the component: Modbus1.Product3
+    _modbus1_product3__out = (_measurement1_violation__violation * _modbus1_constant3__out);
+    // Generated from the component: Modbus2.Product3
+    _modbus2_product3__out = (_measurement2_voltage_deviation__violation * _modbus2_constant3__out);
+    // Generated from the component: Modbus3.Product3
+    _modbus3_product3__out = (_measurement3_violation__violation * _modbus3_constant3__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Gain6
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain6__out = 391.73715677734737 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Gain5
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain5__out = 391.73715677734737 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum7
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiQ_ctrl
+    HIL_OutAO(0x401b, (float)_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum3
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiD_ctrl
+    HIL_OutAO(0x401a, (float)_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum7
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product4__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiQ_ctrl
+    HIL_OutAO(0x402f, (float)_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Sum3
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiD_ctrl
+    HIL_OutAO(0x402e, (float)_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__out);
+    // Generated from the component: Modbus1.C function3
+    _modbus1_c_function3__in = _modbus1_product3__out;
+    if (_modbus1_c_function3__in >= 0) {
+        _modbus1_c_function3__out = _modbus1_c_function3__in;
+        _modbus1_c_function3__sign = 0;
+    }
+    else {
+        _modbus1_c_function3__out = _modbus1_c_function3__in * -1;
+        _modbus1_c_function3__sign = 1;
+    }
+    // Generated from the component: Modbus1.Voltage_diff
+    HIL_OutAO(0x403d, (float)_modbus1_product3__out);
+    // Generated from the component: Modbus2.C function3
+    _modbus2_c_function3__in = _modbus2_product3__out;
+    if (_modbus2_c_function3__in >= 0) {
+        _modbus2_c_function3__out = _modbus2_c_function3__in;
+        _modbus2_c_function3__sign = 0;
+    }
+    else {
+        _modbus2_c_function3__out = _modbus2_c_function3__in * -1;
+        _modbus2_c_function3__sign = 1;
+    }
+    // Generated from the component: Modbus2.Voltage_diff
+    HIL_OutAO(0x4043, (float)_modbus2_product3__out);
+    // Generated from the component: Modbus3.C function3
+    _modbus3_c_function3__in = _modbus3_product3__out;
+    if (_modbus3_c_function3__in >= 0) {
+        _modbus3_c_function3__out = _modbus3_c_function3__in;
+        _modbus3_c_function3__sign = 0;
+    }
+    else {
+        _modbus3_c_function3__out = _modbus3_c_function3__in * -1;
+        _modbus3_c_function3__sign = 1;
+    }
+    // Generated from the component: Modbus3.Voltage_diff
+    HIL_OutAO(0x4049, (float)_modbus3_product3__out);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.dq to abc1.dq to alpha beta
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 = cos(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 = sin(_grid_forming_inverter__averaged__controller_integrator1__out);
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain5__out + _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain6__out;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain6__out - _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_gain5__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Gain6
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain6__out = 391.73715677734737 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Gain5
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain5__out = 391.73715677734737 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Gain6
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain6__out = 391.73715677734737 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum7__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Gain5
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain5__out = 391.73715677734737 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum3__out;
+    // Generated from the component: Modbus1.Bus Join2
+    _modbus1_bus_join2__out[0] = _modbus1_c_function1__out;
+    _modbus1_bus_join2__out[1] = _modbus1_c_function1__sign;
+    _modbus1_bus_join2__out[2] = _modbus1_c_function3__out;
+    _modbus1_bus_join2__out[3] = _modbus1_c_function3__sign;
+    _modbus1_bus_join2__out[4] = _modbus1_c_function5__out;
+    _modbus1_bus_join2__out[5] = _modbus1_c_function5__sign;
+    _modbus1_bus_join2__out[6] = _modbus1_c_function6__out;
+    _modbus1_bus_join2__out[7] = _modbus1_c_function6__sign;
+    // Generated from the component: Modbus2.Bus Join2
+    _modbus2_bus_join2__out[0] = _modbus2_c_function1__out;
+    _modbus2_bus_join2__out[1] = _modbus2_c_function1__sign;
+    _modbus2_bus_join2__out[2] = _modbus2_c_function3__out;
+    _modbus2_bus_join2__out[3] = _modbus2_c_function3__sign;
+    _modbus2_bus_join2__out[4] = _modbus2_c_function5__out;
+    _modbus2_bus_join2__out[5] = _modbus2_c_function5__sign;
+    _modbus2_bus_join2__out[6] = _modbus2_c_function6__out;
+    _modbus2_bus_join2__out[7] = _modbus2_c_function6__sign;
+    // Generated from the component: Modbus3.Bus Join2
+    _modbus3_bus_join2__out[0] = _modbus3_c_function1__out;
+    _modbus3_bus_join2__out[1] = _modbus3_c_function1__sign;
+    _modbus3_bus_join2__out[2] = _modbus3_c_function3__out;
+    _modbus3_bus_join2__out[3] = _modbus3_c_function3__sign;
+    _modbus3_bus_join2__out[4] = _modbus3_c_function5__out;
+    _modbus3_bus_join2__out[5] = _modbus3_c_function5__sign;
+    _modbus3_bus_join2__out[6] = _modbus3_c_function6__out;
+    _modbus3_bus_join2__out[7] = _modbus3_c_function6__sign;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.dq to abc1.alpha beta to abc
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A = 1 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_o_ref__out;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A - 0.5 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B - 0.8660254037844386 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B += 0.8660254037844386 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A += 1 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.dq to abc1.dq to alpha beta
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 = cos(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 = sin(_grid_forming_inverter__averaged_2_controller_integrator1__out);
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain5__out + _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain6__out;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain6__out - _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_gain5__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.dq to abc1.dq to alpha beta
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 = cos(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 = sin(_grid_forming_inverter__averaged_3_controller_integrator1__out);
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain5__out + _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain6__out;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k2 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain6__out - _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__k1 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_gain5__out;
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_reg_in
+    XIo_OutInt32(0x550001a8, _modbus1_bus_join2__out[0]);
+    XIo_OutInt32(0x550001ac, _modbus1_bus_join2__out[1]);
+    XIo_OutInt32(0x550001b0, _modbus1_bus_join2__out[2]);
+    XIo_OutInt32(0x550001b4, _modbus1_bus_join2__out[3]);
+    XIo_OutInt32(0x550001b8, _modbus1_bus_join2__out[4]);
+    XIo_OutInt32(0x550001bc, _modbus1_bus_join2__out[5]);
+    XIo_OutInt32(0x550001c0, _modbus1_bus_join2__out[6]);
+    XIo_OutInt32(0x550001c4, _modbus1_bus_join2__out[7]);
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_reg_in
+    XIo_OutInt32(0x550001d4, _modbus2_bus_join2__out[0]);
+    XIo_OutInt32(0x550001d8, _modbus2_bus_join2__out[1]);
+    XIo_OutInt32(0x550001dc, _modbus2_bus_join2__out[2]);
+    XIo_OutInt32(0x550001e0, _modbus2_bus_join2__out[3]);
+    XIo_OutInt32(0x550001e4, _modbus2_bus_join2__out[4]);
+    XIo_OutInt32(0x550001e8, _modbus2_bus_join2__out[5]);
+    XIo_OutInt32(0x550001ec, _modbus2_bus_join2__out[6]);
+    XIo_OutInt32(0x550001f0, _modbus2_bus_join2__out[7]);
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_reg_in
+    XIo_OutInt32(0x55000200, _modbus3_bus_join2__out[0]);
+    XIo_OutInt32(0x55000204, _modbus3_bus_join2__out[1]);
+    XIo_OutInt32(0x55000208, _modbus3_bus_join2__out[2]);
+    XIo_OutInt32(0x5500020c, _modbus3_bus_join2__out[3]);
+    XIo_OutInt32(0x55000210, _modbus3_bus_join2__out[4]);
+    XIo_OutInt32(0x55000214, _modbus3_bus_join2__out[5]);
+    XIo_OutInt32(0x55000218, _modbus3_bus_join2__out[6]);
+    XIo_OutInt32(0x5500021c, _modbus3_bus_join2__out[7]);
+    // Generated from the component: Grid forming inverter (averaged).Controller.Bus Join1
+    _grid_forming_inverter__averaged__controller_bus_join1__out[0] = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A;
+    _grid_forming_inverter__averaged__controller_bus_join1__out[1] = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B;
+    _grid_forming_inverter__averaged__controller_bus_join1__out[2] = _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.dq to abc1.alpha beta to abc
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A = 1 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_o_ref__out;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A - 0.5 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B - 0.8660254037844386 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B += 0.8660254037844386 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A += 1 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.dq to abc.dq to abc1.alpha beta to abc
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A = 1 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_o_ref__out;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A - 0.5 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B - 0.8660254037844386 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B += 0.8660254037844386 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__beta;
+    _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A += 1 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_dq_to_alpha_beta__alpha;
+    // Generated from the component: Grid forming inverter (averaged).Product1
+    _grid_forming_inverter__averaged__product1__out[0] = (_grid_forming_inverter__averaged__controller_bus_join1__out[0]) * (_grid_forming_inverter__averaged__gain1__out);
+    _grid_forming_inverter__averaged__product1__out[1] = (_grid_forming_inverter__averaged__controller_bus_join1__out[1]) * (_grid_forming_inverter__averaged__gain1__out);
+    _grid_forming_inverter__averaged__product1__out[2] = (_grid_forming_inverter__averaged__controller_bus_join1__out[2]) * (_grid_forming_inverter__averaged__gain1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Bus Join1
+    _grid_forming_inverter__averaged_2_controller_bus_join1__out[0] = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A;
+    _grid_forming_inverter__averaged_2_controller_bus_join1__out[1] = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B;
+    _grid_forming_inverter__averaged_2_controller_bus_join1__out[2] = _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Bus Join1
+    _grid_forming_inverter__averaged_3_controller_bus_join1__out[0] = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__A;
+    _grid_forming_inverter__averaged_3_controller_bus_join1__out[1] = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__B;
+    _grid_forming_inverter__averaged_3_controller_bus_join1__out[2] = _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_dq_to_abc_dq_to_abc1_alpha_beta_to_abc__C;
+    // Generated from the component: Grid forming inverter (averaged).Bus Split1
+    _grid_forming_inverter__averaged__bus_split1__out = _grid_forming_inverter__averaged__product1__out[0];
+    _grid_forming_inverter__averaged__bus_split1__out1 = _grid_forming_inverter__averaged__product1__out[1];
+    _grid_forming_inverter__averaged__bus_split1__out2 = _grid_forming_inverter__averaged__product1__out[2];
+    // Generated from the component: Grid forming inverter (averaged)2.Product1
+    _grid_forming_inverter__averaged_2_product1__out[0] = (_grid_forming_inverter__averaged_2_controller_bus_join1__out[0]) * (_grid_forming_inverter__averaged_2_gain1__out);
+    _grid_forming_inverter__averaged_2_product1__out[1] = (_grid_forming_inverter__averaged_2_controller_bus_join1__out[1]) * (_grid_forming_inverter__averaged_2_gain1__out);
+    _grid_forming_inverter__averaged_2_product1__out[2] = (_grid_forming_inverter__averaged_2_controller_bus_join1__out[2]) * (_grid_forming_inverter__averaged_2_gain1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Product1
+    _grid_forming_inverter__averaged_3_product1__out[0] = (_grid_forming_inverter__averaged_3_controller_bus_join1__out[0]) * (_grid_forming_inverter__averaged_3_gain1__out);
+    _grid_forming_inverter__averaged_3_product1__out[1] = (_grid_forming_inverter__averaged_3_controller_bus_join1__out[1]) * (_grid_forming_inverter__averaged_3_gain1__out);
+    _grid_forming_inverter__averaged_3_product1__out[2] = (_grid_forming_inverter__averaged_3_controller_bus_join1__out[2]) * (_grid_forming_inverter__averaged_3_gain1__out);
+    // Generated from the component: Grid forming inverter (averaged).Va_inv.Vs1
+    HIL_OutFloat(149684224, (float) _grid_forming_inverter__averaged__bus_split1__out);
+    // Generated from the component: Grid forming inverter (averaged).Vb_inv.Vs1
+    HIL_OutFloat(149684225, (float) _grid_forming_inverter__averaged__bus_split1__out1);
+    // Generated from the component: Grid forming inverter (averaged).Vc_inv.Vs1
+    HIL_OutFloat(149684226, (float) _grid_forming_inverter__averaged__bus_split1__out2);
+    // Generated from the component: Grid forming inverter (averaged)2.Bus Split1
+    _grid_forming_inverter__averaged_2_bus_split1__out = _grid_forming_inverter__averaged_2_product1__out[0];
+    _grid_forming_inverter__averaged_2_bus_split1__out1 = _grid_forming_inverter__averaged_2_product1__out[1];
+    _grid_forming_inverter__averaged_2_bus_split1__out2 = _grid_forming_inverter__averaged_2_product1__out[2];
+    // Generated from the component: Grid forming inverter (averaged)3.Bus Split1
+    _grid_forming_inverter__averaged_3_bus_split1__out = _grid_forming_inverter__averaged_3_product1__out[0];
+    _grid_forming_inverter__averaged_3_bus_split1__out1 = _grid_forming_inverter__averaged_3_product1__out[1];
+    _grid_forming_inverter__averaged_3_bus_split1__out2 = _grid_forming_inverter__averaged_3_product1__out[2];
+    // Generated from the component: Grid forming inverter (averaged)2.Va_inv.Vs1
+    HIL_OutFloat(153878528, (float) _grid_forming_inverter__averaged_2_bus_split1__out);
+    // Generated from the component: Grid forming inverter (averaged)2.Vb_inv.Vs1
+    HIL_OutFloat(153878529, (float) _grid_forming_inverter__averaged_2_bus_split1__out1);
+    // Generated from the component: Grid forming inverter (averaged)2.Vc_inv.Vs1
+    HIL_OutFloat(153878530, (float) _grid_forming_inverter__averaged_2_bus_split1__out2);
+    // Generated from the component: Grid forming inverter (averaged)3.Va_inv.Vs1
+    HIL_OutFloat(158072832, (float) _grid_forming_inverter__averaged_3_bus_split1__out);
+    // Generated from the component: Grid forming inverter (averaged)3.Vb_inv.Vs1
+    HIL_OutFloat(158072833, (float) _grid_forming_inverter__averaged_3_bus_split1__out1);
+    // Generated from the component: Grid forming inverter (averaged)3.Vc_inv.Vs1
+    HIL_OutFloat(158072834, (float) _grid_forming_inverter__averaged_3_bus_split1__out2);
+    //@cmp.out.block.end
+    //////////////////////////////////////////////////////////////////////////
+    // Update block
+    //////////////////////////////////////////////////////////////////////////
+    //@cmp.update.block.start
+    // Generated from the component: Clock1
+    _clock1__state += 0.0002;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Integrator1
+    _grid_forming_inverter__averaged__controller_integrator1__state += _grid_forming_inverter__averaged__controller_frequency_droop_sum4__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Integrator2
+    _grid_forming_inverter__averaged__controller_integrator2__state += _grid_forming_inverter__averaged__controller_gain4__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Integrator3
+    _grid_forming_inverter__averaged__controller_integrator3__state += _grid_forming_inverter__averaged__controller_gain13__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Clock1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__clock1__state += 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay1__state = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay2
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay2__state = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_confine_phase__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay3
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay3__state = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__out;
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Unit Delay4
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__unit_delay4__state = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__out;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Integrator1
+    _grid_forming_inverter__averaged_2_controller_integrator1__state += _grid_forming_inverter__averaged_2_controller_frequency_droop_sum4__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Integrator2
+    _grid_forming_inverter__averaged_2_controller_integrator2__state += _grid_forming_inverter__averaged_2_controller_gain4__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Integrator3
+    _grid_forming_inverter__averaged_2_controller_integrator3__state += _grid_forming_inverter__averaged_2_controller_gain13__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Clock1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__clock1__state += 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay1__state = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay2
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay2__state = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_confine_phase__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay3
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay3__state = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__out;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Unit Delay4
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__unit_delay4__state = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__out;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Integrator1
+    _grid_forming_inverter__averaged_3_controller_integrator1__state += _grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Integrator2
+    _grid_forming_inverter__averaged_3_controller_integrator2__state += _grid_forming_inverter__averaged_3_controller_gain4__out * 0.0002;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Integrator3
+    _grid_forming_inverter__averaged_3_controller_integrator3__state += _grid_forming_inverter__averaged_3_controller_gain13__out * 0.0002;
+    // Generated from the component: L4.Load 4
+    _l4_load_4__time += 0.0002;
+    if ((_l4_load_4__time >= 100.0) && (_l4_load_4__time <= 100.0 + 900.0)) {
+        if ((_l4_load_4__time2 == 0) || (_l4_load_4__time2 >= 180.0)) {
+            _l4_load_4__var += 10000.0;
+            _l4_load_4__time2 = 0;
+        }
+        _l4_load_4__time2 += 0.0002;
+    }
+    // Generated from the component: L5.Load 5
+    _l5_load_5__time += 0.0002;
+    if ((_l5_load_5__time >= 160.0) && (_l5_load_5__time <= 160.0 + 900.0)) {
+        if ((_l5_load_5__time2 == 0) || (_l5_load_5__time2 >= 180.0)) {
+            _l5_load_5__var += 10000.0;
+            _l5_load_5__time2 = 0;
+        }
+        _l5_load_5__time2 += 0.0002;
+    }
+    // Generated from the component: L6.Load 6
+    _l6_load_6__time += 0.0002;
+    if ((_l6_load_6__time >= 220.0) && (_l6_load_6__time <= 220.0 + 900.0)) {
+        if ((_l6_load_6__time2 == 0) || (_l6_load_6__time2 >= 180.0)) {
+            _l6_load_6__var += 10000.0;
+            _l6_load_6__time2 = 0;
+        }
+        _l6_load_6__time2 += 0.0002;
+    }
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_coil_out
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_holding_out
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_coil_out
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_holding_out
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_coil_out
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_holding_out
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Unit Delay1
+    _measurement1_three_phase_meter1_phase_locked_loop_unit_delay1__state = _measurement1_three_phase_meter1_phase_locked_loop_pll1_confine_phase__out;
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Unit Delay1
+    _measurement2_three_phase_meter2_phase_locked_loop_unit_delay1__state = _measurement2_three_phase_meter2_phase_locked_loop_pll1_confine_phase__out;
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Unit Delay1
+    _measurement3_three_phase_meter3_phase_locked_loop_unit_delay1__state = _measurement3_three_phase_meter3_phase_locked_loop_pll1_confine_phase__out;
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.Unit Delay1
+    _measurement4_three_phase_meter4_phase_locked_loop_unit_delay1__state = _measurement4_three_phase_meter4_phase_locked_loop_pll1_confine_phase__out;
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.Unit Delay1
+    _measurement5_three_phase_meter5_phase_locked_loop_unit_delay1__state = _measurement5_three_phase_meter5_phase_locked_loop_pll1_confine_phase__out;
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.Unit Delay1
+    _measurement6_three_phase_meter6_phase_locked_loop_unit_delay1__state = _measurement6_three_phase_meter6_phase_locked_loop_pll1_confine_phase__out;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Comparator1
+    if (_grid_forming_inverter__averaged__constant1__out < _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 0;
+    } else if (_grid_forming_inverter__averaged__constant1__out > _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 1;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Comparator1
+    if (_grid_forming_inverter__averaged__constant1__out < _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 0;
+    } else if (_grid_forming_inverter__averaged__constant1__out > _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 1;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Comparator1
+    if (_grid_forming_inverter__averaged_2_constant1__out < _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 0;
+    } else if (_grid_forming_inverter__averaged_2_constant1__out > _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 1;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Comparator1
+    if (_grid_forming_inverter__averaged_2_constant1__out < _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 0;
+    } else if (_grid_forming_inverter__averaged_2_constant1__out > _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 1;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.Comparator1
+    if (_grid_forming_inverter__averaged_3_constant1__out < _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 0;
+    } else if (_grid_forming_inverter__averaged_3_constant1__out > _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_comparator1__state = 1;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.Comparator1
+    if (_grid_forming_inverter__averaged_3_constant1__out < _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 0;
+    } else if (_grid_forming_inverter__averaged_3_constant1__out > _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_limit_zero__out) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_comparator1__state = 1;
+    }
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_coil_in
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_discrete_in
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_holding_in
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_coil_in
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_discrete_in
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_holding_in
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_coil_in
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_discrete_in
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_holding_in
+    // Generated from the component: Modbus1.C function5
+    // Generated from the component: Modbus1.C function2
+    // Generated from the component: Modbus1.C function4
+    // Generated from the component: Modbus2.C function5
+    // Generated from the component: Modbus2.C function2
+    // Generated from the component: Modbus2.C function4
+    // Generated from the component: Modbus3.C function5
+    // Generated from the component: Modbus3.C function2
+    // Generated from the component: Modbus3.C function4
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.PID controller1
+    if (!_measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__av_active) {
+        _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement4_three_phase_meter4_phase_locked_loop_abc_to_dq1_alpha_beta_to_dq__q * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.PID controller1
+    if (!_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active) {
+        _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state += 2.0 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain6__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).PLL.PID controller1
+    if (!_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active) {
+        _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state += 2.0 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out * 0.0002;
+    }
+    // Generated from the component: Modbus1.C function6
+    // Generated from the component: Modbus2.C function6
+    // Generated from the component: Modbus3.C function6
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.C function1
+    _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__in);
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.C function1
+    _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__var += (0.0002 * _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__in);
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).PLL.C function1
+    _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__var += (0.0002 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__in);
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.PID controller1
+    if (!_measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active) {
+        _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out * 0.0002;
+    }
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.PID controller1
+    if (!_measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active) {
+        _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out * 0.0002;
+    }
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.PID controller1
+    if (!_measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active) {
+        _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out * 0.0002;
+    }
+    // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.measSM.mode_and_dFract
+    // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.confine phase
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.PID controller1
+    if (!_measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__av_active) {
+        _measurement5_three_phase_meter5_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement5_three_phase_meter5_phase_locked_loop_pll1_gain1__out * 0.0002;
+    }
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.PID controller1
+    if (!_measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__av_active) {
+        _measurement6_three_phase_meter6_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement6_three_phase_meter6_phase_locked_loop_pll1_gain1__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).confine phase1
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).confine phase2
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.confine phase
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).confine phase1
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).confine phase2
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).PLL.confine phase
+    // Generated from the component: Modbus1.C function1
+    // Generated from the component: Modbus2.C function1
+    // Generated from the component: Modbus3.C function1
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.C function1
+    _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement1_three_phase_meter1_phase_locked_loop_pll1_c_function1__in);
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.C function1
+    _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_c_function1__in);
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.C function1
+    _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_c_function1__in);
+    // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.RMS
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.C function1
+    _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement5_three_phase_meter5_phase_locked_loop_pll1_c_function1__in);
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.C function1
+    _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement6_three_phase_meter6_phase_locked_loop_pll1_c_function1__in);
+    // Generated from the component: measurement1.Three-phase Meter1.VLn_RMS_calc.measSM.mode_and_dFract
+    // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.confine phase
+    // Generated from the component: measurement2.Three-phase Meter2.VLn_RMS_calc.measSM.mode_and_dFract
+    // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.confine phase
+    // Generated from the component: measurement3.Three-phase Meter3.VLn_RMS_calc.measSM.mode_and_dFract
+    // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.confine phase
+    // Generated from the component: measurement5.Three-phase Meter5.VLn_RMS_calc.measSM.mode_and_dFract
+    // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.confine phase
+    // Generated from the component: measurement6.Three-phase Meter6.VLn_RMS_calc.measSM.mode_and_dFract
+    // Generated from the component: measurement6.Three-phase Meter6.Phase locked loop.PLL1.confine phase
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller4
+    if (!_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state += 2.0 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).confine phase
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer1
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller4
+    if (!_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state += 2.0 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).confine phase
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer1
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller4
+    if (!_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__av_active) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__integrator_state += 2.0 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum11__out * 0.0002;
+    }
+    // Generated from the component: measurement1.Three-phase Meter1.VLn_RMS_calc.RMS
+    // Generated from the component: measurement2.Three-phase Meter2.VLn_RMS_calc.RMS
+    // Generated from the component: measurement3.Three-phase Meter3.VLn_RMS_calc.RMS
+    // Generated from the component: measurement5.Three-phase Meter5.VLn_RMS_calc.RMS
+    // Generated from the component: measurement6.Three-phase Meter6.VLn_RMS_calc.RMS
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Hold after connect1
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__connect == 0)_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__var = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__in;
+    else _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect1__var = 0;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Hold after connect1
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__connect == 0)_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__var = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__in;
+    else _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__var = 0;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller3
+    if (!_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state += 2.0 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller3
+    if (!_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state += 2.0 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).BE1-25A Synchronizer
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.PID controller3
+    if (!_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__av_active) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__integrator_state += 2.0 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Hold after connect
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__connect == 0)_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__var = _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__in;
+    else _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__hold_after_connect__var = 0;
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Hold after connect
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__connect == 0)_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__var = _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__in;
+    else _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect__var = 0;
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller2
+    if (!_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state += 0.002 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged).Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller1
+    if (!_grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active) {
+        _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state += 0.002 * _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out * 0.0002;
+    }
+    // Generated from the component: measurement1.Violation
+    // Generated from the component: measurement2.Voltage Deviation
+    // Generated from the component: measurement3.Violation
+    // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).stay connected
+    if (_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__in == 1)_grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__stay_connected__connect = 1;
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller2
+    if (!_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state += 0.002 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller1
+    if (!_grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active) {
+        _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state += 0.002 * _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).stay connected
+    if (_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__in == 1)_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__stay_connected__connect = 1;
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller2
+    if (!_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__av_active) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller2__integrator_state += 0.002 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum9__out * 0.0002;
+    }
+    // Generated from the component: Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.PID controller1
+    if (!_grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__av_active) {
+        _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_pid_controller1__integrator_state += 0.002 * _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum8__out * 0.0002;
+    }
+    // Generated from the component: Modbus1.C function3
+    // Generated from the component: Modbus2.C function3
+    // Generated from the component: Modbus3.C function3
+    // Generated from the component: Modbus1.ModBus Device2 (config1).comp_reg_in
+    // Generated from the component: Modbus2.ModBus Device2 (config2).comp_reg_in
+    // Generated from the component: Modbus3.ModBus Device3 (config3).comp_reg_in
+    //@cmp.update.block.end
+}
+// ----------------------------------------------------------------------------------------  //-----------------------------------------------------------------------------------------

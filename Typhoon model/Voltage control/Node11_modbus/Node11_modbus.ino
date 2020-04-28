@@ -16,7 +16,7 @@ XBee xbee = XBee();                  // create an XBee object
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,1,base);
+OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,2,base);
 LinkedList l = LinkedList();  //#NODE
 OGraph g = OGraph(&s,&l);
 //OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
@@ -196,7 +196,7 @@ void loop() {
       Serial.println(float(q_level0),4);
       delay(100);
 
-      deltaQ = a.voltageControl(1,v_error,5,0.5,q_level0,0.707,-0.707,-0.258852,1/6,20,200);
+      deltaQ = a.voltageControl(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.258852,1/6,20,200);
 //voltageControl(Vref,deltaV,secPercentage,p,q_level0,qtop,qbottom,D,alphaVC,iterations,period ) 
             
       Serial.println("delta q required");
@@ -239,7 +239,7 @@ void loop() {
 //        u_v=0;
 //      }
       u_v=deltaQ;
-      u_v=3;
+      //u_v=3;
       //Sending Data
       if (u_v<0)
       {

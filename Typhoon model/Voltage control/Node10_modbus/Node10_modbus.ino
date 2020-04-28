@@ -31,7 +31,7 @@ boolean de = false;
 //AFE and controller variables
 float f_error0;         // variable to store the read value 
 float v_error0;         // variable to store the read value
-float f_error1;         // ratio consensus result for average frequency error
+float flow_flag0;         // ratio consensus result for average frequency error
 float q_level0;         // variable to store the read value 
 float f_error1;         // ratio consensus result for average frequency error
 
@@ -196,7 +196,7 @@ void loop() {
       Serial.println(float(q_level0),4);
       delay(100);
 
-      deltaQ = a.voltageControl(1,v_error,5,0.5,q_level,0.707,-0.707,-0.224693,1/3,20,200);
+      deltaQ = a.voltageControl(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.224693,1/3,20,200);
 //voltageControl(Vref,deltaV,secPercentage,p,q_level0,qtop,qbottom,D,alphaVC,iterations,period ) 
       
       Serial.println("delta q required");
@@ -240,7 +240,7 @@ void loop() {
 //        u_v=0;
 //      }
       u_v=deltaQ;
-      u_v=2;
+      //u_v=2;
       //Sending Data
       if (u_v<0)
       {
