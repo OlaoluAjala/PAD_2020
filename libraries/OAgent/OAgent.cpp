@@ -6382,25 +6382,91 @@ void OAgent::_initializeVariablesSecStage(OLocalVertex * s)
 }
 
 //centralized approach
-void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float D1,float D2,float D3, float alphaVC){
+void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float S1,float S2,float S3, float alphaVC){
+    OLocalVertex * s = _G->getLocalVertex();
+
     int i;
     
     float Vmax = Vref + 0.05;
     float Vmin = Vref - 0.05;
-    float Q_secondary;
+    float V1 = Vref + diffV1;
+    float V2 = Vref + diffV2;
+    float V3 = Vref + diffV3;
+    float V[3] = { V1, V2 ,V3 };
+    float Q[3] = { q1, q2, q3};
+    float Qnew[3];
+    float Sij[3] = {S1, S2, S3};
 
-    for(i=0;i<3;i++)
+    float ro[3];
+    float deltaQsec[3] = {0,0,0};
+
+    float Q_secondary = 0;
+
+
+    for(i=0; i<3; i++)
     {
-        if(diffV1+Vref > Vmax)
+        if(V[i] > Vmax)
         {
+            ro[i] = alphaVC/Sij[i]*(Vmax - V[i]);
+            
+            if((Q[i]+ ro[i]) > qtop)
+            {
+                Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qtop );
+                ro[i] = ro[i] - Q_secondary;
+            }
 
+        }else if(V[i] < Vmin)
+        {
+            ro[i] = alphaVC/Sij[i]*(Vmin - V[i]);
+
+            if((Q[i]+ ro[i]) < qbottom)
+            {
+                Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qbottom );
+                ro[i] = ro[i] - Q_secondary;
+            }
+        }else
+        {
+            ro[i] = 0;
         }
     }
 
-}
+    float QreserveRise[3] ;
+    float QreserveLower[3] ;
+    float QreserveUp = 0;
+    float QreserveDown = 0;
 
-void fakefunction()
-{
+    for(i=0;i<3;i++)
+    {
+        QreserveRise[i]= qtop - (Q[i] + ro[i]);
+        QreserveLower[i]= qbottom  - (Q[i] + ro[i]);
 
-  //  s->setVoltage(1.123);
+        QreserveUp = QreserveUp + QreserveRise[i];
+        QreserveDown = QreserveDown + QreserveLower[i];
+    }
+
+    if (Q_secondary != 0)//second stage
+    {
+        if(Q_secondary > 0)
+        {
+            for(i=0;i<3;i++)
+            {
+                deltaQsec[i] = Q_secondary * (QreserveRise[i]/QreserveUp);
+            }
+        }else
+        {
+            for(i=0;i<3;i++)
+            {
+                deltaQsec[i] = Q_secondary * (QreserveLower[i]/QreserveDown);
+            }
+        }
+    }
+    for(i=0;i<3;i++)
+    {
+        Qnew[i] = Q[i] + ro[i] + deltaQsec[i];
+
+    }
+        s->setQ1(Qnew[0]);
+        s->setQ2(Qnew[1]);
+        s->setQ3(Qnew[2]);
+
 }

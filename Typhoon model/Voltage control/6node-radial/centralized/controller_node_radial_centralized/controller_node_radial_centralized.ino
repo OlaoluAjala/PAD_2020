@@ -236,25 +236,61 @@ if(Serial.available())
       Serial.println(float(q_level0_3),4);
       delay(100);
 
-      a.voltageControl_cent(v_error0_1,v_error0_2,v_error0_3,1,5,q_level0_1,q_level0_2,q_level0_3,0.707,-0.707,-0.225736,-0.224693,-0.258852,1/3);
-      //void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref,
-      //float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float D1,float D2,float D3, float alphaVC);
+      a.voltageControl_cent(v_error0_1,v_error0_2,v_error0_3,1,5,q_level0_1,
+      q_level0_2,q_level0_3,0.707,-0.707,-0.225736,-0.224693,-0.258852,1/3);
+      
+      //void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,
+      //float q2,float q3, float qtop,float qbottom, float S1,float S2,float S3, float alphaVC){
      
-      u_v_1=1;
+      u_v_1=s.getQ1();
       u_f_1=0.1;
-      u_v_2=2;
+      u_v_2=getQ2();
       u_f_2=0.2;
-      u_v_3=3;
+      u_v_3=getQ3();
       u_f_3=0.3;
 
       //SENDING RESULTS
-
-      Mb.MbData[0]=0;
-      Mb.MbData[2]=0;
-      Mb.MbData[4]=0;
-      Mb.MbData[6]=0;
-      Mb.MbData[8]=0;
-      Mb.MbData[10]=0;
+      if (u_f_1<0)
+      {
+         Mb.MbData[0]=1;
+      }else{
+         Mb.MbData[0]=0;
+      }
+      
+      if (u_v_1<0)
+      {
+         Mb.MbData[2]=1;
+      }else{
+         Mb.MbData[2]=0;
+      }
+      
+      if (u_f_2<0)
+      {
+         Mb.MbData[4]=1;
+      }else{
+         Mb.MbData[4]=0;
+      }
+      
+      if (u_v_2<0)
+      {
+         Mb.MbData[6]=1;
+      }else{
+         Mb.MbData[6]=0;
+      }
+      
+      if (u_f_3<0)
+      {
+         Mb.MbData[8]=1;
+      }else{
+         Mb.MbData[8]=0;
+      }
+      
+       if (u_v_3<0)
+      {
+         Mb.MbData[10]=1;
+      }else{
+         Mb.MbData[10]=0;
+      }
 
       Mb.MbData[1]=base*abs(u_f_1);            
       Mb.MbData[3]=base*abs(u_v_1);
