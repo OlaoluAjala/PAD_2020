@@ -103,12 +103,16 @@ void setup()
     if(a.isSynced())
     {
 //run Voltage Control algorithm 
-      deltaQ = a.voltageControl(0.5,1,5,0.7,0.2,0.2,-1,0.3,0.3,20,200); 
-      //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,D,alpha,iterations,period)
+      deltaQ = a.voltageControl_dist(0.06,1,5,0.7,0.4,0.7,-0.7,-0.25,1/3,20,200); 
+      //deltaQ = a.voltageControl(V,Vref,secPercentage,p,q,qtop,qbottom,Sij,alpha,iterations,period)
       
       Serial.print("the required variation in Q is: ");
       Serial.println(deltaQ);  
 
+      //s.setVoltage(1.2);
+      Serial.print("the voltage obtained from the node is:");
+      Serial.println(s.getVoltage());
+      
       int bbbb = Serial.read();
 
       while(Serial.available()==0)

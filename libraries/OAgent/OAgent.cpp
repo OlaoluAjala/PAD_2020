@@ -6401,5 +6401,6 @@ void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, fl
 
 void fakefunction()
 {
-    setVoltage(1.123);
+
+  //  s->setVoltage(1.123);
 }

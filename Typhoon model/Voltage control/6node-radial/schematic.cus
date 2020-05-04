@@ -1289,8 +1289,8 @@ data = {
                 <slower_update_rate>2</slower_update_rate>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>112</x>
-                    <y>96</y>
+                    <x>112.0</x>
+                    <y>96.0</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1603,8 +1603,8 @@ displayValue = 0.0
                 <hierarchy_position>1</hierarchy_position>
                 <working_mode>windowed</working_mode>
                 <widget_settings>
-                    <x>112</x>
-                    <y>224</y>
+                    <x>112.0</x>
+                    <y>224.0</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1614,7 +1614,7 @@ displayValue = 0.0
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>5.0</time_interval>
+                            <time_interval>10.0</time_interval>
                             <sample_rate>2000.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
@@ -1625,7 +1625,7 @@ displayValue = 0.0
                             <name>measurement1.Three-phase Meter1.VLn_RMS</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1638,7 +1638,7 @@ displayValue = 0.0
                             <name>measurement2.Three-phase Meter2.VLn_RMS</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1651,7 +1651,7 @@ displayValue = 0.0
                             <name>measurement3.Three-phase Meter3.VLn_RMS</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1682,8 +1682,8 @@ displayValue = 0.0
                             <layout>Grid</layout>
                             <legend>True</legend>
                             <show_viewports>3</show_viewports>
-                            <decimation>2</decimation>
-                            <time_base>0.005</time_base>
+                            <decimation>1</decimation>
+                            <time_base>1e-05</time_base>
                             <analog_signals>
                             <analog>
                             <channel>0</channel>
@@ -1818,7 +1818,7 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>5.0</time_interval>
+                        <time_interval>10.0</time_interval>
                         <sample_rate>2000.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
@@ -1838,7 +1838,7 @@ displayValue = 0.0
                             <name>measurement1.Three-phase Meter1.VLn_RMS</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1851,7 +1851,7 @@ displayValue = 0.0
                             <name>measurement2.Three-phase Meter2.VLn_RMS</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1864,7 +1864,7 @@ displayValue = 0.0
                             <name>measurement3.Three-phase Meter3.VLn_RMS</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1880,7 +1880,7 @@ displayValue = 0.0
                     </capture>
 
                     <scope>
-                        <time_base>0.005 </time_base>
+                        <time_base>1e-05 </time_base>
                         <background_color>white</background_color>
                         <layout>Grid</layout>
                         <legend>True</legend>
@@ -2182,8 +2182,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>792.0</x>
-                    <y>408.0</y>
+                    <x>800</x>
+                    <y>408</y>
                     <width>352</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
