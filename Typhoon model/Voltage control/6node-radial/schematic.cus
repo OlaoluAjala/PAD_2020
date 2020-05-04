@@ -1340,8 +1340,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>448.0</x>
-                    <y>248.0</y>
+                    <x>448</x>
+                    <y>248</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1603,8 +1603,8 @@ displayValue = 0.0
                 <hierarchy_position>1</hierarchy_position>
                 <working_mode>windowed</working_mode>
                 <widget_settings>
-                    <x>112.0</x>
-                    <y>224.0</y>
+                    <x>112</x>
+                    <y>224</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1614,7 +1614,7 @@ displayValue = 0.0
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>10.0</time_interval>
+                            <time_interval>5.0</time_interval>
                             <sample_rate>2000.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
@@ -1818,7 +1818,7 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>10.0</time_interval>
+                        <time_interval>5.0</time_interval>
                         <sample_rate>2000.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
@@ -2182,8 +2182,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>800</x>
-                    <y>408</y>
+                    <x>800.0</x>
+                    <y>408.0</y>
                     <width>352</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>

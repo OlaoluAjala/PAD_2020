@@ -15,7 +15,7 @@ XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,2,base); //address and ID
+OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,0,base); //address and ID
 LinkedList l = LinkedList();  //#NODE
 OGraph g = OGraph(&s,&l);
 //OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
@@ -118,8 +118,8 @@ void setup()  {
   //g.addInNeighbor(0x4151C6AC,8,0,0); // node 8
   
   //g.addInNeighbor(0x415786E1,9,0,0); // node 9
-  g.addInNeighbor(0x415786D3,10,0,0); // node 10
-  g.addInNeighbor(0x415DB670,11,0,0); // node 11
+  //g.addInNeighbor(0x415786D3,10,0,0); // node 10
+  //g.addInNeighbor(0x415DB670,11,0,0); // node 11
   
   //g.addInNeighbor(0x415786A9,12,0,0); // node 12
   //g.addInNeighbor(0x4157847B,13,0,0); // node 13
@@ -143,19 +143,19 @@ void setup()  {
 
 void loop(){
 
-Serial.println("Send letter s to start");
-while (Serial.available() == 0) 
-    { 
-      //simply makes the arduino wait until commputer sends signal        
-    }
-if(Serial.available()) 
-  {
-    Serial.println("got some letter");
-    uint8_t b = Serial.read(); //enter the character 's'
-    Serial.println(b);
-    
- if ((b == 's'))//start program
-    {
+//Serial.println("Send letter s to start");
+//while (Serial.available() == 0) 
+//    { 
+//      //simply makes the arduino wait until commputer sends signal        
+//    }
+//if(Serial.available()) 
+//  {
+//    Serial.println("got some letter");
+//    uint8_t b = Serial.read(); //enter the character 's'
+//    Serial.println(b);
+//    
+// if ((b == 's'))//start program
+//    {
       receiveTyphoonData();
       //node 9
       int f_error_1 =  Mb.MbData[0]*((-2*Mb.MbData[1])+1);
@@ -187,7 +187,7 @@ if(Serial.available())
       int f_error_2 =  Mb.MbData[8]*((-2*Mb.MbData[9])+1);
       int v_error_2  = Mb.MbData[10]*((-2*Mb.MbData[11])+1);
       int flow_flag_2  = Mb.MbData[12]*((-2*Mb.MbData[13])+1);
-      int q_level_2  = Mb.MbData[14]*((-2*Mb.MbData[14])+1);
+      int q_level_2  = Mb.MbData[14]*((-2*Mb.MbData[15])+1);
       
       f_error0_2 =  float(f_error_2);
       v_error0_2 =  float(v_error_2);
@@ -236,18 +236,112 @@ if(Serial.available())
       Serial.println(float(q_level0_3),4);
       delay(100);
 
-      a.voltageControl_cent(v_error0_1,v_error0_2,v_error0_3,1,5,q_level0_1,
-      q_level0_2,q_level0_3,0.707,-0.707,-0.225736,-0.224693,-0.258852,1/3);
-      
-      //void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,
-      //float q2,float q3, float qtop,float qbottom, float S1,float S2,float S3, float alphaVC){
+      //start algorithm
+      int i;
+    
+    float Vmax = 1 + 0.05;
+    float Vmin = 1 - 0.05;
+    float V1 = 1 + v_error0_1;
+    float V2 = 1 + v_error0_2;
+    float V3 = 1 + v_error0_3;
+    float V[3] = { V1, V2 ,V3 };
+    float Q[3] = { q_level0_1, q_level0_2, q_level0_3};
+    float Qnew[3];
+    float Sij[3] = {-0.225736, -0.224693, -0.258852};
+    float qtop=0.707;
+    float qbottom=-0.707;
+    float alphaVC=1/3;
+
+    float ro[3];
+    float deltaQsec[3] = {0,0,0};
+
+    float Q_secondary = 0;
+
+
+    for(i=0; i<3; i++)
+    {
+        if(V[i] > Vmax)
+        {
+            ro[i] = alphaVC/Sij[i]*(Vmax - V[i]);
+            
+            if((Q[i]+ ro[i]) > qtop)
+            {
+                Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qtop );
+                ro[i] = ro[i] - Q_secondary;
+            }
+
+        }else if(V[i] < Vmin)
+        {
+            ro[i] = alphaVC/Sij[i]*(Vmin - V[i]);
+
+            if((Q[i]+ ro[i]) < qbottom)
+            {
+                Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qbottom );
+                ro[i] = ro[i] - Q_secondary;
+            }
+        }else
+        {
+            ro[i] = 0;
+        }
+    }
+
+    float QreserveRise[3] ;
+    float QreserveLower[3] ;
+    float QreserveUp = 0;
+    float QreserveDown = 0;
+
+    for(i=0;i<3;i++)
+    {
+        QreserveRise[i]= qtop - (Q[i] + ro[i]);
+        QreserveLower[i]= qbottom  - (Q[i] + ro[i]);
+
+        QreserveUp = QreserveUp + QreserveRise[i];
+        QreserveDown = QreserveDown + QreserveLower[i];
+    }
+
+    if (Q_secondary != 0)//second stage
+    {
+        if(Q_secondary > 0)
+        {
+            for(i=0;i<3;i++)
+            {
+                deltaQsec[i] = Q_secondary * (QreserveRise[i]/QreserveUp);
+            }
+        }else
+        {
+            for(i=0;i<3;i++)
+            {
+                deltaQsec[i] = Q_secondary * (QreserveLower[i]/QreserveDown);
+            }
+        }
+    }
+    for(i=0;i<3;i++)
+    {
+        Qnew[i] = Q[i] + ro[i] + deltaQsec[i];
+        if(Qnew[i] > qtop)
+        {
+          Qnew[i]=qtop;
+        }else if(Qnew[i] < qbottom)
+        {
+          Qnew[i]=qbottom;
+        }
+    }
+    
      
-      u_v_1=s.getQ1();
+      u_v_1=Qnew[0];
       u_f_1=0.1;
-      u_v_2=getQ2();
+      u_v_2=Qnew[1];
       u_f_2=0.2;
-      u_v_3=getQ3();
+      u_v_3=Qnew[2];
       u_f_3=0.3;
+
+      Serial.println("new Q levels:");
+      Serial.print("Q1: ");
+      Serial.println(u_v_1);
+      Serial.print("Q2: ");
+      Serial.println(u_v_2);
+      Serial.print("Q3: ");
+      Serial.println(u_v_3);
 
       //SENDING RESULTS
       if (u_f_1<0)
@@ -300,8 +394,8 @@ if(Serial.available())
       Mb.MbData[11]=base*abs(u_v_3);
 
       sendConsensusResults();     
-    }
-  }
+    //}
+  //}
 }
 
 void sendConsensusResults()

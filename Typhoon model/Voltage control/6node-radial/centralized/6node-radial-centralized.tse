@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 27-Apr-2020 @ 05:50:13 AM
+// Save timestamp: 04-May-2020 @ 01:43:52 PM
 //
 
 model "6node-radial-centralized" {
@@ -25393,6 +25393,27 @@ out = in - (6.283185307179586*floor_in);
             size = 12, 352
         ]
 
+        component src_constant Constant9 {
+            execution_rate = "Ts"
+        }
+        [
+            position = 8648, 7768
+        ]
+
+        component src_constant Constant10 {
+            execution_rate = "Ts"
+        }
+        [
+            position = 8968, 7792
+        ]
+
+        component src_constant Constant11 {
+            execution_rate = "Ts"
+        }
+        [
+            position = 9128, 7800
+        ]
+
         tag switch_droop {
             value = "switch_droop"
             scope = local
@@ -25768,6 +25789,9 @@ out = in - (6.283185307179586*floor_in);
         [
             breakpoints = 8472, 8232; 6376, 8232; 6376, 7424
         ]
+        connect Constant9.out "Modbus1.flow flag_1" as Connection1755
+        connect Constant10.out "Modbus1.flow flag_2" as Connection1756
+        connect Constant11.out "Modbus1.flow flag_3" as Connection1757
     }
 
     default {

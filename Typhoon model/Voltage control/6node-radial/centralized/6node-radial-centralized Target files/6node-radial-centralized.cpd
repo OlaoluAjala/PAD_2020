@@ -1,0 +1,2568 @@
+
+<model_description>
+    <sw_version>2020.1</sw_version>
+    <hw_properties>
+        <revision>3</revision>
+        <product_id>HIL603</product_id>
+        <configuration_id>1</configuration_id>
+        <device_ao_limit_enable>True</device_ao_limit_enable>
+        <device_id>0</device_id>
+        <spc_out_mem_size>512</spc_out_mem_size>
+        <fw_support_limit>132383518</fw_support_limit>
+    </hw_properties>
+    <sim_setup>
+        <sim_time_step>2e-06</sim_time_step>
+    </sim_setup>
+    <pesb>
+    </pesb>
+    <variables>
+        <cell>
+            <name>Core Coupling 1.cpl1.C1</name>
+            <address>0</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl2.C1</name>
+            <address>1</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl3.C1</name>
+            <address>2</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl1.C1</name>
+            <address>3</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl2.C1</name>
+            <address>4</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl3.C1</name>
+            <address>5</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Tr1.tr1.L1</name>
+            <address>6</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Tr1.tr1.Lm</name>
+            <address>7</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Tr1.tr2.L1</name>
+            <address>8</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Tr1.tr2.Lm</name>
+            <address>9</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Tr1.tr3.L1</name>
+            <address>10</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Tr1.tr3.Lm</name>
+            <address>11</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_14.L1</name>
+            <address>12</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_14.L2</name>
+            <address>13</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_14.L3</name>
+            <address>14</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_15.L1</name>
+            <address>15</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_15.L2</name>
+            <address>16</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_15.L3</name>
+            <address>17</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl1.V_msr</name>
+            <address>452</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl2.V_msr</name>
+            <address>453</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl3.V_msr</name>
+            <address>454</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl1.V_msr</name>
+            <address>456</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl2.V_msr</name>
+            <address>457</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl3.V_msr</name>
+            <address>458</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L4.Constant Power L4_vab</name>
+            <address>18</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.VAn</name>
+            <address>19</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.VBn</name>
+            <address>20</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.VCn</name>
+            <address>21</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.VAn</name>
+            <address>22</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.VBn</name>
+            <address>23</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.VCn</name>
+            <address>24</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Core Coupling 5.cpl1.I_msr</name>
+            <address>460</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Core Coupling 5.cpl2.I_msr</name>
+            <address>461</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Core Coupling 5.cpl3.I_msr</name>
+            <address>462</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ia1</name>
+            <address>25</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ib1</name>
+            <address>26</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ic1</name>
+            <address>27</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L4.Constant Power L4_ia</name>
+            <address>28</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L4.Constant Power L4_ib</name>
+            <address>29</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L4.Constant Power L4_ic</name>
+            <address>30</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.IA</name>
+            <address>31</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.IB</name>
+            <address>32</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.IC</name>
+            <address>33</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.IA</name>
+            <address>34</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.IB</name>
+            <address>35</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.IC</name>
+            <address>36</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L4.Constant Power L4.Isa</name>
+            <address>33280</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>False</visible>
+        </cell>
+        <cell>
+            <name>L4.Constant Power L4.Isb</name>
+            <address>33281</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>False</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Tr1.tr1.L1</name>
+            <address>512</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Tr1.tr1.Lm</name>
+            <address>513</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Tr1.tr2.L1</name>
+            <address>514</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Tr1.tr2.Lm</name>
+            <address>515</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Tr1.tr3.L1</name>
+            <address>516</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Tr1.tr3.Lm</name>
+            <address>517</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_24.L1</name>
+            <address>518</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_24.L2</name>
+            <address>519</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_24.L3</name>
+            <address>520</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_26.L2</name>
+            <address>521</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_26.L3</name>
+            <address>522</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.VaG</name>
+            <address>523</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.VbG</name>
+            <address>524</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.VcG</name>
+            <address>525</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L6.Constant Power L6_vab</name>
+            <address>526</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.VAn</name>
+            <address>527</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.VBn</name>
+            <address>528</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.VCn</name>
+            <address>529</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.VAn</name>
+            <address>530</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.VBn</name>
+            <address>531</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.VCn</name>
+            <address>532</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl1.I_msr</name>
+            <address>960</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl2.I_msr</name>
+            <address>961</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 1.cpl3.I_msr</name>
+            <address>962</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Core Coupling 1.cpl1.I_msr</name>
+            <address>976</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Core Coupling 1.cpl2.I_msr</name>
+            <address>977</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Core Coupling 1.cpl3.I_msr</name>
+            <address>978</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ia1</name>
+            <address>533</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ib1</name>
+            <address>534</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ic1</name>
+            <address>535</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L6.Constant Power L6_ia</name>
+            <address>536</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L6.Constant Power L6_ib</name>
+            <address>537</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L6.Constant Power L6_ic</name>
+            <address>538</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.IA</name>
+            <address>539</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.IB</name>
+            <address>540</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.IC</name>
+            <address>541</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.IA</name>
+            <address>542</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.IB</name>
+            <address>543</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.IC</name>
+            <address>544</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L6.Constant Power L6.Isa</name>
+            <address>33282</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>False</visible>
+        </cell>
+        <cell>
+            <name>L6.Constant Power L6.Isb</name>
+            <address>33283</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>False</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Tr1.tr1.L1</name>
+            <address>1024</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Tr1.tr1.Lm</name>
+            <address>1025</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Tr1.tr2.L1</name>
+            <address>1026</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Tr1.tr2.Lm</name>
+            <address>1027</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Tr1.tr3.L1</name>
+            <address>1028</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Tr1.tr3.Lm</name>
+            <address>1029</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_35.L1</name>
+            <address>1030</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_35.L2</name>
+            <address>1031</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>RL_35.L3</name>
+            <address>1032</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.VaG</name>
+            <address>1033</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.VbG</name>
+            <address>1034</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.VcG</name>
+            <address>1035</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L5.Constant Power L5_vab</name>
+            <address>1036</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.VAn</name>
+            <address>1037</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.VBn</name>
+            <address>1038</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.VCn</name>
+            <address>1039</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.VAn</name>
+            <address>1040</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.VBn</name>
+            <address>1041</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.VCn</name>
+            <address>1042</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl1.I_msr</name>
+            <address>1472</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl2.I_msr</name>
+            <address>1473</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Core Coupling 5.cpl3.I_msr</name>
+            <address>1474</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Core Coupling 1.cpl1.I_msr</name>
+            <address>1492</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Core Coupling 1.cpl2.I_msr</name>
+            <address>1493</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Core Coupling 1.cpl3.I_msr</name>
+            <address>1494</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ia1</name>
+            <address>1043</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ib1</name>
+            <address>1044</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ic1</name>
+            <address>1045</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L5.Constant Power L5_ia</name>
+            <address>1046</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L5.Constant Power L5_ib</name>
+            <address>1047</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L5.Constant Power L5_ic</name>
+            <address>1048</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.IA</name>
+            <address>1049</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.IB</name>
+            <address>1050</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.IC</name>
+            <address>1051</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.IA</name>
+            <address>1052</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.IB</name>
+            <address>1053</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.IC</name>
+            <address>1054</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>L5.Constant Power L5.Isa</name>
+            <address>33284</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>False</visible>
+        </cell>
+        <cell>
+            <name>L5.Constant Power L5.Isb</name>
+            <address>33285</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>False</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ca1</name>
+            <address>1536</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Cb1</name>
+            <address>1537</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Cc1</name>
+            <address>1538</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).L0a1</name>
+            <address>1539</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).L0b1</name>
+            <address>1540</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).L0c1</name>
+            <address>1541</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Core Coupling 5.cpl1.V_msr</name>
+            <address>1984</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Core Coupling 5.cpl2.V_msr</name>
+            <address>1985</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Core Coupling 5.cpl3.V_msr</name>
+            <address>1986</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ea1</name>
+            <address>1542</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Eb1</name>
+            <address>1543</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ec1</name>
+            <address>1544</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Va2</name>
+            <address>1545</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Vb2</name>
+            <address>1546</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Vc2</name>
+            <address>1547</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Xi_a1</name>
+            <address>1548</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Xi_b1</name>
+            <address>1549</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Xi_c1</name>
+            <address>1550</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ca1</name>
+            <address>2048</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Cb1</name>
+            <address>2049</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Cc1</name>
+            <address>2050</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.L0a1</name>
+            <address>2051</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.L0b1</name>
+            <address>2052</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.L0c1</name>
+            <address>2053</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Core Coupling 1.cpl1.V_msr</name>
+            <address>2500</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Core Coupling 1.cpl2.V_msr</name>
+            <address>2501</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Core Coupling 1.cpl3.V_msr</name>
+            <address>2502</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ea1</name>
+            <address>2054</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Eb1</name>
+            <address>2055</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ec1</name>
+            <address>2056</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Va2</name>
+            <address>2057</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Vb2</name>
+            <address>2058</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Vc2</name>
+            <address>2059</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Xi_a1</name>
+            <address>2060</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Xi_b1</name>
+            <address>2061</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Xi_c1</name>
+            <address>2062</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ca1</name>
+            <address>2560</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Cb1</name>
+            <address>2561</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Cc1</name>
+            <address>2562</address>
+            <type>voltage</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.L0a1</name>
+            <address>2563</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.L0b1</name>
+            <address>2564</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.L0c1</name>
+            <address>2565</address>
+            <type>current</type>
+            <initial_condition>0.0</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Core Coupling 1.cpl1.V_msr</name>
+            <address>3016</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Core Coupling 1.cpl2.V_msr</name>
+            <address>3017</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Core Coupling 1.cpl3.V_msr</name>
+            <address>3018</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ea1</name>
+            <address>2566</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Eb1</name>
+            <address>2567</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ec1</name>
+            <address>2568</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Va2</name>
+            <address>2569</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Vb2</name>
+            <address>2570</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Vc2</name>
+            <address>2571</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Xi_a1</name>
+            <address>2572</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Xi_b1</name>
+            <address>2573</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Xi_c1</name>
+            <address>2574</address>
+            <type>current</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>const_0V</name>
+            <address>34304</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 1</name>
+            <address>34816</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 2</name>
+            <address>34817</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 3</name>
+            <address>34818</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 4</name>
+            <address>34819</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 5</name>
+            <address>34820</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 6</name>
+            <address>34821</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 7</name>
+            <address>34822</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>HIL0 analog input 8</name>
+            <address>34823</address>
+            <type>voltage</type>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+    </variables>
+    <do_var_list>
+        <cell>
+            <name>HIL0 AO flag</name>
+            <address>8</address>
+        </cell>
+        <cell>
+            <name>HIL0 DTV flag</name>
+            <address>9</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 1</name>
+            <address>512</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 2</name>
+            <address>513</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 3</name>
+            <address>514</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 4</name>
+            <address>515</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 5</name>
+            <address>516</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 6</name>
+            <address>517</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 7</name>
+            <address>518</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 8</name>
+            <address>519</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 9</name>
+            <address>520</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 10</name>
+            <address>521</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 11</name>
+            <address>522</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 12</name>
+            <address>523</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 13</name>
+            <address>524</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 14</name>
+            <address>525</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 15</name>
+            <address>526</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 16</name>
+            <address>527</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 17</name>
+            <address>528</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 18</name>
+            <address>529</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 19</name>
+            <address>530</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 20</name>
+            <address>531</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 21</name>
+            <address>532</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 22</name>
+            <address>533</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 23</name>
+            <address>534</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 24</name>
+            <address>535</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 25</name>
+            <address>536</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 26</name>
+            <address>537</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 27</name>
+            <address>538</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 28</name>
+            <address>539</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 29</name>
+            <address>540</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 30</name>
+            <address>541</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 31</name>
+            <address>542</address>
+        </cell>
+        <cell>
+            <name>HIL0 digital input 32</name>
+            <address>543</address>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).S2_fb</name>
+            <address>1024</address>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.S2_fb</name>
+            <address>1039</address>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.S2_fb</name>
+            <address>1054</address>
+        </cell>
+    </do_var_list>
+    <sources>
+    </sources>
+    <machines>
+    </machines>
+    <pv_panels>
+    </pv_panels>
+    <batteries>
+    </batteries>
+    <contactors>
+        <cell>
+            <name>Grid forming inverter (averaged).S2</name>
+            <type>three_phase_breaker</type>
+            <weight>0</weight>
+            <site>0</site>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.S2</name>
+            <type>three_phase_breaker</type>
+            <weight>0</weight>
+            <site>1</site>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.S2</name>
+            <type>three_phase_breaker</type>
+            <weight>0</weight>
+            <site>2</site>
+        </cell>
+    </contactors>
+    <dtv>
+        <spc_dtv>
+        </spc_dtv>
+        <par_dtv>
+        </par_dtv>
+    </dtv>
+
+<!-- ******* SP DATA ******** -->
+
+    <model_properties>
+        <execution_rates>[[0.0002]]</execution_rates>
+    </model_properties>
+
+    <variables>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Q1</name>
+            <type>generic</type>
+            <address>16414</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.VLn_RMS</name>
+            <type>generic</type>
+            <address>16489</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.POWER_S</name>
+            <type>generic</type>
+            <address>16464</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.POWER_PF</name>
+            <type>generic</type>
+            <address>16486</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe3</name>
+            <type>generic</type>
+            <address>16449</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.POWER_PF</name>
+            <type>generic</type>
+            <address>16462</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).frequency_diff3</name>
+            <type>generic</type>
+            <address>16422</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.E_dREF1</name>
+            <type>generic</type>
+            <address>16385</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.VLn_RMS</name>
+            <type>generic</type>
+            <address>16477</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.POWER_Q</name>
+            <type>generic</type>
+            <address>16469</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Eb_1</name>
+            <type>generic</type>
+            <address>16439</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.VLn_RMS</name>
+            <type>generic</type>
+            <address>16465</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Timer</name>
+            <type>generic</type>
+            <address>16459</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Q_level_1</name>
+            <type>generic</type>
+            <address>16450</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.POWER_Q</name>
+            <type>generic</type>
+            <address>16475</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.E_qREF1</name>
+            <type>generic</type>
+            <address>16407</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Qpu</name>
+            <type>generic</type>
+            <address>16415</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.POWER_PF</name>
+            <type>generic</type>
+            <address>16480</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.POWER_S</name>
+            <type>generic</type>
+            <address>16482</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.P1</name>
+            <type>generic</type>
+            <address>16389</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.POWER_S</name>
+            <type>generic</type>
+            <address>16470</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.E_dREF1</name>
+            <type>generic</type>
+            <address>16425</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.E_dREF1</name>
+            <type>generic</type>
+            <address>16405</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.POWER_Q</name>
+            <type>generic</type>
+            <address>16493</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe16</name>
+            <type>generic</type>
+            <address>16443</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Voltage droop.E_1</name>
+            <type>generic</type>
+            <address>16416</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ec_1</name>
+            <type>generic</type>
+            <address>16400</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.P1</name>
+            <type>generic</type>
+            <address>16432</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.POWER_P</name>
+            <type>generic</type>
+            <address>16461</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.POWER_S</name>
+            <type>generic</type>
+            <address>16494</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.Freq</name>
+            <type>generic</type>
+            <address>16478</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.f1</name>
+            <type>generic</type>
+            <address>16397</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Qpu</name>
+            <type>generic</type>
+            <address>16435</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.E_d1</name>
+            <type>generic</type>
+            <address>16384</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.Freq</name>
+            <type>generic</type>
+            <address>16472</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.f1</name>
+            <type>generic</type>
+            <address>16437</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Voltage droop.Q_diff1</name>
+            <type>generic</type>
+            <address>16394</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Q1</name>
+            <type>generic</type>
+            <address>16434</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Q_level_3</name>
+            <type>generic</type>
+            <address>16452</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.POWER_S</name>
+            <type>generic</type>
+            <address>16476</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.POWER_PF</name>
+            <type>generic</type>
+            <address>16474</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.POWER_S</name>
+            <type>generic</type>
+            <address>16488</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.E_d1</name>
+            <type>generic</type>
+            <address>16404</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Xi_d1</name>
+            <type>generic</type>
+            <address>16395</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.POWER_P</name>
+            <type>generic</type>
+            <address>16479</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe2</name>
+            <type>generic</type>
+            <address>16448</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.POWER_Q</name>
+            <type>generic</type>
+            <address>16463</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.VLn_RMS</name>
+            <type>generic</type>
+            <address>16495</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).angle_diff3</name>
+            <type>generic</type>
+            <address>16401</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.POWER_P</name>
+            <type>generic</type>
+            <address>16467</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.POWER_Q</name>
+            <type>generic</type>
+            <address>16481</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Ea_1</name>
+            <type>generic</type>
+            <address>16398</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ea_1</name>
+            <type>generic</type>
+            <address>16418</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.E_d1</name>
+            <type>generic</type>
+            <address>16424</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.E_qREF1</name>
+            <type>generic</type>
+            <address>16427</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.ED_ctrl</name>
+            <type>generic</type>
+            <address>16408</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Q1</name>
+            <type>generic</type>
+            <address>16391</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).volt_diff3</name>
+            <type>generic</type>
+            <address>16423</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.Freq</name>
+            <type>generic</type>
+            <address>16466</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.POWER_P</name>
+            <type>generic</type>
+            <address>16491</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.POWER_Q</name>
+            <type>generic</type>
+            <address>16487</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Xi_q1</name>
+            <type>generic</type>
+            <address>16396</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Q_level_2</name>
+            <type>generic</type>
+            <address>16451</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiQ_ctrl</name>
+            <type>generic</type>
+            <address>16411</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.flow_2</name>
+            <type>generic</type>
+            <address>16457</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Ppu</name>
+            <type>generic</type>
+            <address>16413</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.EQ_ctrl</name>
+            <type>generic</type>
+            <address>16429</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiD_ctrl</name>
+            <type>generic</type>
+            <address>16410</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.Freq</name>
+            <type>generic</type>
+            <address>16484</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe14</name>
+            <type>generic</type>
+            <address>16441</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.POWER_PF</name>
+            <type>generic</type>
+            <address>16468</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Eb_1</name>
+            <type>generic</type>
+            <address>16399</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe1_1</name>
+            <type>generic</type>
+            <address>16445</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.EQ_ctrl</name>
+            <type>generic</type>
+            <address>16409</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Voltage droop.E_1</name>
+            <type>generic</type>
+            <address>16436</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement5.Three-phase Meter5.POWER_P</name>
+            <type>generic</type>
+            <address>16485</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe17</name>
+            <type>generic</type>
+            <address>16444</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).angle_diff3</name>
+            <type>generic</type>
+            <address>16421</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Voltage droop.E_1</name>
+            <type>generic</type>
+            <address>16393</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement2.Three-phase Meter2.VLn_RMS</name>
+            <type>generic</type>
+            <address>16471</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.Freq</name>
+            <type>generic</type>
+            <address>16490</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Voltage_diff_1</name>
+            <type>generic</type>
+            <address>16453</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Voltage_diff_2</name>
+            <type>generic</type>
+            <address>16454</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.E_q1</name>
+            <type>generic</type>
+            <address>16386</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Ppu</name>
+            <type>generic</type>
+            <address>16390</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe1_3</name>
+            <type>generic</type>
+            <address>16447</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiD_ctrl</name>
+            <type>generic</type>
+            <address>16430</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.P1</name>
+            <type>generic</type>
+            <address>16412</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ec_1</name>
+            <type>generic</type>
+            <address>16440</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement3.Three-phase Meter3.POWER_P</name>
+            <type>generic</type>
+            <address>16473</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Voltage_diff_3</name>
+            <type>generic</type>
+            <address>16455</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement4.Three-phase Meter4.VLn_RMS</name>
+            <type>generic</type>
+            <address>16483</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement6.Three-phase Meter6.POWER_PF</name>
+            <type>generic</type>
+            <address>16492</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.E_qREF1</name>
+            <type>generic</type>
+            <address>16387</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.flow_1</name>
+            <type>generic</type>
+            <address>16456</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).volt_diff3</name>
+            <type>generic</type>
+            <address>16403</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.inner current control loop.XiQ_ctrl</name>
+            <type>generic</type>
+            <address>16431</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe15</name>
+            <type>generic</type>
+            <address>16442</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Eb_1</name>
+            <type>generic</type>
+            <address>16419</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.f1</name>
+            <type>generic</type>
+            <address>16417</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Qpu</name>
+            <type>generic</type>
+            <address>16392</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Ea_1</name>
+            <type>generic</type>
+            <address>16438</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Ec_1</name>
+            <type>generic</type>
+            <address>16420</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Outer Voltage Loop + Inner Current Loop.Outer voltage control loop.ED_ctrl</name>
+            <type>generic</type>
+            <address>16428</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.Controller.E_q1</name>
+            <type>generic</type>
+            <address>16406</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>measurement1.Three-phase Meter1.Freq</name>
+            <type>generic</type>
+            <address>16460</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).frequency_diff3</name>
+            <type>generic</type>
+            <address>16402</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.Probe1_2</name>
+            <type>generic</type>
+            <address>16446</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged).Controller.Frequency droop.P_diff1</name>
+            <type>generic</type>
+            <address>16388</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.Ppu</name>
+            <type>generic</type>
+            <address>16433</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Modbus1.flow_3</name>
+            <type>generic</type>
+            <address>16458</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+        <cell>
+            <name>Grid forming inverter (averaged)3.Controller.E_q1</name>
+            <type>generic</type>
+            <address>16426</address>
+            <initial_condition>None</initial_condition>
+            <visible>True</visible>
+        </cell>
+    </variables>
+
+    <do_var_list>
+        <cell>
+            <name>griddisconnect3</name>
+            <address>2062</address>
+        </cell>
+
+        <cell>
+            <name>ang_sync3</name>
+            <address>2059</address>
+        </cell>
+
+        <cell>
+            <name>griddisconnect2</name>
+            <address>2057</address>
+        </cell>
+
+        <cell>
+            <name>gridconnect2</name>
+            <address>2053</address>
+        </cell>
+
+        <cell>
+            <name>L6.gridconnect6</name>
+            <address>2067</address>
+        </cell>
+
+        <cell>
+            <name>freq_sync3</name>
+            <address>2055</address>
+        </cell>
+
+        <cell>
+            <name>L4.Constant Power L4_active</name>
+            <address>2048</address>
+        </cell>
+
+        <cell>
+            <name>ang_sync3</name>
+            <address>2054</address>
+        </cell>
+
+        <cell>
+            <name>Grid forming inverter (averaged).griddisconnect1</name>
+            <address>2052</address>
+        </cell>
+
+        <cell>
+            <name>L5.griddisconnect5</name>
+            <address>2066</address>
+        </cell>
+
+        <cell>
+            <name>freq_sync3</name>
+            <address>2060</address>
+        </cell>
+
+        <cell>
+            <name>volt_sync3</name>
+            <address>2056</address>
+        </cell>
+
+        <cell>
+            <name>L6.Constant Power L6_active</name>
+            <address>2050</address>
+        </cell>
+
+        <cell>
+            <name>volt_sync3</name>
+            <address>2061</address>
+        </cell>
+
+        <cell>
+            <name>L4.gridconnect4</name>
+            <address>2063</address>
+        </cell>
+
+        <cell>
+            <name>gridconnect3</name>
+            <address>2058</address>
+        </cell>
+
+        <cell>
+            <name>L4.griddisconnect4</name>
+            <address>2064</address>
+        </cell>
+
+        <cell>
+            <name>Grid forming inverter (averaged).gridconnect1</name>
+            <address>2051</address>
+        </cell>
+
+        <cell>
+            <name>L5.gridconnect5</name>
+            <address>2065</address>
+        </cell>
+
+        <cell>
+            <name>L5.Constant Power L5_active</name>
+            <address>2049</address>
+        </cell>
+
+        <cell>
+            <name>L6.griddisconnect6</name>
+            <address>2068</address>
+        </cell>
+
+    </do_var_list>
+
+    <scada_inputs>
+        <scada_input>
+            <name>Grid forming inverter (averaged)3.BE1-25A Synchronizer (inverter).Connect G3</name>
+            <addr>1426063708</addr>
+            <min>0.0</min>
+            <max>1.0</max>
+            <def_value>1.0</def_value>
+            <unit></unit>
+            <widget_type>int</widget_type>
+            <format>unsigned_int</format>
+        </scada_input>
+        <scada_input>
+            <name>Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).Connect G2</name>
+            <addr>1426063704</addr>
+            <min>0.0</min>
+            <max>1.0</max>
+            <def_value>1.0</def_value>
+            <unit></unit>
+            <widget_type>int</widget_type>
+            <format>unsigned_int</format>
+        </scada_input>
+        <scada_input>
+            <name>Grid forming inverter (averaged).Connect G1</name>
+            <addr>1426063700</addr>
+            <min>0.0</min>
+            <max>1.0</max>
+            <def_value>1.0</def_value>
+            <unit></unit>
+            <widget_type>int</widget_type>
+            <format>unsigned_int</format>
+        </scada_input>
+    </scada_inputs>
+
+    <scada_outputs>
+        <scada_output>
+            <name>L5.Constant Power L5.P</name>
+            <addr>1426063628</addr>
+            <unit>W</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L4.Constant Power L4.Q</name>
+            <addr>1426063620</addr>
+            <unit>VAr</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L4.Constant Power L4.f</name>
+            <addr>1426063624</addr>
+            <unit>Hz</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L6.Constant Power L6.Q</name>
+            <addr>1426063644</addr>
+            <unit>VAr</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L5.Constant Power L5.f</name>
+            <addr>1426063636</addr>
+            <unit>Hz</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L4.Constant Power L4.P</name>
+            <addr>1426063616</addr>
+            <unit>W</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L6.Constant Power L6.P</name>
+            <addr>1426063640</addr>
+            <unit>W</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L6.Constant Power L6.f</name>
+            <addr>1426063648</addr>
+            <unit>Hz</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+        <scada_output>
+            <name>L5.Constant Power L5.Q</name>
+            <addr>1426063632</addr>
+            <unit>VAr</unit>
+            <widget_type>float</widget_type>
+            <format>real</format>
+        </scada_output>
+    </scada_outputs>
+
+    <dsp_monitors>
+        <monitor>
+            <type>internal</type>
+            <execution_rates>[0.0001, 0.05]</execution_rates>
+            <execution_rate_labels>['ER0 (0.0001)', 'ER1 (0.05)']</execution_rate_labels>
+            <timer_counters>[14000.0, 7000000.0]</timer_counters>
+
+            
+        </monitor>
+        <monitor>
+            <type>user</type>
+            <execution_rates>[0.0002]</execution_rates>
+            <execution_rate_labels>['ER0 (0.0002)']</execution_rate_labels>
+            <timer_counters>[28000.0]</timer_counters>
+
+            
+        </monitor>
+    </dsp_monitors>
+
+    <streaming>
+
+
+
+     </streaming>
+
+
+</model_description>
