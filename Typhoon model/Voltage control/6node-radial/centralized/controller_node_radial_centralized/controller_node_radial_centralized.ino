@@ -236,7 +236,10 @@ if(Serial.available())
       Serial.println(float(q_level0_3),4);
       delay(100);
 
-
+      a.voltageControl_cent(v_error0_1,v_error0_2,v_error0_3,1,5,q_level0_1,q_level0_2,q_level0_3,0.707,-0.707,-0.225736,-0.224693,-0.258852,1/3);
+      //void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref,
+      //float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float D1,float D2,float D3, float alphaVC);
+     
       u_v_1=1;
       u_f_1=0.1;
       u_v_2=2;

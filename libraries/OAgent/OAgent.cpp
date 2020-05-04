@@ -5954,11 +5954,12 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 }
 /// End general helper functions
 
+//decentralized approach
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::voltageControl( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D , float alphaVC, uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
+float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij , float alphaVC, uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
 {
     OLocalVertex * s = _G->getLocalVertex();  
-    _initializeVoltageControl( s, diffV, Vref ,secPercentage ,p, q, qtop, qbottom, D, alphaVC ); 
+    _initializeVoltageControl( s, diffV, Vref ,secPercentage ,p, q, qtop, qbottom, Sij, alphaVC ); 
      
     //compute the first stage
     isUnderVoltage(s); 
@@ -6314,7 +6315,7 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
 
 
 //constructor functions
-void OAgent::_initializeVoltageControl( OLocalVertex * s, float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC )
+void OAgent::_initializeVoltageControl( OLocalVertex * s, float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij, float alphaVC )
 {
     //Serial<<"initialiting VC Variables"<<endl;
     _G->clearAllStates(); 
@@ -6327,7 +6328,7 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float diffV, float Vre
     s->setQ(q);
     s->setQtop(qtop);
     s->setQbottom(qbottom);
-    s->setD(D);
+    s->setD(1/Sij);
     s->setAlphaVC(alphaVC);
     s->setSecondStageFlag(false);
 }
@@ -6378,4 +6379,27 @@ void OAgent::_initializeVariablesSecStage(OLocalVertex * s)
     //     s->setNuUpperRC(-s->getQsecondary());
     //     s->setNuLowerRC(-s->getQsecondary());
     // }
+}
+
+//centralized approach
+void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float D1,float D2,float D3, float alphaVC){
+    int i;
+    
+    float Vmax = Vref + 0.05;
+    float Vmin = Vref - 0.05;
+    float Q_secondary;
+
+    for(i=0;i<3;i++)
+    {
+        if(diffV1+Vref > Vmax)
+        {
+
+        }
+    }
+
+}
+
+void fakefunction()
+{
+    setVoltage(1.123);
 }

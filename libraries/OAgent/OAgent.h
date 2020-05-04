@@ -144,13 +144,21 @@ class OAgent {
         //inline float getneighborY0(int index){ return _neighborY0[index]; }
         //inline float getneighborZ0(int index){ return _neighborZ0[index]; }
                
-        float voltageControl( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC, uint8_t iterations, uint16_t period );
+        //Distribute VC
+        float voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij, float alphaVC, uint8_t iterations, uint16_t period );
         void firstStageControl(OLocalVertex * s);
         void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period );
         void isOverVoltage(OLocalVertex * s);
         void isUnderVoltage(OLocalVertex * s);       
         void shareFlag(OLocalVertex * s, uint8_t iterations, uint16_t period );
         bool getSecondStageFlagfromPackage(OLocalVertex * s);
+
+        //Centralized VC
+        void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float S1,float S2,float S3, float alphaVC);
+
+        void fakefunction();
+
+
 
     private:
         // Properties
@@ -385,7 +393,7 @@ class OAgent {
         void _prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool leader = false, bool quiet = true);
 
         //voltage control functions
-        void _initializeVoltageControl( OLocalVertex * s, float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float D, float alphaVC );
+        void _initializeVoltageControl( OLocalVertex * s, float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float S, float alphaVC );
         void _initializeVariablesSecStage(OLocalVertex * s);
 };
 
