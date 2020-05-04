@@ -1,0 +1,54 @@
+kV93+o+s5+/nbzLSB5YrPRA2XvIwZUdvxagiWh14hMVn/DOXkijfz1tgqAlA4vF/NJI7sce+OpVK/gV+wYi7tQ==
+{
+  "compilation_timestamp": "2020-05-03 19:57:01",
+  "sw_version": "2020.1",
+  "devices": [
+    {
+      "device_type": "HIL402",
+      "hw_id": "4deffe5f2b1ae2050dbc819cf2af29362eb75b225f75136785b16a83c5372087",
+      "activation_key": "7XBLC-KV06N-4PWIM-18JU3-75094",
+      "serial_no": "00402-02-00036",
+      "license_expiry": "2115-10-14",
+      "maintenance_expiry": null,
+      "supported": true,
+      "not_supported_reason": null,
+      "toolboxes": []
+    },
+    {
+      "device_type": "HIL603",
+      "hw_id": "4cd582e97e44e49da3d35123f445835360fbcaf87c271ad7e0ec9da67420f27d",
+      "activation_key": "C3LYX-FIEUS-PZ9W1-MHG8A-4C01E",
+      "serial_no": "00603-00-00016",
+      "license_expiry": "2117-04-03",
+      "maintenance_expiry": null,
+      "supported": true,
+      "not_supported_reason": null,
+      "toolboxes": []
+    },
+    {
+      "device_type": "HIL603",
+      "hw_id": "d946767de0d0a3bb0efb90b4edd2d48c537a98421dfe9c0056f39a78dabced6c",
+      "activation_key": "IP9CY-JZ23X-W4LRH-QVA6G-40AEC",
+      "serial_no": "00603-00-00031",
+      "license_expiry": "2117-11-14",
+      "maintenance_expiry": null,
+      "supported": true,
+      "not_supported_reason": null,
+      "toolboxes": []
+    },
+    {
+      "device_type": "HIL603",
+      "hw_id": "8229d571b2f879d4fb7237df9c43b9a278822c149ad18c56db4abdcbdef8070b",
+      "activation_key": "G859I-7VQYX-EFZ2M-J401K-FAA4B",
+      "serial_no": "00603-00-00027",
+      "license_expiry": "2119-02-19",
+      "maintenance_expiry": null,
+      "supported": true,
+      "not_supported_reason": null,
+      "toolboxes": []
+    }
+  ]
+}
+-----BEGIN SIGNATURE-----
+EMHC1QxAnzyx7940+ZBO/ufpA/VnBqhf02vomYtpK5YBNyfEpjeghUDGjVtc/oaOdrm2GJ0zpi0JJu0xopTo6GCav80X9x45gjr1sknBjDNdbcHVeb2wQ3WoL9cGsBBnhFiSDXNb41qkDvdZP8CJrx5p+MtQqUuz52k/VYBwk4TfJUqU0ih3dW1Jti2/XNWM7tTeJ/OAkZOIEWWTO7O29CPKGkW/6OTetPrWso8HROAZHA6h33REOFi2nPiwH5+d8l9XAPg13gVw+shYCgcCUT/Tk/L1e877vzkQU13Y7AMdCZE4HJpUxzgi8Pum1Ol0d5CLP/s6DsbPxyyQE/A6iA==
+-----END SIGNATURE-----

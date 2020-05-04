@@ -1,8 +1,8 @@
 version = 4.2
 
 //
-// Saved by sw version: 2018.3 SP1
-// Save timestamp: 08-Apr-2020 @ 04:31:58 PM
+// Saved by sw version: 2020.1
+// Save timestamp: 03-May-2020 @ 08:26:48 PM
 //
 
 model "6node_radial" {
@@ -7946,7 +7946,7 @@ out = in*((-2*sign)+1);
             f_D = "3e-1"
 
             mask {
-                description = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"><html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\"><p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A grid-forming three-phase inverter with a frequency and voltage droop controller</p></body></html>"
+                description = "<html><head><meta name=\"qrichtext\" content=\"1\"></meta><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\"\"><p style=\"margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A grid-forming three-phase inverter with a frequency and voltage droop controller</p></body></html>"
 
                 S {
                     label = "Rated Power "
@@ -14046,7 +14046,7 @@ out = in - (6.283185307179586*floor_in);
             f_D = "3e-1"
 
             mask {
-                description = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"><html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\"><p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A grid-forming three-phase inverter with a frequency and voltage droop controller</p></body></html>"
+                description = "<html><head><meta name=\"qrichtext\" content=\"1\"></meta><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\"\"><p style=\"margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A grid-forming three-phase inverter with a frequency and voltage droop controller</p></body></html>"
 
                 S {
                     label = "Rated Power "
@@ -20146,7 +20146,7 @@ out = in - (6.283185307179586*floor_in);
             f_D = "3e-1"
 
             mask {
-                description = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"><html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\"><p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A grid-forming three-phase inverter with a frequency and voltage droop controller</p></body></html>"
+                description = "<html><head><meta name=\"qrichtext\" content=\"1\"></meta><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\"\"><p style=\"margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A grid-forming three-phase inverter with a frequency and voltage droop controller</p></body></html>"
 
                 S {
                     label = "Rated Power "
@@ -20619,7 +20619,7 @@ if ((time>=load2_delay)&&(time<=load2_delay+load_time))
             connect "Constant Power L5.a_node" A as Connection631
 
             mask {
-                description = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"><html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\"><p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"
+                description = "<html><head><meta name=\"qrichtext\" content=\"1\"></meta><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\"\"><p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br></br></p></body></html>"
 
                 CODE open
                     from typhoon.apps.schematic_editor.dialogs.component_property_dialogs.general import RegularComponentPropertiesDialog
@@ -21850,7 +21850,7 @@ if ((time>=load1_delay)&&(time<=load1_delay+load_time))
             connect "Load 4.status" Junction1 as Connection635
 
             mask {
-                description = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"><html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\"><p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"
+                description = "<html><head><meta name=\"qrichtext\" content=\"1\"></meta><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\"\"><p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br></br></p></body></html>"
 
                 CODE open
                     from typhoon.apps.schematic_editor.dialogs.component_property_dialogs.general import RegularComponentPropertiesDialog
@@ -23048,7 +23048,7 @@ if ((time>=load3_delay)&&(time<=load3_delay+load_time))
             connect "Load 6.status" Junction1 as Connection628
 
             mask {
-                description = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\"><html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\"><p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"
+                description = "<html><head><meta name=\"qrichtext\" content=\"1\"></meta><style type=\"text/css\">p, li { white-space: pre-wrap; }</style></head><body style=\"\"><p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br></br></p></body></html>"
 
                 CODE open
                     from typhoon.apps.schematic_editor.dialogs.component_property_dialogs.general import RegularComponentPropertiesDialog
@@ -25209,6 +25209,8 @@ out = in*((-2*sign)+1);
             filter_cutoff_Hz = "30"
             initial_filter_input = "0"
             initial_filter_output = "0"
+            enable_inst_ports = "True"
+            enable_zero_ports = "False"
             execution_rate = "inherit"
         }
 
@@ -25297,8 +25299,11 @@ out = in*((-2*sign)+1);
         gen_pid_controller {
             controller_type = "PID"
             kp = "1"
+            kp_source = "internal"
             ki = "1"
+            ki_source = "internal"
             kd = "0"
+            kd_source = "internal"
             filt_coef = "100"
             int_init_value = "0"
             filt_init_value = "0"
@@ -25397,87 +25402,7 @@ out = in*((-2*sign)+1);
             execution_rate = "inherit"
         }
 
-        "core/Triple Pole Single Throw Contactor" {
-            ctrl_src = "Digital input"
-            Sa = "1"
-            Sa_logic = "active high"
-            enable_fb_out = "False"
-            fb_out_type = "real"
-            execution_rate = "inherit"
-            initial_state = "off"
-            on_delay = "0"
-            off_delay = "0"
-        }
-
-        "core/Signal Controlled Voltage Source" {
-            execution_rate = "inherit"
-        }
-
-        "core/Three-phase RMS variable frequency" {
-            Ts = "100e-6"
-            dc_freq = "1"
-        }
-
-        "core/Three Phase Constant Power Load" {
-            ctrl_method = "SCADA inputs"
-            execution_rate = "inherit"
-            I_limit = "100"
-            v_droop_enb = "False"
-            v_droop = "[80.0,2.0, 100.0,1.0, 120.0,0.5]"
-            preview_v_droop = "Preview"
-            f_droop_enb = "False"
-            f_droop = "[47.5,1.0, 50.2,1.0, 52.7,0.0]"
-            preview_f_droop = "Preview"
-            Rsnb = "20e3"
-        }
-
-        "core/abc to dq" {
-            power_form = "variant - Clarke\'s original"
-            alignment = "-pi/2"
-            disable_filter = "True"
-            initial_filter_output = "0"
-            wn_LPFdq = "1000"
-            execution_rate = "inherit"
-        }
-
-        "core/RL Section" {
-            model_def = "R-L"
-            unit_sys = "imperial"
-            num_of_phases = "3"
-            resistance_per_l = "1"
-            resistance_per_l_mile = "1"
-            inductance_per_l = "1e-3"
-            inductance_per_l_mile = "1e-3"
-            length = "1.0"
-            length_mile = "1.0"
-            power = "500.0"
-            voltage = "11.0"
-            frequency = "50.0"
-            R_value = "21.55"
-            L_value = "0.00842"
-        }
-
-        "core/Four Phase Core Coupling" {
-            snb_type_i = "none"
-            R1 = "100e3"
-            C1 = "1e-06"
-            C2 = "1e-06"
-            fixed_snb_i = "false"
-            snb_type_u = "none"
-            R2 = "0.1"
-            L1 = "0.1"
-            L2 = "0.1"
-            fixed_snb_u = "false"
-            cpl_connection = "star"
-        }
-
-        "core/dq to abc" {
-            power_form = "variant - Clarke\'s original"
-            alignment = "-pi/2"
-            execution_rate = "0"
-        }
-
-        "core/Voltage Measurement" {
+        "core/Current Measurement" {
             bw_limit = "False"
             frequency = "10e3"
             comparator_enable = "False"
@@ -25497,6 +25422,72 @@ out = in*((-2*sign)+1);
             visible = "True"
             override_signal_name = "False"
             signal_name = ""
+        }
+
+        "core/Four Phase Core Coupling" {
+            snb_type_i = "none"
+            R1 = "100e3"
+            C1 = "1e-06"
+            C2 = "1e-06"
+            fixed_snb_i = "false"
+            snb_type_u = "none"
+            R2 = "0.1"
+            L1 = "0.1"
+            L2 = "0.1"
+            fixed_snb_u = "false"
+            cpl_connection = "star"
+        }
+
+        "core/ModBus Device" {
+            hil_id = "0"
+            configuration = "config1"
+            preview = "Configuration preview"
+            ip_address_port = "False"
+            request_counter_port = "None"
+            network_settings_src = "Configuration dictionary"
+            ip_addr = "192.168.0.210"
+            netmask = "255.255.255.0"
+            port = "502"
+            gateway = "192.168.0.210"
+            gateway_enable = "False"
+            defines = ""
+            modbus_sunspec = "False"
+            logging = "False"
+            execution_rate = "100e-6"
+        }
+
+        "core/RL Section" {
+            model_def = "R-L"
+            unit_sys = "imperial"
+            num_of_phases = "3"
+            resistance_per_l = "1"
+            resistance_per_l_mile = "1"
+            inductance_per_l = "1e-3"
+            inductance_per_l_mile = "1e-3"
+            length = "1.0"
+            length_mile = "1.0"
+            power = "500.0"
+            voltage = "11.0"
+            frequency = "50.0"
+            R_value = "21.55"
+            L_value = "0.00842"
+        }
+
+        "core/Signal Controlled Voltage Source" {
+            execution_rate = "inherit"
+        }
+
+        "core/Three Phase Constant Power Load" {
+            ctrl_method = "SCADA inputs"
+            execution_rate = "inherit"
+            I_limit = "100"
+            v_droop_enb = "False"
+            v_droop = "[80.0,2.0, 100.0,1.0, 120.0,0.5]"
+            preview_v_droop = "Preview"
+            f_droop_enb = "False"
+            f_droop = "[47.5,1.0, 50.2,1.0, 52.7,0.0]"
+            preview_f_droop = "Preview"
+            Rsnb = "20e3"
         }
 
         "core/Three Phase Two Winding Transformer" {
@@ -25542,17 +25533,25 @@ out = in*((-2*sign)+1);
             Rshunt = "inf"
         }
 
-        "core/ModBus Device" {
-            hil_id = "0"
-            configuration = "config1"
-            preview = "Configuration preview"
-            ip_address_port = "False"
-            defines = ""
-            modbus_sunspec = "False"
-            execution_rate = "100e-6"
+        "core/Three-phase RMS variable frequency" {
+            internal_sm = "True"
+            n_cycles = "1"
+            Ts = "100e-6"
         }
 
-        "core/Current Measurement" {
+        "core/Triple Pole Single Throw Contactor" {
+            ctrl_src = "Digital input"
+            Sa = "1"
+            Sa_logic = "active high"
+            enable_fb_out = "False"
+            fb_out_type = "real"
+            execution_rate = "inherit"
+            initial_state = "off"
+            on_delay = "0"
+            off_delay = "0"
+        }
+
+        "core/Voltage Measurement" {
             bw_limit = "False"
             frequency = "10e3"
             comparator_enable = "False"
@@ -25572,6 +25571,21 @@ out = in*((-2*sign)+1);
             visible = "True"
             override_signal_name = "False"
             signal_name = ""
+        }
+
+        "core/abc to dq" {
+            power_form = "variant - Clarke\'s original"
+            alignment = "-pi/2"
+            disable_filter = "True"
+            initial_filter_output = "0"
+            wn_LPFdq = "1000"
+            execution_rate = "inherit"
+        }
+
+        "core/dq to abc" {
+            power_form = "variant - Clarke\'s original"
+            alignment = "-pi/2"
+            execution_rate = "0"
         }
     }
 

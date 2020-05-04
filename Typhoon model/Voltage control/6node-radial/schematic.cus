@@ -1282,7 +1282,7 @@ data = {
     "values": [],
     }
 ]]></expression_code>
-                <analog_signals><![CDATA[['Grid forming inverter (averaged).Controller.P1', 'Grid forming inverter (averaged)2.Controller.P1', 'Grid forming inverter (averaged)3.Controller.P1', 'Grid forming inverter (averaged).Controller.f1', 'Grid forming inverter (averaged)2.Controller.f1', 'Grid forming inverter (averaged)3.Controller.f1', 'measurement4.Three-phase Meter4.POWER_P', 'measurement5.Three-phase Meter5.POWER_P', 'measurement6.Three-phase Meter6.POWER_P', 'Timer']]]></analog_signals>
+                <analog_signals><![CDATA[['Timer', 'measurement1.Three-phase Meter1.VLn_RMS', 'measurement2.Three-phase Meter2.VLn_RMS', 'measurement3.Three-phase Meter3.VLn_RMS']]]></analog_signals>
                 <digital_signals><![CDATA[[]]]></digital_signals>
                 <update_rate>250</update_rate>
                 <use_slower_update_rate>False</use_slower_update_rate>
@@ -1296,7 +1296,7 @@ data = {
                     <appearance><![CDATA[Flat]]></appearance>
                 </widget_settings>
                 <data_file_settings>
-                    <data_file_dir><![CDATA[C:/Users/diegob3/Desktop/PAD20/PAD_2020/Typhoon model/Voltage control/6node-radial/results]]></data_file_dir>
+                    <data_file_dir><![CDATA[C:/Users/diegob3/Desktop/PAD20/PAD_2020/Typhoon model/Voltage control/6node-radial/distributed/results]]></data_file_dir>
                     <data_file_name><![CDATA[signals_data_noCTRL]]></data_file_name>
                     <use_panel_file_dir>False</use_panel_file_dir>
                     <data_file_format><![CDATA[csv]]></data_file_format>
@@ -1603,31 +1603,70 @@ displayValue = 0.0
                 <hierarchy_position>1</hierarchy_position>
                 <working_mode>windowed</working_mode>
                 <widget_settings>
-                    <x>112.0</x>
-                    <y>224.0</y>
+                    <x>112</x>
+                    <y>224</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
-                    <state>Scope</state>
+                    <state>Capture</state>
                     <layout>None</layout>
                     <presets>
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>0.01</time_interval>
-                            <sample_rate>250000.0</sample_rate>
+                            <time_interval>5.0</time_interval>
+                            <sample_rate>2000.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
                             <legend>True</legend>
                             <analog_signals>
+                            <analog>
+                            <channel>0</channel>
+                            <name>measurement1.Three-phase Meter1.VLn_RMS</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                                <num_viewport>1</num_viewport>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>1</channel>
+                            <name>measurement2.Three-phase Meter2.VLn_RMS</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                                <num_viewport>2</num_viewport>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>2</channel>
+                            <name>measurement3.Three-phase Meter3.VLn_RMS</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                                <num_viewport>3</num_viewport>
+                                
+                           </viewports>
+                        </analog>
                             </analog_signals>
                             <digital_signals>
                             </digital_signals>
                             <trigger>
-                                <device>-1</device>
-                                <is_force>False</is_force>
+                                <device>0</device>
+                                <is_force>True</is_force>
                                 <type>Analog</type>
-                                <source>None</source>
+                                <source>measurement1.Three-phase Meter1.VLn_RMS</source>
                                 <edge>Rising edge</edge>
                                 <treshold>0.0</treshold>
                                 <offset>0.0</offset>
@@ -1779,14 +1818,14 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>0.01</time_interval>
-                        <sample_rate>250000.0</sample_rate>
+                        <time_interval>5.0</time_interval>
+                        <sample_rate>2000.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
                         <legend>True</legend>
                         <trigger>
                             <type>Analog</type>
-                            <source>None</source>
+                            <source>measurement1.Three-phase Meter1.VLn_RMS</source>
                             <edge>Rising edge</edge>
                             <treshold>0.0</treshold>
                             <offset>0.0</offset>
@@ -1794,6 +1833,45 @@ displayValue = 0.0
                         </trigger>
 
                         <analog_signals>
+                            <analog>
+                            <channel>0</channel>
+                            <name>measurement1.Three-phase Meter1.VLn_RMS</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                                <num_viewport>1</num_viewport>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>1</channel>
+                            <name>measurement2.Three-phase Meter2.VLn_RMS</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                                <num_viewport>2</num_viewport>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>2</channel>
+                            <name>measurement3.Three-phase Meter3.VLn_RMS</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                                <num_viewport>3</num_viewport>
+                                
+                           </viewports>
+                        </analog>
                             </analog_signals>
 
                          <digital_signals>
