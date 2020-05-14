@@ -194,8 +194,8 @@ void loop() {
       Serial.println(float(q_level0),4);
       delay(100);
 
-      deltaQ = a.voltageControl_dist(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.225736,1/3,20,200);
-//voltageControl(Vref,deltaV,secPercentage,p,q_level0,qtop,qbottom,D,alphaVC,iterations,period ) 
+      deltaQ = a.voltageControl_dist(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.225736,1/3,20,200,0.001);
+//voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,epsilon ) 
             
       Serial.println("delta q required");
       Serial.println(deltaQ,4);

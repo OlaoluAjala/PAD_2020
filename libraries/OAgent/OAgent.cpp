@@ -259,11 +259,11 @@ float OAgent::fairSplitRatioConsensus(long y, long z, uint8_t iterations, uint16
 
 
 // Resilient Fair splitting RC (added in by Olaolu)
-float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period) //,uint8_t round
+float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, float eps) //,uint8_t round
 {  
     OLocalVertex * s = _G->getLocalVertex();        // store pointer to local vertex 
     float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops
-    _initializeFairSplitting_RSL(s,y,z);            // initialize state variables                           
+    _initializeFairSplitting_RSL(s,y,z,eps);            // initialize state variables                           
     unsigned long start;                            // create variable to store iteration start time
     bool txDone;                                    // create variable to keep track of broadcasts
     bool mucheck = 0;
@@ -393,6 +393,9 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         s->setZ((s->getZ()/Dout) + inZ);
         s->addToSigma(s->getZ()/Dout);
 
+        s->setGamma(s->getYMin()/s->getZ())
+
+
         _buffer[count] = (s->getYMin())/(s->getZ()); //add kth iterate to buffer
         _bufferY[count] = s->getYMin(); //add kth iterate to buffer
         _bufferZ[count] = s->getZ(); //add kth iterate to buffer
@@ -471,8 +474,8 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     //Serial <<"\n"; 
 
     s->setMuRC(s->getMuMin()); //so as to evaluate the sign for the Voltage control
-
-    return (s->getYMin()/s->getZ());
+    
+    return (s->getGamma());
 }
 
 
@@ -489,7 +492,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
 
 
 
-float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period) {
+float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps) {
     srand(analogRead(7));    
     float gamma = 0;
     
@@ -514,7 +517,7 @@ float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, 
 
 
 
-float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period) {
+float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps) {
     unsigned long t0 = myMillis();
     unsigned long startTime = t0 + RC_DELAY;
     OLocalVertex * s = _G->getLocalVertex();
@@ -541,13 +544,13 @@ float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterat
         {
             //Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-            gamma = ratiomaxminConsensus(y, z, iterations,period);
+            gamma = ratiomaxminConsensus(y, z, iterations,period,eps);
         }
     }        
     return gamma;
 }
 
-float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period) {
+float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps) {
     unsigned long startTime = 0;
     //delay(50);
     float gamma = 0;
@@ -568,7 +571,7 @@ float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t ite
         if(_waitToStart(startTime,true,10000)) {
             //Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-            gamma = ratiomaxminConsensus(y, z, iterations,period);
+            gamma = ratiomaxminConsensus(y, z, iterations,period,eps);
         }
         
         //digitalWrite(48,LOW);
@@ -619,6 +622,14 @@ long OAgent::nonleaderFairSplitRatioConsensus(long y, long z) {
     digitalWrite(48,LOW);
     return gamma;
 }
+
+//MaxMin calcultion
+
+ void OAgent::maxMin(OLocalVertex * s, float Epsilon)
+ {
+
+ }
+
 
 
 // End fair splitting
@@ -3821,7 +3832,7 @@ void OAgent::_initializeFairSplitting(OLocalVertex * s, long y, long z) {
 }
 
 // Resilient version
-void OAgent::_initializeFairSplitting_RSL(OLocalVertex * s, float y, float z) {
+void OAgent::_initializeFairSplitting_RSL(OLocalVertex * s, float y, float z, float eps) {
     _G->clearAllStates();                   // clear everything
     uint8_t Dout = s->getOutDegree() + 1;   // store out degree
 
@@ -3835,6 +3846,7 @@ void OAgent::_initializeFairSplitting_RSL(OLocalVertex * s, float y, float z) {
     s->setMuMin(s->getYMin()/Dout);         // Initialize mu = y/
     s->setZ(z - s->getMin());               // set initial z value [z - min]
     s->setSigma(s->getZ()/Dout);            // Initialize sigma = z/Dout
+    s->setEpsilon(eps);
 
     //initialize min and max consensus. Min consensus is used to choose leader, max consensus is used to choose deputy
     //s->setleaderID(s->getID());
@@ -5956,7 +5968,7 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 
 //decentralized approach
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij , float alphaVC, uint8_t iterations, uint16_t period )  //it is going to give back the q required to rise or lower
+float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij , float alphaVC, uint8_t iterations, uint16_t period, float eps )  //it is going to give back the q required to rise or lower
 {
     OLocalVertex * s = _G->getLocalVertex();  
     _initializeVoltageControl( s, diffV, Vref ,secPercentage ,p, q, qtop, qbottom, Sij, alphaVC ); 
@@ -5971,7 +5983,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
 
     if(s->getSecondStageFlag())
     {
-        secondStageControl( s, iterations, period );
+        secondStageControl( s, iterations, period, eps );
         //Serial<<"the eta chosen is: "<<s->getEta()<<endl;
 
         if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
@@ -6105,15 +6117,15 @@ void OAgent::firstStageControl( OLocalVertex * s )
     //s->setDeltaQ(deltaQ);
 }
 
-void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period )
+void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period, float eps)
 {
     //float deltaQ;
     Serial<<"******************2nd Stage******************"<<endl;
   
     _initializeVariablesSecStage(s);
 
-    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period ));      //(mu,eta,iterations,period)
-    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period ));
+    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period,eps));      //(mu,eta,iterations,period)
+    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period,eps));
 
    // Serial<<"the value of mu: "<<s->getMuRC()<<endl;
 

@@ -94,10 +94,10 @@ class OAgent {
         long nonleaderFairSplitRatioConsensus(long y, long z);
         
         // Resilient consensus methods
-        float fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period);
-        float leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period);
-        float nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period);
-        float ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period);
+        float fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
+        float leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
+        float nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
+        float ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, float eps);
 
         long maxminConsensusAlgorithm(bool isMax, long max, long min, uint8_t iterations, uint16_t period);
         long leaderMaxMinConsensus(bool isMax, long max, long min, uint8_t iterations, uint16_t period);
@@ -145,9 +145,9 @@ class OAgent {
         //inline float getneighborZ0(int index){ return _neighborZ0[index]; }
                
         //Distribute VC
-        float voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij, float alphaVC, uint8_t iterations, uint16_t period );
+        float voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij, float alphaVC, uint8_t iterations, uint16_t period , float eps);
         void firstStageControl(OLocalVertex * s);
-        void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period );
+        void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period, float eps );
         void isOverVoltage(OLocalVertex * s);
         void isUnderVoltage(OLocalVertex * s);       
         void shareFlag(OLocalVertex * s, uint8_t iterations, uint16_t period );
@@ -219,7 +219,7 @@ class OAgent {
         //inline bool PacketAvailable() { return _packetAvailable(PD_PACKET_HEADER,true); }
         void _initializeFairSplitting(OLocalVertex * s, long y, long z);
         //Leader failure-resilient version
-        void _initializeFairSplitting_RSL(OLocalVertex * s, float y, float z);
+        void _initializeFairSplitting_RSL(OLocalVertex * s, float y, float z, float eps);
 
         void _broadcastFairSplitPacket(OLocalVertex * s);
         //Leader failure-resilient version

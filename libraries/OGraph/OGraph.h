@@ -231,6 +231,8 @@ class OLocalVertex : public OVertex {
         inline void setGamma(float gamma) { _gamma = gamma; }
         inline void setGammaTMP(float gammaTMP) { _gammaTMP = gammaTMP; }
 
+
+
         // get directive for Voltage Control algorithm
         //imputs
         inline float getVoltage() { return _V; }
@@ -340,7 +342,18 @@ class OLocalVertex : public OVertex {
         inline void clearQ2() { _Q2 = 0; } 
         inline void clearQ3() { _Q3 = 0; } 
 
+        //MaxMin consensus
+        //get directives
+        inline float getGamma() {return _gamma; }
+        inline float getGammaMax() {return _gammaMax; }
+        inline float getGammaMin() {return _gammaMin; }
+        inline float getEpsilon() {return _epsilon; }
 
+        //set directives
+        inline void setGamma(float gamma) { _gamma = gamma; }
+        inline void setGammaMax(float gammaMax) { _gammaMax = gammaMax; }
+        inline void setGammaMin(float gammaMin) { _gammaMin = gammaMin; }
+        inline void setEpsilon(float epsilon) { _epsilon = epsilon; }
 
         
     protected:
@@ -432,6 +445,13 @@ class OLocalVertex : public OVertex {
         float _etaUpper;
         float _etaLower;
         float _eta;
+
+        //MaxMin consensus
+        float _gamma;
+        float _gammaMax;
+        float _gammaMin;
+        float _epsilon;
+
 
         //States
         bool _over;             //overvoltage condition
