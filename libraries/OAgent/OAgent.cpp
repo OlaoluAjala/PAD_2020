@@ -456,12 +456,13 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         
         */
         iter++;// increase the iteration count
-
+          Serial<<"gamma: "<<s->getGammaRSL()<<endl;
         if(((iter % 3) == 0) && (iter != 0) && (iter != 3))
             maxMinConsensus_RSL(s,eps,diameter,period);// (OLocalVertex,Epsilon,diameter,period)
         
         //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
-    }while(iter < iterations || (s->getFlagMaxMin())); //we end the RC
+        //Serial<<"gamma: "<<s->getGammaRSL()<<endl;
+    }while(iter < iterations && (s->getFlagMaxMin() == false )); //we end the RC
 
     if(s->getZ() != 0)
         _buffer[0] = (s->getYMin()/s->getZ()); 
@@ -476,7 +477,6 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     //Serial <<"\n"; 
 
     s->setMuRC(s->getMuMin()); //so as to evaluate the sign for the Voltage control
-    
     return (s->getGammaRSL());
 }
 
@@ -625,7 +625,8 @@ long OAgent::nonleaderFairSplitRatioConsensus(long y, long z) {
     return gamma;
 }
 
-//MaxMin calcultion
+///////////MaxMin calcultion
+////////////////////////////////////////////////////
 
 void OAgent::maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period)
  {
@@ -633,9 +634,11 @@ void OAgent::maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diamet
 
     if(isLeader())
     {
+        //Serial<<"entering maxmin leader"<<endl;
         leaderMaxMinConsensus_RSL(s,Epsilon,diameter,period);
     }else
     {
+        //Serial<<"entering maxmin non-leader"<<endl;        
         nonleaderMaxMinConsensus_RSL(s,Epsilon,diameter,period);
     }
  }
@@ -644,7 +647,7 @@ void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t 
   {
     unsigned long t0 = myMillis();
     unsigned long startTime = t0 + MC_DELAY;
-    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT, startTime, iterations, period);
+    bool scheduled =_waitForChildSchedulePacketMaxMin(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT, startTime, 20, period);
   
     if (!scheduled)
     {
@@ -668,8 +671,9 @@ void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t 
 void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period)
   {
     unsigned long startTime = 0;
+    uint8_t iterations =20;
 
-    bool scheduled = _waitForScheduleMaxMinPacket_RSL(startTime,20,period,-1);
+    bool scheduled = _waitForParentSchedulePacketMaxMin(startTime,iterations,period,-1);
 
     if(scheduled)
     {
@@ -704,8 +708,11 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
     //initialize max and min vlaues
     s->setGammaMax(s->getGammaRSL());
     s->setGammaMin(s->getGammaRSL());
+
+    //Serial<<"own gamma max: "<<s->getGammaMax()<<endl;
+    //Serial<<"own gamma min: "<<s->getGammaMin()<<endl;
     
-    for(uint8_t k = 0; k < (diameter +1); k++) { // +1 to account for package losses
+    for(uint8_t k = 0; k < (diameter+3); k++) { // +1 to account for package losses
         srand(analogRead(0));
         txTime =  (rand() % (period - 2*frame)) + frame;  //determines the time window in which a payload is transmitted
         txDone = false;     // initialize toggle to keep track of broadcasts
@@ -718,12 +725,17 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
                 aLsb = _rx->getRemoteAddress64().getLsb();
                 if(_G->isInNeighbor(aLsb,i))
                 {
-                    long inMax = _getMaxFromPacket_RSL();                               // store incoming value of Max
-                    long inMin = _getMinFromPacket_RSL();                               // store incoming value of Min
+                    float inMax = _getMaxFromPacket_RSL();                               // store incoming value of Max
+                    float inMin = _getMinFromPacket_RSL();                               // store incoming value of Min
+                    uint8_t neighborID = _getNeighborIDFromPacket();
+                    //Serial<<"new gamma max: "<<inMax<<" from node: "<<neighborID<<endl;
+                    //Serial<<"new gamma min: "<<inMin<<" from node: "<<neighborID<<endl;
                     if(inMax > s->getGammaMax())
                          s->setGammaMax(inMax);
                     if(inMin < s->getGammaMax())
                         s->setGammaMin(inMin);
+                    //Serial<<"new gamma max: "<<s->getGammaMax()<<" from node: "<<neighborID<<endl;
+                    //Serial<<"new gamma min: "<<s->getGammaMin()<<" from node: "<<neighborID<<endl;
                 }
             }
             if((int((millis() - start)) >= txTime) && !txDone) {
@@ -734,12 +746,16 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
         // Serial << "At iteration "<< k <<" we have "<< max <<" windows"<<endl;
         // delay(5);
     }
+
     diff = (s->getGammaMax()) - (s->getGammaMin());
+    Serial<<"difference: "<<diff<<endl;
     if(diff <= Epsilon)
     {
+        //Serial<<"flag true"<<endl;
         s->setFlagMaxMin(true);
     }else
     {
+        //Serial<<"flag false"<<endl;
         s->setFlagMaxMin(false);
     }
   }
@@ -3975,7 +3991,9 @@ void OAgent::_initializeFairSplitting_RSL(OLocalVertex * s, float y, float z, fl
     s->setZ(z - s->getMin());               // set initial z value [z - min]
     s->setSigma(s->getZ()/Dout);            // Initialize sigma = z/Dout
     s->setEpsilon(eps);
-
+    s->setGamma(0);
+    s->setGammaMax(0);
+    s->setGammaMin(0);
     //initialize min and max consensus. Min consensus is used to choose leader, max consensus is used to choose deputy
     //s->setleaderID(s->getID());
     //s->setdeputyID(s->getID());
@@ -4059,9 +4077,13 @@ void OAgent::_broadcastFairSplitPacket_RSL(OLocalVertex * s) {
 
 //Maxmin packet (diego)
 void OAgent::_broadcastMaxMinPacket_RSL(OLocalVertex * s) {   
-    uint16_t payload[5];
+    uint16_t payload[6];
     float max = (s->getGammaMax())*BASE;
     float min = (s->getGammaMin())*BASE;
+    //Serial<<"sending gamma max: "<<max<<endl;
+    //Serial<<"sending gamma min: "<<min<<endl;
+                    
+    uint16_t id = s->getID();
 
     long Max = long(max);
     long Min = long(min);
@@ -4071,6 +4093,7 @@ void OAgent::_broadcastMaxMinPacket_RSL(OLocalVertex * s) {
     payload[2] = Max >> 16;
     payload[3] = Min;
     payload[4] = Min >> 16;
+    payload[5] = id;
 
     _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
     unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
@@ -5577,13 +5600,13 @@ bool OAgent::_waitForParentSchedulePacketRC(unsigned long &startTime, uint8_t &i
 
 bool OAgent::_waitForParentSchedulePacketMaxMin(unsigned long &startTime, uint8_t &iterations, uint16_t &period,int timeout) {
     uint8_t neighborID;
-    uint16_t header = SCHEDULE_FAIR_SPLIT_HEADER;
+    uint16_t header = SCHEDULE_MAXMIN_HEADER;
     LinkedList * l = _G->getLinkedList();                                           //get pointer to linked list
     OLocalVertex * s = _G->getLocalVertex();                                        // store pointer to local vertex
     l->resetLinkedListStatus(s->getStatusP());                   //gets linkedlist and resets status of online neighbors to 2
     uint8_t counter = 1;
 
-    Serial << "Waiting for Schedule RC Packet"<<endl;
+    Serial << "Waiting for Schedule Maxmin Packet"<<endl;
     delay(5);
 
     if(_waitForNeighborPacket(neighborID,header,true,timeout))                      //stays in loop until desired packet received
@@ -5640,7 +5663,7 @@ bool OAgent::_waitForParentSchedulePacketMaxMin(unsigned long &startTime, uint8_
 
                 if(counter==_G->getN())
                 {
-                    Serial << "All neighbors scheduled for ratio consensus algorithm"<<endl;
+                    Serial << "All neighbors scheduled for ratio maxmin"<<endl;
                     delay(5);
                     l->resetLinkedListStatus(s->getStatusP());                                      //gets linkedlist and resets status of online neighbors to 2
                     return true;
@@ -5651,6 +5674,7 @@ bool OAgent::_waitForParentSchedulePacketMaxMin(unsigned long &startTime, uint8_
     else
         return false;
 }
+
 bool OAgent::_waitForChildSchedulePacketMaxMin(uint16_t header, int timeout, unsigned long startTime, uint8_t iterations, uint16_t period ) { 
     unsigned long start = millis();
     OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex 
@@ -5663,7 +5687,7 @@ bool OAgent::_waitForChildSchedulePacketMaxMin(uint16_t header, int timeout, uns
     _broadcastSchedulePacket(header,startTime,iterations,period);
 
 
-    Serial << "Waiting for Schedule Ratio Consensus packet"<<endl;
+    Serial << "Waiting for Maxmin Consensus packet"<<endl;
     delay(5);    
 
     while (uint16_t(millis()-start) < timeout)

@@ -98,7 +98,7 @@ void loop()
   if(a.isSynced())
     {
      //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(5,1,20,200,3,0.001);
+      tCmd = a.fairSplitRatioConsensus_RSL(0.000123,1,50,200,3,0.001);
       //(y,z,iterations,period,diameter,epsilon)
       Serial.print("The value of the RC algorithm is: ");
       Serial.println(tCmd);
