@@ -644,7 +644,7 @@ void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t 
   {
     unsigned long t0 = myMillis();
     unsigned long startTime = t0 + MC_DELAY;
-    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT,startTime,diameter,period);
+    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT, startTime, iterations, period);
   
     if (!scheduled)
     {
@@ -669,7 +669,7 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
   {
     unsigned long startTime = 0;
 
-    bool scheduled = _waitForScheduleMaxMinPacket_RSL(startTime,diameter,period,-1);
+    bool scheduled = _waitForScheduleMaxMinPacket_RSL(startTime,20,period,-1);
 
     if(scheduled)
     {
@@ -5574,6 +5574,125 @@ bool OAgent::_waitForParentSchedulePacketRC(unsigned long &startTime, uint8_t &i
     else
         return false;
 }
+
+bool OAgent::_waitForParentSchedulePacketMaxMin(unsigned long &startTime, uint8_t &iterations, uint16_t &period,int timeout) {
+    uint8_t neighborID;
+    uint16_t header = SCHEDULE_FAIR_SPLIT_HEADER;
+    LinkedList * l = _G->getLinkedList();                                           //get pointer to linked list
+    OLocalVertex * s = _G->getLocalVertex();                                        // store pointer to local vertex
+    l->resetLinkedListStatus(s->getStatusP());                   //gets linkedlist and resets status of online neighbors to 2
+    uint8_t counter = 1;
+
+    Serial << "Waiting for Schedule RC Packet"<<endl;
+    delay(5);
+
+    if(_waitForNeighborPacket(neighborID,header,true,timeout))                      //stays in loop until desired packet received
+    {
+        // Serial << "Received Schedule RC Packet from node " << neighborID<<endl;
+        // delay(5);
+    
+        startTime   = _getStartTimeFromPacket();
+        iterations  = _getIterationsFromPacket();
+        period      = _getPeriodFromPacket();
+        uint16_t start = millis();
+        s->setStatus(neighborID, 3);
+        counter++;
+
+        if(counter==_G->getN())
+        {
+            Serial << "No Schedule RC ACK is required from neighbors"<<endl;
+            delay(5);
+            // Serial << "Sending Schedule RC ACK to parent"<<endl;
+            // delay(5);
+        
+            while(true)
+            {
+                if(_waitForNeighborPacket(neighborID,header,true,SCHEDULE_TIMEOUT/4))                        //wait for acknowledgement packets
+                {
+                    delay(5);
+                    _broadcastSchedulePacket(header,startTime,iterations,period);
+                }
+                else
+                {
+                    Serial << "Reset LinkedList!"<<endl;
+                    delay(5);
+                    l->resetLinkedListStatus(s->getStatusP());                                      //gets linkedlist and resets status of online neighbors to 2
+                    return true;
+                }
+            }
+        }
+
+        // Serial << "Waiting for Schedule RC ACKs"<<endl;
+        // delay(5);
+
+        while(true)
+        {
+            _broadcastSchedulePacket(header,startTime,iterations,period);
+            if(_waitForNeighborPacket(neighborID,header,true,200))                        //wait for acknowledgement packets
+            {
+                if(s->getStatus(neighborID) < 3)
+                {
+                 //    Serial << "received Schedule RC ACK from node " << neighborID<<endl;
+                    // delay(5);
+                    s->setStatus(neighborID, 3);
+                    counter++;
+                }
+
+                if(counter==_G->getN())
+                {
+                    Serial << "All neighbors scheduled for ratio consensus algorithm"<<endl;
+                    delay(5);
+                    l->resetLinkedListStatus(s->getStatusP());                                      //gets linkedlist and resets status of online neighbors to 2
+                    return true;
+                }
+            }
+        }
+    }
+    else
+        return false;
+}
+bool OAgent::_waitForChildSchedulePacketMaxMin(uint16_t header, int timeout, unsigned long startTime, uint8_t iterations, uint16_t period ) { 
+    unsigned long start = millis();
+    OLocalVertex * s = _G->getLocalVertex(); // store pointer to local vertex 
+    LinkedList * l = _G->getLinkedList();
+    l->resetLinkedListStatus(s->getStatusP());                   //gets linkedlist and resets status of online neighbors to 2     
+
+    uint8_t counter = 1;    
+    uint8_t neighborID;
+    
+    _broadcastSchedulePacket(header,startTime,iterations,period);
+
+
+    Serial << "Waiting for Schedule Ratio Consensus packet"<<endl;
+    delay(5);    
+
+    while (uint16_t(millis()-start) < timeout)
+    {
+       if(_waitForNeighborPacket(neighborID,header,true,100))
+        {
+            if(s->getStatus(neighborID) < 3)
+            {
+                // Serial << "received Schedule RC ACK from node " << neighborID<<endl;
+                // delay(5);
+                s->setStatus(neighborID, 3);
+                counter++;
+            }
+
+            if(counter==_G->getN())
+            {
+                Serial << "All neighbors scheduled for ratio consensus algorithm"<<endl;
+                delay(5);
+                l->resetLinkedListStatus(s->getStatusP());                                      //gets linkedlist and resets status of online neighbors to 2
+                return true;
+            }
+        }
+        _broadcastSchedulePacket(header,startTime,iterations,period);
+        //Serial << "received acknowledgements from " << counter << " nodes"<<endl;
+        //Serial << "Number of neighbors is " << _G->getN()<<endl;
+    }
+    return false;
+}
+
 
 bool OAgent::_waitForParentSchedulePacketPD(unsigned long &startTime, uint16_t &iterations, int timeout) {
     uint8_t neighborID;

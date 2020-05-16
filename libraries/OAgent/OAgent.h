@@ -361,6 +361,7 @@ class OAgent {
         // General scheduling methods
         void _waitForACKPacket(uint16_t header, unsigned long t0, unsigned long startTime, uint8_t iterations, uint16_t period);// General scheduling methods
         bool _waitForChildSchedulePacketRC(uint16_t header, int timeout, unsigned long startTime, uint8_t iterations, uint16_t period );
+        bool _waitForChildSchedulePacketMaxMin(uint16_t header, int timeout, unsigned long startTime, uint8_t iterations, uint16_t period );
         bool _waitForChildSchedulePacketPD(int timeout, unsigned long startTime, uint16_t iterations);
         bool _waitForChildSchedulePacketED(int timeout, unsigned long startTime, uint16_t iterations);
 
@@ -383,6 +384,7 @@ class OAgent {
         void _waitForSchedulePacket(uint16_t header, unsigned long &startTime, uint8_t &iterations, uint16_t &period, uint8_t id, int timeout);
         bool _waitForSchedulePacket_RSL(uint16_t header, unsigned long &startTime, uint8_t &iterations, uint16_t &period, int timeout);
         bool _waitForParentSchedulePacketRC(unsigned long &startTime, uint8_t &iterations, uint16_t &period,int timeout);
+        bool _waitForParentSchedulePacketMaxMin(unsigned long &startTime, uint8_t &iterations, uint16_t &period,int timeout);        
         bool _waitForParentSchedulePacketPD(unsigned long &startTime, uint16_t &iterations,int timeout);
         bool _waitForParentSchedulePacketED(unsigned long &startTime, uint16_t &iterations,int timeout);
         bool _waitForNeighborPacket(uint8_t &neighborID, uint16_t header, bool broadcast, int timeout);
