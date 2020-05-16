@@ -97,6 +97,11 @@ class OAgent {
         float fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
         float leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
         float nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
+        void maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period);
+        void leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period);
+        void nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period);
+        void maxMin_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period);
+ 
         float ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, float eps);
 
         long maxminConsensusAlgorithm(bool isMax, long max, long min, uint8_t iterations, uint16_t period);
@@ -215,6 +220,7 @@ class OAgent {
         inline bool _fairSplitPacketAvailable() { return _packetAvailable(FAIR_SPLITTING_HEADER,true); }
         inline bool _primaldualPacketAvailable() { return _packetAvailable(PD_HEADER,true); }
         inline bool _maxminPacketAvailable() { return _packetAvailable(MAXMIN_HEADER,true); }
+        inline bool _maxminPacketAvailable_RSL() { return _packetAvailable(MAXMIN_HEADER,true); }//(diego)
         //Primal Dual Algorithm
         //inline bool PacketAvailable() { return _packetAvailable(PD_PACKET_HEADER,true); }
         void _initializeFairSplitting(OLocalVertex * s, long y, long z);
@@ -226,6 +232,7 @@ class OAgent {
         void _broadcastFairSplitPacket_RSL(OLocalVertex * s);
         
         void _broadcastMaxMinPacket(long max, long min);
+        void _broadcastMaxMinPacket_RSL(OLocalVertex * s);//(diego)
 
         //Unicast Primal Dual Packet - SN addition edited by Olaolu
         void _unicastPacket_P(uint16_t recipientID, float fP, float fQ, float Lambda, bool flag);
@@ -252,6 +259,8 @@ class OAgent {
         //methods to get packet data
         long _getMaxFromPacket();
         long _getMinFromPacket();
+        float _getMaxFromPacket_RSL();
+        float _getMinFromPacket_RSL();
         float _getMuFromPacket();
         float _getSigmaFromPacket();
         long _getpacketcheck();

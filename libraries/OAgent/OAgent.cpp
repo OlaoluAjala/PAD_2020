@@ -625,12 +625,138 @@ long OAgent::nonleaderFairSplitRatioConsensus(long y, long z) {
 
 //MaxMin calcultion
 
- void OAgent::maxMin(OLocalVertex * s, float Epsilon)
+void OAgent::maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
  {
+    srand(analogRead(7));
 
+    if(isLeader())
+    {
+        leaderMaxMinConsensus_RSL(s,Epsilon,iterations,period);
+    }else
+    {
+        nonleaderMaxMinConsensus_RSL(s,Epsilon,iterations,period);
+    }
  }
 
+void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+  {
+    unsigned long t0 = myMillis();
+    unsigned long startTime = t0 + MC_DELAY;
+    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT,startTime,iterations,period);
+  
+    if (!scheduled)
+    {
+        Serial << "maxmin scheduling was a FAIL"<<endl;
+        delay(5);
+    }
+    else
+    {
+        Serial << "maxmin scheduling was a SUCCESS!"<<endl;
+        delay(5);
+        if(_waitToStart(startTime,true,10000))
+        {
+            //Serial << "Correct Startime is " <<startTime<< ". My startime is "<< myMillis() <<endl;
+            maxMin(s,Epsilon,iterations,period);
+        }
+    }        
 
+
+  }
+
+void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+  {
+    unsigned long startTime = 0;
+
+    bool scheduled = _waitForScheduleMaxMinPacket_RSL(startTime,iterations,period,-1);
+
+    if(scheduled)
+    {
+        Serial << "maxmin scheduling was a SUCCESS!"<<endl;
+        delay(5);
+        if(_waitToStart(startTime,true,10000))
+        {
+            //Serial << "Correct Startime is " <<startTime<< ". My startime is "<< myMillis() <<endl;
+            maxMin(s,Epsilon,iterations,period);
+        }
+    }
+    else
+    {
+        Serial << "maxmin scheduling was a FAIL"<<endl;
+        delay(5);
+    }
+  }
+
+  void OAgent::maxMin_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+  {
+    float diff = 0;
+    s->setFlagMaxMin(false); //initialize the flag
+
+    unsigned long start;                // create variable to store iteration start time
+    bool txDone;                        // create variable to keep track of broadcasts
+    uint16_t txTime;       //_genTxTime(period,10,analogRead(0));   // get transmit time; 
+
+    int count = 3;
+    uint32_t aLsb;
+    int frame = 20;
+
+    //initialize max and min vlaues
+    s->setGammaMax(s->getGamma());
+    s->setGammaMin(s->getGamma());
+    
+    for(uint8_t k = 0; k < (iterations +1); k++) { // +1 to account for package losses
+        srand(analogRead(0));
+        txTime =  (rand() % (period - 2*frame)) + frame;  //determines the time window in which a payload is transmitted
+        txDone = false;     // initialize toggle to keep track of broadcasts
+        start = millis();   // initialize timer
+        uint8_t i;
+        
+        while(uint16_t(millis()-start) < period) {
+            if(_maxminPacketAvailable_RSL()) {
+
+                aLsb = _rx->getRemoteAddress64().getLsb();
+                if(_G->isInNeighbor(aLsb,i))
+                {
+                    long inMax = _getMaxFromPacket_RSL();                               // store incoming value of Max
+                    long inMin = _getMinFromPacket_RSL();                               // store incoming value of Min
+                    if(inMax > s->getGammaMax())
+                         s->setGammaMax(inMax);
+                    if(inMin < s->getGammaMax())
+                        s->setGammaMin(inMin);
+                }
+            }
+            if((int((millis() - start)) >= txTime) && !txDone) {
+                txDone = true; // toggle txDone
+                _broadcastMaxMinPacket_RSL(max,min);
+            }
+        }
+        // Serial << "At iteration "<< k <<" we have "<< max <<" windows"<<endl;
+        // delay(5);
+    }
+    diff = (s->getGammaMax()) - (s->getGammaMin())
+    if(diff <= Epsilon)
+    {
+        s->setFlagMaxMin(true);
+    }else
+    {
+        s->setFlagMaxMin(false);
+    }
+  }
+
+float OAgent::_getMaxFromPacket_RSL() {
+    uint8_t ptr = 2;
+    long Max = _getUint32_tFromPacket(ptr);
+    float max = float (Max);
+
+    return max/BASE;
+}
+
+float OAgent::_getMinFromPacket_RSL() {
+    uint8_t ptr = 6;
+    long Min = _getUint32_tFromPacket(ptr);
+    float min = float (Min);
+
+    return min/BASE;
+}
 
 // End fair splitting
 /// End ratio-consensus
@@ -3928,6 +4054,30 @@ void OAgent::_broadcastFairSplitPacket_RSL(OLocalVertex * s) {
     Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
 #endif
 }
+
+//Maxmin packet (diego)
+void OAgent::_broadcastMaxMinPacket_RSL(OLocalVertex * s) {   
+    uint16_t payload[5];
+    float max = (s->getGammaMax())*BASE;
+    float min = (s->getGammaMin())*BASE;
+
+    long Max = long(max);
+    long Min = long(min);
+
+    payload[0] = MAXMIN_HEADER;
+    payload[1] = Max;
+    payload[2] = Max >> 16;
+    payload[3] = Min;
+    payload[4] = Min >> 16;
+
+    _zbTx = ZBTxRequest(_broadcastAddress, ((uint8_t * )(&payload)), sizeof(payload)); // create zigbee transmit class
+    unsigned long txTime = _xbee->sendTwo(_zbTx,false,true); // transmit with time stamp
+#ifdef VERBOSE
+    Serial << _MEM(PSTR("Transmit time: ")) << txTime << endl;
+#endif
+}
+
+
 
 //leaderfailure-resilient version (Olaolu)
 void OAgent::_broadcastMaxMinPacket(long max, long min) {   

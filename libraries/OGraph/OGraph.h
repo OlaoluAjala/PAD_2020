@@ -349,11 +349,15 @@ class OLocalVertex : public OVertex {
         inline float getGammaMin() {return _gammaMin; }
         inline float getEpsilon() {return _epsilon; }
 
+        inline bool getFlagMaxMin() {return _FlagMaxMin} 
+
         //set directives
         inline void setGamma(float gamma) { _gamma = gamma; }
         inline void setGammaMax(float gammaMax) { _gammaMax = gammaMax; }
         inline void setGammaMin(float gammaMin) { _gammaMin = gammaMin; }
         inline void setEpsilon(float epsilon) { _epsilon = epsilon; }
+
+        inline void setFlagMaxMin(float FlagMaxMin) { _FlagMaxMin = FlagMaxMin; }
 
         
     protected:
@@ -451,6 +455,7 @@ class OLocalVertex : public OVertex {
         float _gammaMax;
         float _gammaMin;
         float _epsilon;
+        bool _FlagMaxMin;
 
 
         //States
