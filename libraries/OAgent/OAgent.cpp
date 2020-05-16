@@ -259,7 +259,7 @@ float OAgent::fairSplitRatioConsensus(long y, long z, uint8_t iterations, uint16
 
 
 // Resilient Fair splitting RC (added in by Olaolu)
-float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, float eps) //,uint8_t round
+float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps) //,uint8_t round
 {  
     OLocalVertex * s = _G->getLocalVertex();        // store pointer to local vertex 
     float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops
@@ -272,7 +272,6 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 
     float inY;              // incoming state variable
     float inZ;
-    // float eps=0.00001;       //variable for setting the end point of the iterations
     float endY;
     float endZ;
     int count = 3;    
@@ -458,9 +457,12 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         */
         iter++;// increase the iteration count
 
+        if(((iter % 3) == 0) && (iter != 0) && (iter != 3))
+            maxMinConsensus_RSL(s,eps,diameter,period);// (OLocalVertex,Epsilon,diameter,period)
+        
         //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
-    }while(iter < iterations); //we need to implement here the max consensus
-//}while(iter < iterations && -(endY) > eps && (endZ) > eps);
+    }while(iter < iterations || (s->getFlagMaxMin())); //we end the RC
+
     if(s->getZ() != 0)
         _buffer[0] = (s->getYMin()/s->getZ()); 
 
@@ -492,7 +494,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
 
 
 
-float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps) {
+float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps) {
     srand(analogRead(7));    
     float gamma = 0;
     
@@ -517,7 +519,7 @@ float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, 
 
 
 
-float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps) {
+float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps) {
     unsigned long t0 = myMillis();
     unsigned long startTime = t0 + RC_DELAY;
     OLocalVertex * s = _G->getLocalVertex();
@@ -550,7 +552,7 @@ float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterat
     return gamma;
 }
 
-float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps) {
+float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps) {
     unsigned long startTime = 0;
     //delay(50);
     float gamma = 0;
@@ -625,24 +627,24 @@ long OAgent::nonleaderFairSplitRatioConsensus(long y, long z) {
 
 //MaxMin calcultion
 
-void OAgent::maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+void OAgent::maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period)
  {
     srand(analogRead(7));
 
     if(isLeader())
     {
-        leaderMaxMinConsensus_RSL(s,Epsilon,iterations,period);
+        leaderMaxMinConsensus_RSL(s,Epsilon,diameter,period);
     }else
     {
-        nonleaderMaxMinConsensus_RSL(s,Epsilon,iterations,period);
+        nonleaderMaxMinConsensus_RSL(s,Epsilon,diameter,period);
     }
  }
 
-void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period)
   {
     unsigned long t0 = myMillis();
     unsigned long startTime = t0 + MC_DELAY;
-    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT,startTime,iterations,period);
+    bool scheduled =_waitForChildSchedulePacketRC(SCHEDULE_MAXMIN_HEADER,SCHEDULE_TIMEOUT,startTime,diameter,period);
   
     if (!scheduled)
     {
@@ -656,18 +658,18 @@ void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t 
         if(_waitToStart(startTime,true,10000))
         {
             //Serial << "Correct Startime is " <<startTime<< ". My startime is "<< myMillis() <<endl;
-            maxMin(s,Epsilon,iterations,period);
+            maxMin(s,Epsilon,diameter,period);
         }
     }        
 
 
   }
 
-void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period)
   {
     unsigned long startTime = 0;
 
-    bool scheduled = _waitForScheduleMaxMinPacket_RSL(startTime,iterations,period,-1);
+    bool scheduled = _waitForScheduleMaxMinPacket_RSL(startTime,diameter,period,-1);
 
     if(scheduled)
     {
@@ -676,7 +678,7 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
         if(_waitToStart(startTime,true,10000))
         {
             //Serial << "Correct Startime is " <<startTime<< ". My startime is "<< myMillis() <<endl;
-            maxMin(s,Epsilon,iterations,period);
+            maxMin(s,Epsilon,diameter,period);
         }
     }
     else
@@ -686,7 +688,7 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
     }
   }
 
-  void OAgent::maxMin_RSL(OLocalVertex * s, float Epsilon, uint8_t iterations, uint16_t period)
+  void OAgent::maxMin_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period)
   {
     float diff = 0;
     s->setFlagMaxMin(false); //initialize the flag
@@ -703,7 +705,7 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
     s->setGammaMax(s->getGamma());
     s->setGammaMin(s->getGamma());
     
-    for(uint8_t k = 0; k < (iterations +1); k++) { // +1 to account for package losses
+    for(uint8_t k = 0; k < (diameter +1); k++) { // +1 to account for package losses
         srand(analogRead(0));
         txTime =  (rand() % (period - 2*frame)) + frame;  //determines the time window in which a payload is transmitted
         txDone = false;     // initialize toggle to keep track of broadcasts
@@ -6267,15 +6269,15 @@ void OAgent::firstStageControl( OLocalVertex * s )
     //s->setDeltaQ(deltaQ);
 }
 
-void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period, float eps)
+void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period, uint8_t diameter, float eps)
 {
     //float deltaQ;
     Serial<<"******************2nd Stage******************"<<endl;
   
     _initializeVariablesSecStage(s);
 
-    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period,eps));      //(mu,eta,iterations,period)
-    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period,eps));
+    s->setEtaLower(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuLowerRC(),iterations,period,diameter,eps));      //(mu,eta,iterations,period)
+    s->setEtaUpper(fairSplitRatioConsensus_RSL( s->getMuRC(),s->getNuUpperRC(),iterations,period,diameter,eps));
 
    // Serial<<"the value of mu: "<<s->getMuRC()<<endl;
 
