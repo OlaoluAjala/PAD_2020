@@ -344,15 +344,15 @@ class OLocalVertex : public OVertex {
 
         //MaxMin consensus
         //get directives
-        inline float getGamma() {return _gamma; }
+        inline float getGammaRSL() {return _gammaRSL; }
         inline float getGammaMax() {return _gammaMax; }
         inline float getGammaMin() {return _gammaMin; }
         inline float getEpsilon() {return _epsilon; }
 
-        inline bool getFlagMaxMin() {return _FlagMaxMin} 
+        inline bool getFlagMaxMin() {return _FlagMaxMin; } 
 
         //set directives
-        inline void setGamma(float gamma) { _gamma = gamma; }
+        inline void setGammaRSL(float gammaRSL) { _gammaRSL = gammaRSL; }
         inline void setGammaMax(float gammaMax) { _gammaMax = gammaMax; }
         inline void setGammaMin(float gammaMin) { _gammaMin = gammaMin; }
         inline void setEpsilon(float epsilon) { _epsilon = epsilon; }
@@ -451,7 +451,7 @@ class OLocalVertex : public OVertex {
         float _eta;
 
         //MaxMin consensus
-        float _gamma;
+        float _gammaRSL;
         float _gammaMax;
         float _gammaMin;
         float _epsilon;

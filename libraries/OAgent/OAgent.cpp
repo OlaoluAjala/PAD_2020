@@ -392,7 +392,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         s->setZ((s->getZ()/Dout) + inZ);
         s->addToSigma(s->getZ()/Dout);
 
-        s->setGamma(s->getYMin()/s->getZ())
+        s->setGammaRSL(s->getYMin()/s->getZ());
 
 
         _buffer[count] = (s->getYMin())/(s->getZ()); //add kth iterate to buffer
@@ -477,7 +477,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
 
     s->setMuRC(s->getMuMin()); //so as to evaluate the sign for the Voltage control
     
-    return (s->getGamma());
+    return (s->getGammaRSL());
 }
 
 
@@ -502,14 +502,14 @@ float OAgent::fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, 
     {
         // Serial<<"going into leader RC  "<<endl;
         // delay(5);     
-        gamma = leaderFairSplitRatioConsensus_RSL(y, z, iterations,period);
+        gamma = leaderFairSplitRatioConsensus_RSL(y, z, iterations,period,diameter,eps);
     }
     else
     {
 
         // Serial<<"going into nonleader RC "<<endl;
         // delay(5);
-        gamma = nonleaderFairSplitRatioConsensus_RSL(y, z, iterations,period);
+        gamma = nonleaderFairSplitRatioConsensus_RSL(y, z, iterations,period,diameter,eps);
     }
         //Serial<<"Sup bro?! "<<getbufferdata(0)<<"\n";
 
@@ -546,7 +546,7 @@ float OAgent::leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterat
         {
             //Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-            gamma = ratiomaxminConsensus(y, z, iterations,period,eps);
+            gamma = ratiomaxminConsensus(y, z, iterations,period,diameter,eps);
         }
     }        
     return gamma;
@@ -573,7 +573,7 @@ float OAgent::nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t ite
         if(_waitToStart(startTime,true,10000)) {
             //Serial <<"My startime is "<< myMillis() <<endl;
             delay(5);
-            gamma = ratiomaxminConsensus(y, z, iterations,period,eps);
+            gamma = ratiomaxminConsensus(y, z, iterations,period,diameter,eps);
         }
         
         //digitalWrite(48,LOW);
@@ -658,7 +658,7 @@ void OAgent::leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t 
         if(_waitToStart(startTime,true,10000))
         {
             //Serial << "Correct Startime is " <<startTime<< ". My startime is "<< myMillis() <<endl;
-            maxMin(s,Epsilon,diameter,period);
+            maxMin_RSL(s,Epsilon,diameter,period);
         }
     }        
 
@@ -678,7 +678,7 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
         if(_waitToStart(startTime,true,10000))
         {
             //Serial << "Correct Startime is " <<startTime<< ". My startime is "<< myMillis() <<endl;
-            maxMin(s,Epsilon,diameter,period);
+            maxMin_RSL(s,Epsilon,diameter,period);
         }
     }
     else
@@ -702,8 +702,8 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
     int frame = 20;
 
     //initialize max and min vlaues
-    s->setGammaMax(s->getGamma());
-    s->setGammaMin(s->getGamma());
+    s->setGammaMax(s->getGammaRSL());
+    s->setGammaMin(s->getGammaRSL());
     
     for(uint8_t k = 0; k < (diameter +1); k++) { // +1 to account for package losses
         srand(analogRead(0));
@@ -728,13 +728,13 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
             }
             if((int((millis() - start)) >= txTime) && !txDone) {
                 txDone = true; // toggle txDone
-                _broadcastMaxMinPacket_RSL(max,min);
+                _broadcastMaxMinPacket_RSL(s);
             }
         }
         // Serial << "At iteration "<< k <<" we have "<< max <<" windows"<<endl;
         // delay(5);
     }
-    diff = (s->getGammaMax()) - (s->getGammaMin())
+    diff = (s->getGammaMax()) - (s->getGammaMin());
     if(diff <= Epsilon)
     {
         s->setFlagMaxMin(true);
@@ -6120,7 +6120,7 @@ void OAgent::_prepareOAgent(XBee * xbee, ZBRxResponse * rx, OGraph * G, bool lea
 
 //decentralized approach
 //return variation of q (voltage, Voltage reference, security percentage for voltage, Power imput, reactive power imput, q to rise, q to lower, sensitivity)
-float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij , float alphaVC, uint8_t iterations, uint16_t period, float eps )  //it is going to give back the q required to rise or lower
+float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij , float alphaVC, uint8_t iterations, uint16_t period, uint8_t diameter, float eps )  //it is going to give back the q required to rise or lower
 {
     OLocalVertex * s = _G->getLocalVertex();  
     _initializeVoltageControl( s, diffV, Vref ,secPercentage ,p, q, qtop, qbottom, Sij, alphaVC ); 
@@ -6135,7 +6135,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
 
     if(s->getSecondStageFlag())
     {
-        secondStageControl( s, iterations, period, eps );
+        secondStageControl( s, iterations, period, diameter, eps );
         //Serial<<"the eta chosen is: "<<s->getEta()<<endl;
 
         if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
@@ -6396,7 +6396,7 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
 {
     //Serial<<"entering the flag sharing"<<endl;
     float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops                          
-   _initializeFairSplitting_RSL(s,0,0);
+   _initializeFairSplitting_RSL(s,0,0,0);
     unsigned long start;                            // create variable to store iteration start time
     bool txDone;                                    // create variable to keep track of broadcasts
     uint16_t txTime;        //_genTxTime(period,10,analogRead(0));   // get transmit time; 

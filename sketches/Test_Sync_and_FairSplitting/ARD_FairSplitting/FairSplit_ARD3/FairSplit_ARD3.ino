@@ -12,7 +12,7 @@ uint8_t i=1;//number of inneighbors
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
   // address, min, max, alpha, beta, out-degree, base
-  OLocalVertex s = OLocalVertex(0x415DB664,14,0,0,0,0,i,base);
+  OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,i,base);
   LinkedList l = LinkedList();
   OGraph g = OGraph(&s,&l);
   OAgent a = OAgent(&xbee,&rx,&g,false,true);

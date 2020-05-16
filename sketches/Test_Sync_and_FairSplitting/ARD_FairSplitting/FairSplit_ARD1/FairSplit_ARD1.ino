@@ -37,7 +37,7 @@ void setup()
   xbee.setSerial(Serial3);
 
   g.addInNeighbor(0x415786D3,10,0,0);   // node 10
-//  g.addNonNeighbor(0x415DB664);  // node 14
+//  g.addNonNeighbor(0x415DB670);  // node 11
 g.configureLinkedList();
 }
 void loop()

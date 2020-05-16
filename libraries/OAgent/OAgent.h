@@ -94,15 +94,15 @@ class OAgent {
         long nonleaderFairSplitRatioConsensus(long y, long z);
         
         // Resilient consensus methods
-        float fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
-        float leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
-        float nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, float eps);
+        float fairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps);
+        float leaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps);
+        float nonleaderFairSplitRatioConsensus_RSL(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps);
         void maxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period);
         void leaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period);
         void nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period);
         void maxMin_RSL(OLocalVertex * s, float Epsilon, uint8_t diameter, uint16_t period);
  
-        float ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, float eps);
+        float ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_t period, uint8_t diameter, float eps);
 
         long maxminConsensusAlgorithm(bool isMax, long max, long min, uint8_t iterations, uint16_t period);
         long leaderMaxMinConsensus(bool isMax, long max, long min, uint8_t iterations, uint16_t period);
@@ -150,9 +150,9 @@ class OAgent {
         //inline float getneighborZ0(int index){ return _neighborZ0[index]; }
                
         //Distribute VC
-        float voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij, float alphaVC, uint8_t iterations, uint16_t period , float eps);
+        float voltageControl_dist( float diffV, float Vref, float secPercentage, float p, float q, float qtop, float qbottom, float Sij, float alphaVC, uint8_t iterations, uint16_t period , uint8_t diameter, float eps);
         void firstStageControl(OLocalVertex * s);
-        void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period, float eps );
+        void secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t period, uint8_t diameter, float eps );
         void isOverVoltage(OLocalVertex * s);
         void isUnderVoltage(OLocalVertex * s);       
         void shareFlag(OLocalVertex * s, uint8_t iterations, uint16_t period );

@@ -35,7 +35,7 @@ void setup()
   xbee.setSerial(Serial3);
 
   g.addInNeighbor(0x415786E1,9,0,0); // node 9
-  g.addInNeighbor(0x415DB664,14,0,0); // node 14
+  g.addInNeighbor(0x415DB670,14,0,0); // node 11
   g.configureLinkedList();
 }
   void loop()
@@ -97,7 +97,7 @@ void setup()
     if(a.isSynced())
     {
      //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(4,1,20,200,0.001);
+      tCmd = a.fairSplitRatioConsensus_RSL(4,1,20,200,3,0.001);
       //(y,z,iterations,period,diameter,epsilon)
       Serial.print("The value of the RC algorithm is: ");
       Serial.println(tCmd);   
