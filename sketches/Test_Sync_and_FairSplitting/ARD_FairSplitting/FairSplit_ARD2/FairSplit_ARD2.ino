@@ -12,7 +12,7 @@ uint8_t i=2;//number of inneighbors
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
   // address, min, max, alpha, beta, out-degree, base
-  OLocalVertex s = OLocalVertex(0x415786D3,10,0,0,0,0,i,base);
+  OLocalVertex s = OLocalVertex(0x415786D3,10,0,0,0,0,2,base);
   LinkedList l = LinkedList();
   OGraph g = OGraph(&s,&l);
   OAgent a = OAgent(&xbee,&rx,&g,false,true);//(xbee,rx,leader,...)
@@ -97,10 +97,10 @@ void setup()
     if(a.isSynced())
     {
      //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(0,1,50,200,3,0.001);
+      tCmd = a.fairSplitRatioConsensus_RSL(4,1,50,200,3,0.0001);
       //(y,z,iterations,period,diameter,epsilon)
       Serial.print("The value of the RC algorithm is: ");
-      Serial.println(tCmd);   
+      Serial.println(tCmd,6);   
 
       int bbbb = Serial.read();
 

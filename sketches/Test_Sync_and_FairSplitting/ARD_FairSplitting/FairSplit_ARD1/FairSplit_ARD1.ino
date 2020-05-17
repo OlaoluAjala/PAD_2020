@@ -6,13 +6,13 @@
 
 long base = 1e4;  // not using floating points so need a base number
 float tCmd;
-uint8_t i=1;//number of inneighbors
+uint8_t i=2;//number of inneighbors
 
 //Create objects needed for communication and control
 XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,i,base);    //sets up parameters for local vertex
+OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,1,base);    //sets up parameters for local vertex
 // OLocalVertex s = OLocalVertex(0x415786E1,0,0.225*D_base,-2.1667*base,0.1667*base,5,D_base,9);
 LinkedList l = LinkedList();
 OGraph g = OGraph(&s,&l);
@@ -37,7 +37,7 @@ void setup()
   xbee.setSerial(Serial3);
 
   g.addInNeighbor(0x415786D3,10,0,0);   // node 10
-//  g.addNonNeighbor(0x415DB670);  // node 11
+  //g.addInNeighbor(0x415DB670,11,0,0);  // node 11
 g.configureLinkedList();
 }
 void loop()
@@ -101,10 +101,10 @@ void loop()
     if(a.isSynced())
     {
      //run fair splitting algorithm
-      tCmd = a.fairSplitRatioConsensus_RSL(0.00678,1,50,200,3,0.001);
+      tCmd = a.fairSplitRatioConsensus_RSL(15,1,50,200,3,0.0001);
       //(y,z,iterations,period,diameter,epsilon)
       Serial.print("The value of the RC algorithm is: ");
-      Serial.println(tCmd);
+      Serial.println(tCmd,6);   
 
       int bbbb = Serial.read();
 

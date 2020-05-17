@@ -456,7 +456,8 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         
         */
         iter++;// increase the iteration count
-          Serial<<"gamma: "<<s->getGammaRSL()<<endl;
+          Serial<<"gamma: ";//<<s->getGammaRSL()<<endl;
+          Serial.println(s->getGammaRSL(),6);
         if(((iter % 3) == 0) && (iter != 0) && (iter != 3))
             maxMinConsensus_RSL(s,eps,diameter,period);// (OLocalVertex,Epsilon,diameter,period)
         
@@ -748,7 +749,15 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
     }
 
     diff = (s->getGammaMax()) - (s->getGammaMin());
-    Serial<<"difference: "<<diff<<endl;
+    
+    // Serial.print("Max: ");
+    // Serial.println(s->getGammaMax(),6);
+    // Serial.print("Min: ");
+    // Serial.println(s->getGammaMin(),6);
+   
+    Serial<<"difference: ";
+    Serial.println(diff,6);
+
     if(diff <= Epsilon)
     {
         //Serial<<"flag true"<<endl;
