@@ -8,7 +8,7 @@
 #include <OAgent.h>
 
 long base = 1e4;  // not using floating points so need a base number
-float deltaQ;
+float q_level;
 uint8_t i=1;//number of inneighbors
 
 //Create objects needed for communication and control
@@ -103,11 +103,13 @@ void setup()
     if(a.isSynced())
     {
 //run Voltage Control algorithm 
-      deltaQ = a.voltageControl_dist(0,1,5,0.5,0.4,0.707,-0.707,-0.23,1/3,20,200,3,0.001); 
-//voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon ) 
-      
-      Serial.print("the required variation in Q is: ");
-      Serial.println(deltaQ);  
+      float q=0.4;
+      Serial.print("the actual q is: ");
+      Serial.println(q,4);
+      q_level = a.voltageControl_dist(0,1,5,0.5,q,0.707,-0.707,-0.23,1/3,20,200,3,0.001); 
+//voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon )
+      Serial.print("teh new Q is: ");
+      Serial.println(q_level);  
 
       int bbbb = Serial.read();
 

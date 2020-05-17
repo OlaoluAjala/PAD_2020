@@ -274,7 +274,8 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     float inZ;
     float endY;
     float endZ;
-    int count = 3;    
+    int count = 3;  
+    int iter=0;  
     //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
     //int step_counter = 0;        //used when adjusting vertex array to account for offline neigbors
@@ -291,7 +292,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
 
     //if(txTime <= 0 || txTime > period)
      //   txTime = 25;                      //25 milliseconds
-    iter=0;
+    //iter=0;
     do
     {
         srand(analogRead(0));
@@ -461,6 +462,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
        
         //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
         //Serial<<"gamma: "<<s->getGammaRSL()<<endl;
+        iter++;
     }while((s->getFlagMaxMin() == false )); //we end the RC
 
     if(s->getZ() != 0)
@@ -6344,7 +6346,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            //Serial<<"setting flag true"<<endl;
+            Serial<<"setting flag true"<<endl;
         //    // s->setDeltaQ(s->getQbottom()-s->s->getQ());
         //     s->setStateSaturatedLow(true);
         //     s->setQ(s->getQbottom());
@@ -6366,7 +6368,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         }else if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            //Serial<<"setting flag true"<<endl;
+            Serial<<"setting flag true"<<endl;
         }
 
         // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
@@ -6383,7 +6385,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            //Serial<<"setting flag true"<<endl;
+            Serial<<"setting flag true"<<endl;
         //     s->setQ(s->getQtop());
         //     s->setStateSaturatedHigh(true);
         //     // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
@@ -6403,7 +6405,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         } else if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            //Serial<<"setting flag true"<<endl;
+            Serial<<"setting flag true"<<endl;
         }
 
         // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
@@ -6544,7 +6546,7 @@ bool OAgent::getSecondStageFlagfromPackage(OLocalVertex * s)
 
 void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
 {
-    //Serial<<"entering the flag sharing"<<endl;
+    Serial<<"entering the flag sharing"<<endl;
     float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops                          
    _initializeFairSplitting_RSL(s,0,0,0);
     unsigned long start;                            // create variable to store iteration start time
@@ -6580,7 +6582,7 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
                     //Serial<<"before flag comprobation"<<endl;
                     if(getSecondStageFlagfromPackage(s))
                     {
-                        //Serial<<"recieved flag"<<endl;
+                        Serial<<"recieved true flag"<<endl;
                         s->setSecondStageFlag(true);
                     }
                     uint8_t neighborID = _getNeighborIDFromPacket();
