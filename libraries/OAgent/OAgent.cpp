@@ -275,8 +275,6 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
     float endY;
     float endZ;
     int count = 3;    
-    int iter;               //variable for the iteration count
-
     //uint8_t no_of_nodes = _G->getN() - 1;  //number of in-neighbors (in this case)
     int node_check[NUM_REMOTE_VERTICES]; //checker for each neighbor whether data is received or not per iteration
     //int step_counter = 0;        //used when adjusting vertex array to account for offline neigbors
@@ -455,15 +453,15 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         no_of_nodes = no_of_nodes - step_counter;
         
         */
-        iter++;// increase the iteration count
           Serial<<"gamma: ";//<<s->getGammaRSL()<<endl;
           Serial.println(s->getGammaRSL(),6);
+
         if(((iter % 3) == 0) && (iter != 0) && (iter != 3))
             maxMinConsensus_RSL(s,eps,diameter,period);// (OLocalVertex,Epsilon,diameter,period)
-        
+       
         //Serial<<"value of Y: "<<endY<<", value of Z: "<<endZ<<endl;
         //Serial<<"gamma: "<<s->getGammaRSL()<<endl;
-    }while(iter < iterations && (s->getFlagMaxMin() == false )); //we end the RC
+    }while((s->getFlagMaxMin() == false )); //we end the RC
 
     if(s->getZ() != 0)
         _buffer[0] = (s->getYMin()/s->getZ()); 
