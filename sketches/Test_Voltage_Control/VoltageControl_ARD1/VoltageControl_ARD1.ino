@@ -8,7 +8,7 @@
 #include <OAgent.h>
 
 long base = 1e4;  // not using floating points so need a base number
-float q_level;
+float q_level;                   
 uint8_t i=1;//number of inneighbors
 
 //Create objects needed for communication and control
