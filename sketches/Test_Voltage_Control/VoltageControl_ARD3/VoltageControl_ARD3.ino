@@ -1,6 +1,7 @@
 //node 9:(COM 6 , 0x415786E1 )
 //node 10:(COM 14 , 0x415786D3 )
-//node 14:(COM 10 , 0x415DB664 )  
+//node 11:(COM 5 , 0x415DB670 ) 
+ 
 
 #include <Streaming.h>
 #include <XBee.h>
@@ -15,7 +16,7 @@ uint8_t i=1;//number of inneighbors
 XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 
-OLocalVertex s = OLocalVertex(0x415DB664,14,0,0,0,0,i,base);    //sets up parameters for local vertex
+OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,i,base);    //sets up parameters for local vertex
 // OLocalVertex s = OLocalVertex(address,ID,min,max,alpha,beta,out-degree,base);
 
 LinkedList l = LinkedList();
@@ -106,9 +107,9 @@ void setup()
       float q=0.4;
       Serial.print("the actual q is: ");
       Serial.println(q,4);
-      q_level = a.voltageControl_dist(0,1,5,0.5,q,0.707,-0.707,-0.23,1/3,20,200,3,0.001); 
+      q_level = a.voltageControl_dist(0,1,5,0.5,q,0.707,-0.707,-0.23,0.333333,20,200,3,0.001); 
 //voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon )
-      Serial.print("teh new Q is: ");
+      Serial.print("the new Q is: ");
       Serial.println(q_level);  
 
       int bbbb = Serial.read();

@@ -41,7 +41,7 @@ void setup() //setup of the scheme of the network
   xbee.setSerial(Serial3);
 
   g.addInNeighbor(0x415786D3,10,0,0);   // node 10
-//g.addNonNeighbor(0x415DB664);  // node 14
+//g.addNonNeighbor(0x415DB670,11,0,0);  // node 11
   g.configureLinkedList();
 }
 
@@ -106,7 +106,7 @@ void setup() //setup of the scheme of the network
       float q=0.2;
       Serial.print("the actual q is: ");
       Serial.println(q,4);
-      q_level = a.voltageControl_dist(0,1,5,0.3,0.7,q,-707,-0.24,1/3,20,200,3,0.001); 
+      q_level = a.voltageControl_dist(0,1,5,0.3,q,0.707,-707,-0.24,0.333333,20,200,3,0.001); 
 //voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon ) 
       Serial.print("the new Q is: ");
       Serial.println(q_level,4);
