@@ -267,11 +267,6 @@ class OLocalVertex : public OVertex {
         inline bool getStateSaturatedHigh() { return _saturatedHigh; }
         inline bool getSecondStageFlag() { return _secondStageFlag; }
 
-        //Centralized VC
-        inline float getQ1() { return _Q1; }
-        inline float getQ2() { return _Q2; }
-        inline float getQ3() { return _Q3; }
-
         //set directive for Voltage Control algorithm
         //imputs
         inline void setVoltage(float V) { _V = V; }
@@ -306,11 +301,6 @@ class OLocalVertex : public OVertex {
         inline void setStateSaturatedHigh(bool saturatedHigh) { _saturatedHigh = saturatedHigh; }
         inline void setSecondStageFlag(bool secondStageFlag) { _secondStageFlag = secondStageFlag; }
 
-        //Centralized VC
-        inline void setQ1(float Q1) { _Q1 = Q1; }
-        inline void setQ2(float Q2) { _Q2 = Q2; }
-        inline void setQ3(float Q3) { _Q3 = Q3; }
-
         //clear directives for VC
 
         inline void clearVoltage(){ _V = 0; } 
@@ -337,10 +327,6 @@ class OLocalVertex : public OVertex {
         inline void clearSecondStageFlag() { _secondStageFlag = false; }
 
         inline void clearDeltaQ() { _deltaQ = 0; } 
-
-        inline void clearQ1() { _Q1 = 0; } 
-        inline void clearQ2() { _Q2 = 0; } 
-        inline void clearQ3() { _Q3 = 0; } 
 
         //MaxMin consensus
         //get directives
@@ -468,11 +454,6 @@ class OLocalVertex : public OVertex {
 
         //Results
         float _deltaQ;
-
-        //Centralized variables 6 node
-        float _Q1;
-        float _Q2;
-        float _Q3;
 
 };
 

@@ -158,11 +158,6 @@ class OAgent {
         void shareFlag(OLocalVertex * s, uint8_t iterations, uint16_t period );
         bool getSecondStageFlagfromPackage(OLocalVertex * s);
 
-        //Centralized VC
-        void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float S1,float S2,float S3, float alphaVC);
-
-
-
     private:
         // Properties
         // XBee stuff

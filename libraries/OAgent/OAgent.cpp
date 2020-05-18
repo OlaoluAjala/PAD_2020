@@ -433,7 +433,7 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         }
 
         /*  old approach
-        step_counter = 0;
+        step_counter = 0; 
 
         for(int j=0;j < no_of_nodes; j++)
         {
@@ -454,8 +454,8 @@ float OAgent::ratiomaxminConsensus(float y, float z, uint8_t iterations, uint16_
         no_of_nodes = no_of_nodes - step_counter;
         
         */
-          Serial<<"gamma: ";//<<s->getGammaRSL()<<endl;
-          Serial.println(s->getGammaRSL(),6);
+          //Serial<<"gamma: ";//<<s->getGammaRSL()<<endl;
+          //Serial.println(s->getGammaRSL(),6);
 
         if(((iter % 3) == 0) && (iter != 0) && (iter != 3))
             maxMinConsensus_RSL(s,eps,diameter,period);// (OLocalVertex,Epsilon,diameter,period)
@@ -755,7 +755,7 @@ void OAgent::nonleaderMaxMinConsensus_RSL(OLocalVertex * s, float Epsilon, uint8
     // Serial.print("Min: ");
     // Serial.println(s->getGammaMin(),6);
    
-    Serial<<"difference: ";
+    //Serial<<"difference: ";
     Serial.println(diff,6);
 
     if(diff <= Epsilon)
@@ -6283,7 +6283,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
 
     firstStageControl(s);
 
-    shareFlag( s, 9, period );
+    shareFlag( s, (diameter + 3), period );
 
     if(s->getSecondStageFlag())
     {
@@ -6292,12 +6292,12 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
 
         if((s->getQtarget()+s->getEta()) > s->getQtop())          //over the limit
         {
-            s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
+            //s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
             s->setQ(s->getQtop());                  //set new Q
 
         }else if((s->getQtarget()+s->getEta()) < s->getQbottom()) //under the limit
         {
-            s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
+            //s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
             s->setQ(s->getQbottom());               //set new Q
 
         }else                                               //inside the plausible region fo
@@ -6309,7 +6309,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
  
     }else{
         //Serial<<"Qtarget: "<<s->getQtarget()<<" Q: "<<s->getQ()<<endl;
-        s->setDeltaQ( (s->getQtarget()) - (s->getQ()) );       //set new delta Q
+        //s->setDeltaQ( (s->getQtarget()) - (s->getQ()) );       //set new delta Q
         s->setQ(s->getQtarget());         //set new Q
     }
 
@@ -6325,7 +6325,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
     //     Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
     // }           
 
-    return (s->getDeltaQ() + s->getQ());
+    return ( s->getQ());
 }
 
 void OAgent::firstStageControl( OLocalVertex * s )
@@ -6336,17 +6336,19 @@ void OAgent::firstStageControl( OLocalVertex * s )
     if(s->getStateOver())   //we lower the q
     {
         Serial<<"1st stage---Over"<<endl;
+        //Serial<<"Vmax: "<<s->getVmax()<<", Volt: "<<s->getVoltage()<<", D: "<<s->getD()<<", alpha: "<<s->getAlphaVC();
         s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
         s->setQtarget(s->getQ()+s->getRo());
 
         //Serial<<"Vmax: "<<s->getVmax()<<", and V: "<<s->getVoltage()<<endl;
-        Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
-        Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
+        Serial<<"∆Q in 1st stage is: ";
+        Serial.println(s->getRo());
+        Serial<<"Q_target for node "<<s->getID()<<" after 1st stage is: "<<s->getQtarget()<<endl;
         
         if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            Serial<<"setting flag true"<<endl;
+            //Serial<<"setting flag true"<<endl;
         //    // s->setDeltaQ(s->getQbottom()-s->s->getQ());
         //     s->setStateSaturatedLow(true);
         //     s->setQ(s->getQbottom());
@@ -6368,7 +6370,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         }else if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            Serial<<"setting flag true"<<endl;
+            //Serial<<"setting flag true"<<endl;
         }
 
         // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
@@ -6380,12 +6382,12 @@ void OAgent::firstStageControl( OLocalVertex * s )
 
         //Serial<<"Vmin: "<<s->getVmin()<<", and V: "<<s->getVoltage()<<endl;
         Serial<<"∆Q in 1st stage is: "<<s->getRo()<<endl;
-        Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
+        Serial<<"Q_target for node "<<s->getID()<<" after 1st stage is: "<<s->getQtarget()<<endl;
 
         if(s->getQtarget() > s->getQtop())          //the node is saturated if the q to rise is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            Serial<<"setting flag true"<<endl;
+            //Serial<<"setting flag true"<<endl;
         //     s->setQ(s->getQtop());
         //     s->setStateSaturatedHigh(true);
         //     // s->setQsecondary( deltaQ + s->getQ() - s->getQtop() );
@@ -6405,7 +6407,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         } else if(s->getQtarget() < s->getQbottom())                     //the node is saturated if the q to lower is greater or equal to the available q
         {
             s->setSecondStageFlag(true);
-            Serial<<"setting flag true"<<endl;
+            //Serial<<"setting flag true"<<endl;
         }
 
         // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
@@ -6415,7 +6417,7 @@ void OAgent::firstStageControl( OLocalVertex * s )
         s->setRo (float (0)); 
         s->setDeltaQ(float (0));
         s->setQtarget(s->getQ());
-        //Serial<<"Q_target for node "<<s->getID()<<" is: "<<s->getQtarget()<<endl;
+        Serial<<"Q_target for node "<<s->getID()<<" after 1st stage is: "<<s->getQtarget()<<endl;
     }
     
     //s->setDeltaQ(deltaQ);
@@ -6546,7 +6548,7 @@ bool OAgent::getSecondStageFlagfromPackage(OLocalVertex * s)
 
 void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
 {
-    Serial<<"entering the flag sharing"<<endl;
+    //Serial<<"entering the flag sharing"<<endl;
     float Dout = float(s->getOutDegree() + 1);      // store out degree, the +1 is to account for the self loops                          
    _initializeFairSplitting_RSL(s,0,0,0);
     unsigned long start;                            // create variable to store iteration start time
@@ -6582,7 +6584,7 @@ void OAgent::shareFlag( OLocalVertex * s, uint8_t iterations, uint16_t period)
                     //Serial<<"before flag comprobation"<<endl;
                     if(getSecondStageFlagfromPackage(s))
                     {
-                        Serial<<"recieved true flag"<<endl;
+                        //Serial<<"recieved true flag"<<endl;
                         s->setSecondStageFlag(true);
                     }
                     uint8_t neighborID = _getNeighborIDFromPacket();
@@ -6696,95 +6698,3 @@ void OAgent::_initializeVariablesSecStage(OLocalVertex * s)
     //     s->setNuLowerRC(-s->getQsecondary());
     // }
 }
-
-//centralized approach
-// void voltageControl_cent( float diffV1,float diffV2,float diffV3, float Vref, float secPercentage, float q1,float q2,float q3, float qtop, float qbottom, float S1,float S2,float S3, float alphaVC)
-// {
-
-//     OLocalVertex * s = _G->getLocalVertex();
-//  //_initializeVoltageControl( s, 0,0,0,0,0,0,0,0,0); 
-//     int i;
-    
-//     float Vmax = Vref + 0.05;
-//     float Vmin = Vref - 0.05;
-//     float V1 = Vref + diffV1;
-//     float V2 = Vref + diffV2;
-//     float V3 = Vref + diffV3;
-//     float V[3] = { V1, V2 ,V3 };
-//     float Q[3] = { q1, q2, q3};
-//     float Qnew[3];
-//     float Sij[3] = {S1, S2, S3};
-
-//     float ro[3];
-//     float deltaQsec[3] = {0,0,0};
-
-//     float Q_secondary = 0;
-
-
-//     for(i=0; i<3; i++)
-//     {
-//         if(V[i] > Vmax)
-//         {
-//             ro[i] = alphaVC/Sij[i]*(Vmax - V[i]);
-            
-//             if((Q[i]+ ro[i]) > qtop)
-//             {
-//                 Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qtop );
-//                 ro[i] = ro[i] - Q_secondary;
-//             }
-
-//         }else if(V[i] < Vmin)
-//         {
-//             ro[i] = alphaVC/Sij[i]*(Vmin - V[i]);
-
-//             if((Q[i]+ ro[i]) < qbottom)
-//             {
-//                 Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qbottom );
-//                 ro[i] = ro[i] - Q_secondary;
-//             }
-//         }else
-//         {
-//             ro[i] = 0;
-//         }
-//     }
-
-//     float QreserveRise[3] ;
-//     float QreserveLower[3] ;
-//     float QreserveUp = 0;
-//     float QreserveDown = 0;
-
-//     for(i=0;i<3;i++)
-//     {
-//         QreserveRise[i]= qtop - (Q[i] + ro[i]);
-//         QreserveLower[i]= qbottom  - (Q[i] + ro[i]);
-
-//         QreserveUp = QreserveUp + QreserveRise[i];
-//         QreserveDown = QreserveDown + QreserveLower[i];
-//     }
-
-//     if (Q_secondary != 0)//second stage
-//     {
-//         if(Q_secondary > 0)
-//         {
-//             for(i=0;i<3;i++)
-//             {
-//                 deltaQsec[i] = Q_secondary * (QreserveRise[i]/QreserveUp);
-//             }
-//         }else
-//         {
-//             for(i=0;i<3;i++)
-//             {
-//                 deltaQsec[i] = Q_secondary * (QreserveLower[i]/QreserveDown);
-//             }
-//         }
-//     }
-//     for(i=0;i<3;i++)
-//     {
-//         Qnew[i] = Q[i] + ro[i] + deltaQsec[i];
-
-//     }
-//         s->setQ1(Qnew[0]);
-//         s->setQ2(Qnew[1]);
-//         s->setQ3(Qnew[2]);
-
-// }
