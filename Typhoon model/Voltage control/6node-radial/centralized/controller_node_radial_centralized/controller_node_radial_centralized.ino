@@ -244,10 +244,10 @@ void loop(){
     float V1 = 1 + v_error0_1;
     float V2 = 1 + v_error0_2;
     float V3 = 1 + v_error0_3;
-    float V[3] = { 1, 1.07 ,1 };
-    float Q[3] = { 0.2, 0.707, 0.4};
+    float V[3] = { V1,V2,V3 };
+    float Q[3] = { q_level0_1,q_level0_2,q_level0_3};
     float Qnew[3]={0,0,0};
-    float Sij[3] = {-0.24, -0.25, -0.23};
+    float Sij[3] = {-0.225736, -0.224693, -0.258852};
     float qtop=0.707;
     float qbottom=-0.707;
     float alphaVC=0.333333;
