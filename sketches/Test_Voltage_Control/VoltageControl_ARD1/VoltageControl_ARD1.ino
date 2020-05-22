@@ -8,14 +8,14 @@
 #include <OAgent.h>
 
 long base = 1e4;  // not using floating points so need a base number
-float q_level;                   
+float q_level;
 uint8_t i=1;//number of inneighbors
 
 //Create objects needed for communication and control
 XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 
-OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,i,base);    //sets up parameters for local vertex
+OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,1,base);    //sets up parameters for local vertex
 // OLocalVertex s = OLocalVertex(address,ID,min,max,alpha,beta,out-degree,base);
 
 LinkedList l = LinkedList();
@@ -106,7 +106,7 @@ void setup() //setup of the scheme of the network
       float q=0.2;
       Serial.print("the actual q is: ");
       Serial.println(q,4);
-      q_level = a.voltageControl_dist(0,1,5,0.3,q,0.707,-707,-0.24,0.333333,20,200,3,0.001); 
+      q_level = a.voltageControl_dist(0,1,5,0.3,q,0.707,-707,-0.24,0.333333,20,200,3,0.01); 
 //voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon ) 
       Serial.print("the new Q is: ");
       Serial.println(q_level,4);

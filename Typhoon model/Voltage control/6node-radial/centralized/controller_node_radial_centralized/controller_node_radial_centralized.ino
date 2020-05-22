@@ -169,7 +169,7 @@ void loop(){
       q_level0_1 =  float(q_level_1);
       
       f_error0_1 =  f_error0_1/base;
-      v_error0_1 =  v_error0_1/base;
+      v_error0_1 =  -v_error0_1/base;
       flow_flag0_1 =  flow_flag0_1/base;
       q_level0_1 =  q_level0_1/base;
 
@@ -244,13 +244,13 @@ void loop(){
     float V1 = 1 + v_error0_1;
     float V2 = 1 + v_error0_2;
     float V3 = 1 + v_error0_3;
-    float V[3] = { V1, V2 ,V3 };
-    float Q[3] = { q_level0_1, q_level0_2, q_level0_3};
-    float Qnew[3];
-    float Sij[3] = {-0.225736, -0.224693, -0.258852};
+    float V[3] = { 1, 1.07 ,1 };
+    float Q[3] = { 0.2, 0.707, 0.4};
+    float Qnew[3]={0,0,0};
+    float Sij[3] = {-0.24, -0.25, -0.23};
     float qtop=0.707;
     float qbottom=-0.707;
-    float alphaVC=1/3;
+    float alphaVC=0.333333;
 
     float ro[3];
     float deltaQsec[3] = {0,0,0};

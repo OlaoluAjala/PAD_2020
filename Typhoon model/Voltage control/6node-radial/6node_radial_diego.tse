@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 03-May-2020 @ 08:26:46 PM
+// Save timestamp: 22-May-2020 @ 12:09:10 PM
 //
 
 model "6node_radial_diego" {
@@ -25889,6 +25889,9 @@ else
             breakpoints = 6400, 7280; 6968, 7280
         ]
         connect Modbus3.U1-P1 "Grid forming inverter (averaged)3.activeP_offset" as Connection1758
+        [
+            breakpoints = 9344, 8728; 9344, 8408
+        ]
         connect "Grid forming inverter (averaged)2.activeP_offset" Modbus2.U1-P1 as Connection1759
         [
             breakpoints = 9328, 7344; 9520, 7344; 9576, 7296; 9576, 7296

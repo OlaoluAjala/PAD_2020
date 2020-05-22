@@ -1,4 +1,3 @@
-//void(* resetFunc) (void) = 0; //declare reset function @ address 0
 #include <Streaming.h>
 #include <XBee.h>
 #include <OGraph.h>
@@ -24,7 +23,8 @@ uint8_t cPin = 48;     // coordination enabled led pin
 //variables for node sync check
 boolean de = false;
 
-void setup()  {  
+void setup()  
+{  
   Serial.begin(38400);
   Serial3.begin(38400);
   pinMode(13, OUTPUT);
@@ -92,12 +92,12 @@ void loop()
     }
   }
 
-  
   else 
   {
   if(a.isSynced())
     {
      //run fair splitting algorithm
+      Serial.println("about to perform RC!!!");
       tCmd = a.fairSplitRatioConsensus_RSL(0,1,50,200,3,0.01);
       //(y,z,iterations,period,diameter,epsilon)
       Serial.print("The value of the RC algorithm is: ");

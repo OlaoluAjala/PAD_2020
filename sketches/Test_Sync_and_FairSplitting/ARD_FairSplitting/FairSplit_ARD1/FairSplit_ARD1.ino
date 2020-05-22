@@ -3,7 +3,6 @@
 #include <OGraph.h>
 #include <OAgent.h>
 
-
 long base = 1e4;  // not using floating points so need a base number
 float tCmd;
 uint8_t i=2;//number of inneighbors
@@ -13,7 +12,6 @@ XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 // address, min, max, alpha, beta, out-degree, base
 OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,1,base);    //sets up parameters for local vertex
-// OLocalVertex s = OLocalVertex(0x415786E1,0,0.225*D_base,-2.1667*base,0.1667*base,5,D_base,9);
 LinkedList l = LinkedList();
 OGraph g = OGraph(&s,&l);
 OAgent a = OAgent(&xbee,&rx,&g,true,true);//(xbee,rx,leader,...)
@@ -25,8 +23,7 @@ uint8_t cPin = 48;     // coordination enabled led pin
 //variables for node sync check
 boolean de = false;
 
-void setup()  
-{
+void setup()  {
   Serial.println("start sync");
   Serial.begin(38400);
   Serial3.begin(38400);
@@ -95,12 +92,12 @@ void loop()
     }
   }
 
-  
   else 
   {
     if(a.isSynced())
     {
      //run fair splitting algorithm
+     Serial.println("about to perform RC!!!");
       tCmd = a.fairSplitRatioConsensus_RSL(0.01345,1,50,200,3,0.01);
       //(y,z,iterations,period,diameter,epsilon)
       Serial.print("The value of the RC algorithm is: ");

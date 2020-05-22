@@ -16,7 +16,7 @@ uint8_t i=1;//number of inneighbors
 XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 
-OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,i,base);    //sets up parameters for local vertex
+OLocalVertex s = OLocalVertex(0x415DB670,11,0,0,0,0,1,base);    //sets up parameters for local vertex
 // OLocalVertex s = OLocalVertex(address,ID,min,max,alpha,beta,out-degree,base);
 
 LinkedList l = LinkedList();
@@ -107,7 +107,7 @@ void setup()
       float q=0.4;
       Serial.print("the actual q is: ");
       Serial.println(q,4);
-      q_level = a.voltageControl_dist(0,1,5,0.5,q,0.707,-0.707,-0.23,0.333333,20,200,3,0.001); 
+      q_level = a.voltageControl_dist(0,1,5,0.5,q,0.707,-0.707,-0.23,0.333333,20,200,3,0.01); 
 //voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon )
       Serial.print("the new Q is: ");
       Serial.println(q_level);  
