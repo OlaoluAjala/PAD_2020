@@ -1668,7 +1668,7 @@ displayValue = 0.0
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>3</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -1681,7 +1681,7 @@ displayValue = 0.0
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>3</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -1694,44 +1694,46 @@ displayValue = 0.0
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>3</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>6</channel>
                             <name>Modbus1.Voltage_diff_1</name>
-                            <is_locked>True</is_locked>
+                            <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>2</num_viewport>
+                                <num_viewport>3</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>7</channel>
                             <name>Modbus1.Voltage_diff_2</name>
-                            <is_locked>True</is_locked>
+                            <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>2</num_viewport>
+                                <num_viewport>3</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>8</channel>
                             <name>Modbus1.Voltage_diff_3</name>
-                            <is_locked>True</is_locked>
+                            <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
+                                
+                                <num_viewport>3</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -1957,7 +1959,7 @@ displayValue = 0.0
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>3</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -1970,7 +1972,7 @@ displayValue = 0.0
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>3</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -1983,44 +1985,46 @@ displayValue = 0.0
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>3</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>6</channel>
                             <name>Modbus1.Voltage_diff_1</name>
-                            <is_locked>True</is_locked>
+                            <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>2</num_viewport>
+                                <num_viewport>3</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>7</channel>
                             <name>Modbus1.Voltage_diff_2</name>
-                            <is_locked>True</is_locked>
+                            <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>2</num_viewport>
+                                <num_viewport>3</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>8</channel>
                             <name>Modbus1.Voltage_diff_3</name>
-                            <is_locked>True</is_locked>
+                            <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
+                                
+                                <num_viewport>3</num_viewport>
                                 
                            </viewports>
                         </analog>

@@ -16,7 +16,7 @@ XBee xbee = XBee();
 ZBRxResponse rx = ZBRxResponse();
 
 // address, min, max, alpha, beta, out-degree, base
-OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,2,base); //address and ID
+OLocalVertex s = OLocalVertex(0x415786E1,9,0,0,0,0,1,base); //address and ID
 LinkedList l = LinkedList();  //#NODE
 OGraph g = OGraph(&s,&l);
 //OAgent_LinkedList al = OAgent_LinkedList();  //#NODE
