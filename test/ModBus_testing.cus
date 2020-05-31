@@ -1,0 +1,233 @@
+<ui_settings>
+    <version>2.5</version>
+    <model_locked>False</model_locked>
+    <canvas_bg_color>#ffffff</canvas_bg_color>
+    <initialization_code><![CDATA[# NOTE: Variables and functions defined here will be
+# available for use in all Macro and Expression scripts.
+# NOTE: This code is always executed prior simulation start.
+
+# Variable 'SETTINGS_DIR' holds directory where loaded Panel .cus file is located.
+# Also you can call 'get_settings_dir_path()' function in any
+# Macro and Expression scripts to get the same directory.
+SETTINGS_DIR = get_settings_dir_path()
+
+# The 'add_to_python_path(folder)' function can be used to add custom folder
+# with Python files and packages to the PYTHONPATH. After folder is added, all Python 
+# files and Python packages from it can be imported into the SCADA Namespace.
+
+# HIL API is imported as 'hil'
+# SCADA API is imported as 'panel'
+# SCADA API constants are imported as 'api_const'
+# Numpy module is imported as 'np'
+# Scipy module is imported as 'sp'
+# Schematic Editor model namespace is imported as 'scm'
+# Function for printing to HIL SCADA Message log is imported as 'printf'.
+
+]]></initialization_code>
+    <components>
+        <component_data>
+                <id>b05e1922550711eaa161d89ef3221e8e</id>
+                <name><![CDATA[U_p1]]></name>
+                <type>DigitalDisplay</type>
+                <description><![CDATA[]]></description>
+                <data_type>Analog signal</data_type>
+                <code><![CDATA[# HIL API is imported as 'hil'
+# NOTE: Only read functions are available from the HIL API
+
+# mandatory variable used for storing value
+# that will be displayed
+displayValue = 0.0
+
+]]></code>
+                <signal_name><![CDATA[u_P1]]></signal_name>
+                <unit><![CDATA[]]></unit>
+                <automatic_unit>True</automatic_unit>
+                <decimals><![CDATA[4]]></decimals>
+                <updateRate>500</updateRate>
+                <hierarchy_position>1</hierarchy_position>
+                <widget_settings>
+                    <x>144</x>
+                    <y>88</y>
+                    <width>144</width>
+                    <height>56</height>
+                    <appearance><![CDATA[Flat]]></appearance>
+                </widget_settings>
+                <advance_widget_settings>
+                    <color_range>False</color_range>
+                    <green_range>(0, 0, 0, 0)</green_range>
+                    <orange_range>(0, 0, 0, 0)</orange_range>
+                    <red_range>(0, 0, 0, 0)</red_range>
+                </advance_widget_settings>
+            </component_data>
+        <component_data>
+                <id>a49ddb8a550811ea842ad89ef3221e8e</id>
+                <name><![CDATA[u_Q1]]></name>
+                <type>DigitalDisplay</type>
+                <description><![CDATA[]]></description>
+                <data_type>Analog signal</data_type>
+                <code><![CDATA[# HIL API is imported as 'hil'
+# NOTE: Only read functions are available from the HIL API
+
+# mandatory variable used for storing value
+# that will be displayed
+displayValue = 0.0
+
+]]></code>
+                <signal_name><![CDATA[u_Q1]]></signal_name>
+                <unit><![CDATA[]]></unit>
+                <automatic_unit>True</automatic_unit>
+                <decimals><![CDATA[4]]></decimals>
+                <updateRate>500</updateRate>
+                <hierarchy_position>1</hierarchy_position>
+                <widget_settings>
+                    <x>144</x>
+                    <y>176</y>
+                    <width>144</width>
+                    <height>56</height>
+                    <appearance><![CDATA[Flat]]></appearance>
+                </widget_settings>
+                <advance_widget_settings>
+                    <color_range>False</color_range>
+                    <green_range>(0, 0, 0, 0)</green_range>
+                    <orange_range>(0, 0, 0, 0)</orange_range>
+                    <red_range>(0, 0, 0, 0)</red_range>
+                </advance_widget_settings>
+            </component_data>
+        <component_data>
+                <id>99fd9640a2a211ea82ecd89ef3221e8e</id>
+                <name><![CDATA[U_p2]]></name>
+                <type>DigitalDisplay</type>
+                <description><![CDATA[]]></description>
+                <data_type>Analog signal</data_type>
+                <code><![CDATA[# HIL API is imported as 'hil'
+# NOTE: Only read functions are available from the HIL API
+
+# mandatory variable used for storing value
+# that will be displayed
+displayValue = 0.0
+
+]]></code>
+                <signal_name><![CDATA[u_P2]]></signal_name>
+                <unit><![CDATA[]]></unit>
+                <automatic_unit>True</automatic_unit>
+                <decimals><![CDATA[4]]></decimals>
+                <updateRate>500</updateRate>
+                <hierarchy_position>1</hierarchy_position>
+                <widget_settings>
+                    <x>136</x>
+                    <y>264</y>
+                    <width>144</width>
+                    <height>56</height>
+                    <appearance><![CDATA[Flat]]></appearance>
+                </widget_settings>
+                <advance_widget_settings>
+                    <color_range>False</color_range>
+                    <green_range>(0, 0, 0, 0)</green_range>
+                    <orange_range>(0, 0, 0, 0)</orange_range>
+                    <red_range>(0, 0, 0, 0)</red_range>
+                </advance_widget_settings>
+            </component_data>
+        <component_data>
+                <id>99fd9641a2a211ea9bd3d89ef3221e8e</id>
+                <name><![CDATA[u_Q2]]></name>
+                <type>DigitalDisplay</type>
+                <description><![CDATA[]]></description>
+                <data_type>Analog signal</data_type>
+                <code><![CDATA[# HIL API is imported as 'hil'
+# NOTE: Only read functions are available from the HIL API
+
+# mandatory variable used for storing value
+# that will be displayed
+displayValue = 0.0
+
+]]></code>
+                <signal_name><![CDATA[u_Q2]]></signal_name>
+                <unit><![CDATA[]]></unit>
+                <automatic_unit>True</automatic_unit>
+                <decimals><![CDATA[4]]></decimals>
+                <updateRate>500</updateRate>
+                <hierarchy_position>1</hierarchy_position>
+                <widget_settings>
+                    <x>136</x>
+                    <y>344</y>
+                    <width>144</width>
+                    <height>56</height>
+                    <appearance><![CDATA[Flat]]></appearance>
+                </widget_settings>
+                <advance_widget_settings>
+                    <color_range>False</color_range>
+                    <green_range>(0, 0, 0, 0)</green_range>
+                    <orange_range>(0, 0, 0, 0)</orange_range>
+                    <red_range>(0, 0, 0, 0)</red_range>
+                </advance_widget_settings>
+            </component_data>
+        <component_data>
+                <id>b0423c2ea2a211eaa353d89ef3221e8e</id>
+                <name><![CDATA[U_p3]]></name>
+                <type>DigitalDisplay</type>
+                <description><![CDATA[]]></description>
+                <data_type>Analog signal</data_type>
+                <code><![CDATA[# HIL API is imported as 'hil'
+# NOTE: Only read functions are available from the HIL API
+
+# mandatory variable used for storing value
+# that will be displayed
+displayValue = 0.0
+
+]]></code>
+                <signal_name><![CDATA[u_P3]]></signal_name>
+                <unit><![CDATA[]]></unit>
+                <automatic_unit>True</automatic_unit>
+                <decimals><![CDATA[4]]></decimals>
+                <updateRate>500</updateRate>
+                <hierarchy_position>1</hierarchy_position>
+                <widget_settings>
+                    <x>128</x>
+                    <y>432</y>
+                    <width>144</width>
+                    <height>56</height>
+                    <appearance><![CDATA[Flat]]></appearance>
+                </widget_settings>
+                <advance_widget_settings>
+                    <color_range>False</color_range>
+                    <green_range>(0, 0, 0, 0)</green_range>
+                    <orange_range>(0, 0, 0, 0)</orange_range>
+                    <red_range>(0, 0, 0, 0)</red_range>
+                </advance_widget_settings>
+            </component_data>
+        <component_data>
+                <id>b0423c2fa2a211ea9a9ed89ef3221e8e</id>
+                <name><![CDATA[u_Q3]]></name>
+                <type>DigitalDisplay</type>
+                <description><![CDATA[]]></description>
+                <data_type>Analog signal</data_type>
+                <code><![CDATA[# HIL API is imported as 'hil'
+# NOTE: Only read functions are available from the HIL API
+
+# mandatory variable used for storing value
+# that will be displayed
+displayValue = 0.0
+
+]]></code>
+                <signal_name><![CDATA[u_Q3]]></signal_name>
+                <unit><![CDATA[]]></unit>
+                <automatic_unit>True</automatic_unit>
+                <decimals><![CDATA[4]]></decimals>
+                <updateRate>500</updateRate>
+                <hierarchy_position>1</hierarchy_position>
+                <widget_settings>
+                    <x>128</x>
+                    <y>512</y>
+                    <width>144</width>
+                    <height>56</height>
+                    <appearance><![CDATA[Flat]]></appearance>
+                </widget_settings>
+                <advance_widget_settings>
+                    <color_range>False</color_range>
+                    <green_range>(0, 0, 0, 0)</green_range>
+                    <orange_range>(0, 0, 0, 0)</orange_range>
+                    <red_range>(0, 0, 0, 0)</red_range>
+                </advance_widget_settings>
+            </component_data>
+        </components>
+</ui_settings>

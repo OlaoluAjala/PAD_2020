@@ -215,7 +215,8 @@ void loop() {
          //Serial.println(u,4);
       }      
       
-      u_f= 0.5;
+      //u_f= 0.5;
+      //deltaQ=0.1;
       
       //Sending data
       if (u_f<0)

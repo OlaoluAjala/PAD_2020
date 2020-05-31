@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 22-May-2020 @ 12:09:10 PM
+// Save timestamp: 31-May-2020 @ 07:01:03 AM
 //
 
 model "6node_radial_diego" {
@@ -25496,14 +25496,6 @@ else
             rotation = down
             scale = -1, -1
             size = 120, 112
-        ]
-
-        component src_constant Constant6 {
-            execution_rate = "Ts"
-            value = "scale_const"
-        }
-        [
-            position = 10920, 8112
         ]
 
         component src_constant Constant7 {

@@ -247,7 +247,6 @@ typedef double real;
     
     
     
-    
 
     
     
@@ -994,7 +993,6 @@ typedef double real;
 // variables
     double _clock1__out;
              X_UnInt32 _constant1__out = 0;
-                 double _constant6__out = 10000.0;
                  double _constant7__out = 0.0;
                  double _constant8__out = 0.0;
                  double _constant9__out = 0.0;
@@ -1457,7 +1455,7 @@ typedef double real;
     double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2;
     float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe1__tmp;
           X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator2__out;
-  X_Int32 _grid_forming_inverter__averaged_3_product2__out;
+  X_UnInt32 _grid_forming_inverter__averaged_3_product2__out;
           double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
         double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
       double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
@@ -1932,11 +1930,11 @@ double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_c
         double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
         double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
   double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain4__out;double _grid_forming_inverter__averaged_2_controller_gain1__out;X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
-double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
 X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
 X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
         double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum7__out;
-    double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain4__out;double _grid_forming_inverter__averaged_3_controller_gain1__out;double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+    double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain4__out;double _grid_forming_inverter__averaged_3_controller_gain1__out;X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
@@ -2030,12 +2028,12 @@ double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_c
     double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller3__pi_reg_out_int;
           double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out;
           X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
-        double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
+        X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
         X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
-        X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
+        double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
         double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
         double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out;
-          double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
+          X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
         double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
         double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
         double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
@@ -2297,7 +2295,6 @@ void ReInit_user_sp_cpu_dev0(){
     //@cmp.init.block.start
         _clock1__state = 0.0f;
 
-    
     
     
     
@@ -3553,8 +3550,6 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
         _clock1__out = _clock1__state;
 
              // Generated from the component: Constant1
-        
-             // Generated from the component: Constant6
         
              // Generated from the component: Constant7
         
@@ -7146,7 +7141,7 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
          // Generated from the component: Clock1
         _clock1__state += 0.0002;
 
-                                                         // Generated from the component: Grid forming inverter (averaged).Controller.Integrator1
+                                                     // Generated from the component: Grid forming inverter (averaged).Controller.Integrator1
                 _grid_forming_inverter__averaged__controller_integrator1__state += _grid_forming_inverter__averaged__controller_frequency_droop_sum4__out * 0.0002;
             
     
