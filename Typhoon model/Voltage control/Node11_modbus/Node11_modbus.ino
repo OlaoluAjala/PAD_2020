@@ -196,13 +196,14 @@ void loop() {
       Serial.println(float(q_level0),4);
       delay(100);
 
-      deltaQ = a.voltageControl_dist(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.258852,1/6,50,200,3,0.001);
+      deltaQ = a.voltageControl_dist(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.258852,0.333333,50,200,3,0.001);
 //voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon ) 
             
       Serial.println("delta q required");
       Serial.println(deltaQ,4);
       delay(100); 
-           
+
+        f_error1 = a.fairSplitRatioConsensus_RSL(f_error0,D,50,200,3,0.001);
       //f_error1 = a.ratioConsensusAlgorithm(f_error0,D,10,500);
       
       Serial.println("ratio consensus result");

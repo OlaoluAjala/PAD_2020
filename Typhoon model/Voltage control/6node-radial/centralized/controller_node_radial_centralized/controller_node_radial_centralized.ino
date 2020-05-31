@@ -72,6 +72,8 @@ float u_f_3 =0;
 float u_v_3 =0;
 float u_set_3=0.85;
 
+float eps_f = 0.001;
+
 //Modbus Communication
 MgsModbus Mb; 
 int val;
@@ -326,6 +328,18 @@ void loop(){
           Qnew[i]=qbottom;
         }
     }
+
+
+      for(i=0;i<3;i++){
+              if(abs(f_error1) > eps_f)
+      {
+         error=error + -1*0.707*f_error1;
+         u_f=u_set+0.7071*error;
+         //Serial.println(u,4);
+      }
+
+
+
     
      
       u_v_1=Qnew[0];
