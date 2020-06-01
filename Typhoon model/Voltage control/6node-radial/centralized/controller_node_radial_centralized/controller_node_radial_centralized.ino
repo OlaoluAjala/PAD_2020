@@ -136,7 +136,7 @@ void setup()  {
   
  // initialize the ethernet device
   Ethernet.begin(mac, ip, gateway, subnet);   // start etehrnet interface
-  for (int i=0;i<12;i++) {
+  for (int i=0;i<24;i++) {
      Mb.MbData[i] = 0;
   }
 }
@@ -181,7 +181,7 @@ void loop(){
       Serial.println(float(flow_flag0_1),4);
       Serial.print("Q level in 9: ");
       Serial.println(float(q_level0_1),4);
-      delay(100);
+      delay(150);
       
       //Node 10
       int f_error_2 =  Mb.MbData[8]*((-2*Mb.MbData[9])+1);
@@ -207,7 +207,7 @@ void loop(){
       Serial.println(float(flow_flag0_2),4);
       Serial.print("Q level in 10: ");
       Serial.println(float(q_level0_2),4);
-      delay(100);
+      delay(150);
 
       //Node 11
       int f_error_3 =  Mb.MbData[16]*((-2*Mb.MbData[17])+1);
@@ -234,7 +234,7 @@ void loop(){
       Serial.println(float(flow_flag0_3),4);
       Serial.print("Q level in 11: ");
       Serial.println(float(q_level0_3),4);
-      delay(100);
+      delay(150);
 
       //start algorithm
       int i;
@@ -246,10 +246,12 @@ void loop(){
     float V3 = 1 + v_error0_3;
     float V[3] = { V1,V2,V3 };
     float Q[3] = { q_level0_1,q_level0_2,q_level0_3};
+//    float V[3] = { 1,1,1.7 };
+//    float Q[3] = { 0.3,-0.1,0.02};
     float Qnew[3]={0,0,0};
     float Sij[3] = {-0.225736, -0.224693, -0.258852};
-    float qtop=0.707;
-    float qbottom=-0.707;
+    float qtop=1;
+    float qbottom=-1;
     float alphaVC=0.333333;
 
     float ro[3];

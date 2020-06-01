@@ -1125,8 +1125,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>808</x>
-                    <y>248</y>
+                    <x>808.0</x>
+                    <y>248.0</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1212,8 +1212,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1168</x>
-                    <y>248</y>
+                    <x>1168.0</x>
+                    <y>248.0</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1340,8 +1340,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>448</x>
-                    <y>248</y>
+                    <x>448.0</x>
+                    <y>248.0</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1614,7 +1614,7 @@ displayValue = 0.0
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>20.0</time_interval>
+                            <time_interval>15.0</time_interval>
                             <sample_rate>2000.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
@@ -1781,7 +1781,7 @@ displayValue = 0.0
                             <name>Modbus1.Voltage_diff_1</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1792,7 +1792,7 @@ displayValue = 0.0
                             <name>Modbus1.Voltage_diff_2</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1803,7 +1803,7 @@ displayValue = 0.0
                             <name>Modbus1.Voltage_diff_3</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1968,7 +1968,7 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>20.0</time_interval>
+                        <time_interval>15.0</time_interval>
                         <sample_rate>2000.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
@@ -2144,7 +2144,7 @@ displayValue = 0.0
                             <name>Modbus1.Voltage_diff_1</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -2155,7 +2155,7 @@ displayValue = 0.0
                             <name>Modbus1.Voltage_diff_2</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -2166,7 +2166,7 @@ displayValue = 0.0
                             <name>Modbus1.Voltage_diff_3</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -2395,8 +2395,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>440</x>
-                    <y>400</y>
+                    <x>440.0</x>
+                    <y>400.0</y>
                     <width>344</width>
                     <height>168</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2569,8 +2569,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1152</x>
-                    <y>408</y>
+                    <x>1152.0</x>
+                    <y>408.0</y>
                     <width>352</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2677,8 +2677,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1152</x>
-                    <y>568</y>
+                    <x>1152.0</x>
+                    <y>568.0</y>
                     <width>352</width>
                     <height>192</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2764,8 +2764,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>792</x>
-                    <y>576</y>
+                    <x>792.0</x>
+                    <y>576.0</y>
                     <width>352</width>
                     <height>176</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2851,8 +2851,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>432</x>
-                    <y>568</y>
+                    <x>432.0</x>
+                    <y>568.0</y>
                     <width>352</width>
                     <height>192</height>
                     <appearance><![CDATA[Flat]]></appearance>
