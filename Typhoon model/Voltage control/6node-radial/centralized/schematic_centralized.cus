@@ -1125,8 +1125,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>808.0</x>
-                    <y>248.0</y>
+                    <x>808</x>
+                    <y>248</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1212,8 +1212,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1168.0</x>
-                    <y>248.0</y>
+                    <x>1168</x>
+                    <y>248</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1331,7 +1331,7 @@ data = {
     }
 displayValue = data
 ]]></code>
-                <analog_signals><![CDATA[['Grid forming inverter (averaged).Controller.f1', 'Grid forming inverter (averaged)2.Controller.f1', 'Grid forming inverter (averaged)3.Controller.f1']]]></analog_signals>
+                <analog_signals><![CDATA[['measurement1.Three-phase Meter1.Freq', 'measurement2.Three-phase Meter2.Freq', 'measurement3.Three-phase Meter3.Freq']]]></analog_signals>
                 <digital_signals><![CDATA[[]]]></digital_signals>
                 <streaming_analog_signals><![CDATA[[]]]></streaming_analog_signals>
                 <streaming_digital_signals><![CDATA[[]]]></streaming_digital_signals>
@@ -1340,8 +1340,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>448.0</x>
-                    <y>248.0</y>
+                    <x>448</x>
+                    <y>248</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1742,7 +1742,7 @@ displayValue = 0.0
                             <name>measurement4.Three-phase Meter4.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1755,7 +1755,7 @@ displayValue = 0.0
                             <name>measurement5.Three-phase Meter5.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -1768,11 +1768,44 @@ displayValue = 0.0
                             <name>measurement6.Three-phase Meter6.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
                                 <num_viewport>4</num_viewport>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>12</channel>
+                            <name>Modbus1.Voltage_diff_1</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>13</channel>
+                            <name>Modbus1.Voltage_diff_2</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>14</channel>
+                            <name>Modbus1.Voltage_diff_3</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
                                 
                            </viewports>
                         </analog>
@@ -2072,7 +2105,7 @@ displayValue = 0.0
                             <name>measurement4.Three-phase Meter4.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -2085,7 +2118,7 @@ displayValue = 0.0
                             <name>measurement5.Three-phase Meter5.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
@@ -2098,11 +2131,44 @@ displayValue = 0.0
                             <name>measurement6.Three-phase Meter6.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0</vertical_offset>
+                            <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
                                 <num_viewport>4</num_viewport>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>12</channel>
+                            <name>Modbus1.Voltage_diff_1</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>13</channel>
+                            <name>Modbus1.Voltage_diff_2</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
+                                
+                           </viewports>
+                        </analog>
+                            <analog>
+                            <channel>14</channel>
+                            <name>Modbus1.Voltage_diff_3</name>
+                            <is_locked>False</is_locked>
+                            <vertical_scale>Auto</vertical_scale>
+                            <vertical_offset>0</vertical_offset>
+                            <coupling>False</coupling>
+                            <viewports>
                                 
                            </viewports>
                         </analog>
@@ -2329,8 +2395,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>440.0</x>
-                    <y>400.0</y>
+                    <x>440</x>
+                    <y>400</y>
                     <width>344</width>
                     <height>168</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2503,8 +2569,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1152.0</x>
-                    <y>408.0</y>
+                    <x>1152</x>
+                    <y>408</y>
                     <width>352</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2611,8 +2677,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1152.0</x>
-                    <y>568.0</y>
+                    <x>1152</x>
+                    <y>568</y>
                     <width>352</width>
                     <height>192</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2698,8 +2764,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>792.0</x>
-                    <y>576.0</y>
+                    <x>792</x>
+                    <y>576</y>
                     <width>352</width>
                     <height>176</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2785,8 +2851,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>432.0</x>
-                    <y>568.0</y>
+                    <x>432</x>
+                    <y>568</y>
                     <width>352</width>
                     <height>192</height>
                     <appearance><![CDATA[Flat]]></appearance>

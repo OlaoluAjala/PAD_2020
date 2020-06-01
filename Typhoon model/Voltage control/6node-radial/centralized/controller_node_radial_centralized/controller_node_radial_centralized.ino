@@ -72,8 +72,6 @@ float u_f_3 =0;
 float u_v_3 =0;
 float u_set_3=0.85;
 
-float eps_f = 0.001;
-
 //Modbus Communication
 MgsModbus Mb; 
 int val;
@@ -266,6 +264,12 @@ void loop(){
         {
             ro[i] = alphaVC/Sij[i]*(Vmax - V[i]);
             
+             if((Q[i]+ ro[i]) < qbottom)
+            {
+                Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qbottom );
+                ro[i] = ro[i] - Q_secondary;
+            }
+            
             if((Q[i]+ ro[i]) > qtop)
             {
                 Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qtop );
@@ -281,6 +285,13 @@ void loop(){
                 Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qbottom );
                 ro[i] = ro[i] - Q_secondary;
             }
+            
+             if((Q[i]+ ro[i]) > qtop)
+            {
+                Q_secondary=Q_secondary + ( Q[i]+ ro[i] - qtop );
+                ro[i] = ro[i] - Q_secondary;
+            }
+         
         }else
         {
             ro[i] = 0;
@@ -329,25 +340,36 @@ void loop(){
         }
     }
 
+  
+    f_error1_1=(f_error0_1 + f_error0_2 + f_error0_3)/3;
+    f_error1_2=(f_error0_1 + f_error0_2 + f_error0_3)/3;
+    f_error1_3=(f_error0_1 + f_error0_2 + f_error0_3)/3;
 
-      for(i=0;i<3;i++){
-              if(abs(f_error1) > eps_f)
-      {
-         error=error + -1*0.707*f_error1;
-         u_f=u_set+0.7071*error;
-         //Serial.println(u,4);
-      }
-
-
-
+    if(abs(f_error1_1) > eps_f)
+    {
+      error_1=error_1 + -1*0.707*f_error1_1;
+      u_f_1=u_set_1+0.7071*error_1;
+    }
+    
+    if(abs(f_error1_2) > eps_f)
+    {
+      error_2=error_2 + -1*0.707*f_error1_2;
+      u_f_2=u_set_2+0.7071*error_2;
+    }
+    
+    if(abs(f_error1_3 )> eps_f)
+    {
+      error_3=error_3 + -1*0.707*f_error1_3;
+      u_f_3=u_set_3+0.7071*error_3;
+    }
     
      
       u_v_1=Qnew[0];
-      u_f_1=0.1;
+      //u_f_1=0.1;
       u_v_2=Qnew[1];
-      u_f_2=0.2;
+      //u_f_2=0.2;
       u_v_3=Qnew[2];
-      u_f_3=0.3;
+      //u_f_3=0.3;
 
       Serial.println("new Q levels:");
       Serial.print("Q1: ");
