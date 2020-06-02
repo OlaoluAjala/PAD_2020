@@ -957,6 +957,9 @@ typedef double real;
 
 
 
+
+
+
 //@cmp.def.end
 
 
@@ -1411,7 +1414,7 @@ double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1
 double _grid_forming_inverter__averaged__controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2;
 float _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__digital_probe1__tmp;
 X_Int32 _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__logical_operator2__out;
-X_UnInt32 _grid_forming_inverter__averaged_2_product2__out;
+X_Int32 _grid_forming_inverter__averaged_2_product2__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
 double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
@@ -1440,7 +1443,7 @@ double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq
 double _grid_forming_inverter__averaged_2_controller_current_abc_to_dq_abc_to_dq1_alpha_beta_to_dq__k2;
 float _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__digital_probe1__tmp;
 X_Int32 _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__logical_operator2__out;
-X_UnInt32 _grid_forming_inverter__averaged_3_product2__out;
+X_Int32 _grid_forming_inverter__averaged_3_product2__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_signal_switch1__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_signal_switch1__out;
 double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__current_abc_to_dq3_abc_to_dq1_alpha_beta_to_dq__d;
@@ -1600,11 +1603,11 @@ double _modbus1_product18__out;
 double _modbus1_product2__out;
 double _modbus1_product4__out;
 double _measurement1_three_phase_meter1_phase_locked_loop_gain3__out;
-double _modbus1_product6__out;
+double _measurement1_gain2__out;
 double _measurement2_three_phase_meter2_phase_locked_loop_gain3__out;
-double _modbus1_product10__out;
+double _measurement2_gain2__out;
 double _measurement3_three_phase_meter3_phase_locked_loop_gain3__out;
-double _modbus1_product14__out;
+double _measurement3_gain2__out;
 double _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out;
 double _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
 double _measurement5_three_phase_meter5_phase_locked_loop_gain3__out;
@@ -1662,23 +1665,11 @@ double _grid_forming_inverter__averaged_3_controller_voltage_droop_sum2__out;
 double _grid_forming_inverter__averaged__controller_frequency_droop_sum1__out;
 double _grid_forming_inverter__averaged__controller_voltage_droop_sum2__out;
 double _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out;
-X_Int32 _modbus1_c_function6__in;
-
-
-X_Int32 _modbus1_c_function6__out;
-X_Int32 _modbus1_c_function6__sign;
+double _modbus1_product6__out;
 double _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out;
-X_Int32 _modbus1_c_function10__in;
-
-
-X_Int32 _modbus1_c_function10__out;
-X_Int32 _modbus1_c_function10__sign;
+double _modbus1_product10__out;
 double _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out;
-X_Int32 _modbus1_c_function14__in;
-
-
-X_Int32 _modbus1_c_function14__out;
-X_Int32 _modbus1_c_function14__sign;
+double _modbus1_product14__out;
 double _measurement4_three_phase_meter4_phase_locked_loop_gain4__out;
 double _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var;
 double _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__in;
@@ -1730,10 +1721,25 @@ double _modbus1_product1__out;
 double _grid_forming_inverter__averaged__controller_voltage_droop_gain3__out;
 double _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out;
 double _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+X_Int32 _modbus1_c_function6__in;
+
+
+X_Int32 _modbus1_c_function6__out;
+X_Int32 _modbus1_c_function6__sign;
 double _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out;
 double _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+X_Int32 _modbus1_c_function10__in;
+
+
+X_Int32 _modbus1_c_function10__out;
+X_Int32 _modbus1_c_function10__sign;
 double _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out;
 double _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
+X_Int32 _modbus1_c_function14__in;
+
+
+X_Int32 _modbus1_c_function14__out;
+X_Int32 _modbus1_c_function14__sign;
 double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__Tfract;
 double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
 double _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__fMax;
@@ -1898,10 +1904,10 @@ double _grid_forming_inverter__averaged_2_controller_voltage_droop_sum3__out;
 double _grid_forming_inverter__averaged_3_controller_frequency_droop_sum4__out;
 double _grid_forming_inverter__averaged_3_controller_voltage_droop_sum3__out;
 double _grid_forming_inverter__averaged__controller_gain1__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
 double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_sum7__out;
 double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__Tfract;
 double _measurement1_three_phase_meter1_vln_rms_calc_meassm_mode_and_dfract__freqAbs;
@@ -2019,21 +2025,21 @@ double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_pid_controller4__pi_reg_out_int;
 double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__gain4__out;
 double _grid_forming_inverter__averaged_2_controller_gain1__out;
-X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
-X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
-X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_sum7__out;
 double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain4__out;
 double _grid_forming_inverter__averaged_3_controller_gain1__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product6__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product8__out;
-X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
-X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product1__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_product2__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_sum7__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
-X_UnInt32 _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
+double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
 double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
 double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
 double _measurement1_three_phase_meter1_vln_rms_calc_rms__rmsSum1;
@@ -2119,16 +2125,16 @@ double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_a
 
 double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__hold_after_connect1__out;
 double _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__sum2__out;
-X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
-X_UnInt32 _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
+double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
 double _grid_forming_inverter__averaged_2_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
 double _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__sum2__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum10__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum13__out;
-X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
-X_UnInt32 _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum5__out;
+double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_inner_current_control_loop_sum6__out;
 double _grid_forming_inverter__averaged_3_controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_sum8__out;
 double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product5__out;
 double _grid_forming_inverter__averaged__controller_outer_voltage_loop___inner_current_loop_outer_voltage_control_loop_product7__out;
@@ -2614,18 +2620,18 @@ void ReInit_user_sp_cpu_dev0() {
     HIL_OutAO(0x4028, 0.0f);
     _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state =  376.99111843077515;
     _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__filter_state =  0.0;
-    HIL_OutAO(0x4042, 0.0f);
-    HIL_OutAO(0x4043, 0.0f);
-    HIL_OutAO(0x4044, 0.0f);
     _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var = 0;
     _grid_forming_inverter__averaged_2_be1_25a_synchronizer__inverter__pll_c_function1__var = 0;
     _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_c_function1__var = 0;
     _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
     _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x4042, 0.0f);
     _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
     _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x4043, 0.0f);
     _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state =  376.99111843077515;
     _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__filter_state =  0.0;
+    HIL_OutAO(0x4044, 0.0f);
     HIL_OutAO(0x405e, 0.0f);
     _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__dFract = 0;
     _measurement4_three_phase_meter4_vln_rms_calc_meassm_mode_and_dfract__fMax = 1.0 / 0.0002;
@@ -3978,8 +3984,8 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
     // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.Termination2
     // Generated from the component: measurement1.Three-phase Meter1.POWER_P
     HIL_OutAO(0x404d, (float)_measurement1_three_phase_meter1_gain1__out);
-    // Generated from the component: Modbus1.Product6
-    _modbus1_product6__out = (_measurement1_three_phase_meter1_gain2__out * _modbus1_constant6__out);
+    // Generated from the component: measurement1.Gain2
+    _measurement1_gain2__out = 0.005 * _measurement1_three_phase_meter1_gain2__out;
     // Generated from the component: measurement1.Three-phase Meter1.POWER_Q
     HIL_OutAO(0x404f, (float)_measurement1_three_phase_meter1_gain2__out);
     // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Gain3
@@ -3987,8 +3993,8 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
     // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.Termination2
     // Generated from the component: measurement2.Three-phase Meter2.POWER_P
     HIL_OutAO(0x4053, (float)_measurement2_three_phase_meter2_gain1__out);
-    // Generated from the component: Modbus1.Product10
-    _modbus1_product10__out = (_measurement2_three_phase_meter2_gain2__out * _modbus1_constant10__out);
+    // Generated from the component: measurement2.Gain2
+    _measurement2_gain2__out = 0.005 * _measurement2_three_phase_meter2_gain2__out;
     // Generated from the component: measurement2.Three-phase Meter2.POWER_Q
     HIL_OutAO(0x4055, (float)_measurement2_three_phase_meter2_gain2__out);
     // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Gain3
@@ -3996,8 +4002,8 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
     // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.Termination2
     // Generated from the component: measurement3.Three-phase Meter3.POWER_P
     HIL_OutAO(0x4059, (float)_measurement3_three_phase_meter3_gain1__out);
-    // Generated from the component: Modbus1.Product14
-    _modbus1_product14__out = (_measurement3_three_phase_meter3_gain2__out * _modbus1_constant14__out);
+    // Generated from the component: measurement3.Gain2
+    _measurement3_gain2__out = 0.005 * _measurement3_three_phase_meter3_gain2__out;
     // Generated from the component: measurement3.Three-phase Meter3.POWER_Q
     HIL_OutAO(0x405b, (float)_measurement3_three_phase_meter3_gain2__out);
     // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.PID controller1
@@ -4185,46 +4191,16 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
     _grid_forming_inverter__averaged__controller_voltage_droop_sum2__out = _modbus1_product4__out - _grid_forming_inverter__averaged__controller_integrator3__out;
     // Generated from the component: measurement1.Three-phase Meter1.Phase locked loop.PLL1.Gain1
     _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement1_three_phase_meter1_phase_locked_loop_gain3__out;
-    // Generated from the component: Modbus1.C function6
-    _modbus1_c_function6__in = _modbus1_product6__out;
-    if (_modbus1_c_function6__in >= 0) {
-        _modbus1_c_function6__out = _modbus1_c_function6__in;
-        _modbus1_c_function6__sign = 0;
-    }
-    else {
-        _modbus1_c_function6__out = _modbus1_c_function6__in * -1;
-        _modbus1_c_function6__sign = 1;
-    }
-    // Generated from the component: Modbus1.Q_level_1
-    HIL_OutAO(0x4042, (float)_modbus1_product6__out);
+    // Generated from the component: Modbus1.Product6
+    _modbus1_product6__out = (_measurement1_gain2__out * _modbus1_constant6__out);
     // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.Gain1
     _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement2_three_phase_meter2_phase_locked_loop_gain3__out;
-    // Generated from the component: Modbus1.C function10
-    _modbus1_c_function10__in = _modbus1_product10__out;
-    if (_modbus1_c_function10__in >= 0) {
-        _modbus1_c_function10__out = _modbus1_c_function10__in;
-        _modbus1_c_function10__sign = 0;
-    }
-    else {
-        _modbus1_c_function10__out = _modbus1_c_function10__in * -1;
-        _modbus1_c_function10__sign = 1;
-    }
-    // Generated from the component: Modbus1.Q_level_2
-    HIL_OutAO(0x4043, (float)_modbus1_product10__out);
+    // Generated from the component: Modbus1.Product10
+    _modbus1_product10__out = (_measurement2_gain2__out * _modbus1_constant10__out);
     // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.Gain1
     _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out = -1.0 * _measurement3_three_phase_meter3_phase_locked_loop_gain3__out;
-    // Generated from the component: Modbus1.C function14
-    _modbus1_c_function14__in = _modbus1_product14__out;
-    if (_modbus1_c_function14__in >= 0) {
-        _modbus1_c_function14__out = _modbus1_c_function14__in;
-        _modbus1_c_function14__sign = 0;
-    }
-    else {
-        _modbus1_c_function14__out = _modbus1_c_function14__in * -1;
-        _modbus1_c_function14__sign = 1;
-    }
-    // Generated from the component: Modbus1.Q_level_3
-    HIL_OutAO(0x4044, (float)_modbus1_product14__out);
+    // Generated from the component: Modbus1.Product14
+    _modbus1_product14__out = (_measurement3_gain2__out * _modbus1_constant14__out);
     // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.Gain4
     _measurement4_three_phase_meter4_phase_locked_loop_gain4__out = 0.15915494309189535 * _measurement4_three_phase_meter4_phase_locked_loop_pll1_pid_controller1__out;
     // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.C function1
@@ -4314,6 +4290,18 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
         _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__out = _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
         _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active = 0;
     }
+    // Generated from the component: Modbus1.C function6
+    _modbus1_c_function6__in = _modbus1_product6__out;
+    if (_modbus1_c_function6__in >= 0) {
+        _modbus1_c_function6__out = _modbus1_c_function6__in;
+        _modbus1_c_function6__sign = 0;
+    }
+    else {
+        _modbus1_c_function6__out = _modbus1_c_function6__in * -1;
+        _modbus1_c_function6__sign = 1;
+    }
+    // Generated from the component: Modbus1.Q_level_1
+    HIL_OutAO(0x4042, (float)_modbus1_product6__out);
     // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.PID controller1
     _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out;
     if (_measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
@@ -4326,6 +4314,18 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
         _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__out = _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
         _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active = 0;
     }
+    // Generated from the component: Modbus1.C function10
+    _modbus1_c_function10__in = _modbus1_product10__out;
+    if (_modbus1_c_function10__in >= 0) {
+        _modbus1_c_function10__out = _modbus1_c_function10__in;
+        _modbus1_c_function10__sign = 0;
+    }
+    else {
+        _modbus1_c_function10__out = _modbus1_c_function10__in * -1;
+        _modbus1_c_function10__sign = 1;
+    }
+    // Generated from the component: Modbus1.Q_level_2
+    HIL_OutAO(0x4043, (float)_modbus1_product10__out);
     // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.PID controller1
     _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int = _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state + 1.0 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out;
     if (_measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int < 358.1415625092364) {
@@ -4338,6 +4338,18 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
         _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__out = _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__pi_reg_out_int;
         _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active = 0;
     }
+    // Generated from the component: Modbus1.C function14
+    _modbus1_c_function14__in = _modbus1_product14__out;
+    if (_modbus1_c_function14__in >= 0) {
+        _modbus1_c_function14__out = _modbus1_c_function14__in;
+        _modbus1_c_function14__sign = 0;
+    }
+    else {
+        _modbus1_c_function14__out = _modbus1_c_function14__in * -1;
+        _modbus1_c_function14__sign = 1;
+    }
+    // Generated from the component: Modbus1.Q_level_3
+    HIL_OutAO(0x4044, (float)_modbus1_product14__out);
     // Generated from the component: measurement4.Three-phase Meter4.Freq
     HIL_OutAO(0x405e, (float)_measurement4_three_phase_meter4_phase_locked_loop_gain4__out);
     // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.measSM.mode_and_dFract
@@ -5989,9 +6001,6 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
     if (!_grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__av_active) {
         _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__pll_pid_controller1__integrator_state += 2.0 * _grid_forming_inverter__averaged_3_be1_25a_synchronizer__inverter__gain6__out * 0.0002;
     }
-    // Generated from the component: Modbus1.C function6
-    // Generated from the component: Modbus1.C function10
-    // Generated from the component: Modbus1.C function14
     // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.C function1
     _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__var += (0.0002 * _measurement4_three_phase_meter4_phase_locked_loop_pll1_c_function1__in);
     // Generated from the component: Grid forming inverter (averaged)2.BE1-25A Synchronizer (inverter).PLL.C function1
@@ -6002,14 +6011,17 @@ void TimerCounterHandler_0_user_sp_cpu_dev0() {
     if (!_measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__av_active) {
         _measurement1_three_phase_meter1_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement1_three_phase_meter1_phase_locked_loop_pll1_gain1__out * 0.0002;
     }
+    // Generated from the component: Modbus1.C function6
     // Generated from the component: measurement2.Three-phase Meter2.Phase locked loop.PLL1.PID controller1
     if (!_measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__av_active) {
         _measurement2_three_phase_meter2_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement2_three_phase_meter2_phase_locked_loop_pll1_gain1__out * 0.0002;
     }
+    // Generated from the component: Modbus1.C function10
     // Generated from the component: measurement3.Three-phase Meter3.Phase locked loop.PLL1.PID controller1
     if (!_measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__av_active) {
         _measurement3_three_phase_meter3_phase_locked_loop_pll1_pid_controller1__integrator_state += 2.0 * _measurement3_three_phase_meter3_phase_locked_loop_pll1_gain1__out * 0.0002;
     }
+    // Generated from the component: Modbus1.C function14
     // Generated from the component: measurement4.Three-phase Meter4.VLn_RMS_calc.measSM.mode_and_dFract
     // Generated from the component: measurement4.Three-phase Meter4.Phase locked loop.PLL1.confine phase
     // Generated from the component: measurement5.Three-phase Meter5.Phase locked loop.PLL1.PID controller1

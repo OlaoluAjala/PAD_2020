@@ -1125,8 +1125,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>808.0</x>
-                    <y>248.0</y>
+                    <x>800</x>
+                    <y>240</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1603,8 +1603,8 @@ displayValue = 0.0
                 <hierarchy_position>1</hierarchy_position>
                 <working_mode>windowed</working_mode>
                 <widget_settings>
-                    <x>112</x>
-                    <y>224</y>
+                    <x>112.0</x>
+                    <y>224.0</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1614,8 +1614,8 @@ displayValue = 0.0
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>15.0</time_interval>
-                            <sample_rate>2000.0</sample_rate>
+                            <time_interval>300.0</time_interval>
+                            <sample_rate>100.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
                             <legend>True</legend>
@@ -1661,45 +1661,6 @@ displayValue = 0.0
                         </analog>
                             <analog>
                             <channel>3</channel>
-                            <name>Modbus1.Q_level_1</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>4</channel>
-                            <name>Modbus1.Q_level_2</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>5</channel>
-                            <name>Modbus1.Q_level_3</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>6</channel>
                             <name>measurement4.Three-phase Meter4.POWER_P</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -1712,7 +1673,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>7</channel>
+                            <channel>4</channel>
                             <name>measurement5.Three-phase Meter5.POWER_P</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -1725,7 +1686,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>8</channel>
+                            <channel>5</channel>
                             <name>measurement6.Three-phase Meter6.POWER_P</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -1738,7 +1699,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>9</channel>
+                            <channel>6</channel>
                             <name>measurement4.Three-phase Meter4.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -1751,7 +1712,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>10</channel>
+                            <channel>7</channel>
                             <name>measurement5.Three-phase Meter5.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -1764,7 +1725,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>11</channel>
+                            <channel>8</channel>
                             <name>measurement6.Three-phase Meter6.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -1777,35 +1738,41 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>12</channel>
-                            <name>Modbus1.Voltage_diff_1</name>
+                            <channel>9</channel>
+                            <name>measurement1.Three-phase Meter1.POWER_Q</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
+                                <num_viewport>2</num_viewport>
+                                
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>13</channel>
-                            <name>Modbus1.Voltage_diff_2</name>
+                            <channel>10</channel>
+                            <name>measurement2.Three-phase Meter2.POWER_Q</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
+                                <num_viewport>2</num_viewport>
+                                
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>14</channel>
-                            <name>Modbus1.Voltage_diff_3</name>
+                            <channel>11</channel>
+                            <name>measurement3.Three-phase Meter3.POWER_Q</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
+                                
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -1968,8 +1935,8 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>15.0</time_interval>
-                        <sample_rate>2000.0</sample_rate>
+                        <time_interval>300.0</time_interval>
+                        <sample_rate>100.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
                         <legend>True</legend>
@@ -2024,45 +1991,6 @@ displayValue = 0.0
                         </analog>
                             <analog>
                             <channel>3</channel>
-                            <name>Modbus1.Q_level_1</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>4</channel>
-                            <name>Modbus1.Q_level_2</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>5</channel>
-                            <name>Modbus1.Q_level_3</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>6</channel>
                             <name>measurement4.Three-phase Meter4.POWER_P</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -2075,7 +2003,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>7</channel>
+                            <channel>4</channel>
                             <name>measurement5.Three-phase Meter5.POWER_P</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -2088,7 +2016,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>8</channel>
+                            <channel>5</channel>
                             <name>measurement6.Three-phase Meter6.POWER_P</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -2101,7 +2029,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>9</channel>
+                            <channel>6</channel>
                             <name>measurement4.Three-phase Meter4.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -2114,7 +2042,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>10</channel>
+                            <channel>7</channel>
                             <name>measurement5.Three-phase Meter5.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -2127,7 +2055,7 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>11</channel>
+                            <channel>8</channel>
                             <name>measurement6.Three-phase Meter6.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
@@ -2140,35 +2068,41 @@ displayValue = 0.0
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>12</channel>
-                            <name>Modbus1.Voltage_diff_1</name>
+                            <channel>9</channel>
+                            <name>measurement1.Three-phase Meter1.POWER_Q</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
+                                <num_viewport>2</num_viewport>
+                                
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>13</channel>
-                            <name>Modbus1.Voltage_diff_2</name>
+                            <channel>10</channel>
+                            <name>measurement2.Three-phase Meter2.POWER_Q</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
+                                <num_viewport>2</num_viewport>
+                                
                            </viewports>
                         </analog>
                             <analog>
-                            <channel>14</channel>
-                            <name>Modbus1.Voltage_diff_3</name>
+                            <channel>11</channel>
+                            <name>measurement3.Three-phase Meter3.POWER_Q</name>
                             <is_locked>False</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
+                                
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
@@ -2755,7 +2689,7 @@ data = {
     }
 displayValue = data
 ]]></code>
-                <analog_signals><![CDATA[['Grid forming inverter (averaged)2.Controller.E_qREF1', 'Grid forming inverter (averaged)2.Controller.E_q1']]]></analog_signals>
+                <analog_signals><![CDATA[['measurement1.Three-phase Meter1.VLn_RMS', 'measurement2.Three-phase Meter2.VLn_RMS', 'measurement3.Three-phase Meter3.VLn_RMS']]]></analog_signals>
                 <digital_signals><![CDATA[[]]]></digital_signals>
                 <streaming_analog_signals><![CDATA[[]]]></streaming_analog_signals>
                 <streaming_digital_signals><![CDATA[[]]]></streaming_digital_signals>
@@ -2764,8 +2698,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>792.0</x>
-                    <y>576.0</y>
+                    <x>792</x>
+                    <y>576</y>
                     <width>352</width>
                     <height>176</height>
                     <appearance><![CDATA[Flat]]></appearance>

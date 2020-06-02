@@ -6283,7 +6283,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
 
     firstStageControl(s);
 
-    shareFlag( s, (diameter + 3), period );
+    shareFlag( s, (diameter + 6), period );
 
     if(s->getSecondStageFlag())
     {
@@ -6302,7 +6302,7 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
 
         }else                                               //inside the plausible region fo
         {
-            s->setDeltaQ( (s->getQtarget() + s->getEta()) - (s->getQ()) );       //set new delta Q
+            //s->setDeltaQ( (s->getQtarget() + s->getEta()) - (s->getQ()) );       //set new delta Q
             s->setQ( s->getQtarget() + s->getEta());         //set new Q
            
         }
@@ -6310,10 +6310,23 @@ float OAgent::voltageControl_dist( float diffV, float Vref, float secPercentage,
     }else{
         //Serial<<"Qtarget: "<<s->getQtarget()<<" Q: "<<s->getQ()<<endl;
         //s->setDeltaQ( (s->getQtarget()) - (s->getQ()) );       //set new delta Q
-        s->setQ(s->getQtarget());         //set new Q
-    }
+        if(s->getQtarget() > s->getQtop())          //over the limit
+        {
+            //s->setDeltaQ(s->getQtop() - s->getQ());    //set new delta Q
+            s->setQ(s->getQtop());                  //set new Q
 
-   
+        }else if(s->getQtarget() < s->getQbottom()) //under the limit
+        {
+            //s->setDeltaQ(s->getQtop() - s->getQ());//set new delta Q
+            s->setQ(s->getQbottom());               //set new Q
+
+        }else                                               //inside the plausible region fo
+        {
+            //s->setDeltaQ( s->getQtarget() - s->getQ() );       //set new delta Q
+            s->setQ( s->getQtarget() );         //set new Q
+           
+        }
+    }
     // if( s->getStateOver() || s->getStateUnder() )
     // {
     //     firstStageControl(s);
@@ -6337,8 +6350,8 @@ void OAgent::firstStageControl( OLocalVertex * s )
     {
         Serial<<"1st stage---Over"<<endl;
         //Serial<<"Vmax: "<<s->getVmax()<<", Volt: "<<s->getVoltage()<<", D: "<<s->getD()<<", alpha: "<<s->getAlphaVC();
-        s->setRo(s->getD() * s->getAlphaVC() *(s->getVmax() - s->getVoltage()));    //this value will be possitive
-        s->setQtarget(s->getQ()+s->getRo());
+        s->setRo( (s->getAlphaVC() / s->getD()) *(s->getVmax() - s->getVoltage()));    //this value will be possitive
+        s->setQtarget(s->getQ() + s->getRo());
 
         //Serial<<"Vmax: "<<s->getVmax()<<", and V: "<<s->getVoltage()<<endl;
         Serial<<"∆Q in 1st stage is: ";
@@ -6371,13 +6384,15 @@ void OAgent::firstStageControl( OLocalVertex * s )
         {
             s->setSecondStageFlag(true);
             //Serial<<"setting flag true"<<endl;
+        }else{
+            s->setSecondStageFlag(false);
         }
 
         // s->setQ( s->getQ()+ deltaQ );       //we set the new q value
     } else if(s->getStateUnder())      //we rise the q
     {
         Serial<<"1st stage---Under"<<endl;
-        s->setRo (s->getD() * s->getAlphaVC() *( s->getVmin() - s->getVoltage() ));        // this value will be negative
+        s->setRo ((s->getAlphaVC() / s->getD()) *( s->getVmin() - s->getVoltage() ));        // this value will be negative
         s->setQtarget(s->getQ()+s->getRo());
 
         //Serial<<"Vmin: "<<s->getVmin()<<", and V: "<<s->getVoltage()<<endl;
@@ -6408,6 +6423,8 @@ void OAgent::firstStageControl( OLocalVertex * s )
         {
             s->setSecondStageFlag(true);
             //Serial<<"setting flag true"<<endl;
+        }else{
+            s->setSecondStageFlag(false);
         }
 
         // s->setQ( s->getQ()+ deltaQ );           //we set the new q value
@@ -6441,7 +6458,7 @@ void OAgent::secondStageControl( OLocalVertex * s, uint8_t iterations, uint16_t 
         s->setEta(s->getEtaLower());
         //Serial<<"the value of eta_lower: "<<s->getEtaLower()<<endl;
 
-    }else if( s->getMuRC() > 0 )
+    }else if( s->getMuRC() >= 0 )
     {
         s->setEta(s->getEtaUpper());
         //Serial<<"the value of eta_upper: "<<s->getEtaUpper()<<endl;
@@ -6646,7 +6663,7 @@ void OAgent::_initializeVoltageControl( OLocalVertex * s, float diffV, float Vre
     s->setQ(q);
     s->setQtop(qtop);
     s->setQbottom(qbottom);
-    s->setD(1/Sij);
+    s->setD(Sij);
     s->setAlphaVC(alphaVC);
     s->setSecondStageFlag(false);
 }

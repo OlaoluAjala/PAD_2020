@@ -35,7 +35,7 @@ float flow_flag0;         // variable to store the read value
 float q_level0;         // variable to store the read value 
 float f_error1;         // ratio consensus result for average frequency error
 
-float deltaQ;           //delta q necessary for the voltage violation
+float Q_new;           //delta q necessary for the voltage violation
 
 float error = 0;
 float u_f =0;
@@ -194,14 +194,16 @@ void loop() {
       Serial.println(float(q_level0),4);
       delay(100);
 
-      deltaQ = a.voltageControl_dist(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.225736,0.333333,50,200,3,0.001);
+       //Q_new = q_level0;
+
+      Q_new = a.voltageControl_dist(v_error0,1,5,0.5,q_level0,0.707,-0.707,-0.224693,0.333333,50,200,3,0.01);
 //voltageControl(deltaV,Vref,secPercentage,p,q_level0,qtop,qbottom,S,alphaVC,iterations,period,diameter,epsilon ) 
             
       Serial.println("delta q required");
-      Serial.println(deltaQ,4);
+      Serial.println(Q_new,4);
       delay(100);
 
-      f_error1 = a.fairSplitRatioConsensus_RSL(f_error0,D,50,200,3,0.001);
+      f_error1 = a.fairSplitRatioConsensus_RSL(f_error0,D,50,200,3,0.01);
       //f_error1 = a.fairsplitRatioConsensus_RSL(f_error0,D,10,500);
       
 //      Serial.println("ratio consensus result");
@@ -216,8 +218,8 @@ void loop() {
          //Serial.println(u,4);
       }      
       
-      //u_f= 0.5;
-      //deltaQ=0.1;
+      //u_f= 0.2;
+      //Q_new=0.1;
       
       //Sending data
       if (u_f<0)
@@ -239,7 +241,7 @@ void loop() {
 //      {
 //        u_v=0;
 //      }
-      u_v=deltaQ;
+      u_v=Q_new;
 
       //u_v= 1;
       //Sending Data
