@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 01-Jun-2020 @ 09:22:42 PM
+// Save timestamp: 02-Jun-2020 @ 08:11:33 AM
 //
 
 model "deconstruido" {
@@ -34,21 +34,21 @@ model "deconstruido" {
         component src_ground gnd2 {
         }
         [
-            position = 6840, 7536
+            position = 6120, 6736
         ]
 
         component src_clock Clock1 {
             execution_rate = "Ts"
         }
         [
-            position = 5736, 7008
+            position = 5016, 6208
             hide_name = True
         ]
 
         component gen_probe Timer {
         }
         [
-            position = 5816, 7008
+            position = 5096, 6208
         ]
 
         component Subsystem measurement1 {
@@ -1101,6 +1101,13 @@ else
                 size = 120, 48
             ]
 
+            component gen_gain Gain2 {
+                gain = "1/200"
+            }
+            [
+                position = 8392, 8000
+            ]
+
             port Vc+ {
                 position = left:2
                 kind = pe
@@ -1183,7 +1190,7 @@ else
                 }
             }
             [
-                position = 8184, 8032
+                position = 8488, 8000
             ]
 
             connect Va+ "Three-phase Meter1.A+" as Connection1
@@ -1211,10 +1218,11 @@ else
             connect V_dev Violation.violation as Connection10
             connect Violation.V Gain1.out as Connection11
             connect "Three-phase Meter1.|V|" Gain1.in as Connection12
-            connect "Three-phase Meter1.Q_level" Q_level as Connection13
+            connect "Three-phase Meter1.Q_level" Gain2.in as Connection13
+            connect Gain2.out Q_level as Connection14
         }
         [
-            position = 5448, 7320
+            position = 4728, 6520
             scale = 1, -1
             size = 80, 80
         ]
@@ -2262,6 +2270,13 @@ else
                 size = 120, 48
             ]
 
+            component gen_gain Gain2 {
+                gain = "1/200"
+            }
+            [
+                position = 8256, 7928
+            ]
+
             port Vb- {
                 position = right:2
                 kind = pe
@@ -2345,7 +2360,7 @@ else
                 }
             }
             [
-                position = 8240, 7928
+                position = 8400, 7928
             ]
 
             connect Va+ "Three-phase Meter2.A+" as Connection1
@@ -2358,10 +2373,11 @@ else
             connect "Three-phase Meter2.|V|" Gain1.in as Connection9
             connect V_dev "Voltage Deviation.violation" as Connection10
             connect "Voltage Deviation.V" Gain1.out as Connection11
-            connect Q_level "Three-phase Meter2.Q_level" as Connection12
+            connect Q_level Gain2.out as Connection12
+            connect Gain2.in "Three-phase Meter2.Q_level" as Connection13
         }
         [
-            position = 7456, 7232
+            position = 6736, 6432
             rotation = left
             scale = 1, -1
             size = 80, 192
@@ -3410,6 +3426,13 @@ else
                 position = 8208, 7880
             ]
 
+            component gen_gain Gain2 {
+                gain = "1/200"
+            }
+            [
+                position = 8256, 7952
+            ]
+
             port Vc- {
                 position = right:1
                 kind = pe
@@ -3493,7 +3516,7 @@ else
                 }
             }
             [
-                position = 8208, 7944
+                position = 8344, 7952
             ]
 
             connect Va+ "Three-phase Meter3.A+" as Connection1
@@ -3506,10 +3529,11 @@ else
             connect Violation.V Gain1.out as Connection11
             connect V_dev Violation.violation as Connection10
             connect "Three-phase Meter3.|V|" Gain1.in as Connection12
-            connect Q_level "Three-phase Meter3.Q_level" as Connection13
+            connect Q_level Gain2.out as Connection13
+            connect Gain2.in "Three-phase Meter3.Q_level" as Connection14
         }
         [
-            position = 7448, 8400
+            position = 6728, 7600
             rotation = left
             size = 80, 192
         ]
@@ -3520,7 +3544,7 @@ else
             snb_type_i = "R1-C1"
         }
         [
-            position = 6656, 7368
+            position = 5936, 6568
             size = 12, 352
         ]
 
@@ -3530,7 +3554,7 @@ else
             value = "0"
         }
         [
-            position = 5112, 6792
+            position = 4392, 5992
             hide_name = True
         ]
 
@@ -3540,7 +3564,7 @@ else
             resistance_per_l_mile = "0.45"
         }
         [
-            position = 5920, 7320
+            position = 5200, 6520
             size = 256, 56
         ]
 
@@ -3550,7 +3574,7 @@ else
             resistance_per_l_mile = "0.35"
         }
         [
-            position = 5912, 8296
+            position = 5192, 7496
             size = 256, 56
         ]
 
@@ -3560,7 +3584,7 @@ else
             resistance_per_l_mile = "0.57"
         }
         [
-            position = 6968, 7320
+            position = 6248, 6520
             size = 256, 56
         ]
 
@@ -3570,7 +3594,7 @@ else
             resistance_per_l_mile = "0.45"
         }
         [
-            position = 7872, 7320
+            position = 7152, 6520
             size = 256, 56
         ]
 
@@ -3580,7 +3604,7 @@ else
             resistance_per_l_mile = "0.57"
         }
         [
-            position = 6904, 8296
+            position = 6184, 7496
             size = 256, 56
         ]
 
@@ -8022,7 +8046,7 @@ else
             }
         }
         [
-            position = 4768, 7216
+            position = 4048, 6416
             size = 224, 192
         ]
 
@@ -14122,7 +14146,7 @@ out = in - (6.283185307179586*floor_in);
             }
         }
         [
-            position = 7448, 8592
+            position = 6728, 7792
             rotation = left
             scale = -1, 1
             size = 224, 192
@@ -20222,7 +20246,7 @@ out = in - (6.283185307179586*floor_in);
             }
         }
         [
-            position = 7456, 7032
+            position = 6736, 6232
             rotation = left
             scale = -1, -1
             size = 224, 192
@@ -20402,7 +20426,7 @@ if ((time>=load2_delay)&&(time<=load2_delay+load_time))
             }
         }
         [
-            position = 6592, 8384
+            position = 5872, 7584
             rotation = down
             scale = -1, -1
             size = 256, 48
@@ -21451,7 +21475,7 @@ out = in - (6.283185307179586*floor_in);
             connect "Three-phase Meter6.Ground" ground as Connection5
         }
         [
-            position = 8192, 7464
+            position = 7472, 6664
             scale = 1, -1
             size = 88, 80
         ]
@@ -21632,7 +21656,7 @@ if ((time>=load1_delay)&&(time<=load1_delay+load_time))
             }
         }
         [
-            position = 6400, 7232
+            position = 5680, 6432
             scale = 1, -1
             size = 256, 48
         ]
@@ -22650,7 +22674,7 @@ out = in - (6.283185307179586*floor_in);
             connect "Three-phase Meter4.B+" Vb+ as Connection4
         }
         [
-            position = 6224, 7424
+            position = 5504, 6624
             scale = 1, -1
             size = 88, 64
         ]
@@ -22829,7 +22853,7 @@ if ((time>=load3_delay)&&(time<=load3_delay+load_time))
             }
         }
         [
-            position = 8360, 7552
+            position = 7640, 6752
             rotation = down
             scale = 1, -1
             size = 256, 48
@@ -23875,7 +23899,7 @@ out = in - (6.283185307179586*floor_in);
             connect ground "Three-phase Meter5.Ground" as Connection6
         }
         [
-            position = 6424, 8176
+            position = 5704, 7376
             rotation = down
             scale = -1, -1
             size = 80, 64
@@ -23887,7 +23911,7 @@ out = in - (6.283185307179586*floor_in);
             snb_type_i = "R1-C1"
         }
         [
-            position = 6104, 8248
+            position = 5384, 7448
             size = 12, 352
         ]
 
@@ -23895,21 +23919,21 @@ out = in - (6.283185307179586*floor_in);
             execution_rate = "Ts"
         }
         [
-            position = 4920, 7176
+            position = 4440, 6048
         ]
 
         component src_constant Constant10 {
             execution_rate = "Ts"
         }
         [
-            position = 6992, 7216
+            position = 7160, 7360
         ]
 
         component src_constant Constant11 {
             execution_rate = "Ts"
         }
         [
-            position = 7880, 8704
+            position = 7264, 6320
         ]
 
         component Subsystem Modbus2 {
@@ -23918,19 +23942,19 @@ out = in - (6.283185307179586*floor_in);
                 execution_rate = "Ts"
             }
             [
-                position = 7968, 7800
+                position = 7800, 7488
             ]
 
             component gen_product Product2 {
             }
             [
-                position = 8800, 8104
+                position = 8632, 7792
             ]
 
             component gen_product Product1 {
             }
             [
-                position = 7768, 8160
+                position = 7600, 7848
             ]
 
             component gen_c_function "C function1" {
@@ -23959,7 +23983,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7880, 8160
+                position = 7712, 7848
                 hide_name = True
                 size = 80, 48
             ]
@@ -23969,27 +23993,27 @@ else
                 value = "scale_const"
             }
             [
-                position = 7664, 8208
+                position = 7496, 7896
             ]
 
             component gen_bus_split "Bus Split1" {
                 outputs = "4"
             }
             [
-                position = 8384, 8064
+                position = 8216, 7752
             ]
 
             component gen_probe Probe2 {
             }
             [
-                position = 8576, 8152
+                position = 8408, 7840
             ]
 
             component src_constant C_u11 {
                 execution_rate = "Ts"
             }
             [
-                position = 8008, 7720
+                position = 7840, 7408
             ]
 
             component gen_c_function "C function2" {
@@ -24007,7 +24031,7 @@ out = in*((-2*sign)+1);
 /*End code section*/"
             }
             [
-                position = 8472, 8048
+                position = 8304, 7736
                 hide_name = True
                 size = 48, 48
             ]
@@ -24017,13 +24041,13 @@ out = in*((-2*sign)+1);
                 value = "50"
             }
             [
-                position = 7920, 7872
+                position = 7752, 7560
             ]
 
             component gen_terminator Termination1 {
             }
             [
-                position = 8400, 7920
+                position = 8232, 7608
             ]
 
             component src_constant Constant2 {
@@ -24031,21 +24055,21 @@ out = in*((-2*sign)+1);
                 value = "scale_back_const"
             }
             [
-                position = 8680, 8128
+                position = 8512, 7816
             ]
 
             component "core/ModBus Device" "ModBus Device2 (config1)" {
                 execution_rate = "Ts"
             }
             [
-                position = 8192, 7992
+                position = 8024, 7680
                 size = 184, 184
             ]
 
             component gen_probe Probe1 {
             }
             [
-                position = 7936, 8080
+                position = 7768, 7768
             ]
 
             component gen_c_function "C function3" {
@@ -24074,7 +24098,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7888, 8376
+                position = 7720, 8064
                 hide_name = True
                 size = 80, 48
             ]
@@ -24082,7 +24106,7 @@ else
             component gen_probe Voltage_diff {
             }
             [
-                position = 7896, 8288
+                position = 7728, 7976
             ]
 
             component src_constant Constant3 {
@@ -24090,20 +24114,20 @@ else
                 value = "scale_const"
             }
             [
-                position = 7672, 8424
+                position = 7504, 8112
             ]
 
             component gen_product Product3 {
             }
             [
-                position = 7776, 8376
+                position = 7608, 8064
             ]
 
             component gen_bus_join "Bus Join2" {
                 inputs = "8"
             }
             [
-                position = 8080, 8448
+                position = 7912, 8136
             ]
 
             component gen_c_function "C function4" {
@@ -24121,7 +24145,7 @@ out = in*((-2*sign)+1);
 /*End code section*/"
             }
             [
-                position = 8480, 8288
+                position = 8312, 7976
                 hide_name = True
                 size = 48, 48
             ]
@@ -24131,25 +24155,25 @@ out = in*((-2*sign)+1);
                 value = "scale_back_const"
             }
             [
-                position = 8688, 8368
+                position = 8520, 8056
             ]
 
             component gen_product Product4 {
             }
             [
-                position = 8800, 8344
+                position = 8632, 8032
             ]
 
             component gen_probe Probe3 {
             }
             [
-                position = 8576, 8392
+                position = 8408, 8080
             ]
 
             component gen_product Product5 {
             }
             [
-                position = 7776, 8552
+                position = 7608, 8240
             ]
 
             component gen_c_function "C function5" {
@@ -24178,7 +24202,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7888, 8552
+                position = 7720, 8240
                 hide_name = True
                 size = 80, 48
             ]
@@ -24188,13 +24212,13 @@ else
                 value = "scale_const"
             }
             [
-                position = 7672, 8600
+                position = 7504, 8288
             ]
 
             component gen_probe flow {
             }
             [
-                position = 7944, 8472
+                position = 7776, 8160
             ]
 
             component gen_c_function "C function6" {
@@ -24223,7 +24247,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7896, 8768
+                position = 7728, 8456
                 hide_name = True
                 size = 80, 48
             ]
@@ -24231,7 +24255,7 @@ else
             component gen_probe Q_level {
             }
             [
-                position = 7904, 8680
+                position = 7736, 8368
             ]
 
             component src_constant Constant6 {
@@ -24239,13 +24263,13 @@ else
                 value = "scale_const"
             }
             [
-                position = 7680, 8816
+                position = 7512, 8504
             ]
 
             component gen_product Product6 {
             }
             [
-                position = 7784, 8768
+                position = 7616, 8456
             ]
 
             port U1-P1 {
@@ -24258,7 +24282,7 @@ else
                 }
             }
             [
-                position = 7664, 8112
+                position = 7496, 7800
                 rotation = down
                 scale = -1, 1
             ]
@@ -24273,7 +24297,7 @@ else
                 }
             }
             [
-                position = 8952, 8104
+                position = 8784, 7792
             ]
 
             port V_dev {
@@ -24286,7 +24310,7 @@ else
                 }
             }
             [
-                position = 7672, 8328
+                position = 7504, 8016
                 rotation = down
                 scale = -1, 1
             ]
@@ -24301,7 +24325,7 @@ else
                 }
             }
             [
-                position = 8960, 8344
+                position = 8792, 8032
             ]
 
             port "flow flag" {
@@ -24314,7 +24338,7 @@ else
                 }
             }
             [
-                position = 7672, 8504
+                position = 7504, 8192
                 rotation = down
                 scale = -1, 1
             ]
@@ -24329,39 +24353,39 @@ else
                 }
             }
             [
-                position = 7680, 8720
+                position = 7512, 8408
                 rotation = down
                 scale = -1, 1
             ]
 
             junction Junction5 sp
             [
-                position = 8520, 8048
+                position = 8352, 7736
             ]
 
             junction Junction4 sp
             [
-                position = 7824, 8160
+                position = 7656, 7848
             ]
 
             junction Junction6 sp
             [
-                position = 7832, 8376
+                position = 7664, 8064
             ]
 
             junction Junction7 sp
             [
-                position = 8528, 8288
+                position = 8360, 7976
             ]
 
             junction Junction8 sp
             [
-                position = 7832, 8552
+                position = 7664, 8240
             ]
 
             junction Junction9 sp
             [
-                position = 7840, 8768
+                position = 7672, 8456
             ]
 
             connect "ModBus Device2 (config1).coil_in" C_u11.out as Connection139
@@ -24369,7 +24393,7 @@ else
             connect Constant1.out Product1.in1 as Connection73
             connect C_u12.out "ModBus Device2 (config1).discrete_in" as Connection121
             [
-                breakpoints = 8000, 7968; 8080, 7968
+                breakpoints = 7832, 7656; 7912, 7656
             ]
             connect "C function2.sign" "Bus Split1.out" as Connection132
             connect Termination1.in "ModBus Device2 (config1).coil_out" as Connection127
@@ -24384,7 +24408,7 @@ else
             connect Probe2.in Junction5 as Connection137
             connect C_u13.out "ModBus Device2 (config1).holding_in" as Connection120
             [
-                breakpoints = 7952, 8016; 8080, 8016
+                breakpoints = 7784, 7704; 7912, 7704
             ]
             connect "ModBus Device2 (config1).holding_out" "Bus Split1.in" as Connection131
             connect V_dev Product3.in as Connection140
@@ -24395,15 +24419,15 @@ else
             connect "C function1.out" "Bus Join2.in" as Connection145
             connect "C function1.sign" "Bus Join2.in1" as Connection146
             [
-                breakpoints = 8032, 8168; 8032, 8408
+                breakpoints = 7864, 7856; 7864, 8096
             ]
             connect "C function3.out" "Bus Join2.in2" as Connection147
             [
-                breakpoints = 8024, 8368; 8024, 8424
+                breakpoints = 7856, 8056; 7856, 8112
             ]
             connect "C function3.sign" "Bus Join2.in3" as Connection148
             [
-                breakpoints = 8016, 8384; 8016, 8440
+                breakpoints = 7848, 8072; 7848, 8128
             ]
             connect "Bus Join2.out" "ModBus Device2 (config1).reg_in" as Connection149
             connect "C function4.out" Junction7 as Connection150
@@ -24414,7 +24438,7 @@ else
             connect "Bus Split1.out2" "C function4.sign" as Connection155
             connect "Bus Split1.out3" "C function4.in" as Connection156
             [
-                breakpoints = 8432, 8088; 8432, 8296
+                breakpoints = 8264, 7776; 8264, 7984
             ]
             connect Junction8 Product5.out as Connection157
             connect Constant5.out Product5.in1 as Connection158
@@ -24429,108 +24453,43 @@ else
             connect "Bus Join2.in4" "C function5.out" as Connection167
             connect "C function5.sign" "Bus Join2.in5" as Connection168
             [
-                breakpoints = 7992, 8560; 7992, 8472
+                breakpoints = 7824, 8248; 7824, 8160
             ]
             connect "Bus Join2.in6" "C function6.out" as Connection169
             [
-                breakpoints = 8008, 8488; 8008, 8760
+                breakpoints = 7840, 8176; 7840, 8448
             ]
             connect "C function6.sign" "Bus Join2.in7" as Connection170
             [
-                breakpoints = 8024, 8776; 8024, 8504
+                breakpoints = 7856, 8464; 7856, 8192
             ]
         }
         [
-            position = 4984, 7088
-            rotation = down
+            position = 4376, 6208
             scale = 1, -1
-            size = 120, 112
+            size = 240, 192
         ]
 
         component Subsystem Modbus3 {
             layout = dynamic
-            component "core/ModBus Device" "ModBus Device2 (config2)" {
-                configuration = "config2"
-                execution_rate = "Ts"
-            }
-            [
-                position = 8192, 7992
-                size = 184, 184
-            ]
-
-            component src_constant C_u13 {
-                execution_rate = "Ts"
-                value = "50"
-            }
-            [
-                position = 7920, 7872
-            ]
-
             component gen_probe Probe3 {
             }
             [
-                position = 8576, 8392
-            ]
-
-            component gen_product Product2 {
-            }
-            [
-                position = 8800, 8104
-            ]
-
-            component src_constant Constant2 {
-                execution_rate = "Ts"
-                value = "scale_back_const"
-            }
-            [
-                position = 8680, 8128
-            ]
-
-            component gen_c_function "C function2" {
-                in_terminal_dimensions = "inherit;inherit"
-                in_terminal_dimensions_str = "sign inherit;in inherit"
-                in_terminal_labels = "[(\'sign\', True), (\'in\', True)]"
-                in_terminal_properties = "inherit sign;inherit in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit"
-                out_terminal_dimensions_str = "out inherit"
-                out_terminal_labels = "[(\'out\', True)]"
-                output_fnc = "/*Begin code section*/
-out = in*((-2*sign)+1);
-/*End code section*/"
-            }
-            [
-                position = 8472, 8048
-                hide_name = True
-                size = 48, 48
-            ]
-
-            component gen_bus_split "Bus Split1" {
-                outputs = "4"
-            }
-            [
-                position = 8384, 8064
+                position = 8496, 8168
             ]
 
             component src_constant C_u11 {
                 execution_rate = "Ts"
             }
             [
-                position = 8008, 7720
+                position = 7928, 7496
             ]
 
-            component gen_terminator Termination1 {
+            component gen_bus_split "Bus Split1" {
+                outputs = "4"
             }
             [
-                position = 8400, 7920
-            ]
-
-            component src_constant C_u12 {
-                execution_rate = "Ts"
-            }
-            [
-                position = 7968, 7800
+                position = 8304, 7840
             ]
 
             component gen_c_function "C function4" {
@@ -24548,7 +24507,56 @@ out = in*((-2*sign)+1);
 /*End code section*/"
             }
             [
-                position = 8480, 8288
+                position = 8400, 8064
+                hide_name = True
+                size = 48, 48
+            ]
+
+            component "core/ModBus Device" "ModBus Device3 (config3)" {
+                configuration = "config3"
+                execution_rate = "Ts"
+            }
+            [
+                position = 8112, 7768
+                size = 184, 184
+            ]
+
+            component gen_probe Probe2 {
+            }
+            [
+                position = 8496, 7928
+            ]
+
+            component gen_product Product4 {
+            }
+            [
+                position = 8720, 8120
+            ]
+
+            component src_constant Constant2 {
+                execution_rate = "Ts"
+                value = "scale_back_const"
+            }
+            [
+                position = 8600, 7904
+            ]
+
+            component gen_c_function "C function2" {
+                in_terminal_dimensions = "inherit;inherit"
+                in_terminal_dimensions_str = "sign inherit;in inherit"
+                in_terminal_labels = "[(\'sign\', True), (\'in\', True)]"
+                in_terminal_properties = "inherit sign;inherit in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit"
+                out_terminal_dimensions_str = "out inherit"
+                out_terminal_labels = "[(\'out\', True)]"
+                output_fnc = "/*Begin code section*/
+out = in*((-2*sign)+1);
+/*End code section*/"
+            }
+            [
+                position = 8392, 7824
                 hide_name = True
                 size = 48, 48
             ]
@@ -24558,25 +24566,40 @@ out = in*((-2*sign)+1);
                 value = "scale_back_const"
             }
             [
-                position = 8688, 8368
+                position = 8608, 8144
             ]
 
-            component gen_probe Probe2 {
+            component gen_product Product2 {
             }
             [
-                position = 8576, 8152
+                position = 8720, 7880
             ]
 
-            component gen_product Product4 {
+            component src_constant C_u13 {
+                execution_rate = "Ts"
+                value = "50"
             }
             [
-                position = 8800, 8344
+                position = 7840, 7648
+            ]
+
+            component gen_terminator Termination1 {
+            }
+            [
+                position = 8320, 7696
+            ]
+
+            component src_constant C_u12 {
+                execution_rate = "Ts"
+            }
+            [
+                position = 7888, 7576
             ]
 
             component gen_product Product1 {
             }
             [
-                position = 7656, 8016
+                position = 7608, 7824
             ]
 
             component gen_c_function "C function1" {
@@ -24605,7 +24628,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7768, 8016
+                position = 7720, 7824
                 hide_name = True
                 size = 80, 48
             ]
@@ -24615,13 +24638,13 @@ else
                 value = "scale_const"
             }
             [
-                position = 7552, 8064
+                position = 7504, 7872
             ]
 
             component gen_probe Probe1 {
             }
             [
-                position = 7824, 7936
+                position = 7776, 7744
             ]
 
             component gen_c_function "C function3" {
@@ -24650,7 +24673,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7776, 8232
+                position = 7728, 8040
                 hide_name = True
                 size = 80, 48
             ]
@@ -24658,7 +24681,7 @@ else
             component gen_probe Voltage_diff {
             }
             [
-                position = 7784, 8144
+                position = 7736, 7952
             ]
 
             component src_constant Constant3 {
@@ -24666,26 +24689,26 @@ else
                 value = "scale_const"
             }
             [
-                position = 7560, 8280
+                position = 7512, 8088
             ]
 
             component gen_product Product3 {
             }
             [
-                position = 7664, 8232
+                position = 7616, 8040
             ]
 
             component gen_bus_join "Bus Join2" {
                 inputs = "8"
             }
             [
-                position = 7968, 8304
+                position = 7920, 8112
             ]
 
             component gen_product Product5 {
             }
             [
-                position = 7664, 8408
+                position = 7616, 8216
             ]
 
             component gen_c_function "C function5" {
@@ -24714,7 +24737,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7776, 8408
+                position = 7728, 8216
                 hide_name = True
                 size = 80, 48
             ]
@@ -24724,13 +24747,13 @@ else
                 value = "scale_const"
             }
             [
-                position = 7560, 8456
+                position = 7512, 8264
             ]
 
             component gen_probe flow {
             }
             [
-                position = 7832, 8328
+                position = 7784, 8136
             ]
 
             component gen_c_function "C function6" {
@@ -24759,7 +24782,7 @@ else
 /*End code section*/"
             }
             [
-                position = 7784, 8624
+                position = 7736, 8432
                 hide_name = True
                 size = 80, 48
             ]
@@ -24767,7 +24790,7 @@ else
             component gen_probe Q_level {
             }
             [
-                position = 7792, 8536
+                position = 7744, 8344
             ]
 
             component src_constant Constant6 {
@@ -24775,13 +24798,13 @@ else
                 value = "scale_const"
             }
             [
-                position = 7568, 8672
+                position = 7520, 8480
             ]
 
             component gen_product Product6 {
             }
             [
-                position = 7672, 8624
+                position = 7624, 8432
             ]
 
             port u_P {
@@ -24794,7 +24817,7 @@ else
                 }
             }
             [
-                position = 8952, 8104
+                position = 8872, 7880
             ]
 
             port u_Q {
@@ -24807,7 +24830,7 @@ else
                 }
             }
             [
-                position = 8960, 8344
+                position = 8880, 8120
             ]
 
             port U1-P1 {
@@ -24820,7 +24843,7 @@ else
                 }
             }
             [
-                position = 7552, 7968
+                position = 7504, 7776
                 rotation = down
                 scale = -1, 1
             ]
@@ -24835,7 +24858,7 @@ else
                 }
             }
             [
-                position = 7560, 8184
+                position = 7512, 7992
                 rotation = down
                 scale = -1, 1
             ]
@@ -24850,7 +24873,7 @@ else
                 }
             }
             [
-                position = 7560, 8360
+                position = 7512, 8168
                 rotation = down
                 scale = -1, 1
             ]
@@ -24865,44 +24888,579 @@ else
                 }
             }
             [
-                position = 7568, 8576
+                position = 7520, 8384
+                rotation = down
+                scale = -1, 1
+            ]
+
+            junction Junction7 sp
+            [
+                position = 8448, 8064
+            ]
+
+            junction Junction5 sp
+            [
+                position = 8440, 7824
+            ]
+
+            junction Junction4 sp
+            [
+                position = 7664, 7824
+            ]
+
+            junction Junction6 sp
+            [
+                position = 7672, 8040
+            ]
+
+            junction Junction8 sp
+            [
+                position = 7672, 8216
+            ]
+
+            junction Junction9 sp
+            [
+                position = 7680, 8432
+            ]
+
+            connect Probe2.in Junction5 as Connection137
+            connect Product2.out u_P as Connection96
+            connect Termination1.in "ModBus Device3 (config3).coil_out" as Connection127
+            connect Constant4.out Product4.in1 as Connection151
+            connect Junction7 Product4.in as Connection152
+            connect Product4.out u_Q as Connection154
+            connect C_u13.out "ModBus Device3 (config3).holding_in" as Connection120
+            [
+                breakpoints = 7872, 7792; 8000, 7792
+            ]
+            connect "Bus Split1.out1" "C function2.in" as Connection133
+            connect "C function4.out" Junction7 as Connection150
+            connect "ModBus Device3 (config3).coil_in" C_u11.out as Connection139
+            connect "C function2.out" Junction5 as Connection135
+            connect "C function2.sign" "Bus Split1.out" as Connection132
+            connect Junction5 Product2.in as Connection136
+            connect "Bus Split1.out3" "C function4.in" as Connection156
+            [
+                breakpoints = 8352, 7864; 8352, 8072
+            ]
+            connect Constant2.out Product2.in1 as Connection100
+            connect "Bus Split1.out2" "C function4.sign" as Connection155
+            connect C_u12.out "ModBus Device3 (config3).discrete_in" as Connection121
+            [
+                breakpoints = 7920, 7744; 8000, 7744
+            ]
+            connect "ModBus Device3 (config3).holding_out" "Bus Split1.in" as Connection131
+            connect Probe3.in Junction7 as Connection153
+            connect Junction4 Product1.out as Connection115
+            connect Constant1.out Product1.in1 as Connection73
+            connect Probe1.in Junction4 as Connection116
+            connect U1-P1 Product1.in as Connection83
+            connect "C function1.in" Junction4 as Connection114
+            connect V_dev Product3.in as Connection140
+            connect Constant3.out Product3.in1 as Connection141
+            connect "C function3.in" Junction6 as Connection142
+            connect Voltage_diff.in Junction6 as Connection143
+            connect Junction6 Product3.out as Connection144
+            connect "C function1.out" "Bus Join2.in" as Connection145
+            connect "C function1.sign" "Bus Join2.in1" as Connection146
+            [
+                breakpoints = 7872, 7832; 7872, 8072
+            ]
+            connect "C function3.out" "Bus Join2.in2" as Connection147
+            [
+                breakpoints = 7864, 8032; 7864, 8088
+            ]
+            connect "C function3.sign" "Bus Join2.in3" as Connection148
+            [
+                breakpoints = 7856, 8048; 7856, 8104
+            ]
+            connect Junction8 Product5.out as Connection157
+            connect Constant5.out Product5.in1 as Connection158
+            connect flow.in Junction8 as Connection159
+            connect "flow flag" Product5.in as Connection160
+            connect "C function5.in" Junction8 as Connection161
+            connect "Q level" Product6.in as Connection162
+            connect Constant6.out Product6.in1 as Connection163
+            connect "C function6.in" Junction9 as Connection164
+            connect Q_level.in Junction9 as Connection165
+            connect Junction9 Product6.out as Connection166
+            connect "Bus Join2.in4" "C function5.out" as Connection167
+            connect "C function5.sign" "Bus Join2.in5" as Connection168
+            [
+                breakpoints = 7832, 8224; 7832, 8136
+            ]
+            connect "Bus Join2.in6" "C function6.out" as Connection169
+            [
+                breakpoints = 7848, 8152; 7848, 8424
+            ]
+            connect "C function6.sign" "Bus Join2.in7" as Connection170
+            [
+                breakpoints = 7864, 8440; 7864, 8168
+            ]
+            connect "Bus Join2.out" "ModBus Device3 (config3).reg_in" as Connection171
+        }
+        [
+            position = 7184, 7608
+            scale = 1, -1
+            size = 232, 184
+        ]
+
+        component Subsystem Modbus4 {
+            layout = dynamic
+            component "core/ModBus Device" "ModBus Device2 (config2)" {
+                configuration = "config2"
+                execution_rate = "Ts"
+            }
+            [
+                position = 8136, 7880
+                size = 184, 184
+            ]
+
+            component src_constant C_u13 {
+                execution_rate = "Ts"
+                value = "50"
+            }
+            [
+                position = 7864, 7760
+            ]
+
+            component gen_probe Probe3 {
+            }
+            [
+                position = 8520, 8280
+            ]
+
+            component gen_product Product2 {
+            }
+            [
+                position = 8744, 7992
+            ]
+
+            component src_constant Constant2 {
+                execution_rate = "Ts"
+                value = "scale_back_const"
+            }
+            [
+                position = 8624, 8016
+            ]
+
+            component gen_c_function "C function2" {
+                in_terminal_dimensions = "inherit;inherit"
+                in_terminal_dimensions_str = "sign inherit;in inherit"
+                in_terminal_labels = "[(\'sign\', True), (\'in\', True)]"
+                in_terminal_properties = "inherit sign;inherit in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit"
+                out_terminal_dimensions_str = "out inherit"
+                out_terminal_labels = "[(\'out\', True)]"
+                output_fnc = "/*Begin code section*/
+out = in*((-2*sign)+1);
+/*End code section*/"
+            }
+            [
+                position = 8416, 7936
+                hide_name = True
+                size = 48, 48
+            ]
+
+            component gen_bus_split "Bus Split1" {
+                outputs = "4"
+            }
+            [
+                position = 8328, 7952
+            ]
+
+            component src_constant C_u11 {
+                execution_rate = "Ts"
+            }
+            [
+                position = 7952, 7608
+            ]
+
+            component gen_terminator Termination1 {
+            }
+            [
+                position = 8344, 7808
+            ]
+
+            component src_constant C_u12 {
+                execution_rate = "Ts"
+            }
+            [
+                position = 7912, 7688
+            ]
+
+            component gen_c_function "C function4" {
+                in_terminal_dimensions = "inherit;inherit"
+                in_terminal_dimensions_str = "sign inherit;in inherit"
+                in_terminal_labels = "[(\'sign\', True), (\'in\', True)]"
+                in_terminal_properties = "inherit sign;inherit in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit"
+                out_terminal_dimensions_str = "out inherit"
+                out_terminal_labels = "[(\'out\', True)]"
+                output_fnc = "/*Begin code section*/
+out = in*((-2*sign)+1);
+/*End code section*/"
+            }
+            [
+                position = 8424, 8176
+                hide_name = True
+                size = 48, 48
+            ]
+
+            component src_constant Constant4 {
+                execution_rate = "Ts"
+                value = "scale_back_const"
+            }
+            [
+                position = 8632, 8256
+            ]
+
+            component gen_probe Probe2 {
+            }
+            [
+                position = 8520, 8040
+            ]
+
+            component gen_product Product4 {
+            }
+            [
+                position = 8744, 8232
+            ]
+
+            component gen_product Product1 {
+            }
+            [
+                position = 7600, 7904
+            ]
+
+            component gen_c_function "C function1" {
+                in_terminal_dimensions = "inherit"
+                in_terminal_dimensions_str = "in inherit"
+                in_terminal_labels = "[(\'in\', True)]"
+                in_terminal_properties = "int in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit;inherit"
+                out_terminal_dimensions_str = "out inherit;sign inherit"
+                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
+                out_terminal_properties = "int out;int sign;"
+                output_fnc = "/*Begin code section*/
+if (in >= 0)
+{    
+    out = in;
+    sign=0;
+}
+
+else
+{
+    out = in*-1;
+    sign = 1;
+}
+/*End code section*/"
+            }
+            [
+                position = 7712, 7904
+                hide_name = True
+                size = 80, 48
+            ]
+
+            component src_constant Constant1 {
+                execution_rate = "Ts"
+                value = "scale_const"
+            }
+            [
+                position = 7496, 7952
+            ]
+
+            component gen_probe Probe1 {
+            }
+            [
+                position = 7768, 7824
+            ]
+
+            component gen_c_function "C function3" {
+                in_terminal_dimensions = "inherit"
+                in_terminal_dimensions_str = "in inherit"
+                in_terminal_labels = "[(\'in\', True)]"
+                in_terminal_properties = "int in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit;inherit"
+                out_terminal_dimensions_str = "out inherit;sign inherit"
+                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
+                out_terminal_properties = "int out;int sign;"
+                output_fnc = "/*Begin code section*/
+if (in >= 0)
+{    
+    out = in;
+    sign=0;
+}
+
+else
+{
+    out = in*-1;
+    sign = 1;
+}
+/*End code section*/"
+            }
+            [
+                position = 7720, 8120
+                hide_name = True
+                size = 80, 48
+            ]
+
+            component gen_probe Voltage_diff {
+            }
+            [
+                position = 7728, 8032
+            ]
+
+            component src_constant Constant3 {
+                execution_rate = "Ts"
+                value = "scale_const"
+            }
+            [
+                position = 7504, 8168
+            ]
+
+            component gen_product Product3 {
+            }
+            [
+                position = 7608, 8120
+            ]
+
+            component gen_bus_join "Bus Join2" {
+                inputs = "8"
+            }
+            [
+                position = 7912, 8192
+            ]
+
+            component gen_product Product5 {
+            }
+            [
+                position = 7608, 8296
+            ]
+
+            component gen_c_function "C function5" {
+                in_terminal_dimensions = "inherit"
+                in_terminal_dimensions_str = "in inherit"
+                in_terminal_labels = "[(\'in\', True)]"
+                in_terminal_properties = "int in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit;inherit"
+                out_terminal_dimensions_str = "out inherit;sign inherit"
+                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
+                out_terminal_properties = "int out;int sign;"
+                output_fnc = "/*Begin code section*/
+if (in >= 0)
+{    
+    out = in;
+    sign=0;
+}
+
+else
+{
+    out = in*-1;
+    sign = 1;
+}
+/*End code section*/"
+            }
+            [
+                position = 7720, 8296
+                hide_name = True
+                size = 80, 48
+            ]
+
+            component src_constant Constant5 {
+                execution_rate = "Ts"
+                value = "scale_const"
+            }
+            [
+                position = 7504, 8344
+            ]
+
+            component gen_probe flow {
+            }
+            [
+                position = 7776, 8216
+            ]
+
+            component gen_c_function "C function6" {
+                in_terminal_dimensions = "inherit"
+                in_terminal_dimensions_str = "in inherit"
+                in_terminal_labels = "[(\'in\', True)]"
+                in_terminal_properties = "int in;"
+                no_feed_inputs = "[\'\']"
+                no_feed_outputs = "[\'\']"
+                out_terminal_dimensions = "inherit;inherit"
+                out_terminal_dimensions_str = "out inherit;sign inherit"
+                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
+                out_terminal_properties = "int out;int sign;"
+                output_fnc = "/*Begin code section*/
+if (in >= 0)
+{    
+    out = in;
+    sign=0;
+}
+
+else
+{
+    out = in*-1;
+    sign = 1;
+}
+/*End code section*/"
+            }
+            [
+                position = 7728, 8512
+                hide_name = True
+                size = 80, 48
+            ]
+
+            component gen_probe Q_level {
+            }
+            [
+                position = 7736, 8424
+            ]
+
+            component src_constant Constant6 {
+                execution_rate = "Ts"
+                value = "scale_const"
+            }
+            [
+                position = 7512, 8560
+            ]
+
+            component gen_product Product6 {
+            }
+            [
+                position = 7616, 8512
+            ]
+
+            port u_P {
+                position = top:2
+                kind = sp
+                direction =  in
+                sp_type {
+                    default = inherit
+                    readonly = True
+                }
+            }
+            [
+                position = 8896, 7992
+            ]
+
+            port u_Q {
+                position = top:1
+                kind = sp
+                direction =  in
+                sp_type {
+                    default = inherit
+                    readonly = True
+                }
+            }
+            [
+                position = 8904, 8232
+            ]
+
+            port U1-P1 {
+                position = bottom:2
+                kind = sp
+                direction =  out
+                sp_type {
+                    default = auto
+                    readonly = True
+                }
+            }
+            [
+                position = 7496, 7856
+                rotation = down
+                scale = -1, 1
+            ]
+
+            port V_dev {
+                position = bottom:1
+                kind = sp
+                direction =  out
+                sp_type {
+                    default = auto
+                    readonly = True
+                }
+            }
+            [
+                position = 7504, 8072
+                rotation = down
+                scale = -1, 1
+            ]
+
+            port "flow flag" {
+                position = bottom:2
+                kind = sp
+                direction =  out
+                sp_type {
+                    default = auto
+                    readonly = True
+                }
+            }
+            [
+                position = 7504, 8248
+                rotation = down
+                scale = -1, 1
+            ]
+
+            port "Q level" {
+                position = bottom:1
+                kind = sp
+                direction =  out
+                sp_type {
+                    default = auto
+                    readonly = True
+                }
+            }
+            [
+                position = 7512, 8464
                 rotation = down
                 scale = -1, 1
             ]
 
             junction Junction5 sp
             [
-                position = 8520, 8048
+                position = 8464, 7936
             ]
 
             junction Junction7 sp
             [
-                position = 8528, 8288
+                position = 8472, 8176
             ]
 
             junction Junction4 sp
             [
-                position = 7712, 8016
+                position = 7656, 7904
             ]
 
             junction Junction6 sp
             [
-                position = 7720, 8232
+                position = 7664, 8120
             ]
 
             junction Junction8 sp
             [
-                position = 7720, 8408
+                position = 7664, 8296
             ]
 
             junction Junction9 sp
             [
-                position = 7728, 8624
+                position = 7672, 8512
             ]
 
             connect C_u12.out "ModBus Device2 (config2).discrete_in" as Connection121
             [
-                breakpoints = 8000, 7968; 8080, 7968
+                breakpoints = 7944, 7856; 8024, 7856
             ]
             connect Constant4.out Product4.in1 as Connection151
             connect Junction7 Product4.in as Connection152
@@ -24921,11 +25479,11 @@ else
             connect "C function2.out" Junction5 as Connection135
             connect C_u13.out "ModBus Device2 (config2).holding_in" as Connection120
             [
-                breakpoints = 7952, 8016; 8080, 8016
+                breakpoints = 7896, 7904; 8024, 7904
             ]
             connect "Bus Split1.out3" "C function4.in" as Connection156
             [
-                breakpoints = 8432, 8088; 8432, 8296
+                breakpoints = 8376, 7976; 8376, 8184
             ]
             connect "ModBus Device2 (config2).coil_in" C_u11.out as Connection139
             connect Junction4 Product1.out as Connection115
@@ -24941,15 +25499,15 @@ else
             connect "C function1.out" "Bus Join2.in" as Connection145
             connect "C function1.sign" "Bus Join2.in1" as Connection146
             [
-                breakpoints = 7920, 8024; 7920, 8264
+                breakpoints = 7864, 7912; 7864, 8152
             ]
             connect "C function3.out" "Bus Join2.in2" as Connection147
             [
-                breakpoints = 7912, 8224; 7912, 8280
+                breakpoints = 7856, 8112; 7856, 8168
             ]
             connect "C function3.sign" "Bus Join2.in3" as Connection148
             [
-                breakpoints = 7904, 8240; 7904, 8296
+                breakpoints = 7848, 8128; 7848, 8184
             ]
             connect Junction8 Product5.out as Connection157
             connect Constant5.out Product5.in1 as Connection158
@@ -24964,559 +25522,21 @@ else
             connect "Bus Join2.in4" "C function5.out" as Connection167
             connect "C function5.sign" "Bus Join2.in5" as Connection168
             [
-                breakpoints = 7880, 8416; 7880, 8328
+                breakpoints = 7824, 8304; 7824, 8216
             ]
             connect "Bus Join2.in6" "C function6.out" as Connection169
             [
-                breakpoints = 7896, 8344; 7896, 8616
+                breakpoints = 7840, 8232; 7840, 8504
             ]
             connect "C function6.sign" "Bus Join2.in7" as Connection170
             [
-                breakpoints = 7912, 8632; 7912, 8360
+                breakpoints = 7856, 8520; 7856, 8248
             ]
             connect "Bus Join2.out" "ModBus Device2 (config2).reg_in" as Connection171
         }
         [
-            position = 7064, 7088
-            rotation = down
-            scale = 1, -1
-            size = 112, 112
-        ]
-
-        component Subsystem Modbus4 {
-            layout = dynamic
-            component gen_probe Probe3 {
-            }
-            [
-                position = 8576, 8392
-            ]
-
-            component src_constant C_u11 {
-                execution_rate = "Ts"
-            }
-            [
-                position = 8008, 7720
-            ]
-
-            component gen_bus_split "Bus Split1" {
-                outputs = "4"
-            }
-            [
-                position = 8384, 8064
-            ]
-
-            component gen_c_function "C function4" {
-                in_terminal_dimensions = "inherit;inherit"
-                in_terminal_dimensions_str = "sign inherit;in inherit"
-                in_terminal_labels = "[(\'sign\', True), (\'in\', True)]"
-                in_terminal_properties = "inherit sign;inherit in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit"
-                out_terminal_dimensions_str = "out inherit"
-                out_terminal_labels = "[(\'out\', True)]"
-                output_fnc = "/*Begin code section*/
-out = in*((-2*sign)+1);
-/*End code section*/"
-            }
-            [
-                position = 8480, 8288
-                hide_name = True
-                size = 48, 48
-            ]
-
-            component "core/ModBus Device" "ModBus Device3 (config3)" {
-                configuration = "config3"
-                execution_rate = "Ts"
-            }
-            [
-                position = 8192, 7992
-                size = 184, 184
-            ]
-
-            component gen_probe Probe2 {
-            }
-            [
-                position = 8576, 8152
-            ]
-
-            component gen_product Product4 {
-            }
-            [
-                position = 8800, 8344
-            ]
-
-            component src_constant Constant2 {
-                execution_rate = "Ts"
-                value = "scale_back_const"
-            }
-            [
-                position = 8680, 8128
-            ]
-
-            component gen_c_function "C function2" {
-                in_terminal_dimensions = "inherit;inherit"
-                in_terminal_dimensions_str = "sign inherit;in inherit"
-                in_terminal_labels = "[(\'sign\', True), (\'in\', True)]"
-                in_terminal_properties = "inherit sign;inherit in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit"
-                out_terminal_dimensions_str = "out inherit"
-                out_terminal_labels = "[(\'out\', True)]"
-                output_fnc = "/*Begin code section*/
-out = in*((-2*sign)+1);
-/*End code section*/"
-            }
-            [
-                position = 8472, 8048
-                hide_name = True
-                size = 48, 48
-            ]
-
-            component src_constant Constant4 {
-                execution_rate = "Ts"
-                value = "scale_back_const"
-            }
-            [
-                position = 8688, 8368
-            ]
-
-            component gen_product Product2 {
-            }
-            [
-                position = 8800, 8104
-            ]
-
-            component src_constant C_u13 {
-                execution_rate = "Ts"
-                value = "50"
-            }
-            [
-                position = 7920, 7872
-            ]
-
-            component gen_terminator Termination1 {
-            }
-            [
-                position = 8400, 7920
-            ]
-
-            component src_constant C_u12 {
-                execution_rate = "Ts"
-            }
-            [
-                position = 7968, 7800
-            ]
-
-            component gen_product Product1 {
-            }
-            [
-                position = 7688, 8048
-            ]
-
-            component gen_c_function "C function1" {
-                in_terminal_dimensions = "inherit"
-                in_terminal_dimensions_str = "in inherit"
-                in_terminal_labels = "[(\'in\', True)]"
-                in_terminal_properties = "int in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit;inherit"
-                out_terminal_dimensions_str = "out inherit;sign inherit"
-                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
-                out_terminal_properties = "int out;int sign;"
-                output_fnc = "/*Begin code section*/
-if (in >= 0)
-{    
-    out = in;
-    sign=0;
-}
-
-else
-{
-    out = in*-1;
-    sign = 1;
-}
-/*End code section*/"
-            }
-            [
-                position = 7800, 8048
-                hide_name = True
-                size = 80, 48
-            ]
-
-            component src_constant Constant1 {
-                execution_rate = "Ts"
-                value = "scale_const"
-            }
-            [
-                position = 7584, 8096
-            ]
-
-            component gen_probe Probe1 {
-            }
-            [
-                position = 7856, 7968
-            ]
-
-            component gen_c_function "C function3" {
-                in_terminal_dimensions = "inherit"
-                in_terminal_dimensions_str = "in inherit"
-                in_terminal_labels = "[(\'in\', True)]"
-                in_terminal_properties = "int in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit;inherit"
-                out_terminal_dimensions_str = "out inherit;sign inherit"
-                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
-                out_terminal_properties = "int out;int sign;"
-                output_fnc = "/*Begin code section*/
-if (in >= 0)
-{    
-    out = in;
-    sign=0;
-}
-
-else
-{
-    out = in*-1;
-    sign = 1;
-}
-/*End code section*/"
-            }
-            [
-                position = 7808, 8264
-                hide_name = True
-                size = 80, 48
-            ]
-
-            component gen_probe Voltage_diff {
-            }
-            [
-                position = 7816, 8176
-            ]
-
-            component src_constant Constant3 {
-                execution_rate = "Ts"
-                value = "scale_const"
-            }
-            [
-                position = 7592, 8312
-            ]
-
-            component gen_product Product3 {
-            }
-            [
-                position = 7696, 8264
-            ]
-
-            component gen_bus_join "Bus Join2" {
-                inputs = "8"
-            }
-            [
-                position = 8000, 8336
-            ]
-
-            component gen_product Product5 {
-            }
-            [
-                position = 7696, 8440
-            ]
-
-            component gen_c_function "C function5" {
-                in_terminal_dimensions = "inherit"
-                in_terminal_dimensions_str = "in inherit"
-                in_terminal_labels = "[(\'in\', True)]"
-                in_terminal_properties = "int in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit;inherit"
-                out_terminal_dimensions_str = "out inherit;sign inherit"
-                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
-                out_terminal_properties = "int out;int sign;"
-                output_fnc = "/*Begin code section*/
-if (in >= 0)
-{    
-    out = in;
-    sign=0;
-}
-
-else
-{
-    out = in*-1;
-    sign = 1;
-}
-/*End code section*/"
-            }
-            [
-                position = 7808, 8440
-                hide_name = True
-                size = 80, 48
-            ]
-
-            component src_constant Constant5 {
-                execution_rate = "Ts"
-                value = "scale_const"
-            }
-            [
-                position = 7592, 8488
-            ]
-
-            component gen_probe flow {
-            }
-            [
-                position = 7864, 8360
-            ]
-
-            component gen_c_function "C function6" {
-                in_terminal_dimensions = "inherit"
-                in_terminal_dimensions_str = "in inherit"
-                in_terminal_labels = "[(\'in\', True)]"
-                in_terminal_properties = "int in;"
-                no_feed_inputs = "[\'\']"
-                no_feed_outputs = "[\'\']"
-                out_terminal_dimensions = "inherit;inherit"
-                out_terminal_dimensions_str = "out inherit;sign inherit"
-                out_terminal_labels = "[(\'out\', True), (\'sign\', True)]"
-                out_terminal_properties = "int out;int sign;"
-                output_fnc = "/*Begin code section*/
-if (in >= 0)
-{    
-    out = in;
-    sign=0;
-}
-
-else
-{
-    out = in*-1;
-    sign = 1;
-}
-/*End code section*/"
-            }
-            [
-                position = 7816, 8656
-                hide_name = True
-                size = 80, 48
-            ]
-
-            component gen_probe Q_level {
-            }
-            [
-                position = 7824, 8568
-            ]
-
-            component src_constant Constant6 {
-                execution_rate = "Ts"
-                value = "scale_const"
-            }
-            [
-                position = 7600, 8704
-            ]
-
-            component gen_product Product6 {
-            }
-            [
-                position = 7704, 8656
-            ]
-
-            port u_P {
-                position = top:2
-                kind = sp
-                direction =  in
-                sp_type {
-                    default = inherit
-                    readonly = True
-                }
-            }
-            [
-                position = 8952, 8104
-            ]
-
-            port u_Q {
-                position = top:1
-                kind = sp
-                direction =  in
-                sp_type {
-                    default = inherit
-                    readonly = True
-                }
-            }
-            [
-                position = 8960, 8344
-            ]
-
-            port U1-P1 {
-                position = bottom:2
-                kind = sp
-                direction =  out
-                sp_type {
-                    default = auto
-                    readonly = True
-                }
-            }
-            [
-                position = 7584, 8000
-                rotation = down
-                scale = -1, 1
-            ]
-
-            port V_dev {
-                position = bottom:1
-                kind = sp
-                direction =  out
-                sp_type {
-                    default = auto
-                    readonly = True
-                }
-            }
-            [
-                position = 7592, 8216
-                rotation = down
-                scale = -1, 1
-            ]
-
-            port "flow flag" {
-                position = bottom:2
-                kind = sp
-                direction =  out
-                sp_type {
-                    default = auto
-                    readonly = True
-                }
-            }
-            [
-                position = 7592, 8392
-                rotation = down
-                scale = -1, 1
-            ]
-
-            port "Q level" {
-                position = bottom:1
-                kind = sp
-                direction =  out
-                sp_type {
-                    default = auto
-                    readonly = True
-                }
-            }
-            [
-                position = 7600, 8608
-                rotation = down
-                scale = -1, 1
-            ]
-
-            junction Junction7 sp
-            [
-                position = 8528, 8288
-            ]
-
-            junction Junction5 sp
-            [
-                position = 8520, 8048
-            ]
-
-            junction Junction4 sp
-            [
-                position = 7744, 8048
-            ]
-
-            junction Junction6 sp
-            [
-                position = 7752, 8264
-            ]
-
-            junction Junction8 sp
-            [
-                position = 7752, 8440
-            ]
-
-            junction Junction9 sp
-            [
-                position = 7760, 8656
-            ]
-
-            connect Probe2.in Junction5 as Connection137
-            connect Product2.out u_P as Connection96
-            connect Termination1.in "ModBus Device3 (config3).coil_out" as Connection127
-            connect Constant4.out Product4.in1 as Connection151
-            connect Junction7 Product4.in as Connection152
-            connect Product4.out u_Q as Connection154
-            connect C_u13.out "ModBus Device3 (config3).holding_in" as Connection120
-            [
-                breakpoints = 7952, 8016; 8080, 8016
-            ]
-            connect "Bus Split1.out1" "C function2.in" as Connection133
-            connect "C function4.out" Junction7 as Connection150
-            connect "ModBus Device3 (config3).coil_in" C_u11.out as Connection139
-            connect "C function2.out" Junction5 as Connection135
-            connect "C function2.sign" "Bus Split1.out" as Connection132
-            connect Junction5 Product2.in as Connection136
-            connect "Bus Split1.out3" "C function4.in" as Connection156
-            [
-                breakpoints = 8432, 8088; 8432, 8296
-            ]
-            connect Constant2.out Product2.in1 as Connection100
-            connect "Bus Split1.out2" "C function4.sign" as Connection155
-            connect C_u12.out "ModBus Device3 (config3).discrete_in" as Connection121
-            [
-                breakpoints = 8000, 7968; 8080, 7968
-            ]
-            connect "ModBus Device3 (config3).holding_out" "Bus Split1.in" as Connection131
-            connect Probe3.in Junction7 as Connection153
-            connect Junction4 Product1.out as Connection115
-            connect Constant1.out Product1.in1 as Connection73
-            connect Probe1.in Junction4 as Connection116
-            connect U1-P1 Product1.in as Connection83
-            connect "C function1.in" Junction4 as Connection114
-            connect V_dev Product3.in as Connection140
-            connect Constant3.out Product3.in1 as Connection141
-            connect "C function3.in" Junction6 as Connection142
-            connect Voltage_diff.in Junction6 as Connection143
-            connect Junction6 Product3.out as Connection144
-            connect "C function1.out" "Bus Join2.in" as Connection145
-            connect "C function1.sign" "Bus Join2.in1" as Connection146
-            [
-                breakpoints = 7952, 8056; 7952, 8296
-            ]
-            connect "C function3.out" "Bus Join2.in2" as Connection147
-            [
-                breakpoints = 7944, 8256; 7944, 8312
-            ]
-            connect "C function3.sign" "Bus Join2.in3" as Connection148
-            [
-                breakpoints = 7936, 8272; 7936, 8328
-            ]
-            connect Junction8 Product5.out as Connection157
-            connect Constant5.out Product5.in1 as Connection158
-            connect flow.in Junction8 as Connection159
-            connect "flow flag" Product5.in as Connection160
-            connect "C function5.in" Junction8 as Connection161
-            connect "Q level" Product6.in as Connection162
-            connect Constant6.out Product6.in1 as Connection163
-            connect "C function6.in" Junction9 as Connection164
-            connect Q_level.in Junction9 as Connection165
-            connect Junction9 Product6.out as Connection166
-            connect "Bus Join2.in4" "C function5.out" as Connection167
-            connect "C function5.sign" "Bus Join2.in5" as Connection168
-            [
-                breakpoints = 7912, 8448; 7912, 8360
-            ]
-            connect "Bus Join2.in6" "C function6.out" as Connection169
-            [
-                breakpoints = 7928, 8376; 7928, 8648
-            ]
-            connect "C function6.sign" "Bus Join2.in7" as Connection170
-            [
-                breakpoints = 7944, 8664; 7944, 8392
-            ]
-            connect "Bus Join2.out" "ModBus Device3 (config3).reg_in" as Connection171
-        }
-        [
-            position = 7840, 8568
-            rotation = down
-            scale = -1, -1
-            size = 120, 112
+            position = 7128, 6176
+            size = 216, 200
         ]
 
         tag switch_droop {
@@ -25526,7 +25546,7 @@ else
             direction = out
         }
         [
-            position = 4520, 7288
+            position = 3800, 6488
             hide_name = True
         ]
 
@@ -25537,7 +25557,7 @@ else
             direction = in
         }
         [
-            position = 5272, 6792
+            position = 4552, 5992
             hide_name = True
         ]
 
@@ -25548,7 +25568,7 @@ else
             direction = out
         }
         [
-            position = 7280, 6912
+            position = 6560, 6112
             hide_name = True
         ]
 
@@ -25559,108 +25579,108 @@ else
             direction = out
         }
         [
-            position = 7280, 8728
+            position = 6560, 7928
             hide_name = True
         ]
 
         junction Junction250 pe
         [
-            position = 5448, 7512
+            position = 4728, 6712
         ]
 
         junction Junction253 pe
         [
-            position = 7280, 7512
+            position = 6560, 6712
         ]
 
         junction Junction254 pe
         [
-            position = 6840, 7512
+            position = 6120, 6712
         ]
 
         junction Junction256 pe
         [
-            position = 5608, 7304
+            position = 4888, 6504
         ]
 
         junction Junction257 pe
         [
-            position = 5672, 7336
+            position = 4952, 6536
         ]
 
         junction Junction258 pe
         [
-            position = 5640, 7320
+            position = 4920, 6520
         ]
 
         junction Junction259 pe
         [
-            position = 7528, 7304
+            position = 6808, 6504
         ]
 
         junction Junction260 pe
         [
-            position = 7456, 7320
+            position = 6736, 6520
         ]
 
         junction Junction261 pe
         [
-            position = 7384, 7336
+            position = 6664, 6536
         ]
 
         junction Junction266 pe
         [
-            position = 7280, 7232
+            position = 6560, 6432
         ]
 
         junction Junction267 pe
         [
-            position = 7264, 8400
+            position = 6544, 7600
         ]
 
         junction Junction268 pe
         [
-            position = 6152, 7304
+            position = 5432, 6504
         ]
 
         junction Junction269 pe
         [
-            position = 6136, 7320
+            position = 5416, 6520
         ]
 
         junction Junction270 pe
         [
-            position = 6120, 7336
+            position = 5400, 6536
         ]
 
         junction Junction280 pe
         [
-            position = 6224, 7512
+            position = 5504, 6712
         ]
 
         junction Junction281 pe
         [
-            position = 5696, 7512
+            position = 4976, 6712
         ]
 
         junction Junction283 pe
         [
-            position = 6424, 8104
+            position = 5704, 7304
         ]
 
         junction Junction284 pe
         [
-            position = 6368, 8312
+            position = 5648, 7512
         ]
 
         junction Junction285 pe
         [
-            position = 6352, 8296
+            position = 5632, 7496
         ]
 
         junction Junction286 pe
         [
-            position = 6336, 8280
+            position = 5616, 7480
         ]
 
         connect Clock1.out Timer.in as Connection1061
@@ -25672,19 +25692,19 @@ else
         connect RL_14.P2 Junction256 as Connection1544
         connect Junction256 measurement1.Va- as Connection1545
         [
-            breakpoints = 5624, 7304; 5568, 7304
+            breakpoints = 4904, 6504; 4848, 6504
         ]
         connect RL_15.P6 Junction256 as Connection1546
         connect RL_14.P6 Junction257 as Connection1547
         connect Junction257 measurement1.Vc- as Connection1548
         [
-            breakpoints = 5616, 7336
+            breakpoints = 4896, 6536
         ]
         connect RL_15.P2 Junction257 as Connection1549
         connect RL_14.P4 Junction258 as Connection1550
         connect Junction258 measurement1.Vb- as Connection1551
         [
-            breakpoints = 5592, 7320
+            breakpoints = 4872, 6520
         ]
         connect RL_15.P4 Junction258 as Connection1552
         connect "Core Coupling 1.b_out" RL_24.P4 as Connection1556
@@ -25693,31 +25713,31 @@ else
         connect measurement2.Va- Junction259 as Connection1571
         connect Junction259 RL_24.P1 as Connection1572
         [
-            breakpoints = 7528, 7304; 7528, 7304
+            breakpoints = 6808, 6504; 6808, 6504
         ]
         connect RL_26.P2 Junction259 as Connection1573
         connect RL_24.P3 Junction260 as Connection1574
         connect Junction260 measurement2.Vb- as Connection1575
         [
-            breakpoints = 7456, 7320
+            breakpoints = 6736, 6520
         ]
         connect RL_26.P4 Junction260 as Connection1576
         connect RL_24.P5 Junction261 as Connection1577
         connect Junction261 measurement2.Vc- as Connection1578
         [
-            breakpoints = 7384, 7336
+            breakpoints = 6664, 6536
         ]
         connect RL_26.P6 Junction261 as Connection1579
         connect "Grid forming inverter (averaged).Vc" measurement1.Vc+ as Connection1623
         connect measurement1.Vb+ "Grid forming inverter (averaged).Vb" as Connection1624
         [
-            breakpoints = 5400, 7320
+            breakpoints = 4680, 6520
         ]
         connect "Grid forming inverter (averaged).Va" measurement1.Va+ as Connection1625
         connect measurement2.ground Junction266 as Connection1632
         connect Junction266 Junction253 as Connection1633
         [
-            breakpoints = 7280, 7232; 7280, 7512; 7280, 7512
+            breakpoints = 6560, 6432; 6560, 6712; 6560, 6712
         ]
         connect "Grid forming inverter (averaged)2.Ground" Junction266 as Connection1634
         connect switch_droop2 "Grid forming inverter (averaged)2.Switch droop" as Connection1635
@@ -25741,44 +25761,44 @@ else
         connect RL_14.P1 Junction268 as Connection1650
         connect Junction268 "Core Coupling 1.a_in" as Connection1651
         [
-            breakpoints = 6160, 7304; 6632, 7304
+            breakpoints = 5440, 6504; 5912, 6504
         ]
         connect measurement4.Va+ Junction268 as Connection1652
         [
-            breakpoints = 6152, 7408; 6152, 7304
+            breakpoints = 5432, 6608; 5432, 6504
         ]
         connect RL_14.P3 Junction269 as Connection1653
         connect Junction269 "Core Coupling 1.b_in" as Connection1654
         connect measurement4.Vb+ Junction269 as Connection1655
         [
-            breakpoints = 6136, 7424; 6136, 7320
+            breakpoints = 5416, 6624; 5416, 6520
         ]
         connect RL_14.P5 Junction270 as Connection1656
         connect Junction270 "Core Coupling 1.c_in" as Connection1657
         connect measurement4.Vc+ Junction270 as Connection1658
         connect "Grid forming inverter (averaged).Ground" Junction250 as Connection1687
         [
-            breakpoints = 5448, 7512
+            breakpoints = 4728, 6712
         ]
         connect Junction280 "Core Coupling 1.d_in" as Connection1694
         [
-            breakpoints = 6232, 7512
+            breakpoints = 5512, 6712
         ]
         connect measurement4.ground Junction280 as Connection1695
         connect measurement3.ground Junction267 as Connection1706
         [
-            breakpoints = 7264, 8400; 7264, 8400; 7264, 8400; 7264, 8400; 7264, 8400; 7264, 8400; 7264, 8400; 7264, 8400; 7264, 8400
+            breakpoints = 6544, 7600; 6544, 7600; 6544, 7600; 6544, 7600; 6544, 7600; 6544, 7600; 6544, 7600; 6544, 7600; 6544, 7600
         ]
         connect RL_15.P3 "Core Coupling 5.c_in" as Connection1707
         connect RL_15.P5 "Core Coupling 5.d_in" as Connection1709
         connect RL_15.P1 "Core Coupling 5.b_in" as Connection1712
         connect Junction250 Junction281 as Connection1713
         [
-            breakpoints = 5448, 7512; 5448, 7512
+            breakpoints = 4728, 6712; 4728, 6712
         ]
         connect Junction281 Junction280 as Connection1714
         [
-            breakpoints = 6208, 7512
+            breakpoints = 5488, 6712
         ]
         connect "Core Coupling 5.a_in" Junction281 as Connection1715
         connect "Core Coupling 5.a_out" Junction283 as Connection1719
@@ -25786,78 +25806,75 @@ else
         connect measurement5.Va+ Junction284 as Connection1722
         connect Junction284 "Core Coupling 5.d_out" as Connection1723
         [
-            breakpoints = 6368, 8312; 6128, 8312; 6128, 8392
+            breakpoints = 5648, 7512; 5408, 7512; 5408, 7592
         ]
         connect RL_35.P6 Junction284 as Connection1724
         connect "Core Coupling 5.c_out" Junction285 as Connection1725
         connect Junction285 measurement5.Vb+ as Connection1726
         [
-            breakpoints = 6352, 8296; 6352, 8176
+            breakpoints = 5632, 7496; 5632, 7376
         ]
         connect RL_35.P4 Junction285 as Connection1727
         connect "Core Coupling 5.b_out" Junction286 as Connection1728
         [
-            breakpoints = 6128, 8280; 6336, 8280
+            breakpoints = 5408, 7480; 5616, 7480
         ]
         connect Junction286 measurement5.Vc+ as Connection1729
         [
-            breakpoints = 6336, 8272; 6336, 8160
+            breakpoints = 5616, 7472; 5616, 7360
         ]
         connect RL_35.P2 Junction286 as Connection1730
         connect measurement6.ground Junction253 as Connection1733
         [
-            breakpoints = 8192, 7512; 8000, 7512; 8000, 7512; 8000, 7512
+            breakpoints = 7472, 6712; 7280, 6712; 7280, 6712; 7280, 6712
         ]
         connect RL_26.P5 measurement6.Vc+ as Connection1732
         [
-            breakpoints = 8024, 7336; 8024, 7488
+            breakpoints = 7304, 6536; 7304, 6688
         ]
         connect RL_26.P3 measurement6.Vb+ as Connection1735
         [
-            breakpoints = 8056, 7472
+            breakpoints = 7336, 6672
         ]
         connect RL_35.P3 measurement3.Vb- as Connection1737
         [
-            breakpoints = 7448, 8296
+            breakpoints = 6728, 7496
         ]
         connect RL_35.P1 measurement3.Vc- as Connection1734
         [
-            breakpoints = 7376, 8280; 7376, 8280
+            breakpoints = 6656, 7480; 6656, 7480
         ]
         connect measurement6.Va+ RL_26.P1 as Connection1736
         [
-            breakpoints = 8088, 7456; 8088, 7304
+            breakpoints = 7368, 6656; 7368, 6504
         ]
         connect Junction267 Junction283 as Connection1731
         [
-            breakpoints = 7264, 8400; 7264, 8240; 7264, 8240; 6768, 8240; 6768, 8104
+            breakpoints = 6544, 7600; 6544, 7440; 6544, 7440; 6048, 7440; 6048, 7304
         ]
         connect RL_35.P5 measurement3.Va- as Connection1738
         [
-            breakpoints = 7520, 8312; 7520, 8312
+            breakpoints = 6800, 7512; 6800, 7512
         ]
         connect "Grid forming inverter (averaged).Switch droop" switch_droop as Connection1739
-        connect measurement1.Q_level "Modbus2.Q level" as Connection1740
+        connect Modbus2.u_Q "Grid forming inverter (averaged).setpoint_Q" as Connection1740
         connect Modbus2.u_P "Grid forming inverter (averaged).setpoint_P" as Connection1741
-        connect Modbus2.u_Q "Grid forming inverter (averaged).setpoint_Q" as Connection1742
-        connect measurement1.V_dev Modbus2.V_dev as Connection1743
-        connect "Grid forming inverter (averaged).activeP_offset" Modbus2.U1-P1 as Connection1744
-        connect Constant9.out "Modbus2.flow flag" as Connection1745
-        connect Constant10.out "Modbus3.flow flag" as Connection1746
-        connect Modbus3.U1-P1 "Grid forming inverter (averaged)2.activeP_offset" as Connection1747
-        connect "Modbus3.Q level" measurement2.Q_level as Connection1748
-        connect Modbus3.V_dev measurement2.V_dev as Connection1749
-        connect "Grid forming inverter (averaged)2.setpoint_Q" Modbus3.u_Q as Connection1750
-        connect "Grid forming inverter (averaged)2.setpoint_P" Modbus3.u_P as Connection1751
-        connect Constant11.out "Modbus4.flow flag" as Connection1752
-        connect Modbus4.u_Q "Grid forming inverter (averaged)3.setpoint_Q" as Connection1753
-        connect "Grid forming inverter (averaged)3.setpoint_P" Modbus4.u_P as Connection1754
-        [
-            breakpoints = 7880, 8504
-        ]
-        connect Modbus4.V_dev measurement3.V_dev as Connection1755
-        connect measurement3.Q_level "Modbus4.Q level" as Connection1756
-        connect Modbus4.U1-P1 "Grid forming inverter (averaged)3.activeP_offset" as Connection1757
+        connect Modbus2.V_dev measurement1.V_dev as Connection1742
+        connect measurement1.Q_level "Modbus2.Q level" as Connection1743
+        connect Constant9.out "Modbus2.flow flag" as Connection1744
+        connect Modbus2.U1-P1 "Grid forming inverter (averaged).activeP_offset" as Connection1745
+        connect Modbus4.u_Q "Grid forming inverter (averaged)2.setpoint_Q" as Connection1746
+        connect "Grid forming inverter (averaged)2.setpoint_P" Modbus4.u_P as Connection1747
+        connect measurement2.V_dev Modbus4.V_dev as Connection1748
+        connect "Modbus4.Q level" measurement2.Q_level as Connection1749
+        connect Modbus4.U1-P1 "Grid forming inverter (averaged)2.activeP_offset" as Connection1750
+        connect "Modbus4.flow flag" Constant11.out as Connection1751
+        connect Modbus3.u_Q "Grid forming inverter (averaged)3.setpoint_Q" as Connection1752
+        connect "Grid forming inverter (averaged)3.setpoint_P" Modbus3.u_P as Connection1753
+        connect Constant10.out "Modbus3.flow flag" as Connection1754
+        connect Modbus3.U1-P1 "Grid forming inverter (averaged)3.activeP_offset" as Connection1755
+        connect measurement3.V_dev Modbus3.V_dev as Connection1756
+        connect "Modbus3.Q level" measurement3.Q_level as Connection1757
     }
 
     default {

@@ -1125,8 +1125,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>800</x>
-                    <y>240</y>
+                    <x>800.0</x>
+                    <y>240.0</y>
                     <width>328</width>
                     <height>160</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1289,8 +1289,8 @@ data = {
                 <slower_update_rate>2</slower_update_rate>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>112.0</x>
-                    <y>96.0</y>
+                    <x>112</x>
+                    <y>96</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1603,8 +1603,8 @@ displayValue = 0.0
                 <hierarchy_position>1</hierarchy_position>
                 <working_mode>windowed</working_mode>
                 <widget_settings>
-                    <x>112.0</x>
-                    <y>224.0</y>
+                    <x>112</x>
+                    <y>224</y>
                     <width>120</width>
                     <height>120</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -1614,7 +1614,7 @@ displayValue = 0.0
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>300.0</time_interval>
+                            <time_interval>600.0</time_interval>
                             <sample_rate>100.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
@@ -1700,73 +1700,34 @@ displayValue = 0.0
                         </analog>
                             <analog>
                             <channel>6</channel>
-                            <name>measurement4.Three-phase Meter4.POWER_Q</name>
+                            <name>measurement1.Three-phase Meter1.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>4</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>7</channel>
-                            <name>measurement5.Three-phase Meter5.POWER_Q</name>
+                            <name>measurement2.Three-phase Meter2.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>4</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>8</channel>
-                            <name>measurement6.Three-phase Meter6.POWER_Q</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>4</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>9</channel>
-                            <name>measurement1.Three-phase Meter1.POWER_Q</name>
-                            <is_locked>False</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>10</channel>
-                            <name>measurement2.Three-phase Meter2.POWER_Q</name>
-                            <is_locked>False</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>11</channel>
                             <name>measurement3.Three-phase Meter3.POWER_Q</name>
-                            <is_locked>False</is_locked>
+                            <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
@@ -1935,7 +1896,7 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>300.0</time_interval>
+                        <time_interval>600.0</time_interval>
                         <sample_rate>100.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
@@ -2030,73 +1991,34 @@ displayValue = 0.0
                         </analog>
                             <analog>
                             <channel>6</channel>
-                            <name>measurement4.Three-phase Meter4.POWER_Q</name>
+                            <name>measurement1.Three-phase Meter1.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>4</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>7</channel>
-                            <name>measurement5.Three-phase Meter5.POWER_Q</name>
+                            <name>measurement2.Three-phase Meter2.POWER_Q</name>
                             <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
                             <viewports>
                                 
-                                <num_viewport>4</num_viewport>
+                                <num_viewport>2</num_viewport>
                                 
                            </viewports>
                         </analog>
                             <analog>
                             <channel>8</channel>
-                            <name>measurement6.Three-phase Meter6.POWER_Q</name>
-                            <is_locked>True</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>4</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>9</channel>
-                            <name>measurement1.Three-phase Meter1.POWER_Q</name>
-                            <is_locked>False</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>10</channel>
-                            <name>measurement2.Three-phase Meter2.POWER_Q</name>
-                            <is_locked>False</is_locked>
-                            <vertical_scale>Auto</vertical_scale>
-                            <vertical_offset>0.0</vertical_offset>
-                            <coupling>False</coupling>
-                            <viewports>
-                                
-                                <num_viewport>2</num_viewport>
-                                
-                           </viewports>
-                        </analog>
-                            <analog>
-                            <channel>11</channel>
                             <name>measurement3.Three-phase Meter3.POWER_Q</name>
-                            <is_locked>False</is_locked>
+                            <is_locked>True</is_locked>
                             <vertical_scale>Auto</vertical_scale>
                             <vertical_offset>0.0</vertical_offset>
                             <coupling>False</coupling>
@@ -2602,7 +2524,7 @@ data = {
     }
 displayValue = data
 ]]></code>
-                <analog_signals><![CDATA[['Grid forming inverter (averaged)3.Controller.E_qREF1', 'Grid forming inverter (averaged)3.Controller.E_q1']]]></analog_signals>
+                <analog_signals><![CDATA[['measurement4.Three-phase Meter4.POWER_P', 'measurement5.Three-phase Meter5.POWER_P', 'measurement6.Three-phase Meter6.POWER_P']]]></analog_signals>
                 <digital_signals><![CDATA[[]]]></digital_signals>
                 <streaming_analog_signals><![CDATA[[]]]></streaming_analog_signals>
                 <streaming_digital_signals><![CDATA[[]]]></streaming_digital_signals>
@@ -2611,8 +2533,8 @@ displayValue = data
                 <background_color>black</background_color>
                 <hierarchy_position>1</hierarchy_position>
                 <widget_settings>
-                    <x>1152.0</x>
-                    <y>568.0</y>
+                    <x>1152</x>
+                    <y>568</y>
                     <width>352</width>
                     <height>192</height>
                     <appearance><![CDATA[Flat]]></appearance>
@@ -2624,7 +2546,7 @@ displayValue = data
                     <y_range_max>100.0</y_range_max>
                     <time_window>100</time_window>
                     <auto_scale_enabled>True</auto_scale_enabled>
-                    <legend_enabled>False</legend_enabled>
+                    <legend_enabled>True</legend_enabled>
                     <x_axis_title_enabled>False</x_axis_title_enabled>
                     <y_axis_title_enabled>False</y_axis_title_enabled>
                     <use_reference_curve>False</use_reference_curve>

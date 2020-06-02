@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 01-Jun-2020 @ 07:45:25 PM
+// Save timestamp: 02-Jun-2020 @ 08:11:42 AM
 //
 
 model "test_distributed" {
@@ -25513,7 +25513,7 @@ else
             connect "Bus Join2.out" "ModBus Device3 (config3).reg_in" as Connection171
         }
         [
-            position = 9608, 8240
+            position = 9608, 8560
             rotation = down
             scale = -1, -1
             size = 120, 112

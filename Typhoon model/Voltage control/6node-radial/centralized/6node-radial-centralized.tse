@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 01-Jun-2020 @ 01:29:41 PM
+// Save timestamp: 02-Jun-2020 @ 06:55:59 AM
 //
 
 model "6node-radial-centralized" {
@@ -1101,6 +1101,13 @@ else
                 size = 120, 48
             ]
 
+            component gen_gain Gain2 {
+                gain = "1/200"
+            }
+            [
+                position = 8432, 8008
+            ]
+
             port Vc+ {
                 position = left:2
                 kind = pe
@@ -1183,7 +1190,7 @@ else
                 }
             }
             [
-                position = 8184, 8032
+                position = 8560, 8008
             ]
 
             connect Va+ "Three-phase Meter1.A+" as Connection1
@@ -1211,7 +1218,8 @@ else
             connect V_dev Violation.violation as Connection10
             connect Violation.V Gain1.out as Connection11
             connect "Three-phase Meter1.|V|" Gain1.in as Connection12
-            connect "Three-phase Meter1.Q_level" Q_level as Connection13
+            connect "Three-phase Meter1.Q_level" Gain2.in as Connection13
+            connect Gain2.out Q_level as Connection14
         }
         [
             position = 7208, 7528
@@ -2262,6 +2270,13 @@ else
                 size = 120, 48
             ]
 
+            component gen_gain Gain2 {
+                gain = "1/200"
+            }
+            [
+                position = 8416, 7960
+            ]
+
             port Vb- {
                 position = right:2
                 kind = pe
@@ -2345,7 +2360,7 @@ else
                 }
             }
             [
-                position = 8240, 7928
+                position = 8576, 7960
             ]
 
             connect Va+ "Three-phase Meter2.A+" as Connection1
@@ -2358,7 +2373,8 @@ else
             connect "Three-phase Meter2.|V|" Gain1.in as Connection9
             connect V_dev "Voltage Deviation.violation" as Connection10
             connect "Voltage Deviation.V" Gain1.out as Connection11
-            connect Q_level "Three-phase Meter2.Q_level" as Connection12
+            connect Q_level Gain2.out as Connection12
+            connect Gain2.in "Three-phase Meter2.Q_level" as Connection13
         }
         [
             position = 9216, 7440
@@ -3410,6 +3426,13 @@ else
                 position = 8208, 7880
             ]
 
+            component gen_gain Gain2 {
+                gain = "1/200"
+            }
+            [
+                position = 8328, 7968
+            ]
+
             port Vc- {
                 position = right:1
                 kind = pe
@@ -3493,7 +3516,7 @@ else
                 }
             }
             [
-                position = 8208, 7944
+                position = 8576, 7968
             ]
 
             connect Va+ "Three-phase Meter3.A+" as Connection1
@@ -3506,7 +3529,8 @@ else
             connect Violation.V Gain1.out as Connection11
             connect V_dev Violation.violation as Connection10
             connect "Three-phase Meter3.|V|" Gain1.in as Connection12
-            connect Q_level "Three-phase Meter3.Q_level" as Connection13
+            connect Q_level Gain2.out as Connection13
+            connect Gain2.in "Three-phase Meter3.Q_level" as Connection14
         }
         [
             position = 9208, 8608
