@@ -1614,7 +1614,7 @@ displayValue = 0.0
                         <active_capture_preset>Default</active_capture_preset>
                         <active_scope_preset>Default</active_scope_preset>
                         <capture name="Default">
-                            <time_interval>1200.0</time_interval>
+                            <time_interval>600.0</time_interval>
                             <sample_rate>100.0</sample_rate>
                             <background_color>white</background_color>
                             <layout>Vertical</layout>
@@ -1896,7 +1896,7 @@ displayValue = 0.0
                         </scope>
                         </presets>
                     <capture>
-                        <time_interval>1200.0</time_interval>
+                        <time_interval>600.0</time_interval>
                         <sample_rate>100.0</sample_rate>
                         <background_color>white</background_color>
                         <layout>Vertical</layout>
