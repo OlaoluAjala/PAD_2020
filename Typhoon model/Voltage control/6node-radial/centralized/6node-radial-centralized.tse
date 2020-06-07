@@ -2,7 +2,7 @@ version = 4.2
 
 //
 // Saved by sw version: 2020.1
-// Save timestamp: 02-Jun-2020 @ 06:55:59 AM
+// Save timestamp: 07-Jun-2020 @ 05:48:35 PM
 //
 
 model "6node-radial-centralized" {
@@ -20502,7 +20502,7 @@ out = in - (6.283185307179586*floor_in);
                 connect "BE1-25A Synchronizer1.max_Q" Constant11.out as Connection305
             }
             [
-                position = 9752, 7456
+                position = 9752, 7688
                 size = 112, 216
             ]
 
